@@ -4,7 +4,7 @@
     "./src/assets/css/*.css"
   ],
   "version": "1.0.0",
-  "description": "Pure JavaScript based WYSIWYG web editor",
+  "description": "Pure JavaScript rich text editor web editor",
   "main": "src/keditor.js",
   "keywords": [
     "wysiwyg",
