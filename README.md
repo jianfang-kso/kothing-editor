@@ -1,15 +1,7 @@
 # KothingEditor
-Pure javscript based WYSIWYG web editor, with no dependencies
+Pure javscript rich text editorweb editor, with no dependencies
 
 > #### Demo : <a href="http://kothing.github.io/editor" target="_blank">kothing.github.io/editor</a>
-
-[![GitHub](https://img.shields.io/github/license/jihong88/suneditor.svg?style=flat-square)](https://github.com/kothing/kothing-Editor/blob/master/LICENSE.txt)
-[![GitHub release](https://img.shields.io/github/release/jihong88/suneditor.svg?style=flat-square)](https://github.com/kothing/kothing-Editor/releases)
-[![npm version](https://img.shields.io/npm/v/suneditor.svg?style=flat-square)](https://nodei.co/npm/suneditor/)
-[![bower version](https://img.shields.io/bower/v/suneditor.svg?style=flat-square)](https://github.com/kothing/kothing-Editor/releases/latest)
-[![](https://data.jsdelivr.com/v1/package/npm/suneditor/badge)](https://www.jsdelivr.com/package/npm/suneditor)
-![npm](https://img.shields.io/npm/dt/suneditor.svg?style=flat-square)
-![npm bundle size (minified + gzip)](https://img.shields.io/bundlephobia/minzip/suneditor.svg?style=flat-square)
 
 > The KothingEditor is a lightweight, flexible, customizable WYSIWYG text editor for your web applications.
 > - Pasting from Microsoft Word and Excel.
@@ -17,8 +9,6 @@ Pure javscript based WYSIWYG web editor, with no dependencies
 > - Media embeds, image uploads.
 > - Can use CodeMirror.
 > - And.. many other features :)
-
-![WYSIWYG HTML Editor](http://kothing.github.io/editor/docs/screen-main-w.png?v=2180)
 
 ## Table of contents
 - [Browser Support](#browser-support)
@@ -41,48 +31,41 @@ Pure javscript based WYSIWYG web editor, with no dependencies
 - [Options template](#options-template)
 - [Custom plugins](#custom-plugins)
 - [Document](#document)
-- [Other libraries using KothingEditor](#other-libraries-using-sunEditor)
-    - [Plugin for Pluxml](#lib-pluxml)
-    - [AEM-KothingEditor](#lib-pluxml)
-    - [KothingEditor-React](#lib-suneditor-react)
 - [License](#license)
 
 
 #### Browser Support
 
-| <img src="http://kothing.github.io/editor/docs/chrome-64.png" alt="Chrome" width="16px" height="16px" /> Chrome | <img src="http://kothing.github.io/editor/docs/mozilla-64.png" alt="Firefox" width="16px" height="16px" /> Firefox | <img src="http://kothing.github.io/editor/docs/opera-64.png" alt="Opera" width="16px" height="16px" /> Opera | <img src="http://kothing.github.io/editor/docs/safari-64.png" alt="Safari" width="16px" height="16px" /> Safari | <img src="http://kothing.github.io/editor/docs/edge-64.png" alt="Edge" width="16px" height="16px" /> Edge | <img src="http://kothing.github.io/editor/docs/explorer-64.png" alt="Explorer" width="16px" height="16px" /> Internet Explorer |
+| Chrome | Firefox | Opera | Safari | Edge | Internet Explorer |
 |:---:|:---:|:---:|:---:|:---:|:---:|
 | Yes | Yes | Yes | Yes | Yes | 11+ |
 
 ## Install
 #### npm
 ``` sh
-$ npm install --save suneditor
+$ npm install --save kothing-editor
 ```
 #### bower
 ``` sh
-$ bower install --save suneditor
+$ bower install --save kothing-editor
 ```
 #### CDN
 ``` html
-<link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/suneditor.min.js"></script>
+<link href="./keditor.min.css" rel="stylesheet">
+<script src="./keditor.min.js"></script>
 <!-- languages (Basic Language: English/en) -->
-<script src="https://cdn.jsdelivr.net/npm/suneditor@latest/src/lang/ko.js"></script>
+<script src="./lang/en.js"></script>
 ```
-[jsdelivr/suneditor](https://www.jsdelivr.com/package/npm/suneditor)
-
-[jsdelivr/suneditor-languages-list](https://www.jsdelivr.com/package/npm/suneditor?path=src%2Flang)
 
 
 ## Getting Started
 ### 1. Include
 ```html
-<!-- <link href="../src/assets/css/suneditor.css" rel="stylesheet"> -->
-<!-- <link  href="../src/assets/css/suneditor-contents.css" rel="stylesheet"> -->
-<link href="../dist/css/suneditor.min.css" rel="stylesheet">
-<script src="../dist/suneditor.min.js"></script>
-<script src="../src/lang/ko.js"></script>
+<!-- <link href="../src/assets/css/keditor.css" rel="stylesheet"> -->
+<!-- <link  href="../src/assets/css/keditor-contents.css" rel="stylesheet"> -->
+<link href="../dist/css/keditor.min.css" rel="stylesheet">
+<script src="../dist/keditor.min.js"></script>
+<script src="../src/lang/en.js"></script>
 ```
 
 ### 2. Target Element
@@ -122,8 +105,7 @@ import keditor from 'keditor'
 import {font, fontSize, fontColor, horizontalRule, list, image} from 'keditor/src/plugins'
 // How to import language files (default: en)
 import lang from 'keditor/src/lang'
-import {en, ko} from 'keditor/src/lang'
-import de from 'keditor/src/lang/de'
+import {en, zh_cn} from 'keditor/src/lang'
 
 keditor.create('sample', {
     plugins: [
@@ -612,13 +594,6 @@ editor.showInline = function (toolbar, context) {
 
 ## Document
 [Document](http://kothing.github.io/editor/sample/html/document.html)
-
-## Other libraries using KothingEditor
-<a id="lib-pluxml"></a>[Plugin for Pluxml](https://forum.pluxml.org/discussion/comment/59339) ([@sudwebdesign](https://github.com/sudwebdesign)) - Plugin for Pluxml.
-
-<a id="lib-aem-suneditor"></a>[AEM-KothingEditor](https://blogs.perficientdigital.com/2019/08/13/suneditor-an-alternative-to-the-aem-rte) ([@ahmed-musallam](https://github.com/ahmed-musallam/AEM-KothingEditor)) - Enables using KothingEditor in AEM dialogs as an RTE replacement.
-
-<a id="lib-suneditor-react"></a>[KothingEditor-React](https://github.com/mkhstar/suneditor-react) ([@mkhstar](https://github.com/mkhstar)) - Pure React Component for KothingEditor.
     
 ## License
 KothingEditor may be freely distributed under the MIT license.
