@@ -9,7 +9,7 @@ const common = require('./webpack.common')
 
 module.exports = merge(common, {
 	mode: 'production',
-	entry: './src/keditor_build',
+	entry: './src/index',
 	output: {
 		filename: 'keditor.min.js',
 		path: path.resolve(__dirname, 'dist')
