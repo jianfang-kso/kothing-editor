@@ -1,11 +1,11 @@
 'use strict';
 
-import '../../src/assets/css/keditor.css';
-import '../../src/assets/css/keditor-contents.css';
+import '../src/assets/css/keditor.css';
+import '../src/assets/css/keditor-contents.css';
 
-import keditor from '../../src/keditor';
-import plugins from '../../src/plugins';
-import { zh_cn } from '../../src/lang';
+import keditor from '../src/keditor';
+import plugins from '../src/plugins';
+import { zh_cn } from '../src/lang';
 
 import custom_plugin_submenu from './custom_plugin_submenu';
 

@@ -63,25 +63,25 @@ $ bower install --save kothing-editor
 ```html
 <!-- <link href="../src/assets/css/keditor.css" rel="stylesheet"> -->
 <!-- <link  href="../src/assets/css/keditor-contents.css" rel="stylesheet"> -->
-<link href="../dist/css/keditor.min.css" rel="stylesheet">
-<script src="../dist/keditor.min.js"></script>
+<link href="../build/css/keditor.min.css" rel="stylesheet">
+<script src="../build/keditor.min.js"></script>
 <script src="../src/lang/en.js"></script>
 ```
 
 ### 2. Target Element
 ```html
-<textarea id="sample">Hi</textarea>
+<textarea id="document">Hi</textarea>
 ```
 
 ### 3. Create
 ```javascript
 /**
-* ID : 'keditor_sample'
+* ID : 'keditor_document'
 * ClassName : 'keidtor'
 */
 // ID or DOM object
-const keditor = KEDITOR.create((document.getElementById('sample') || 'sample'),{
-    // All of the plugins are loaded in the "window.KEDITOR" object in dist/keditor.min.js file
+const keditor = KEDITOR.create((document.getElementById('document') || 'document'),{
+    // All of the plugins are loaded in the "window.KEDITOR" object in build/keditor.min.js file
     // Insert options
     // Language global object (default: en)
     lang: KEDITOR_LANG['ko']
@@ -91,7 +91,7 @@ const keditor = KEDITOR.create((document.getElementById('sample') || 'sample'),{
 ### 4. Contents display
 ```text
 When you display a document created by keditor
-You need to include "src/assets/css/keditor-contents.css" or "dist/css/keditor.min.css" file.
+You need to include "src/assets/css/keditor-contents.css" or "build/css/keditor.min.css" file.
 Then add "keditor-editable" to the class name of the Tag element that displays the content.
 In "keditor-contents.css", you can define the style of all the tags created in keditor.
 ```
@@ -100,14 +100,14 @@ In "keditor-contents.css", you can define the style of all the tags created in k
 
 ### 1. Load only what you want
 ```javascript
-import 'keditor/dist/css/keditor.min.css'
+import 'keditor/build/css/keditor.min.css'
 import keditor from 'keditor'
 import {font, fontSize, fontColor, horizontalRule, list, image} from 'keditor/src/plugins'
 // How to import language files (default: en)
 import lang from 'keditor/src/lang'
 import {en, zh_cn} from 'keditor/src/lang'
 
-keditor.create('sample', {
+keditor.create('document', {
     plugins: [
         font,
         fontSize,
@@ -128,11 +128,11 @@ keditor.create('sample', {
 
 ### 2. Load all plugins
 ```javascript
-import 'keditor/dist/css/keditor.min.css'
+import 'keditor/build/css/keditor.min.css'
 import keditor from 'keditor'
 import plugins from 'keditor/src/plugins'
 
-keditor.create('sample', {
+keditor.create('document', {
     plugins: plugins,
     buttonList: [
         ['undo', 'redo'],
@@ -151,7 +151,7 @@ keditor.create('sample', {
 })
 
 // You can also load what you want
-keditor.create('sample', {
+keditor.create('document', {
     plugins: [
         plugins.font
         plugins.fontSize
@@ -166,11 +166,11 @@ keditor.create('sample', {
 
 ### 3. Plugins can be used directly in the button list
 ```javascript
-import 'keditor/dist/css/keditor.min.css'
+import 'keditor/build/css/keditor.min.css'
 import keditor from 'keditor'
 import {align, font, fontSize, fontColor, hiliteColor, horizontalRule, list, table, template, formatBlock, link, image, video} from 'keditor/src/plugins'
 
-keditor.create('sample', {
+keditor.create('document', {
     buttonList: [
         ['undo', 'redo'],
         [font, fontSize, formatBlock],
@@ -193,7 +193,7 @@ The init function can be used by predefining options and calling the create func
 The value of the option argument put in the "create" function call takes precedence
 ```
 ```javascript
-import 'keditor/dist/css/keditor.min.css'
+import 'keditor/build/css/keditor.min.css'
 import keditor from 'keditor'
 import plugins from 'keditor/src/plugins'
 
@@ -215,11 +215,11 @@ const initEditor = keditor.init({
     ]
 });
 
-initEditor.create('sample_1', {
+initEditor.create('document_1', {
     // The value of the option argument put in the "create" function call takes precedence
 });
 
-initEditor.create('sample_2', {
+initEditor.create('document_2', {
     // The value of the option argument put in the "create" function call takes precedence
     height: 'auto',
     buttonList: [
@@ -241,14 +241,14 @@ initEditor.create('sample_2', {
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.49.0/mode/css/css.js"></script>
 ```
 ```javascript
-import 'keditor/dist/css/keditor.min.css'
+import 'keditor/build/css/keditor.min.css'
 import keditor from 'keditor'
 // Import codeMirror
 import CodeMirror from 'codemirror'
 import 'codemirror/mode/htmlmixed/htmlmixed'
 import 'codemirror/lib/codemirror.css'
 
-keditor.create('sample', {
+keditor.create('document', {
     codeMirror: CodeMirror,
     // Set options
     // codeMirror: {
@@ -485,7 +485,7 @@ editor.getImagesInfo();
 editor.insertImage(FileList);
 
 // Inserts an HTML element or HTML string or plain string at the current cursor position
-editor.insertHTML('<img src="http://kothing.github.io/editor/sample/img/sunset.jpg">');
+editor.insertHTML('<img src="http://kothing.github.io/editor/document/img/sunset.jpg">');
 
 // Change the contents of the keditor
 editor.setContents('set contents');
@@ -576,24 +576,24 @@ editor.showInline = function (toolbar, context) {
 ```
 
 ## Examples
-<a id="defining-menu-items"></a> [Defining menu items](http://kothing.github.io/editor/sample/html/examples.html#setting)
+<a id="defining-menu-items"></a> [Defining menu items](http://kothing.github.io/editor/document/html/examples.html#setting)
 
-<a id="char-count-button-groups"></a> [Char count, Button groups](http://kothing.github.io/editor/sample/html/examples.html#groups)
+<a id="char-count-button-groups"></a> [Char count, Button groups](http://kothing.github.io/editor/document/html/examples.html#groups)
 
-<a id="iframe-fullpage-and-use-codemirror"></a> [Iframe, fullPage and use CodeMirror](http://kothing.github.io/editor/sample/html/examples.html#CodeMirror)
+<a id="iframe-fullpage-and-use-codemirror"></a> [Iframe, fullPage and use CodeMirror](http://kothing.github.io/editor/document/html/examples.html#CodeMirror)
 
-<a id="image-management"></a> [Image management](http://kothing.github.io/editor/sample/html/examples.html#image)
+<a id="image-management"></a> [Image management](http://kothing.github.io/editor/document/html/examples.html#image)
 
-<a id="user-functions"></a> [User Functions](http://kothing.github.io/editor/sample/html/examples.html#functions)
+<a id="user-functions"></a> [User Functions](http://kothing.github.io/editor/document/html/examples.html#functions)
 
 ## Options template
-[Options template](http://kothing.github.io/editor/sample/html/options.html)
+[Options template](http://kothing.github.io/editor/document/html/options.html)
 
 ## Custom plugins
-[Custom plugins](http://kothing.github.io/editor/sample/html/customPlugins.html)
+[Custom plugins](http://kothing.github.io/editor/document/html/customPlugins.html)
 
 ## Document
-[Document](http://kothing.github.io/editor/sample/html/document.html)
+[Document](http://kothing.github.io/editor/document/html/document.html)
     
 ## License
 KothingEditor may be freely distributed under the MIT license.

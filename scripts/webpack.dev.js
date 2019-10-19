@@ -8,15 +8,15 @@ const common = require('./webpack.common')
 
 module.exports = merge(common, {
 	mode: 'development',
-	entry: './test/dev/keditor_build_test',
+	entry: './demo/keditor_demo',
 	output: {
 		filename: 'keditor.[hash].js',
-		path: path.resolve(__dirname, 'dist')
+		path: path.resolve(__dirname, 'build')
 	},
 
 	devtool: 'cheap-module-eval-source-map',
 	devServer: {
-		contentBase: 'dist',
+		contentBase: 'build',
 		host: 'localhost',
 		port: 8080
 	},
@@ -27,7 +27,7 @@ module.exports = merge(common, {
 		}),
 		new webpack.NamedModulesPlugin(),
 		new HtmlWebpackPlugin({
-			template: './test/dev/keditor_build_test.html',
+			template: './demo/keditor_demo.html',
 			inject: true
 		}),
 	]

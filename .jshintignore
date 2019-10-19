@@ -1,6 +1,7 @@
 node_modules
 dist
-sample
+build
+document
 test
 karma.conf.js
 webpack.*.js
