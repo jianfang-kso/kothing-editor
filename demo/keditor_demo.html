@@ -114,32 +114,14 @@
 </head>
 
 <body>
-    <div style="position: relative;">
-        <textarea id="cmtest">Test</textarea>
-        <button type="button" onclick="ccm()">CodeMirror</button>
-        <script>
-            function ccm() {
-                console.log('cm', cm);
-                var ed = cm.fromTextArea(document.getElementById('cmtest'), {
-                    mode: 'htmlmixed',
-                    htmlMode: true,
-                    lineNumbers: true,
-                });
-                console.log(ed);
-            }
-        </script>
-    </div>
-
-    <hr/>
-    
-    <div style="position: relative;">
+    <div class="keditor-demo" style="position: relative;">
         <div style="max-width: 1080px; margin: 60px auto 0 auto; position: relative;">
             <h1>Editor1</h1>
             <textarea id="editor1" style="width: 1080px; height: 200px;">
                 <p><br></p>
                 <h3>The KothingEditor is based on pure JavaScript, with no dependencies.</h3>
                 <p>KothingEditor is a lightweight, flexible, customizable WYSIWYG text editor for your web applications.</p>
-                <div class="ke-component ke-image-container __se__float-right" contenteditable="false"><figure style="margin: auto;"><img src="http://kothing.github.io/kothing-editor/docs/cat1.jpg" data-align="right" alt="Sunset image" data-rotate="" data-proportion="false" data-rotatex="" data-rotatey="" origin-size="640,360" data-origin="640,360" style="transform: rotate(0deg); max-width: 100%;"><figcaption contenteditable="true" style="margin-top: 0px;"><p>Insert description</p></figcaption></figure></div>
+                <div class="ke-component ke-image-container __se__float-right" contenteditable="false"><figure style="margin: auto;"><img src="http://kothing.github.io/kothing-editor/img/g1.jpg" data-align="right" alt="Sunset image" data-rotate="" data-proportion="false" data-rotatex="" data-rotatey="" origin-size="640,360" data-origin="640,360" style="transform: rotate(0deg); max-width: 100%;"><figcaption contenteditable="true" style="margin-top: 0px;"><p>Insert description</p></figcaption></figure></div>
                 <pre><p>Supports Chrome, Safari, Opeera, Firefox, Edge, IE11, Mobile web browser.</p></pre>
                 <p>KothingEditor distributed under the <a href="https://github.com/kothing/kothing-Editor/blob/master/LICENSE.txt" target="_blank">MIT</a> license.</p>
                 <p><br></p>
@@ -159,7 +141,7 @@
             <button type="button" class="btn btn-md btn-success" onclick="ke_getContext()">getContext</button>
             <button type="button" class="btn btn-md btn-success" onclick="ke_getContents()">getContents</button>
             <button type="button" class="btn btn-md btn-success" onclick="ke_getImagesInfo()">getImagesInfo</button>
-            <button type="button" class="btn btn-md btn-success" onclick="ke_insertHTML('<img src=\'//kothing.github.io/editor/document/img/sunset.jpg\' style=\'width:115px; height:64px;\'>')">insertHTML</button>
+            <button type="button" class="btn btn-md btn-success" onclick="ke_insertHTML('<img src=\'//kothing.github.io/editor/img/beauty.jpg\' style=\'width:115px; height:64px;\'>')">insertHTML</button>
             <button type="button" class="btn btn-md btn-success" onclick="ke_setContents('set contents')">setContents</button>
             <button type="button" class="btn btn-md btn-success" onclick="ke_appendContents('append contents')">AppendContents</button>
             <button type="button" class="btn btn-md btn-success" onclick="ke_disabled()">Disabled</button>
@@ -174,9 +156,9 @@
             <!-- images-->
             <textarea id="editor3" style="width: 1080px; height: auto;">
                 <p>image test</p>
-                <div class="ke-component ke-image-container __se__float-none" contenteditable="false"><figure style="margin: 0px;"><img src="http://kothing.github.io/kothing-editor/docs/cat.jpg" data-align="none" alt="" data-rotate="" data-proportion="true" data-rotatex="" data-rotatey="" origin-size="752,500" data-origin="466,310" data-index="0" data-file-name="cat.jpg" data-file-size="25000" style="max-width: 100%; width: 100%; transform: rotate(0deg);"></figure></div>
+                <div class="ke-component ke-image-container __se__float-none" contenteditable="false"><figure style="margin: 0px;"><img src="http://kothing.github.io/kothing-editor/img/g1.jpg" data-align="none" alt="" data-rotate="" data-proportion="true" data-rotatex="" data-rotatey="" origin-size="752,500" data-origin="466,310" data-index="0" data-file-name="g1.jpg" data-file-size="25000" style="max-width: 100%; width: 100%; transform: rotate(0deg);"></figure></div>
                 <p><br></p>
-                <div class="ke-component ke-image-container __se__float-none" contenteditable="false"><figure style="margin: 0px;"><img src="http://kothing.github.io/kothing-editor/docs/cat1.jpg" data-align="none" alt="" data-rotate="" data-proportion="true" data-rotatex="" data-rotatey="" origin-size="727,485" data-origin="449,300" data-index="1" data-file-name="cat1.jpg" data-file-size="0" style="max-width: 100%; width: 100%; transform: rotate(0deg);"></figure></div>
+                <div class="ke-component ke-image-container __se__float-none" contenteditable="false"><figure style="margin: 0px;"><img src="http://kothing.github.io/kothing-editor/img/g2.jpg" data-align="none" alt="" data-rotate="" data-proportion="true" data-rotatex="" data-rotatey="" origin-size="727,485" data-origin="449,300" data-index="1" data-file-name="g2.jpg" data-file-size="0" style="max-width: 100%; width: 100%; transform: rotate(0deg);"></figure></div>
                 <p><br></p>
             </textarea>
             <div id="image_wrapper" class="image-list" style="display: none;">
@@ -214,6 +196,22 @@
             <br><br><br>
             <button type="button" class="btn btn-md btn-success" onclick="ke_create5()">Create in window</button>
             <br><br><br>
+        </div>
+        <hr/>
+        <div style="max-width: 1080px; margin: 60px auto 0 auto; position: relative;">
+            <textarea id="cmtest">Test</textarea>
+            <button type="button" onclick="ccm()">CodeMirror</button>
+            <script>
+                function ccm() {
+                    console.log('cm', cm);
+                    var ed = cm.fromTextArea(document.getElementById('cmtest'), {
+                        mode: 'htmlmixed',
+                        htmlMode: true,
+                        lineNumbers: true,
+                    });
+                    console.log(ed);
+                }
+            </script>
         </div>
     </div>
 </body>

@@ -485,7 +485,7 @@ editor.getImagesInfo();
 editor.insertImage(FileList);
 
 // Inserts an HTML element or HTML string or plain string at the current cursor position
-editor.insertHTML('<img src="http://kothing.github.io/editor/document/img/sunset.jpg">');
+editor.insertHTML('<img src="http://kothing.github.io/editor/img/beauty.jpg">');
 
 // Change the contents of the keditor
 editor.setContents('set contents');
