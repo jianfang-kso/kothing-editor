@@ -576,24 +576,24 @@ editor.showInline = function (toolbar, context) {
 ```
 
 ## Examples
-<a id="defining-menu-items"></a> [Defining menu items](http://kothing.github.io/editor/document/html/examples.html#setting)
+<a id="defining-menu-items"></a> [Defining menu items](http://kothing.github.io/editor/html/examples.html#setting)
 
-<a id="char-count-button-groups"></a> [Char count, Button groups](http://kothing.github.io/editor/document/html/examples.html#groups)
+<a id="char-count-button-groups"></a> [Char count, Button groups](http://kothing.github.io/editor/html/examples.html#groups)
 
 <a id="iframe-fullpage-and-use-codemirror"></a> [Iframe, fullPage and use CodeMirror](http://kothing.github.io/editor/document/html/examples.html#CodeMirror)
 
-<a id="image-management"></a> [Image management](http://kothing.github.io/editor/document/html/examples.html#image)
+<a id="image-management"></a> [Image management](https://kothing.github.io/editor/html/examples.html#image)
 
-<a id="user-functions"></a> [User Functions](http://kothing.github.io/editor/document/html/examples.html#functions)
+<a id="user-functions"></a> [User Functions](https://kothing.github.io/editor/html/examples.html#functions)
 
 ## Options template
-[Options template](http://kothing.github.io/editor/document/html/options.html)
+[Options template](https://kothing.github.io/editor/html/options.html)
 
 ## Custom plugins
-[Custom plugins](http://kothing.github.io/editor/document/html/customPlugins.html)
+[Custom plugins](https://kothing.github.io/editor/html/customPlugins.html)
 
 ## Document
-[Document](http://kothing.github.io/editor/document/html/document.html)
+[Document](https://kothing.github.io/editor/html/document.html)
     
 ## License
 KothingEditor may be freely distributed under the MIT license.
