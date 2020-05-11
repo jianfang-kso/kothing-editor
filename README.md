@@ -84,7 +84,7 @@ const keditor = KEDITOR.create((document.getElementById('document') || 'document
     // All of the plugins are loaded in the "window.KEDITOR" object in build/keditor.min.js file
     // Insert options
     // Language global object (default: en)
-    lang: KEDITOR_LANG['ko']
+    lang: KEDITOR_LANG['zh_cn']
 });
 ```
 
@@ -122,7 +122,7 @@ keditor.create('document', {
         ['horizontalRule'],
         ['link', 'image']
     ],
-    lang: lang.ko
+    lang: lang.zh_cn
 });
 ```
 
@@ -263,7 +263,7 @@ keditor.create('document', {
 ```
 
 ## Options
-```java
+```javascript
 plugins: [
     font,
     fontSize,
