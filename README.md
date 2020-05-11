@@ -576,11 +576,11 @@ editor.showInline = function (toolbar, context) {
 ```
 
 ## Examples
-<a id="defining-menu-items"></a> [Defining menu items](http://kothing.github.io/editor/html/examples.html#setting)
+<a id="defining-menu-items"></a> [Defining menu items](https://kothing.github.io/editor/html/examples.html#setting)
 
-<a id="char-count-button-groups"></a> [Char count, Button groups](http://kothing.github.io/editor/html/examples.html#groups)
+<a id="char-count-button-groups"></a> [Char count, Button groups](https://kothing.github.io/editor/html/examples.html#groups)
 
-<a id="iframe-fullpage-and-use-codemirror"></a> [Iframe, fullPage and use CodeMirror](http://kothing.github.io/editor/document/html/examples.html#CodeMirror)
+<a id="iframe-fullpage-and-use-codemirror"></a> [Iframe, fullPage and use CodeMirror](https://kothing.github.io/editor/html/examples.html#CodeMirror)
 
 <a id="image-management"></a> [Image management](https://kothing.github.io/editor/html/examples.html#image)
 
