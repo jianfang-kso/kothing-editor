@@ -836,7 +836,7 @@ const util = {
         }
 
         cleanHTML = cleanHTML
-            .replace(/<([a-zA-Z]+\:[a-zA-Z]+|script|style).*>(\n|.)*<\/([a-zA-Z]+\:[a-zA-Z]+|script|style)>/g, '')
+            .replace(/<([a-zA-Z]+\:[a-zA-Z]+|script|style).>(\n|.)<\/([a-zA-Z]+\:[a-zA-Z]+|script|style)>/g, '')
             .replace(/(<[a-zA-Z0-9]+)[^>]*(?=>)/g, function (m, t) {
                 const v = m.match(/((?:colspan|rowspan|target|href|src|class|data-file-size|data-file-name|data-origin|origin-size|data-format)\s*=\s*"[^"]*")/ig);
                 if (v) {
