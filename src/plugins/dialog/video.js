@@ -1,5 +1,5 @@
 /*
- * keditor.js
+ * kothing-editor.js
  * Copyright Kothing
  * MIT license.
  */
@@ -105,10 +105,10 @@ export default {
             '   </div>' +
             '   <div class="ke-dialog-footer">' +
             '       <div class="footer-div">' +
-            '           <label><input type="radio" name="keditor_video_radio" class="ke-dialog-btn-radio" value="none" checked>' + lang.dialogBox.basic + '</label>' +
-            '           <label><input type="radio" name="keditor_video_radio" class="ke-dialog-btn-radio" value="left">' + lang.dialogBox.left + '</label>' +
-            '           <label><input type="radio" name="keditor_video_radio" class="ke-dialog-btn-radio" value="center">' + lang.dialogBox.center + '</label>' +
-            '           <label><input type="radio" name="keditor_video_radio" class="ke-dialog-btn-radio" value="right">' + lang.dialogBox.right + '</label>' +
+            '           <label><input type="radio" name="kothing-editor_video_radio" class="ke-dialog-btn-radio" value="none" checked>' + lang.dialogBox.basic + '</label>' +
+            '           <label><input type="radio" name="kothing-editor_video_radio" class="ke-dialog-btn-radio" value="left">' + lang.dialogBox.left + '</label>' +
+            '           <label><input type="radio" name="kothing-editor_video_radio" class="ke-dialog-btn-radio" value="center">' + lang.dialogBox.center + '</label>' +
+            '           <label><input type="radio" name="kothing-editor_video_radio" class="ke-dialog-btn-radio" value="right">' + lang.dialogBox.right + '</label>' +
             '       </div>' +
             '       <button type="button" data-command="close" class="ke-btn-cancel" aria-label="Close" title="' + lang.dialogBox.close + '"><span data-command="close">' + lang.dialogBox.close + '</span></button>' +
             '       <button type="submit" class="ke-btn-primary" title="' + lang.dialogBox.submitButton + '"><span>' + lang.dialogBox.submitButton + '</span></button>' +
@@ -140,7 +140,7 @@ export default {
         let cover = null;
         let container = null;
         let url = contextVideo.focusElement.value.trim();
-        contextVideo._align = contextVideo.modal.querySelector('input[name="keditor_video_radio"]:checked').value;
+        contextVideo._align = contextVideo.modal.querySelector('input[name="kothing-editor_video_radio"]:checked').value;
 
         /** iframe source */
         if (/^<iframe.*\/iframe>$/.test(url)) {
@@ -341,7 +341,7 @@ export default {
         contextVideo.videoWidth.value = contextVideo._element.offsetWidth;
         contextVideo.videoHeight.value = contextVideo._element.offsetHeight;
         contextVideo._captionChecked = contextVideo.captionCheckEl.checked = !!contextVideo._caption;
-        contextVideo.modal.querySelector('input[name="keditor_video_radio"][value="' + contextVideo._align + '"]').checked = true;
+        contextVideo.modal.querySelector('input[name="kothing-editor_video_radio"][value="' + contextVideo._align + '"]').checked = true;
 
         if (contextVideo._resizing) {
             contextVideo.proportion.checked = contextVideo._proportionChecked = contextVideo._element.getAttribute('data-proportion') !== 'false';
@@ -443,7 +443,7 @@ export default {
         contextVideo._origin_w = this.context.option.videoWidth;
         contextVideo._origin_h = this.context.option.videoHeight;
 
-        contextVideo.modal.querySelector('input[name="keditor_video_radio"][value="none"]').checked = true;
+        contextVideo.modal.querySelector('input[name="kothing-editor_video_radio"][value="none"]').checked = true;
         
         if (contextVideo._resizing) {
             contextVideo.videoWidth.value = this.context.option.videoWidth;

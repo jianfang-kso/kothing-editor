@@ -1,9 +1,9 @@
 'use strict';
 
-import '../src/assets/css/keditor.css';
-import '../src/assets/css/keditor-contents.css';
+import '../src/assets/css/kothing-editor.css';
+import '../src/assets/css/kothing-editor-contents.css';
 
-import keditor from '../src/keditor';
+import KothingEditor from '../src/kothing-editor';
 import plugins from '../src/plugins';
 import { zh_cn } from '../src/lang';
 
@@ -17,23 +17,29 @@ window.cm = CodeMirror
 
 //Editor1;
 /* ================================================================= */
-let s1 = keditor.create(document.getElementById('editor1'), {
-    plugins: plugins,
-    buttonList: [
-        [
-        'formatBlock', 'fontColor', 'fontSize',
-        'bold', 'underline', 'italic', 'strike',
-        'removeFormat', 'table',
-        'link',
-        ]
+let s1 = KothingEditor.create(document.getElementById("editor1"), {
+  plugins: plugins,
+  buttonList: [
+    [
+      "formatBlock",
+      "fontColor",
+      "fontSize",
+      "bold",
+      "underline",
+      "italic",
+      "strike",
+      "removeFormat",
+      "table",
+      "link",
     ],
-    height: 'auto',
-    width: '1080px',
-    mode: 'classic',
-    stickyToolbar: true,
-    videoResizing: false,
-    imageWidth: 150,
-    // fullPage: true,
+  ],
+  height: "auto",
+  width: "1080px",
+  mode: "classic",
+  stickyToolbar: true,
+  videoResizing: false,
+  imageWidth: 150,
+  // fullPage: true,
 });
 
 window.ke_destroy1 = function () {
@@ -41,41 +47,62 @@ window.ke_destroy1 = function () {
 }
 
 window.ke_create1 = function () {
-    s1 = keditor.create('editor', {
-    });
+    s1 = KothingEditor.create("editor", {});
 }
 
 
 
 // Editor2
 /* ================================================================= */
-let s2 = keditor.create(document.getElementById('editor2'), {
-    plugins: plugins,
-    buttonList: [
-        ['undo', 'redo','removeFormat',
-        'font', 'fontSize', 'formatBlock',
-        'bold', 'underline', 'italic', 'strike', 'subscript', 'superscript',
-        'fontColor', 'hiliteColor',
-        'outdent', 'indent',
-        'align', 'horizontalRule', 'list', 'table',
-        'link', 'image', 'video',
-        'fullScreen', 'showBlocks', 'codeView',
-        'preview', 'print', 'save']
+let s2 = KothingEditor.create(document.getElementById("editor2"), {
+  plugins: plugins,
+  buttonList: [
+    [
+      "undo",
+      "redo",
+      "removeFormat",
+      "font",
+      "fontSize",
+      "formatBlock",
+      "bold",
+      "underline",
+      "italic",
+      "strike",
+      "subscript",
+      "superscript",
+      "fontColor",
+      "hiliteColor",
+      "outdent",
+      "indent",
+      "align",
+      "horizontalRule",
+      "list",
+      "table",
+      "link",
+      "image",
+      "video",
+      "fullScreen",
+      "showBlocks",
+      "codeView",
+      "preview",
+      "print",
+      "save",
     ],
-    width: '100%',
-    imageWidth: 300,
-    mode: 'classic', //'balloon',
-    // toolbarWidth: 800,
-    height: 'auto',
-    // fullPage: true,
-    iframeCSSFileName: 'keditor',
-    // iframe: true,
-    // callBackSave: (contents) => {
-    //     console.log('callback')
-    // }
-    codeMirror: {
-        src: CodeMirror,
-    }
+  ],
+  width: "100%",
+  imageWidth: 300,
+  mode: "classic", //'balloon',
+  // toolbarWidth: 800,
+  height: "auto",
+  // fullPage: true,
+  iframeCSSFileName: "kothing-editor",
+  // iframe: true,
+  // callBackSave: (contents) => {
+  //     console.log('callback')
+  // }
+  codeMirror: {
+    src: CodeMirror,
+  },
 });
 
 s2.onScroll = function (e) {
@@ -164,25 +191,25 @@ window.ke_destroy = function () {
 }
 
 window.ke_create = function () {
-    s2 = keditor.create('editor2', {
-        height: 148
+    s2 = KothingEditor.create("editor2", {
+      height: 148,
     });
 }
 
 
 //////////////////////////////////////////////////////////////////////
-const editor = keditor.init({
-    plugins: [
-        plugins.hiliteColor,
-        plugins.align,
-        plugins.horizontalRule,
-        plugins.list,
-        plugins.table,
-        plugins.link,
-        custom_plugin_submenu
-    ],
-    width: '100%',
-    // iframe: true,
+const editor = KothingEditor.init({
+  plugins: [
+    plugins.hiliteColor,
+    plugins.align,
+    plugins.horizontalRule,
+    plugins.list,
+    plugins.table,
+    plugins.link,
+    custom_plugin_submenu,
+  ],
+  width: "100%",
+  // iframe: true,
 });
 /////////////////////////////////////////////////////////////////////
 
@@ -412,7 +439,7 @@ window.ke_destroy2 = function () {
 }
 
 window.ke_create3 = function () {
-    s3 = keditor.create('editor3', {});
+    s3 = KothingEditor.create("editor3", {});
 }
 
 
@@ -461,8 +488,7 @@ window.ke_destroy4 = function () {
 }
 
 window.ke_create4 = function () {
-    s4 = keditor.create(document.getElementsByName('editor4')[0], {
-    });
+    s4 = KothingEditor.create(document.getElementsByName("editor4")[0], {});
 }
 
 
@@ -474,26 +500,48 @@ window.ke_create5 = function() {
         win.document.write(linkNode.outerHTML);
     })
     win.document.write('<textarea name="editor5" id="editor5" style="width: 1080px; height: 200px;"></textarea>');
-    s5 = keditor.create(win.document.querySelector('#editor4'), {
-        plugins: plugins,
-        buttonList: [
-            ['undo', 'redo','removeFormat',
-            'font', 'fontSize', 'formatBlock',
-            'bold', 'underline', 'italic', 'strike', 'subscript', 'superscript',
-            'fontColor', 'hiliteColor',
-            'outdent', 'indent',
-            'align', 'horizontalRule', 'list', 'table',
-            'link', 'image', 'video',
-            'fullScreen', 'showBlocks', 'codeView',
-            'preview', 'print', 'save']
+    s5 = KothingEditor.create(win.document.querySelector("#editor4"), {
+      plugins: plugins,
+      buttonList: [
+        [
+          "undo",
+          "redo",
+          "removeFormat",
+          "font",
+          "fontSize",
+          "formatBlock",
+          "bold",
+          "underline",
+          "italic",
+          "strike",
+          "subscript",
+          "superscript",
+          "fontColor",
+          "hiliteColor",
+          "outdent",
+          "indent",
+          "align",
+          "horizontalRule",
+          "list",
+          "table",
+          "link",
+          "image",
+          "video",
+          "fullScreen",
+          "showBlocks",
+          "codeView",
+          "preview",
+          "print",
+          "save",
         ],
-        width: '100%',
-        imageWidth: 300,
-        mode: 'classic',
-        // toolbarWidth: 800,
-        height: 'auto',
-        // callBackSave: (contents) => {
-        //     console.log('callback')
-        // }
+      ],
+      width: "100%",
+      imageWidth: 300,
+      mode: "classic",
+      // toolbarWidth: 800,
+      height: "auto",
+      // callBackSave: (contents) => {
+      //     console.log('callback')
+      // }
     });
 }

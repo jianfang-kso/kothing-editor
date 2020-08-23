@@ -8,9 +8,9 @@ const common = require('./webpack.common')
 
 module.exports = merge(common, {
 	mode: 'development',
-	entry: './demo/keditor_demo',
+	entry: './demo/kothing-editor_demo',
 	output: {
-		filename: 'keditor.[hash].js',
+		filename: 'kothing-editor.[hash].js',
 		path: path.resolve(__dirname, 'build')
 	},
 
@@ -23,11 +23,11 @@ module.exports = merge(common, {
 
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: 'css/keditor.[hash].css'
+			filename: 'css/kothing-editor.[hash].css'
 		}),
 		new webpack.NamedModulesPlugin(),
 		new HtmlWebpackPlugin({
-			template: './demo/keditor_demo.html',
+			template: './demo/kothing-editor_demo.html',
 			inject: true
 		}),
 	]

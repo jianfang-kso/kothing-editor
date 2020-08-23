@@ -2,7 +2,7 @@
   "name": "KothingEditor",
   "version": "1.0.0",
   "description": "Pure JavaScript based WYSIWYG web editor",
-  "main": "src/keditor.js",
+  "main": "src/kothing-editor.js",
   "keywords": [
     "wysiwyg",
     "editor",

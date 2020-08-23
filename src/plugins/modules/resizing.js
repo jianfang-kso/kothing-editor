@@ -1,5 +1,5 @@
 /*
- * keditor.js
+ * kothing-editor.js
  * Copyright Kothing
  * MIT license.
  */
@@ -135,7 +135,7 @@ export default {
             '       <i class="ke-icon-align-justify"></i>' +
             '       <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.toolbar.align + '</span></span>' +
             '   </button>' +
-            '   <div class="ke-btn-group-sub keditor-common ke-list-layer ke-resizing-align-list">' +
+            '   <div class="ke-btn-group-sub kothing-editor-common ke-list-layer ke-resizing-align-list">' +
             '       <div class="ke-list-inner">' +
             '           <ul class="ke-list-basic">' +
             '               <li><button type="button" class="ke-btn-list ke-tooltip" data-command="align" data-value="basic">' +

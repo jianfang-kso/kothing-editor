@@ -1,5 +1,5 @@
 /*
- * keditor.js
+ * kothing-editor.js
  * Copyright Kothing
  * MIT license.
  */
@@ -158,7 +158,7 @@ export default {
             '           <i class="ke-icon-split-cell"></i>' +
             '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.splitCells + '</span></span>' +
             '       </button>' +
-            '       <div class="ke-btn-group-sub keditor-common ke-list-layer">' +
+            '       <div class="ke-btn-group-sub kothing-editor-common ke-list-layer">' +
             '           <div class="ke-list-inner">' +
             '               <ul class="ke-list-basic">' +
             '                   <li class="ke-btn-list" data-command="split" data-value="vertical" style="line-height:32px;" title="' + lang.controller.VerticalSplit + '">' + 

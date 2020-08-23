@@ -11,7 +11,7 @@ module.exports = merge(common, {
 	mode: 'production',
 	entry: './src/index',
 	output: {
-		filename: 'keditor.min.js',
+		filename: 'kothing-editor.min.js',
 		path: path.resolve(__dirname, '../build')
 	},
 
@@ -21,7 +21,7 @@ module.exports = merge(common, {
 		new CleanWebpackPlugin(['../build'], { root: __dirname, allowExternal: true }),
 		new OptimizeCSSPlugin(),
 		new MiniCssExtractPlugin({
-			filename: 'css/keditor.min.css'
+			filename: 'css/kothing-editor.min.css'
 		})
 	]
 });

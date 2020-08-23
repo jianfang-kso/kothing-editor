@@ -1,11 +1,11 @@
 {
-  "name": "kothingeditor",
+  "name": "kothing-editor",
   "sideEffects": [
     "./src/assets/css/*.css"
   ],
   "version": "1.0.0",
   "description": "Pure JavaScript rich text editor web editor",
-  "main": "src/keditor.js",
+  "main": "src/kothing-editor.js",
   "keywords": [
     "wysiwyg",
     "editor",
@@ -22,12 +22,12 @@
   "author": "Koting",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kothing/kothing-Editor/issues"
+    "url": "https://github.com/kothing/kothing-editor/issues"
   },
   "homepage": "http://kothing.github.io/editor",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kothing/kothing-Editor.git"
+    "url": "https://github.com/kothing/kothing-editor.git"
   },
   "ignore": [
     "**/.*",

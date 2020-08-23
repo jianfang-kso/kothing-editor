@@ -1,5 +1,5 @@
 /*
- * keditor.js
+ * kothing-editor.js
  * Copyright Kothing
  * MIT license.
  */

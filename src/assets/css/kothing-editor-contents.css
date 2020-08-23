@@ -5,8 +5,8 @@
 /* blue color #c7deff , #80bdff , #3f9dff , #4592ff */
 /* red color #b94a48 , #f2dede , #eed3d7 */
 
-/* keditor contents */
-.keditor-editable {
+/* kothing-editor contents */
+.kothing-editor-editable {
     font-family: Helvetica Neue, sans-serif;
     font-size: 13px;
     line-height: 1.5;
@@ -19,7 +19,7 @@
     margin: 0;
 }
 
-.keditor-editable * {
+.kothing-editor-editable * {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
@@ -30,13 +30,13 @@
 }
 
 /** controllers on tag */
-.keditor-editable td, .keditor-editable th, 
-.keditor-editable figure, .keditor-editable figcaption, .keditor-editable img, 
-.keditor-editable iframe, .keditor-editable video, .keditor-editable audio {
+.kothing-editor-editable td, .kothing-editor-editable th, 
+.kothing-editor-editable figure, .kothing-editor-editable figcaption, .kothing-editor-editable img, 
+.kothing-editor-editable iframe, .kothing-editor-editable video, .kothing-editor-editable audio {
     position: relative;
 }
 
-.keditor-editable img, .keditor-editable iframe, .keditor-editable video, .keditor-editable audio {
+.kothing-editor-editable img, .kothing-editor-editable iframe, .kothing-editor-editable video, .kothing-editor-editable audio {
     display: block;
     margin: 0;
     padding: 0;
@@ -44,21 +44,21 @@
 }
 
 /* float */
-.keditor-editable .__se__float-left {
+.kothing-editor-editable .__se__float-left {
     float: left;
 }
-.keditor-editable .__se__float-right {
+.kothing-editor-editable .__se__float-right {
     float: right;
 }
-.keditor-editable .__se__float-center {
+.kothing-editor-editable .__se__float-center {
     float: center;
 }
-.keditor-editable .__se__float-none {
+.kothing-editor-editable .__se__float-none {
     float: none;
 }
 
 /* span */
-.keditor-editable span {
+.kothing-editor-editable span {
     display: inline;
     vertical-align: baseline;
     margin: 0;
@@ -66,18 +66,18 @@
 }
 
 /* a */
-.keditor-editable a {
+.kothing-editor-editable a {
     color: #0098f7;
     text-decoration: none;
 }
-.keditor-editable a:hover, .keditor-editable a:focus {
+.kothing-editor-editable a:hover, .kothing-editor-editable a:focus {
     cursor: pointer;
     color: #0093ff;
     text-decoration: underline;
 }
 
 /* pre */
-.keditor-editable pre {
+.kothing-editor-editable pre {
     display: block;
     padding: 8px;
     margin: 0 0 10px;
@@ -90,7 +90,7 @@
 }
 
 /* ol, ul */
-.keditor-editable ol {
+.kothing-editor-editable ol {
     display: block;
     list-style-type: decimal;
     margin-block-start: 1em;
@@ -99,7 +99,7 @@
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 }
-.keditor-editable ul {
+.kothing-editor-editable ul {
     display: block;
     list-style-type: disc;
     margin-block-start: 1em;
@@ -108,40 +108,40 @@
     margin-inline-end: 0px;
     padding-inline-start: 40px;
 }
-.keditor-editable li {
+.kothing-editor-editable li {
     display: list-item;
     text-align: -webkit-match-parent;
     margin-bottom: 5px;
 }
 
 /* sub, sup */
-.keditor-editable sub, .keditor-editable sup {
+.kothing-editor-editable sub, .kothing-editor-editable sup {
     font-size: 75%;
     line-height: 0;
 }
-.keditor-editable sub {
+.kothing-editor-editable sub {
     vertical-align: sub;
 }
-.keditor-editable sup {
+.kothing-editor-editable sup {
     vertical-align: super;
 }
 
 /** format style */
 /* p */
-.keditor-editable p {
+.kothing-editor-editable p {
     display: block;
     margin: 0 0 10px;
 }
 
 /* div */
-.keditor-editable div {
+.kothing-editor-editable div {
     display: block;
     margin: 0;
     padding: 0;
 }
 
 /* blockquote */
-.keditor-editable blockquote {
+.kothing-editor-editable blockquote {
     display: block;
     color: #999;
     margin-block-start: 1em;
@@ -156,21 +156,21 @@
     padding-right: 5px;
     border-left-width: 5px;
 }
-.keditor-editable blockquote {
+.kothing-editor-editable blockquote {
     border-color: #b1b1b1;
 }
-.keditor-editable blockquote blockquote {
+.kothing-editor-editable blockquote blockquote {
     border-color: #c1c1c1;
 }
-.keditor-editable blockquote blockquote blockquote {
+.kothing-editor-editable blockquote blockquote blockquote {
     border-color: #d1d1d1;
 }
-.keditor-editable blockquote blockquote blockquote blockquote {
+.kothing-editor-editable blockquote blockquote blockquote blockquote {
     border-color: #e1e1e1;
 }
 
 /* h1 */
-.keditor-editable h1 {
+.kothing-editor-editable h1 {
     display: block;
     font-size: 2em;
     margin-block-start: 0.67em;
@@ -180,7 +180,7 @@
     font-weight: bold;
 }
 /* h2 */
-.keditor-editable h2 {
+.kothing-editor-editable h2 {
     display: block;
     font-size: 1.5em;
     margin-block-start: 0.83em;
@@ -190,7 +190,7 @@
     font-weight: bold;
 }
 /* h3 */
-.keditor-editable h3 {
+.kothing-editor-editable h3 {
     display: block;
     font-size: 1.17em;
     margin-block-start: 1em;
@@ -200,7 +200,7 @@
     font-weight: bold;
 }
 /* h4 */
-.keditor-editable h4 {
+.kothing-editor-editable h4 {
     display: block;
     font-size: 1em;
     margin-block-start: 1.33em;
@@ -210,7 +210,7 @@
     font-weight: bold;
 }
 /* h5 */
-.keditor-editable h5 {
+.kothing-editor-editable h5 {
     display: block;
     font-size: 0.83em;
     margin-block-start: 1.67em;
@@ -220,7 +220,7 @@
     font-weight: bold;
 }
 /* h6 */
-.keditor-editable h6 {
+.kothing-editor-editable h6 {
     display: block;
     font-size: 0.67em;
     margin-block-start: 2.33em;
@@ -231,25 +231,25 @@
 }
 
 /* hr */
-.keditor-editable hr {
+.kothing-editor-editable hr {
     display: block;
     border-width: 1px 0 0;
     border-color: black;
     border-image: initial;
     height: 1px;
 }
-.keditor-editable hr.__se__solid {
+.kothing-editor-editable hr.__se__solid {
     border-style: solid none none;
 }
-.keditor-editable hr.__se__dotted {
+.kothing-editor-editable hr.__se__dotted {
     border-style: dotted none none;
 }
-.keditor-editable hr.__se__dashed {
+.kothing-editor-editable hr.__se__dashed {
     border-style: dashed none none;
 }
 
 /* table */
-.keditor-editable table {
+.kothing-editor-editable table {
     display: table;
     table-layout: auto;
     border: 1px solid rgb(204, 204, 204);
@@ -260,28 +260,28 @@
     border-spacing: 0;
     border-collapse: collapse;
 }
-.keditor-editable table thead {
+.kothing-editor-editable table thead {
     border-bottom: 2px solid #333;
 }
-.keditor-editable table tr {
+.kothing-editor-editable table tr {
     border: 1px solid #efefef;
 }
-.keditor-editable table th {
+.kothing-editor-editable table th {
     background-color: #f3f3f3;
 }
-.keditor-editable table th, .keditor-editable table td {
+.kothing-editor-editable table th, .kothing-editor-editable table td {
     border: 1px solid #e1e1e1;
     padding:0.4em;
     background-clip: padding-box;
 }
 
 /** component (image, iframe video) */
-.keditor-editable .ke-component {
+.kothing-editor-editable .ke-component {
     display: flex;
     padding: 1px;
     margin: 0 0 10px;
 }
-.keditor-editable[contenteditable=true] .ke-component {
+.kothing-editor-editable[contenteditable=true] .ke-component {
     outline: 1px dashed #e1e1e1;
     user-select: none;
     -o-user-select: none;
@@ -292,31 +292,31 @@
 }
 
 /** image, video iframe figure cover */
-.keditor-editable figure {
+.kothing-editor-editable figure {
     display: block;
     outline: none;
     margin: 0;
     padding: 0;
 }
-.keditor-editable figure figcaption {
+.kothing-editor-editable figure figcaption {
     padding: 1em .5em;
     margin: 0;
     background-color: #f9f9f9;
     outline: none;
 }
-.keditor-editable figure figcaption p{
+.kothing-editor-editable figure figcaption p{
     line-height: 2;
     margin: 0;
 }
 
 /* image */
-.keditor-editable .ke-image-container a img {
+.kothing-editor-editable .ke-image-container a img {
     padding: 1px;
     margin: 1px;
     outline: 1px solid #4592ff;
 }
 
 /** video iframe tags */
-.keditor-editable .ke-video-container iframe {
+.kothing-editor-editable .ke-video-container iframe {
     outline: 1px solid #9e9e9e;
 }

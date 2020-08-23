@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-import './assets/css/keditor.css';
-import './assets/css/keditor-contents.css';
+import "./assets/css/kothing-editor.css";
+import "./assets/css/kothing-editor-contents.css";
 
-import plugins from './plugins';
-import keditor from './keditor';
+import plugins from "./plugins";
+import KothingEditor from "./kothing-editor";
 
-window.KEDITOR = keditor.init({
-    plugins: plugins
+window.KothingEditor = KothingEditor.init({
+  plugins: plugins,
 });

@@ -1,5 +1,5 @@
 /*
- * keditor.js
+ * kothing-editor.js
  * Copyright Kothing
  * MIT license.
  */
@@ -13,7 +13,7 @@ export default {
 
         /** dialog */
         let dialog_div = core.util.createElement('DIV');
-        dialog_div.className = 'ke-dialog keditor-common';
+        dialog_div.className = 'ke-dialog kothing-editor-common';
 
         let dialog_back = core.util.createElement('DIV');
         dialog_back.className = 'ke-dialog-back';
