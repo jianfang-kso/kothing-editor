@@ -504,172 +504,181 @@
     <script src="../../src/lang/en.js"></script>
     <script src="../../src/lang/zh_cn.js"></script>
     <script>
-      var optionDisplay = document.getElementById("option_display");
-      var langSelect = document.getElementById("language");
-      var modeSelect = document.getElementById("mode");
+      var optionDisplay = document.getElementById('option_display')
+      var langSelect = document.getElementById('language')
+      var modeSelect = document.getElementById('mode')
 
       function ke_create() {
         if (editorImageSample && editorImageSample.destroy)
-          editorImageSample.destroy();
+          editorImageSample.destroy()
 
-        imageTable.innerHTML = "";
+        imageTable.innerHTML = ''
 
         var options = {
           mode: modeSelect.options[modeSelect.selectedIndex].value,
-          toolbarWidth: document.getElementById("toolbarWidth").checked
-            ? document.getElementById("toolbarWidth_value").value
+          toolbarWidth: document.getElementById('toolbarWidth').checked
+            ? document.getElementById('toolbarWidth_value').value
             : false,
-          stickyToolbar: document.getElementById("stickyToolbar").checked
-            ? document.getElementById("stickyToolbar_value").value
+          stickyToolbar: document.getElementById('stickyToolbar').checked
+            ? document.getElementById('stickyToolbar_value').value
             : false,
-          iframe: document.getElementById("iframe").checked,
-          fullPage: document.getElementById("fullPage").checked,
-          iframeCSSFileName: document.getElementById("iframeCSSFileName")
+          iframe: document.getElementById('iframe').checked,
+          fullPage: document.getElementById('fullPage').checked,
+          iframeCSSFileName: document.getElementById('iframeCSSFileName')
             .checked
-            ? document.getElementById("iframeCSSFileName_value").value
+            ? document.getElementById('iframeCSSFileName_value').value
             : false,
-          codeMirror: document.getElementById("codeMirror").checked
+          codeMirror: document.getElementById('codeMirror').checked
             ? CodeMirror
             : null,
-          position: document.getElementById("position").checked
-            ? document.getElementById("position_value").value
+          position: document.getElementById('position').checked
+            ? document.getElementById('position_value').value
             : null,
-          popupDisplay: document.getElementById("popupDisplay").checked
-            ? document.getElementById("popupDisplay_value").value
+          popupDisplay: document.getElementById('popupDisplay').checked
+            ? document.getElementById('popupDisplay_value').value
             : null,
-          resizingBar: document.getElementById("resizingBar").checked,
-          showPathLabel: document.getElementById("showPathLabel").checked,
-          charCounter: document.getElementById("charCounter").checked,
-          maxCharCount: document.getElementById("maxCharCount").checked
-            ? document.getElementById("maxCharCount_value").value
+          resizingBar: document.getElementById('resizingBar').checked,
+          showPathLabel: document.getElementById('showPathLabel').checked,
+          charCounter: document.getElementById('charCounter').checked,
+          maxCharCount: document.getElementById('maxCharCount').checked
+            ? document.getElementById('maxCharCount_value').value
             : null,
-          display: document.getElementById("display").checked
-            ? document.getElementById("display_value").value
+          display: document.getElementById('display').checked
+            ? document.getElementById('display_value').value
             : null,
-          width: document.getElementById("width").checked
-            ? document.getElementById("width_value").value
+          width: document.getElementById('width').checked
+            ? document.getElementById('width_value').value
             : null,
-          minWidth: document.getElementById("minWidth").checked
-            ? document.getElementById("minWidth_value").value
+          minWidth: document.getElementById('minWidth').checked
+            ? document.getElementById('minWidth_value').value
             : null,
-          maxWidth: document.getElementById("maxWidth").checked
-            ? document.getElementById("maxWidth_value").value
+          maxWidth: document.getElementById('maxWidth').checked
+            ? document.getElementById('maxWidth_value').value
             : null,
-          height: document.getElementById("height").checked
-            ? document.getElementById("height_value").value
+          height: document.getElementById('height').checked
+            ? document.getElementById('height_value').value
             : null,
-          minHeight: document.getElementById("minHeight").checked
-            ? document.getElementById("minHeight_value").value
+          minHeight: document.getElementById('minHeight').checked
+            ? document.getElementById('minHeight_value').value
             : null,
-          maxHeight: document.getElementById("maxHeight").checked
-            ? document.getElementById("maxHeight_value").value
+          maxHeight: document.getElementById('maxHeight').checked
+            ? document.getElementById('maxHeight_value').value
             : null,
-          font: !document.getElementById("font").checked
+          font: !document.getElementById('font').checked
             ? null
-            : ["Arial", "tahoma", "Courier New,Courier"],
-          fontSize: !document.getElementById("fontSize").checked
+            : ['Arial', 'tahoma', 'Courier New,Courier'],
+          fontSize: !document.getElementById('fontSize').checked
             ? null
             : [8, 10, 14, 18, 24, 36],
-          formats: !document.getElementById("formats").checked
+          formats: !document.getElementById('formats').checked
             ? null
-            : ["p", "blockquote", "h1", "h2", "h3"],
-          colorList: !document.getElementById("colorList").checked
+            : ['p', 'blockquote', 'h1', 'h2', 'h3'],
+          colorList: !document.getElementById('colorList').checked
             ? null
             : [
-                ["#ff0000", "#ff5e00", "#ffe400", "#abf200"],
-                ["#00d8ff", "#0055ff", "#6600ff", "#ff00dd"],
+                ['#ff0000', '#ff5e00', '#ffe400', '#abf200'],
+                ['#00d8ff', '#0055ff', '#6600ff', '#ff00dd'],
               ],
-          imageResizing: document.getElementById("imageResizing").checked,
-          imageFileInput: document.getElementById("imageFileInput").checked,
-          imageUrlInput: document.getElementById("imageUrlInput").checked,
-          imageWidth: document.getElementById("imageWidth").checked
-            ? document.getElementById("imageWidth_value").value
+          imageResizing: document.getElementById('imageResizing').checked,
+          imageFileInput: document.getElementById('imageFileInput').checked,
+          imageUrlInput: document.getElementById('imageUrlInput').checked,
+          imageWidth: document.getElementById('imageWidth').checked
+            ? document.getElementById('imageWidth_value').value
             : null,
-          imageUploadHeader: document.getElementById("imageUploadHeader")
+          imageUploadHeader: document.getElementById('imageUploadHeader')
             .checked
             ? JSON.parse(
-                document.getElementById("imageUploadHeader_value").value
+                document.getElementById('imageUploadHeader_value').value
               )
             : null,
-          imageUploadUrl: document.getElementById("imageUploadUrl").checked
-            ? document.getElementById("imageUploadUrl_value").value
+          imageUploadUrl: document.getElementById('imageUploadUrl').checked
+            ? document.getElementById('imageUploadUrl_value').value
             : null,
-          imageUploadSizeLimit: document.getElementById("imageUploadSizeLimit")
+          imageUploadSizeLimit: document.getElementById('imageUploadSizeLimit')
             .checked
-            ? document.getElementById("imageUploadSizeLimit_value").value
+            ? document.getElementById('imageUploadSizeLimit_value').value
             : null,
-          videoResizing: document.getElementById("videoResizing").checked,
-          videoWidth: document.getElementById("videoWidth").checked
-            ? document.getElementById("videoWidth_value").value
+          videoResizing: document.getElementById('videoResizing').checked,
+          videoWidth: document.getElementById('videoWidth').checked
+            ? document.getElementById('videoWidth_value').value
             : null,
-          videoHeight: document.getElementById("videoHeight").checked
-            ? document.getElementById("videoHeight_value").value
+          videoHeight: document.getElementById('videoHeight').checked
+            ? document.getElementById('videoHeight_value').value
             : null,
-          youtubeQuery: document.getElementById("youtubeQuery").checked
-            ? document.getElementById("youtubeQuery_value").value
+          youtubeQuery: document.getElementById('youtubeQuery').checked
+            ? document.getElementById('youtubeQuery_value').value
             : null,
-          callBackSave: document.getElementById("callBackSave").checked
+          callBackSave: document.getElementById('callBackSave').checked
             ? function(contents) {
-                alert(contents);
+                alert(contents)
               }
             : null,
-          templates: document.getElementById("templates").checked
+          templates: document.getElementById('templates').checked
             ? [
-                { name: "Template-1", html: "<p>HTML source1</p>" },
-                { name: "Template-2", html: "<p>HTML source2</p>" },
+                { name: 'Template-1', html: '<p>HTML source1</p>' },
+                { name: 'Template-2', html: '<p>HTML source2</p>' },
               ]
             : null,
           buttonList: [
             [
-              "undo",
-              "redo",
-              "font",
-              "fontSize",
-              "formatBlock",
-              "bold",
-              "underline",
-              "italic",
-              "strike",
-              "subscript",
-              "superscript",
-              "removeFormat",
-              "fontColor",
-              "hiliteColor",
-              "outdent",
-              "indent",
-              "align",
-              "horizontalRule",
-              "list",
-              "table",
-              "link",
-              "image",
-              "video",
-              "fullScreen",
-              "showBlocks",
-              "codeView",
-              "preview",
-              "print",
-              "save",
-              "template",
+              'undo',
+              'redo',
+              'font',
+              'fontSize',
+              'formatBlock',
+              'bold',
+              'underline',
+              'italic',
+              'strike',
+              'subscript',
+              'superscript',
+              'removeFormat',
+              'fontColor',
+              'hiliteColor',
+              'outdent',
+              'indent',
+              'align',
+              'horizontalRule',
+              'list',
+              'table',
+              'link',
+              'image',
+              'video',
+              'fullScreen',
+              'showBlocks',
+              'codeView',
+              'preview',
+              'print',
+              'save',
+              'template',
             ],
           ],
           lang:
             KothingEditor_LANG[
               langSelect.options[langSelect.selectedIndex].value
             ],
-        };
+        }
 
-        editorImageSample = KothingEditor.create("sample_editor", options);
-        editorImageSample.onImageUpload = imageUpload;
+        editorImageSample = KothingEditor.create('sample_editor', options)
+        editorImageSample.onImageUpload = imageUpload
 
         // option string
-        JSONstringify(
+        var languageCode = langSelect.options[langSelect.selectedIndex].value
+        var json = JSONstringify(
           options,
           langSelect.options[langSelect.selectedIndex].value
-        );
+        )
+        optionDisplay.setValue(
+          json
+            .replace(/\%c/g, '')
+            .replace(
+              /"KothingEditor_LANG\..+"/,
+              'KothingEditor_LANG.' + languageCode
+            )
+        )
       }
 
-      ke_create();
+      ke_create()
     </script>
   </body>
 </html>
