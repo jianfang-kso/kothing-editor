@@ -9,19 +9,17 @@ gen
 
 # modules
 node_modules/
-bower_components/
 *.log
 
 #build
 .travis.yml
+build/
+dist/
 
 #dev
 .git/
-document/
 test/
-.jshintrc
-.jshintignore
-karma.conf.js
-bower.json
-webpack.*.js
+.eslintrc.js
+.eslintignore
 package-lock.json
+yarn.lock

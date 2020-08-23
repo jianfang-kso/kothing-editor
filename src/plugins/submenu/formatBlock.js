@@ -87,7 +87,7 @@ export default {
         e.stopPropagation();
 
         let target = e.target;
-        let command = null, value = null, tag = null;
+        let command = null; let value = null; let tag = null;
         
         while (!command && !/UL/i.test(target.tagName)) {
             command = target.getAttribute('data-command');

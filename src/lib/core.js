@@ -3,8 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-"use strict";
-
 import _Constructor from "./constructor";
 import _Context from "./context";
 import _history from "./history";
@@ -515,8 +513,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
         lineNodes.unshift(util.getFormatElement(commonCon));
       if (startCon === endCon || lineNodes.length === 1) return lineNodes;
 
-      let startLine = util.getFormatElement(startCon);
-      let endLine = util.getFormatElement(endCon);
+      const startLine = util.getFormatElement(startCon);
+      const endLine = util.getFormatElement(endCon);
       let startIdx = null;
       let endIdx = null;
 
@@ -609,11 +607,9 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
     appendFormatTag: function(element, formatNodeName) {
       const formatEl = element;
       const currentFormatEl = util.getFormatElement(this.getSelectionNode());
-      const oFormatName = formatNodeName
-        ? formatNodeName
-        : util.isFormatElement(currentFormatEl)
+      const oFormatName = formatNodeName || (util.isFormatElement(currentFormatEl)
         ? currentFormatEl.nodeName
-        : "P";
+        : "P");
       const oFormat = util.createElement(oFormatName);
       oFormat.innerHTML = "<br>";
 
@@ -847,7 +843,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
       const rangeLines = this.getSelectedElementsAndComponents();
       if (!rangeLines || rangeLines.length === 0) return;
 
-      let last = rangeLines[rangeLines.length - 1];
+      const last = rangeLines[rangeLines.length - 1];
       let standTag, beforeTag, pElement;
 
       if (util.isRangeFormatElement(last) || util.isFormatElement(last)) {
@@ -1103,9 +1099,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
                 ? firstNode.nextSibling
                 : rangeEl && rangeEl.children.length > 0
                 ? rangeEl
-                : rangeRight
-                ? rangeRight
-                : null,
+                : rangeRight || null,
           }
         : this.util.getEdgeChildNodes(firstNode, lastNode);
 
@@ -1290,8 +1284,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
       const newNodeName = appendNode.nodeName;
       this.setRange(startCon, startOff, endCon, endOff);
 
-      let start = {},
-        end = {};
+      let start = {};
+        let end = {};
       let newNode, styleRegExp, removeRegExp;
 
       if (styleArray) {
@@ -1312,7 +1306,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
         removeRegExp = new _w.RegExp(removeRegExp, "i");
       }
 
-      /** validation check function*/
+      /** validation check function */
       const validation = function(vNode) {
         // all path
         if (vNode.nodeType === 3 || util.isBreak(vNode)) return true;
@@ -1516,7 +1510,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
         const childNodes = current.childNodes;
 
         for (let i = 0, len = childNodes.length; i < len; i++) {
-          let child = childNodes[i];
+          const child = childNodes[i];
           if (!child) continue;
           let coverNode = node;
           let cloneNode;
@@ -1740,8 +1734,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
 
       if (isRemoveFormat) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          let removeNode = nNodeArray[i];
-          let textNode = util.createTextNode(
+          const removeNode = nNodeArray[i];
+          const textNode = util.createTextNode(
             collapsed ? util.zeroWidthSpace : removeNode.textContent
           );
           pNode.insertBefore(textNode, removeNode);
@@ -1819,7 +1813,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
         const childNodes = current.childNodes;
 
         for (let i = 0, len = childNodes.length; i < len; i++) {
-          let child = childNodes[i];
+          const child = childNodes[i];
           if (!child) continue;
           let coverNode = node;
 
@@ -1834,7 +1828,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
             continue;
           } else if (validation(child)) {
             noneChange = false;
-            let cloneNode = child.cloneNode(false);
+            const cloneNode = child.cloneNode(false);
             node.appendChild(cloneNode);
             if (child.nodeType === 1 && !util.isBreak(child))
               coverNode = cloneNode;
@@ -1850,8 +1844,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
 
       if (isRemoveFormat && isRemoveNode) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          let removeNode = nNodeArray[i];
-          let textNode = util.createTextNode(removeNode.textContent);
+          const removeNode = nNodeArray[i];
+          const textNode = util.createTextNode(removeNode.textContent);
           pNode.insertBefore(textNode, removeNode);
           pNode.removeChild(removeNode);
         }
@@ -2013,8 +2007,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
 
       if (isRemoveFormat) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          let removeNode = nNodeArray[i];
-          let textNode = util.createTextNode(removeNode.textContent);
+          const removeNode = nNodeArray[i];
+          const textNode = util.createTextNode(removeNode.textContent);
           pNode.insertBefore(textNode, removeNode);
           pNode.removeChild(removeNode);
           if (i === 0) container = textNode;
@@ -2082,7 +2076,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
 
       (function recursionFunc(current, node) {
         const childNodes = current.childNodes;
-        for (let i = childNodes.length - 1; 0 <= i; i--) {
+        for (let i = childNodes.length - 1; i >= 0; i--) {
           const child = childNodes[i];
           if (!child) continue;
           let coverNode = node;
@@ -2195,8 +2189,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
 
       if (isRemoveFormat) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          let removeNode = nNodeArray[i];
-          let textNode = util.createTextNode(removeNode.textContent);
+          const removeNode = nNodeArray[i];
+          const textNode = util.createTextNode(removeNode.textContent);
           pNode.insertBefore(textNode, removeNode);
           pNode.removeChild(removeNode);
 
@@ -2246,23 +2240,22 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
      * @param {String} command Property of command button (data-value)
      */
     commandHandler: function(target, command) {
+      const wysiwyg = context.element.wysiwyg;
+      const first =
+        util.getChildElement(wysiwyg.firstChild, function (current) {
+          return current.childNodes.length === 0 || current.nodeType === 3
+        }) || wysiwyg.firstChild;
+      const last =
+        util.getChildElement(
+          wysiwyg.lastChild,
+          function (current) {
+            return current.childNodes.length === 0 || current.nodeType === 3
+          },
+          true
+        ) || wysiwyg.lastChild;
+      const on = util.hasClass(this.commandMap[command], 'active')
       switch (command) {
         case "selectAll":
-          const wysiwyg = context.element.wysiwyg;
-          const first =
-            util.getChildElement(wysiwyg.firstChild, function(current) {
-              return current.childNodes.length === 0 || current.nodeType === 3;
-            }) || wysiwyg.firstChild;
-          const last =
-            util.getChildElement(
-              wysiwyg.lastChild,
-              function(current) {
-                return (
-                  current.childNodes.length === 0 || current.nodeType === 3
-                );
-              },
-              true
-            ) || wysiwyg.lastChild;
           this.setRange(first, 0, last, last.textContent.length);
           break;
         case "codeView":
@@ -2313,8 +2306,6 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
           break;
         default:
           // 'STRONG', 'INS', 'EM', 'DEL', 'SUB', 'SUP'
-          const on = util.hasClass(this.commandMap[command], "active");
-
           if (
             command === "SUB" &&
             util.hasClass(this.commandMap.SUP, "active")
@@ -2355,7 +2346,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
           ? p.style.marginLeft.match(/\d+/)[0] * 1
           : 0;
 
-        if ("indent" === command) {
+        if (command === "indent") {
           margin += 25;
         } else {
           margin -= 25;
@@ -2963,13 +2954,13 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
       const commandMapNodes = [];
       const currentNodes = [];
 
-      let findFormat = true,
-        findAlign = true,
-        findList = true,
-        findFont = true,
-        findSize = true,
-        findOutdent = true,
-        findA = true;
+      let findFormat = true;
+        let findAlign = true;
+        let findList = true;
+        let findFont = true;
+        let findSize = true;
+        let findOutdent = true;
+        let findA = true;
       let nodeName = "";
 
       for (
@@ -3101,7 +3092,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
       }
 
       /** remove class, display text */
-      for (let key in commandMap) {
+      for (const key in commandMap) {
         if (commandMapNodes.indexOf(key) > -1) continue;
 
         if (commandMap.FONT && /^FONT$/i.test(key)) {
@@ -3438,7 +3429,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
           : rects.bottom + arrowMargin) -
         stickyTop +
         scrollTop;
-      let l =
+      const l =
         absoluteLeft < 0
           ? padding
           : overRight < 0
@@ -3519,7 +3510,10 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
       const resizingName = core._resizingName;
       let formatEl = util.getFormatElement(selectionNode) || selectionNode;
       let rangeEl = util.getRangeFormatElement(selectionNode);
-
+      const commonCon = range.commonAncestorContainer;
+      const figcaption = util.getParentElement(rangeEl, 'FIGCAPTION');
+      const lines = core.getSelectedElements();
+      let currentNode = selectionNode
       switch (keyCode) {
         case 8 /** backspace key */:
           if (selectRange) break;
@@ -3541,8 +3535,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
             selectionNode.innerHTML = "<br>";
             return false;
           }
-
-          const commonCon = range.commonAncestorContainer;
+          
           if (range.startOffset === 0 && range.endOffset === 0) {
             if (
               rangeEl &&
@@ -3651,10 +3644,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
         case 9 /** tab key */:
           e.preventDefault();
           if (ctrl || alt || util.isWysiwygDiv(selectionNode)) break;
-
           core.controllersOff();
-
-          let currentNode = selectionNode;
           while (!util.isCell(currentNode) && !util.isWysiwygDiv(currentNode)) {
             currentNode = currentNode.parentNode;
           }
@@ -3675,8 +3665,6 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
             core.setRange(moveCell, 0, moveCell, 0);
             break;
           }
-
-          const lines = core.getSelectedElements();
 
           if (!shift) {
             const tabText = util.createTextNode(
@@ -3717,7 +3705,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
 
           formatEl = util.getFormatElement(selectionNode);
           rangeEl = util.getRangeFormatElement(selectionNode);
-          const figcaption = util.getParentElement(rangeEl, "FIGCAPTION");
+          
           if (
             rangeEl &&
             formatEl &&

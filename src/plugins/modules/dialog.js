@@ -37,7 +37,9 @@ export default {
         context.element.relative.appendChild(dialog_div);
         
         /** empty memory */
-        dialog_div = null, dialog_back = null, dialog_area = null;
+        dialog_div = null;
+        dialog_back = null;
+        dialog_area = null;
     },
 
     onClick_dialog: function (e) {

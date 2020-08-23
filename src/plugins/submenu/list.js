@@ -27,7 +27,8 @@ export default {
         targetElement.parentNode.appendChild(listDiv);
 
         /** empty memory */
-        listDiv = null, listUl = null;
+        listDiv = null;
+        listUl = null;
     },
 
     setSubmenu: function () {

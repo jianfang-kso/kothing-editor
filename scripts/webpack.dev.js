@@ -1,5 +1,5 @@
-const webpack = require('webpack');
-const path = require('path');
+const webpack = require('webpack')
+const path = require('path')
 const merge = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
@@ -7,28 +7,28 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const common = require('./webpack.common')
 
 module.exports = merge(common, {
-	mode: 'development',
-	entry: './demo/kothing-editor_demo',
-	output: {
-		filename: 'kothing-editor.[hash].js',
-		path: path.resolve(__dirname, 'build')
-	},
+  mode: 'development',
+  entry: './public/index',
+  output: {
+    filename: 'kothing-editor.[hash].js',
+    path: path.resolve(__dirname, 'build'),
+  },
 
-	devtool: 'cheap-module-eval-source-map',
-	devServer: {
-		contentBase: 'build',
-		host: 'localhost',
-		port: 8080
-	},
+  devtool: 'cheap-module-eval-source-map',
+  devServer: {
+    contentBase: 'build',
+    host: 'localhost',
+    port: 8080,
+  },
 
-	plugins: [
-		new MiniCssExtractPlugin({
-			filename: 'css/kothing-editor.[hash].css'
-		}),
-		new webpack.NamedModulesPlugin(),
-		new HtmlWebpackPlugin({
-			template: './demo/kothing-editor_demo.html',
-			inject: true
-		}),
-	]
-});
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'css/kothing-editor.[hash].css',
+    }),
+    new webpack.NamedModulesPlugin(),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+      inject: true,
+    }),
+  ],
+})

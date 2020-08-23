@@ -70,7 +70,10 @@ export default {
         context.element.relative.appendChild(tableController);
 
         /** empty memory */
-        listDiv = null, tablePicker = null, resizeDiv = null, tableController = null;
+        listDiv = null;
+        tablePicker = null;
+        resizeDiv = null;
+        tableController = null;
     },
 
     setSubmenu: function () {
@@ -221,8 +224,8 @@ export default {
         this.context.table.tableHighlight.style.width = x + 'em';
         this.context.table.tableHighlight.style.height = y + 'em';
 
-        let x_u = x < 5 ? 5 : (x > 9 ? 10 : x + 1);
-        let y_u = y < 5 ? 5 : (y > 9 ? 10 : y + 1);
+        const x_u = x < 5 ? 5 : (x > 9 ? 10 : x + 1);
+        const y_u = y < 5 ? 5 : (y > 9 ? 10 : y + 1);
         this.context.table.tableUnHighlight.style.width = x_u + 'em';
         this.context.table.tableUnHighlight.style.height = y_u + 'em';
 
@@ -361,7 +364,7 @@ export default {
 
             // span
             contextTable._current_colSpan = contextTable._tdElement.colSpan - 1;
-            contextTable._current_rowSpan - contextTable._trElement.cells[cellIndex].rowSpan - 1;
+            contextTable._current_rowSpan = contextTable._trElement.cells[cellIndex].rowSpan - 1;
 
             // find logcal cell index
             let rowSpanArr = [];
@@ -582,7 +585,8 @@ export default {
                         colSpan += cell.colSpan - 1;
     
                         if (logcalIndex >= spanCell.index) {
-                            i--, colSpan--;
+                            i--;
+                            colSpan--;
                             colSpan += spanCell.cell.colSpan - 1;
                             next.insertBefore(spanCell.cell, cell);
                             spanCell = spanCells.shift();
@@ -956,7 +960,7 @@ export default {
         
         let emptyRowFirst = null;
         let emptyRowLast = null;
-        let cs = (ref.ce - ref.cs) + 1;
+        const cs = (ref.ce - ref.cs) + 1;
         let rs = (ref.re - ref.rs) + 1;
         let mergeHTML = '';
         let row = null;

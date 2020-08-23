@@ -3,8 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-"use strict";
-
 import _defaultLang from "../lang/en";
 import util from "./util";
 
@@ -68,7 +66,6 @@ export default {
     const resizing_bar = bottomBar.resizingBar;
     const navigation = bottomBar.navigation;
     const char_counter = bottomBar.charCounter;
-    const poweredBy = bottomBar.poweredBy;
 
     // loading box
     const loading_box = doc.createElement("DIV");
@@ -287,7 +284,7 @@ export default {
           }
 
           if (!path || path.length === 0)
-            throw '[KothingEditor.constructor.iframe.fail] The kothing-editor CSS files installation path could not be automatically detected. Please set the option property "iframeCSSFileName" before creating editor instances.';
+            throw new Error('[KothingEditor.constructor.iframe.fail] The kothing-editor CSS files installation path could not be automatically detected. Please set the option property "iframeCSSFileName" before creating editor instances.');
 
           let tagString = "";
           for (let i = 0, len = path.length; i < len; i++) {
@@ -419,9 +416,7 @@ export default {
     // bottom resizing bar
     options.resizingBar =
       options.resizingBar === undefined
-        ? /inline|balloon/i.test(options.mode)
-          ? false
-          : true
+        ? !/inline|balloon/i.test(options.mode)
         : options.resizingBar;
     options.showPathLabel = !options.resizingBar
       ? false

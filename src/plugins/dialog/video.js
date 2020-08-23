@@ -223,7 +223,7 @@ export default {
         }
 
         // align
-        if (contextVideo._align && 'none' !== contextVideo._align) {
+        if (contextVideo._align && contextVideo._align !== 'none') {
             cover.style.margin = 'auto';
         } else {
             cover.style.margin = '0';
@@ -285,7 +285,7 @@ export default {
         const container = this.plugins.resizing.set_container.call(this, cover, 'ke-video-container');
 
         const figcaption = existElement.getElementsByTagName('FIGCAPTION')[0];
-        if (!!figcaption) {
+        if (figcaption) {
             const caption = this.plugins.resizing.create_caption.call(this);
             caption.innerHTML = figcaption.innerHTML;
             cover.appendChild(caption);

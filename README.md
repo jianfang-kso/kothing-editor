@@ -50,12 +50,6 @@ Pure javscript rich text editorweb editor, with no dependencies
 $ npm install --save kothing-editor
 ```
 
-#### bower
-
-```sh
-$ bower install --save kothing-editor
-```
-
 #### CDN
 
 ```html

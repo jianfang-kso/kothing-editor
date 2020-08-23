@@ -3,8 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-"use strict";
-
 /**
  * @description utility function
  */
@@ -59,10 +57,10 @@ const util = {
     /** IE */
     if (this._w.ActiveXObject) {
       try {
-        return new ActiveXObject("Msxml2.XMLHTTP");
+        return new this._w.ActiveXObject('Msxml2.XMLHTTP')
       } catch (e) {
         try {
-          return new ActiveXObject("Microsoft.XMLHTTP");
+          return new this._w.ActiveXObject('Microsoft.XMLHTTP')
         } catch (e1) {
           return null;
         }
@@ -136,7 +134,7 @@ const util = {
     }
 
     for (let i = 0; i < pathList.length; i++) {
-      let editorTag = pathList[i][src].match(regExp);
+      const editorTag = pathList[i][src].match(regExp);
       if (editorTag) {
         path = editorTag[0];
         break;
@@ -145,19 +143,19 @@ const util = {
 
     if (path === "") path = pathList.length > 0 ? pathList[0][src] : "";
 
-    -1 === path.indexOf(":/") &&
-      "//" !== path.slice(0, 2) &&
+    path.indexOf(":/") === -1 &&
+      path.slice(0, 2) !== "//" &&
       (path =
-        0 === path.indexOf("/")
-          ? location.href.match(/^.*?:\/\/[^\/]*/)[0] + path
-          : location.href.match(/^[^\?]*\/(?:)/)[0] + path);
+        path.indexOf("/") === 0
+          ? location.href.match(/^.*?:\/\/[^]*/)[0] + path
+          : location.href.match(/^[^]*\/(?:)/)[0] + path);
 
     if (!path)
-      throw "[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +" +
+      throw new Error("[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +" +
         name +
         ", extension: " +
         extension +
-        ")";
+        ")");
 
     return path;
   },
@@ -191,12 +189,11 @@ const util = {
    * @returns {String}
    */
   convertContentsForEditor: function(contents) {
-    let tag,
-      baseHtml,
-      innerHTML = "";
+      let baseHtml;
+      let innerHTML = "";
     contents = contents.trim();
 
-    tag = this._d.createRange().createContextualFragment(contents).childNodes;
+    const tag = this._d.createRange().createContextualFragment(contents).childNodes;
 
     for (let i = 0, len = tag.length; i < len; i++) {
       baseHtml = tag[i].outerHTML || tag[i].textContent;
@@ -350,7 +347,7 @@ const util = {
 
     while (element) {
       if (this.isWysiwygDiv(element)) return null;
-      if (this.isRangeFormatElement(element)) element.firstElementChild;
+      if (this.isRangeFormatElement(element)) return element.firstElementChild;
       if (this.isFormatElement(element) && validation(element)) return element;
 
       element = element.parentNode;
@@ -412,7 +409,7 @@ const util = {
    * @returns {Number}
    */
   nextIdx: function(array, item) {
-    let idx = this.getArrayIndex(array, item);
+    const idx = this.getArrayIndex(array, item);
     if (idx === -1) return -1;
     return idx + 1;
   },
@@ -424,7 +421,7 @@ const util = {
    * @returns {Number}
    */
   prevIdx: function(array, item) {
-    let idx = this.getArrayIndex(array, item);
+    const idx = this.getArrayIndex(array, item);
     if (idx === -1) return -1;
     return idx - 1;
   },
@@ -436,7 +433,7 @@ const util = {
    */
   getPositionIndex: function(node) {
     let idx = 0;
-    while (!!(node = node.previousSibling)) {
+    while (node === node.previousSibling) {
       idx += 1;
     }
     return idx;
@@ -992,7 +989,7 @@ const util = {
 
     cleanHTML = cleanHTML
       .replace(
-        /<([a-zA-Z]+\:[a-zA-Z]+|script|style).>(\n|.)<\/([a-zA-Z]+\:[a-zA-Z]+|script|style)>/g,
+        /<([a-zA-Z]+[a-zA-Z]+|script|style).>(\n|.)<\/([a-zA-Z]+[a-zA-Z]+|script|style)>/g,
         ""
       )
       .replace(/(<[a-zA-Z0-9]+)[^>]*(?=>)/g, function(m, t) {

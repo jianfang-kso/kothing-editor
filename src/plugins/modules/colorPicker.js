@@ -90,7 +90,7 @@ export default {
     
     init: function (node, color) {
         const colorPicker = this.plugins.colorPicker;
-        let fillColor = color ? color : colorPicker.getColorInNode.call(this, node) || this.context.colorPicker._defaultColor;
+        let fillColor = color || colorPicker.getColorInNode.call(this, node) || this.context.colorPicker._defaultColor;
         fillColor = colorPicker.isHexColor(fillColor) ? fillColor : colorPicker.rgb2hex(fillColor) || fillColor;
 
         const colorList = this.context.colorPicker._colorList;

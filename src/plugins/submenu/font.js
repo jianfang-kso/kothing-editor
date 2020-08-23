@@ -37,7 +37,7 @@ export default {
         listDiv.className = 'ke-list-layer';
 
         let font, text, i, len;
-        let fontList = !option.font ?
+        const fontList = !option.font ?
             [
                 'Arial',
                 'Comic Sans MS',

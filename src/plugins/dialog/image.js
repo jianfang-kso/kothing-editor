@@ -3,8 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-"use strict";
-
 import dialog from "../modules/dialog";
 import resizing from "../modules/resizing";
 import notice from "../modules/notice";
@@ -245,17 +243,16 @@ export default {
     // Declare all variables
     const tabName = targetElement.getAttribute("data-tab-link");
     const contentClassName = "_se_tab_content";
-    let i, tabContent, tabLinks;
 
     // Get all elements with class="tabcontent" and hide them
-    tabContent = modal.getElementsByClassName(contentClassName);
-    for (i = 0; i < tabContent.length; i++) {
+    const tabContent = modal.getElementsByClassName(contentClassName);
+    for (let i = 0; i < tabContent.length; i++) {
       tabContent[i].style.display = "none";
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
-    tabLinks = modal.getElementsByClassName("_se_tab_link");
-    for (i = 0; i < tabLinks.length; i++) {
+    const tabLinks = modal.getElementsByClassName("_se_tab_link");
+    for (let i = 0; i < tabLinks.length; i++) {
       this.util.removeClass(tabLinks[i], "active");
     }
 
@@ -340,7 +337,7 @@ export default {
           typeof imageUploadHeader === "object" &&
           Object.keys(imageUploadHeader).length > 0
         ) {
-          for (let key in imageUploadHeader) {
+          for (const key in imageUploadHeader) {
             this.context.image._xmlHttp.setRequestHeader(
               key,
               imageUploadHeader[key]
@@ -641,7 +638,8 @@ export default {
         }
       }
 
-      (info.src = img.src), (info.name = img.getAttribute("data-file-name"));
+      info.src = img.src;
+      info.name = img.getAttribute("data-file-name");
       info.size = img.getAttribute("data-file-size") * 1;
     }
 
@@ -772,7 +770,7 @@ export default {
     }
 
     // align
-    if ("none" !== align) {
+    if (align !== "none") {
       cover.style.margin = "auto";
     } else {
       cover.style.margin = "0";
@@ -851,7 +849,7 @@ export default {
     }
 
     // align
-    if (contextImage._align && "none" !== contextImage._align) {
+    if (contextImage._align && contextImage._align !== "none") {
       cover.style.margin = "auto";
     } else {
       cover.style.margin = "0";
@@ -871,7 +869,7 @@ export default {
           : "";
         imageEl.setAttribute("data-image-link", linkValue);
       } else {
-        let newEl = this.plugins.image.onRender_link.call(
+        const newEl = this.plugins.image.onRender_link.call(
           this,
           imageEl,
           linkValue,
@@ -883,7 +881,7 @@ export default {
       const imageElement = imageEl;
 
       imageElement.setAttribute("data-image-link", "");
-      let newEl = imageElement.cloneNode(true);
+      const newEl = imageElement.cloneNode(true);
       cover.removeChild(contextImage._linkElement);
       cover.insertBefore(newEl, contextImage._caption);
       imageEl = newEl;

@@ -62,7 +62,9 @@ export default {
         context.element.relative.appendChild(resize_button);
 
         /** empty memory */
-        resize_div_container = null, resize_button = null, resize_handles = null;
+        resize_div_container = null;
+        resize_button = null;
+        resize_handles = null;
     },
 
     /** resize controller, button (image, iframe) */
@@ -323,6 +325,17 @@ export default {
             if (command === 'onalign') return;
         }
 
+        const r = contextEl.getAttribute('data-rotate') || '0';
+        let x = contextEl.getAttribute('data-rotateX') || '';
+        let y = contextEl.getAttribute('data-rotateY') || '';
+
+        const contextResizing = this.context.resizing;
+        const slope = contextEl.getAttribute('data-rotate') * 1 + value * 1;
+        const deg = this._w.Math.abs(slope) >= 360 ? 0 : slope;
+
+        const alignValue = value === 'basic' ? 'none' : value;
+        const caption = !currentContext._captionChecked;
+
         switch (command) {
             case 'percent':
                 this.plugins.resizing.resetTransform.call(this, contextEl);
@@ -330,9 +343,7 @@ export default {
                 contextPlugin.onModifyMode.call(this, contextEl, this.plugins.resizing.call_controller_resize.call(this, contextEl, pluginName));
                 break;
             case 'mirror':
-                const r = contextEl.getAttribute('data-rotate') || '0';
-                let x = contextEl.getAttribute('data-rotateX') || '';
-                let y = contextEl.getAttribute('data-rotateY') || '';
+                
     
                 if ((value === 'h' && !this.context.resizing._rotateVertical) || (value === 'v' && this.context.resizing._rotateVertical)) {
                     y = y ? '' : '180';
@@ -346,9 +357,7 @@ export default {
                 this.plugins.resizing._setTransForm(contextEl, r, x, y);
                 break;
             case 'rotate':
-                const contextResizing = this.context.resizing;
-                const slope = (contextEl.getAttribute('data-rotate') * 1) + (value * 1);
-                const deg = this._w.Math.abs(slope) >= 360 ? 0 : slope;
+                
     
                 contextEl.setAttribute('data-rotate', deg);
                 contextResizing._rotateVertical = /^(90|270)$/.test(this._w.Math.abs(deg).toString());
@@ -360,9 +369,9 @@ export default {
                 this.plugins.resizing.openAlignMenu.call(this);
                 break;
             case 'align':
-                const alignValue = value === 'basic' ? 'none' : value;
+                
         
-                if (alignValue && 'none' !== alignValue) {
+                if (alignValue && alignValue !== 'none') {
                     currentContext._cover.style.margin = 'auto';
                 } else {
                     currentContext._cover.style.margin = '0';
@@ -375,7 +384,6 @@ export default {
                 contextPlugin.onModifyMode.call(this, contextEl, this.plugins.resizing.call_controller_resize.call(this, contextEl, pluginName));
                 break;
             case 'caption':
-                const caption = !currentContext._captionChecked;
                 contextPlugin.openModify.call(this, true);
                 currentContext._captionChecked = currentContext.captionCheckEl.checked = caption;
 
@@ -461,8 +469,8 @@ export default {
 
         let transOrigin = '';
         if (isVertical) {
-            let transW = (offsetW/2) + 'px ' + (offsetW/2) + 'px 0';
-            let transH = (offsetH/2) + 'px ' + (offsetH/2) + 'px 0';
+            const transW = (offsetW/2) + 'px ' + (offsetW/2) + 'px 0';
+            const transH = (offsetH/2) + 'px ' + (offsetH/2) + 'px 0';
             transOrigin = deg === 90 || deg === -270 ? transH : transW;
         }
 

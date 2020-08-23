@@ -42,7 +42,8 @@ export default {
         context.element.relative.appendChild(link_button);
 
         /** empty memory */
-        link_dialog = null, link_button = null;
+        link_dialog = null;
+        link_button = null;
     },
 
     /** dialog */
@@ -195,7 +196,7 @@ export default {
         if (/update/.test(command)) {
             this.context.link.focusElement.value = this.context.link._linkAnchor.href;
             this.context.link.linkAnchorText.value = this.context.link._linkAnchor.textContent;
-            this.context.link.linkNewWindowCheck.checked = (/_blank/i.test(this.context.link._linkAnchor.target) ? true : false);
+            this.context.link.linkNewWindowCheck.checked = (!!/_blank/i.test(this.context.link._linkAnchor.target));
             this.plugins.dialog.open.call(this, 'link', true);
         }
         else {
