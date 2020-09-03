@@ -3,8 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-'use strict';
-
 /**
  * @description Elements and variables you should have
  * @param {HTMLElement} element textarea element
