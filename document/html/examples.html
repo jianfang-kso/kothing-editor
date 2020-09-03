@@ -114,7 +114,7 @@
             <div>&nbsp; &nbsp; youtubeQuery : <span style="color: rgb(152, 0, 0);">'autoplay=1&mute=1&enablejsapi=1'</span>,</div>
             <div>&nbsp; &nbsp; popupDisplay : <span style="color: rgb(152, 0, 0);">'local'</span>,</div>
             <div>&nbsp; &nbsp; resizingBar : <span style="color: rgb(0, 130, 153);">false</span>,</div>
-            <div>&nbsp; &nbsp; buttonList : [</div>
+            <div>&nbsp; &nbsp; toolBarItem : [</div>
             <div><span style="color: rgb(152, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'font', 'fontSize',</span></div>
             <div><span style="color: rgb(152, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'fontColor', 'hiliteColor', 'video',</span></div>
             <div><span style="color: rgb(152, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'fullScreen', 'codeView',</span></div>
@@ -143,7 +143,7 @@
             <div>&nbsp; &nbsp; height : <span style="color: rgb(152, 0, 0);">'auto'</span>,</div>
             <div>&nbsp; &nbsp; minHeight : <span style="color: rgb(152, 0, 0);">'100px'</span>,</div>
             <div>&nbsp; &nbsp; maxHeight: <span style="color: rgb(152, 0, 0);">'250px'</span>,</div>
-            <div>&nbsp; &nbsp; buttonList : [</div>
+            <div>&nbsp; &nbsp; toolBarItem : [</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; [<span style="color: rgb(152, 0, 0);">'undo', 'redo', 'font', 'fontSize', 'formatBlock'</span>],</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; [<span style="color: rgb(152, 0, 0);">'bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'</span>],</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<span style="color: rgb(152, 0, 0);"> '/' </span><span style="color: rgb(53, 53, 53); font-weight: bold; font-style: italic;">// Line break</span></div>
@@ -184,7 +184,7 @@
             <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(189, 189, 189);">    //     src: CodeMirror,</span></div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(189, 189, 189);">    //     options: {...}</span></div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: rgb(189, 189, 189);">    // }</span></div>
-            <div>&nbsp;&nbsp;&nbsp;&nbsp;    buttonList<span style="color: rgb(255, 94, 0);">:</span> [</div>
+            <div>&nbsp;&nbsp;&nbsp;&nbsp;    toolBarItem<span style="color: rgb(255, 94, 0);">:</span> [</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;       [<span style="color: rgb(0, 51, 153);">'codeView'</span>]</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;    ],</div>
             <div>&nbsp;&nbsp;&nbsp;&nbsp;    height<span style="color: rgb(255, 94, 0);">:</span> <span style="color: rgb(0, 85, 255);">400</span></div>
@@ -263,7 +263,7 @@
 <span class="pl-k">let</span> selectedImages <span class="pl-k">=</span> [];
 
 <span class="pl-k">const</span> <span class="pl-c1">editorImageSample</span> <span class="pl-k">=</span> <span class="pl-c1">KothingEditor</span>.<span class="pl-en">create</span>(<span class="pl-s"><span class="pl-pds">'</span>imageManagement<span class="pl-pds">'</span></span>, {
-    buttonList<span class="pl-k">:</span> [
+    toolBarItem<span class="pl-k">:</span> [
         [<span class="pl-s"><span class="pl-pds">'</span>undo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>redo<span class="pl-pds">'</span></span>],
         [<span class="pl-s"><span class="pl-pds">'</span>formatBlock<span class="pl-pds">'</span></span>],
         [<span class="pl-s"><span class="pl-pds">'</span>horizontalRule<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>list<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>table<span class="pl-pds">'</span></span>],
@@ -543,7 +543,7 @@
     colorList<span class="pl-k">:</span> [
         [<span class="pl-s"><span class="pl-pds">'</span>#ccc<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>#dedede<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>OrangeRed<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>Orange<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>RoyalBlue<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>SaddleBrown<span class="pl-pds">'</span></span>]
     ],
-    buttonList<span class="pl-k">:</span> [
+    toolBarItem<span class="pl-k">:</span> [
         [<span class="pl-s"><span class="pl-pds">'</span>fontColor<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>hiliteColor<span class="pl-pds">'</span></span>]
     ]
 });
@@ -551,7 +551,7 @@
 <span class="pl-k">function</span> <span class="pl-en">replaceOptions</span>() {
     minHeight<span class="pl-k">:</span> null,
     colorList<span class="pl-k">:</span> null,
-    buttonList<span class="pl-k">:</span> [
+    toolBarItem<span class="pl-k">:</span> [
         [<span class="pl-s"><span class="pl-pds">'</span>undo<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>undo<span class="pl-pds">'</span></span>],
         [<span class="pl-s"><span class="pl-pds">'</span>bold<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>underline<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>italic<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>strike<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>subscript<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>superscript<span class="pl-pds">'</span></span>],
         [<span class="pl-s"><span class="pl-pds">'</span>removeFormat<span class="pl-pds">'</span></span>],
@@ -702,7 +702,7 @@
         imageWidth: 150,
         popupDisplay: "local",
         resizingBar: false,
-        buttonList: [
+        toolBarItem: [
           [
             "font",
             "fontSize",
@@ -729,7 +729,7 @@
         height: "auto",
         minHeight: "100px",
         maxHeight: "270px",
-        buttonList: [
+        toolBarItem: [
           ["undo", "redo", "font", "fontSize", "formatBlock"],
           [
             "bold",
@@ -770,14 +770,14 @@
 
       KothingEditor.create("useCodeMirror", {
         codeMirror: CodeMirror,
-        buttonList: [["codeView"]],
+        toolBarItem: [["codeView"]],
         height: 330,
         width: "auto",
         fullPage: true,
       });
 
       editorImageSample = KothingEditor.create("imageManagement", {
-        buttonList: [
+        toolBarItem: [
           ["undo", "redo"],
           ["formatBlock"],
           ["horizontalRule", "list", "table"],
@@ -794,7 +794,7 @@
       var opt2 = document.getElementById("opt2");
 
       var options = {
-        buttonList: [
+        toolBarItem: [
           ["undo", "redo"],
           ["bold", "underline", "italic", "strike", "subscript", "superscript"],
           ["removeFormat"],
@@ -820,7 +820,7 @@
               "SaddleBrown",
             ],
           ],
-          buttonList: [["fontColor", "hiliteColor"]],
+          toolBarItem: [["fontColor", "hiliteColor"]],
         });
 
         opt1.style.display = "none";
@@ -832,7 +832,7 @@
           mode: "classic",
           minHeight: null,
           colorList: null,
-          buttonList: [
+          toolBarItem: [
             ["undo", "redo"],
             [
               "bold",
