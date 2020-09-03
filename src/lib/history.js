@@ -3,7 +3,6 @@
  * Copyright Kothing.
  * MIT license.
  */
-'use strict';
 
 export default function (core, change) {
     const _w = window;
