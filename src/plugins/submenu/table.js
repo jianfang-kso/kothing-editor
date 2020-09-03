@@ -3,7 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-'use strict';
 
 export default {
     name: 'table',
@@ -1367,6 +1366,8 @@ export default {
             case 'remove':
                 this.util.removeItem(contextTable._element);
                 this.controllersOff();
+                break;
+            default:
         }
 
         this.focus();
