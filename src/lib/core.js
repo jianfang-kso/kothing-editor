@@ -3782,6 +3782,8 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
           }
 
           break;
+          
+          default:
       }
 
       if (shift && /16/.test(keyCode)) {
