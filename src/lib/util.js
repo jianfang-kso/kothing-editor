@@ -151,8 +151,8 @@ const util = {
           : location.href.match(/^[^]*\/(?:)/)[0] + path);
 
     if (!path)
-      throw new Error("[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +" +
-        name +
+      throw new Error("[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (path: +" +
+        path +
         ", extension: " +
         extension +
         ")");
