@@ -3,7 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-'use strict';
 
 export default {
     name: 'notice',
