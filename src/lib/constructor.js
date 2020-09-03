@@ -33,7 +33,7 @@ export default {
     // toolbar
     const tool_bar = this._createToolBar(
       doc,
-      options.buttonList,
+      options.toolBarItem,
       options.plugins,
       options.lang
     );
@@ -164,12 +164,12 @@ export default {
     const relative = el.relative;
     const editorArea = el.editorArea;
     const isNewToolbar =
-      !!mergeOptions.buttonList || mergeOptions.mode !== originOptions.mode;
+      !!mergeOptions.toolBarItem || mergeOptions.mode !== originOptions.mode;
     const isNewPlugins = !!mergeOptions.plugins;
 
     const tool_bar = this._createToolBar(
       document,
-      isNewToolbar ? mergeOptions.buttonList : originOptions.buttonList,
+      isNewToolbar ? mergeOptions.toolBarItem : originOptions.toolBarItem,
       isNewPlugins ? mergeOptions.plugins : plugins,
       mergeOptions.lang
     );
@@ -513,7 +513,7 @@ export default {
     // options.iframeCSSFileName = options.iframeCSSFileName;
     // options.fullPage = options.fullPage;
     // buttons
-    options.buttonList = options.buttonList || [
+    options.toolBarItem = options.toolBarItem || [
       ["undo", "redo"],
       ["bold", "underline", "italic", "strike", "subscript", "superscript"],
       ["removeFormat"],
@@ -851,11 +851,11 @@ export default {
   /**
    * @description Create editor HTML
    * @param {Array} doc document object
-   * @param {Array} buttonList option.buttonList
+   * @param {Array} toolBarItem option.toolBarItem
    * @param {Array} lang option.lang
    * @private
    */
-  _createToolBar: function(doc, buttonList, _plugins, lang) {
+  _createToolBar: function(doc, toolBarItem, _plugins, lang) {
     const separator_vertical = doc.createElement("DIV");
     separator_vertical.className = "ke-toolbar-separator-vertical";
 
@@ -863,7 +863,7 @@ export default {
     tool_bar.className = "ke-toolbar kothing-editor-common";
 
     /** create button list */
-    const defaultButtonList = this._defaultButtons(lang);
+    const defaultToolBarItem = this._defaultButtons(lang);
     const pluginCallButtons = {};
     const plugins = {};
     if (_plugins) {
@@ -883,10 +883,10 @@ export default {
     let buttonElement = null;
     let pluginName = "";
     let vertical = false;
-    const oneModule = buttonList.length === 1;
+    const oneModule = toolBarItem.length === 1;
 
-    for (let i = 0; i < buttonList.length; i++) {
-      const buttonGroup = buttonList[i];
+    for (let i = 0; i < toolBarItem.length; i++) {
+      const buttonGroup = toolBarItem[i];
       moduleElement = this._createModuleGroup(oneModule);
 
       /** button object */
@@ -896,7 +896,7 @@ export default {
           if (typeof button === "object") {
             if (typeof button.add === "function") {
               pluginName = button.name;
-              module = defaultButtonList[pluginName];
+              module = defaultToolBarItem[pluginName];
               plugins[pluginName] = button;
             } else {
               pluginName = button.name;
@@ -909,7 +909,7 @@ export default {
               ];
             }
           } else {
-            module = defaultButtonList[button];
+            module = defaultToolBarItem[button];
             pluginName = button;
           }
 
