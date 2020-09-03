@@ -1,5 +1,3 @@
-'use strict'
-
 import '../src/assets/css/kothing-editor.css'
 import '../src/assets/css/kothing-editor-contents.css'
 
@@ -19,7 +17,7 @@ window.cm = CodeMirror
 /* ================================================================= */
 let s1 = KothingEditor.create(document.getElementById('editor1'), {
   plugins: plugins,
-  buttonList: [
+  toolBarItem: [
     [
       'formatBlock',
       'fontColor',
@@ -54,7 +52,7 @@ window.ke_create1 = function() {
 /* ================================================================= */
 let s2 = KothingEditor.create(document.getElementById('editor2'), {
   plugins: plugins,
-  buttonList: [
+  toolBarItem: [
     [
       'undo',
       'redo',
@@ -217,7 +215,7 @@ let s3 = editor.create(document.getElementById('editor3'), {
   imageResizing: true,
   // imageWidth: '400',
   stickyToolbar: false,
-  buttonList: [
+  toolBarItem: [
     ['undo', 'redo'],
     ['font', 'fontSize', 'formatBlock'],
     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -277,7 +275,7 @@ const newOption = {
   iframe: false,
   plugins: [plugins.hiliteColor, plugins.fontColor],
   minHeight: '300',
-  buttonList: [
+  toolBarItem: [
     ['undo', 'redo'],
     ['font', 'fontSize', 'formatBlock'],
     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -457,7 +455,7 @@ window.ke_create3 = function() {
 /* ================================================================= */
 // Editor4
 let s4 = editor.create(document.getElementsByName('editor4')[0], {
-  buttonList: [
+  toolBarItem: [
     [
       plugins.formatBlock,
       'align',
@@ -534,7 +532,7 @@ window.ke_create5 = function() {
   )
   s5 = KothingEditor.create(win.document.querySelector('#editor4'), {
     plugins: plugins,
-    buttonList: [
+    toolBarItem: [
       [
         'undo',
         'redo',
