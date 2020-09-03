@@ -2940,6 +2940,7 @@ export default function(context, pluginCallButtons, plugins, lang, _options) {
         case "]":
           command = "indent";
           break;
+        default:
       }
 
       if (!command) return false;
