@@ -3,7 +3,6 @@
  * Copyright Kothing
  * MIT license.
  */
-'use strict';
 
 import dialog from '../modules/dialog';
 import resizing from '../modules/resizing';
