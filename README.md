@@ -126,7 +126,7 @@ import { en, zh_cn } from "kothing-editor/src/lang";
 
 KothingEditor.create("document", {
   plugins: [font, fontSize, fontColor, horizontalRule, link, image],
-  buttonList: [
+  toolBarItem: [
     ["font", "fontSize"],
     ["fontColor"],
     ["horizontalRule"],
@@ -145,7 +145,7 @@ import plugins from 'kothing-editor/src/plugins'
 
 KothingEditor.create('document', {
     plugins: plugins,
-    buttonList: [
+    toolBarItem: [
         ['undo', 'redo'],
         ['font', 'fontSize', 'formatBlock'],
         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -167,7 +167,7 @@ KothingEditor.create('document', {
         plugins.font
         plugins.fontSize
     ],
-    buttonList: [
+    toolBarItem: [
         ['font', 'fontSize'],
         // Plugins can be used directly in the button list
         [plugins.formatBlock]
@@ -197,7 +197,7 @@ import {
 } from "kothing-editor/src/plugins";
 
 KothingEditor.create("document", {
-  buttonList: [
+  toolBarItem: [
     ["undo", "redo"],
     [font, fontSize, formatBlock],
     ["bold", "underline", "italic", "strike", "subscript", "superscript"],
@@ -229,7 +229,7 @@ import plugins from "kothing-editor/src/plugins";
 const initEditor = KothingEditor.init({
   plugins: plugins,
   height: 200,
-  buttonList: [
+  toolBarItem: [
     [
       "undo",
       "redo",
@@ -272,7 +272,7 @@ initEditor.create("document_1", {
 initEditor.create("document_2", {
   // The value of the option argument put in the "create" function call takes precedence
   height: "auto",
-  buttonList: [
+  toolBarItem: [
     ["bold", "underline", "italic"],
     ["removeFormat"],
     ["preview", "print"],
@@ -310,7 +310,7 @@ KothingEditor.create("document", {
   //     src: CodeMirror,
   //     options: {...}
   // }
-  buttonList: [["codeView"]],
+  toolBarItem: [["codeView"]],
   height: 400,
 });
 ```
@@ -473,7 +473,7 @@ templates       : If you use a template plugin, add it.
                   ]
 
 // Buttons--------------------------------------------------------------------------------------------------------
-buttonList      : Defines button list to array {Array}
+toolBarItem      : Defines button list to array {Array}
                   default: [
                     ['undo', 'redo'],
                     // ['font', 'fontSize', 'formatBlock'],
@@ -500,7 +500,7 @@ const editor = KothingEditor.create("example");
 // Add or reset option property
 editor.setOptions({
   minHeight: "300px",
-  buttonList: [["fontColor", "hiliteColor"]],
+  toolBarItem: [["fontColor", "hiliteColor"]],
   colorList: [
     ["#ccc", "#dedede", "OrangeRed", "Orange", "RoyalBlue", "SaddleBrown"],
   ],
