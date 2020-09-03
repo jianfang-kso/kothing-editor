@@ -428,6 +428,7 @@ export default {
             case 'delete':
                 contextPlugin.destroy.call(this);
                 break;
+            default:
         }
 
         // history stack
