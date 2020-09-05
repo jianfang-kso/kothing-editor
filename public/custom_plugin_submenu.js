@@ -4,6 +4,7 @@
 export default {
     // plugin name (Required)
     name: 'custom_plugin_submenu',
+    display: 'submenu',
 
     // add function - It is called only once when the plugin is first run.
     // This function generates HTML to append and register the event.
@@ -20,14 +21,14 @@ export default {
         let listDiv = this.setSubmenu.call(core);
 
         // Input tag caching
-        context.custom.textElement = listDiv.getElementsByTagName('INPUT')[0];
+        // context.custom.textElement = listDiv.getElementsByTagName('INPUT')[0];
 
         // You must bind "core" object when registering an event.
         /** add event listeners */
         listDiv.getElementsByTagName('BUTTON')[0].addEventListener('click', this.onClick.bind(core));
-        context.custom.textElement.addEventListener('mousedown', function () {
+        // context.custom.textElement.addEventListener('mousedown', function () {
 
-        });
+        // });
 
         /** append html */
         targetElement.parentNode.appendChild(listDiv);
@@ -36,12 +37,13 @@ export default {
     setSubmenu: function () {
         const listDiv = this.util.createElement('DIV');
 
-        listDiv.className = 'ke-submenu ke-list-layer';
+        listDiv.className = 'ke-submenu ke-list-layer ke-list-align';
         listDiv.style.display = 'none';
         listDiv.innerHTML = '' +
-            '<div class="ke-list-inner ke-list-align">' +
+            '<div class="ke-list-inner">' +
             '   <ul class="ke-list-basic">' +
-            '       <li><input class="ke-input-form" type="text" placeholder="insert text" style="width: 100%; border: 1px solid #CCC;" /></li>' +
+            // '       <li><input class="ke-input-form" type="text" placeholder="insert text" style="width: 100%; border: 1px solid #CCC;" /></li>' +
+            '       <li><select><option>111</option><option>222</option></select></li>' +
             '       <li><button type="button" class="ke-btn ke-tooltip">' +
             '               <span>OK</span>' +
             '               <span class="ke-tooltip-inner">' +

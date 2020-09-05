@@ -1,29 +1,21 @@
 /*
- * kothing-editor.js
+ * Rich Text Editor
+ *
+ * kothing-ditor.js
  * Copyright Kothing.
  * MIT license.
  */
-'use strict';
 
 export default function (core, change) {
     const _w = window;
-    const editor = core.context.element;
     const util = core.util;
-    const undo = core.context.tool.undo;
-    const redo = core.context.tool.redo;
+    let editor = core.context.element;
+    let undo = core.context.tool.undo;
+    let redo = core.context.tool.redo;
+
     let pushDelay = null;
     let stackIndex = 0;
-    let stack = [{
-        contents: core.getContents(),
-        s: {
-            path: [0, 0],
-            offset: 0
-        },
-        e: {
-            path: [0, 0],
-            offset: 0
-        }
-    }];
+    let stack = [];
 
     function setContentsFromStack () {
         const item = stack[stackIndex];
@@ -43,62 +35,85 @@ export default function (core, change) {
             if (redo) redo.removeAttribute('disabled');
         }
 
+        core.controllersOff();
         core._checkComponents();
-        core._charCount(0, false);
-        core._iframeAutoHeight();
+        core._setCharCount();
+        core._resourcesStateChange();
         
         // onChange
         change();
     }
 
     function pushStack () {
-        const current = core.getContents();
-        if (current === stack[stackIndex].contents) return;
+        core._checkComponents();
+        const current = core.getContents(true);
+        if (!!stack[stackIndex] && current === stack[stackIndex].contents) return;
 
         stackIndex++;
-        const range = core.getRange();
+        const range = core._variable._range;
 
         if (stack.length > stackIndex) {
             stack = stack.slice(0, stackIndex);
             if (redo) redo.setAttribute('disabled', true);
         }
 
-        stack[stackIndex] = {
-            contents: current,
-            s: {
-                path: util.getNodePath(range.startContainer),
-                offset: range.startOffset
-            },
-            e: {
-                path: util.getNodePath(range.endContainer),
-                offset: range.endOffset
-            }
-        };
+        if (!range) {
+            stack[stackIndex] = {
+                contents: current,
+                s: { path: [0, 0], offset: [0, 0] },
+                e: { path: 0, offset: 0 }
+            };
+        } else {
+            stack[stackIndex] = {
+                contents: current,
+                s: {
+                    path: util.getNodePath(range.startContainer, null, null),
+                    offset: range.startOffset
+                },
+                e: {
+                    path: util.getNodePath(range.endContainer, null, null),
+                    offset: range.endOffset
+                }
+            };
+        }
 
         if (stackIndex === 1 && undo) undo.removeAttribute('disabled');
 
-        core._checkComponents();
-        core._charCount(0, false);
+        core._setCharCount();
         // onChange
         change();
     }
 
     return {
         /**
-         * @description Saving the current status to the history object stack
+         * @description History stack
          */
-        push: function () {
-            _w.setTimeout(core._iframeAutoHeight);
+        stack: stack,
+
+        /**
+         * @description Saving the current status to the history object stack
+         * If "delay" is true, it will be saved after 500 miliseconds
+         * If the function is called again with the "delay" argument true before it is saved, the delay time is renewal
+         * You can specify the delay time by sending a number.
+         * @param {Boolean|Number} delay If true, delays 400 milliseconds
+         */
+        push: function (delay) {
+            _w.setTimeout(core._resourcesStateChange.bind(core));
+            const time = typeof delay === 'number' ? (delay > 0 ? delay : 0) : (!delay ? 0 : 400);
             
-            if (pushDelay) {
+            if (!time || pushDelay) {
                 _w.clearTimeout(pushDelay);
+                if (!time) {
+                    pushStack();
+                    return;
+                }
             }
 
             pushDelay = _w.setTimeout(function () {
                 _w.clearTimeout(pushDelay);
                 pushDelay = null;
                 pushStack();
-            }, 500);
+            }, time);
         },
 
         /**
@@ -120,13 +135,69 @@ export default function (core, change) {
                 setContentsFromStack();
             }
         },
+
+        /**
+         * @description Go to the history stack for that index.
+         * If "index" is -1, go to the last stack
+         * @param {Number} index Stack index
+         */
+        go: function (index) {
+            stackIndex = index < 0 ? (stack.length - 1) : index;
+            setContentsFromStack();
+        },
         
         /**
          * @description Reset the history object
          */
-        reset: function () {
+        reset: function (ignoreChangeEvent) {
+            if (undo) undo.setAttribute('disabled', true);
+            if (redo) redo.setAttribute('disabled', true);
+            if (core.context.tool.save) core.context.tool.save.setAttribute('disabled', true);
+            
+            stack.splice(0);
             stackIndex = 0;
-            stack = stack[stackIndex];
+
+            // pushStack
+            stack[stackIndex] = {
+                contents: core.getContents(true),
+                s: {
+                    path: [0, 0],
+                    offset: 0
+                },
+                e: {
+                    path: [0, 0],
+                    offset: 0
+                }
+            };
+
+            if (!ignoreChangeEvent) change();
+        },
+
+        /**
+         * @description Reset the disabled state of the buttons to fit the current stack.
+         * @private
+         */
+        _resetCachingButton: function () {
+            editor = core.context.element;
+            undo = core.context.tool.undo;
+            redo = core.context.tool.redo;
+
+            if (stackIndex === 0) {
+                if (undo) undo.setAttribute('disabled', true);
+                if (redo && stackIndex === stack.length - 1) redo.setAttribute('disabled', true);
+                if (core.context.tool.save) core.context.tool.save.setAttribute('disabled', true);
+            } else if (stackIndex === stack.length - 1) {
+                if (redo) redo.setAttribute('disabled', true);
+            }
+        },
+
+        /**
+         * @description Remove all stacks and remove the timeout function.
+         * @private
+         */
+        _destroy: function () {
+            if (pushDelay) _w.clearTimeout(pushDelay);
+            stack = null;
         }
     };
 }

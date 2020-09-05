@@ -1,12 +1,14 @@
 /*
- * kothing-editor.js
- * Copyright Kothing
+ * Rich Text Editor
+ *
+ * kothing-ditor.js
+ * Copyright Kothing.
  * MIT license.
  */
-'use strict';
 
 export default {
     name: 'table',
+    display: 'submenu',
     add: function (core, targetElement) {
         const context = core.context;
         context.table = {
@@ -16,7 +18,8 @@ export default {
             _trElements: null,
             _tableXY: [],
             _maxWidth: true,
-            resizeIcon: null,
+            _fixedColumn: false,
+            cellControllerTop: context.options.tableCellControllerPosition === 'top',
             resizeText: null,
             headerButton: null,
             mergeButton: null,
@@ -31,7 +34,11 @@ export default {
             _physical_cellIndex: 0,
             _logical_cellIndex: 0,
             _current_colSpan: 0,
-            _current_rowSpan: 0
+            _current_rowSpan: 0,
+            icons: {
+                expansion: core.icons.expansion,
+                reduction: core.icons.reduction
+            }
         };
 
         /** set submenu */
@@ -45,18 +52,21 @@ export default {
         /** set table controller */
         let tableController = this.setController_table.call(core);
         context.table.tableController = tableController;
-        context.table.resizeIcon = tableController.querySelector('._se_table_resize > i');
-        context.table.resizeText = tableController.querySelector('._se_table_resize > span > span');
-        context.table.headerButton = tableController.querySelector('._se_table_header');
-        tableController.addEventListener('mousedown', function (e) { e.stopPropagation(); }, false);
+        context.table.resizeButton = tableController.querySelector('._ke_table_resize');
+        context.table.resizeText = tableController.querySelector('._ke_table_resize > span > span');
+        context.table.columnFixedButton = tableController.querySelector('._ke_table_fixed_column');
+        context.table.headerButton = tableController.querySelector('._ke_table_header');
+        tableController.addEventListener('mousedown', core.eventStop);
 
         /** set resizing */
-        let resizeDiv = this.setController_tableEditor.call(core);
+        let resizeDiv = this.setController_tableEditor.call(core, context.table.cellControllerTop);
         context.table.resizeDiv = resizeDiv;
         context.table.splitMenu = resizeDiv.querySelector('.ke-btn-group-sub');
-        context.table.mergeButton = resizeDiv.querySelector('._se_table_merge_button');
-        context.table.splitButton = resizeDiv.querySelector('._se_table_split_button');
-        resizeDiv.addEventListener('mousedown', function (e) { e.stopPropagation(); }, false);
+        context.table.mergeButton = resizeDiv.querySelector('._ke_table_merge_button');
+        context.table.splitButton = resizeDiv.querySelector('._ke_table_split_button');
+        context.table.insertRowAboveButton = resizeDiv.querySelector('._ke_table_insert_row_a');
+        context.table.insertRowBelowButton = resizeDiv.querySelector('._ke_table_insert_row_b');
+        resizeDiv.addEventListener('mousedown', core.eventStop);
         
         /** add event listeners */
         tablePicker.addEventListener('mousemove', this.onMouseMove_tablePicker.bind(core));
@@ -64,8 +74,10 @@ export default {
         resizeDiv.addEventListener('click', this.onClick_tableController.bind(core));
         tableController.addEventListener('click', this.onClick_tableController.bind(core));
 
-        /** append html */
-        targetElement.parentNode.appendChild(listDiv);
+        /** append target button menu */
+        core.initMenuTarget(this.name, targetElement, listDiv);
+
+        /** append controller */
         context.element.relative.appendChild(resizeDiv);
         context.element.relative.appendChild(tableController);
 
@@ -81,9 +93,9 @@ export default {
         listDiv.className = 'ke-submenu ke-selector-table';
         listDiv.innerHTML = '' +
             '<div class="ke-table-size">' +
-            '   <div class="ke-table-size-picker ke-controller-table-picker"></div>' +
-            '   <div class="ke-table-size-highlighted"></div>' +
-            '   <div class="ke-table-size-unhighlighted"></div>' +
+                '<div class="ke-table-size-picker ke-controller-table-picker"></div>' +
+                '<div class="ke-table-size-highlighted"></div>' +
+                '<div class="ke-table-size-unhighlighted"></div>' +
             '</div>' +
             '<div class="ke-table-size-display">1 x 1</div>';
 
@@ -92,86 +104,87 @@ export default {
 
     setController_table: function () {
         const lang = this.lang;
+        const icons = this.icons;
         const tableResize = this.util.createElement('DIV');
 
         tableResize.className = 'ke-controller ke-controller-table';
         tableResize.innerHTML = '' +
             '<div>' +
-            '   <div class="ke-btn-group">' +
-            '       <button type="button" data-command="resize" class="ke-tooltip _se_table_resize">' +
-            '           <i class="ke-icon-expansion"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.maxSize + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="header" class="ke-tooltip _se_table_header">' +
-            '           <i class="ke-icon-table-header"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.tableHeader + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="remove" class="ke-tooltip">' +
-            '           <i class="ke-icon-delete"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.remove + '</span></span>' +
-            '       </button>' +
-            '   </div>' +
+                '<div class="ke-btn-group">' +
+                    '<button type="button" data-command="resize" class="ke-btn ke-tooltip _ke_table_resize">' +
+                        icons.expansion +
+                        '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.maxSize + '</span></span>' +
+                    '</button>' +
+                    '<button type="button" data-command="layout" class="ke-btn ke-tooltip _ke_table_fixed_column">' +
+                        icons.fixed_column_width +
+                        '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.fixedColumnWidth + '</span></span>' +
+                    '</button>' +
+                    '<button type="button" data-command="header" class="ke-btn ke-tooltip _ke_table_header">' +
+                        icons.table_header +
+                        '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.tableHeader + '</span></span>' +
+                    '</button>' +
+                    '<button type="button" data-command="remove" class="ke-btn ke-tooltip">' +
+                        icons.delete +
+                        '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.remove + '</span></span>' +
+                    '</button>' +
+                '</div>' +
             '</div>';
 
         return tableResize;
     },
 
-    setController_tableEditor: function () {
+    setController_tableEditor: function (cellControllerTop) {
         const lang = this.lang;
+        const icons = this.icons;
         const tableResize = this.util.createElement('DIV');
 
         tableResize.className = 'ke-controller ke-controller-table-cell';
-        tableResize.innerHTML = '' +
-            '<div class="ke-arrow ke-arrow-up"></div>' +
-            '<div>' +
-            '   <div class="ke-btn-group">' +
-            '       <button type="button" data-command="insert" data-value="row" data-option="up" class="ke-tooltip">' +
-            '           <i class="ke-icon-insert-row-above"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertRowAbove + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="insert" data-value="row" data-option="down" class="ke-tooltip">' +
-            '           <i class="ke-icon-insert-row-below"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertRowBelow + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="delete" data-value="row" class="ke-tooltip">' +
-            '           <i class="ke-icon-delete-row"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.deleteRow + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="merge" class="_se_table_merge_button ke-tooltip" disabled>' +
-            '           <i class="ke-icon-merge-cell"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.mergeCells + '</span></span>' +
-            '       </button>' +
-            '   </div>' +
+        tableResize.innerHTML = (cellControllerTop ? '' : '<div class="ke-arrow ke-arrow-up"></div>') +
+            '<div class="ke-btn-group">' +
+                '<button type="button" data-command="insert" data-value="row" data-option="up" class="ke-btn ke-tooltip _ke_table_insert_row_a">' +
+                    icons.insert_row_above +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertRowAbove + '</span></span>' +
+                '</button>' +
+                '<button type="button" data-command="insert" data-value="row" data-option="down" class="ke-btn ke-tooltip _ke_table_insert_row_b">' +
+                    icons.insert_row_below +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertRowBelow + '</span></span>' +
+                '</button>' +
+                '<button type="button" data-command="delete" data-value="row" class="ke-btn ke-tooltip">' +
+                    icons.delete_row +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.deleteRow + '</span></span>' +
+                '</button>' +
+                '<button type="button" data-command="merge" class="_ke_table_merge_button ke-btn ke-tooltip" disabled>' +
+                    icons.merge_cell +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.mergeCells + '</span></span>' +
+                '</button>' +
             '</div>' +
-            '<div>' +
-            '   <div class="ke-btn-group">' +
-            '     <button type="button" data-command="insert" data-value="cell" data-option="left" class="ke-tooltip">' +
-            '       <i class="ke-icon-insert-column-left"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertColumnBefore + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="insert" data-value="cell" data-option="right" class="ke-tooltip">' +
-            '           <i class="ke-icon-insert-column-right"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertColumnAfter + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="delete" data-value="cell" class="ke-tooltip">' +
-            '           <i class="ke-icon-delete-column"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.deleteColumn + '</span></span>' +
-            '       </button>' +
-            '       <button type="button" data-command="onsplit" class="_se_table_split_button ke-tooltip">' +
-            '           <i class="ke-icon-split-cell"></i>' +
-            '           <span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.splitCells + '</span></span>' +
-            '       </button>' +
-            '       <div class="ke-btn-group-sub kothing-editor-common ke-list-layer">' +
-            '           <div class="ke-list-inner">' +
-            '               <ul class="ke-list-basic">' +
-            '                   <li class="ke-btn-list" data-command="split" data-value="vertical" style="line-height:32px;" title="' + lang.controller.VerticalSplit + '">' + 
-            '                   ' + lang.controller.VerticalSplit + '</li>' +
-            '                   <li class="ke-btn-list" data-command="split" data-value="horizontal" style="line-height:32px;" title="' + lang.controller.HorizontalSplit + '">' + 
-            '                   ' + lang.controller.HorizontalSplit + '</li>' +
-            '               </ul>' +
-            '           </div>' +
-            '       </div>' +
-            '   </div>' +
+            '<div class="ke-btn-group" style="padding-top: 0;">' +
+                '<button type="button" data-command="insert" data-value="cell" data-option="left" class="ke-btn ke-tooltip">' +
+                    icons.insert_column_left +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertColumnBefore + '</span></span>' +
+                '</button>' +
+                '<button type="button" data-command="insert" data-value="cell" data-option="right" class="ke-btn ke-tooltip">' +
+                    icons.insert_column_right +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.insertColumnAfter + '</span></span>' +
+                '</button>' +
+                '<button type="button" data-command="delete" data-value="cell" class="ke-btn ke-tooltip">' +
+                    icons.delete_column +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.deleteColumn + '</span></span>' +
+                '</button>' +
+                '<button type="button" data-command="onsplit" class="_ke_table_split_button ke-btn ke-tooltip">' +
+                    icons.split_cell +
+                    '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.splitCells + '</span></span>' +
+                '</button>' +
+                '<div class="ke-btn-group-sub kothing-editor-common ke-list-layer">' +
+                    '<div class="ke-list-inner">' +
+                        '<ul class="ke-list-basic">' +
+                            '<li class="ke-btn-list" data-command="split" data-value="vertical" style="line-height:32px;" title="' + lang.controller.VerticalSplit + '">' + 
+                                lang.controller.VerticalSplit + '</li>' +
+                            '<li class="ke-btn-list" data-command="split" data-value="horizontal" style="line-height:32px;" title="' + lang.controller.HorizontalSplit + '">' + 
+                                lang.controller.HorizontalSplit + '</li>' +
+                        '</ul>' +
+                    '</div>' +
+                '</div>' +
             '</div>';
 
         return tableResize;
@@ -191,10 +204,13 @@ export default {
         tableHTML += '</tbody>';
         oTable.innerHTML = tableHTML;
 
-        this.insertComponent(oTable);
+        const changed = this.insertComponent(oTable, false, true, false);
         
-        this.focus();
-        this.plugins.table.reset_table_picker.call(this);
+        if (changed) {
+            const firstTd = oTable.querySelector('td div');
+            this.setRange(firstTd, 0, firstTd, 0);
+            this.plugins.table.reset_table_picker.call(this);
+        }
     },
 
     createCells: function (nodeName, cnt, returnElement) {
@@ -203,13 +219,13 @@ export default {
         if (!returnElement) {
             let cellsHTML = '';
             while (cnt > 0) {
-                cellsHTML += '<' +nodeName + '><br></' + nodeName + '>';
+                cellsHTML += '<' +nodeName + '><div><br></div></' + nodeName + '>';
                 cnt--;
             }
             return cellsHTML;
         } else {
             const cell = this.util.createElement(nodeName);
-            cell.innerHTML = '<br>';
+            cell.innerHTML = '<div><br></div>';
             return cell;
         }
     },
@@ -224,8 +240,8 @@ export default {
         this.context.table.tableHighlight.style.width = x + 'em';
         this.context.table.tableHighlight.style.height = y + 'em';
 
-        const x_u = x < 5 ? 5 : (x > 9 ? 10 : x + 1);
-        const y_u = y < 5 ? 5 : (y > 9 ? 10 : y + 1);
+        const x_u = 10; // x < 5 ? 5 : (x > 9 ? 10 : x + 1);
+        const y_u = 10; // y < 5 ? 5 : (y > 9 ? 10 : y + 1);
         this.context.table.tableUnHighlight.style.width = x_u + 'em';
         this.context.table.tableUnHighlight.style.height = y_u + 'em';
 
@@ -241,8 +257,8 @@ export default {
 
         highlight.width = '1em';
         highlight.height = '1em';
-        unHighlight.width = '5em';
-        unHighlight.height = '5em';
+        unHighlight.width = '10em';
+        unHighlight.height = '10em';
 
         this.util.changeTxt(this.context.table.tableDisplay, '1 x 1');
         this.submenuOff();
@@ -269,6 +285,7 @@ export default {
         contextTable._trElements = null;
         contextTable._tableXY = [];
         contextTable._maxWidth = true;
+        contextTable._fixedColumn = false;
         contextTable._physical_cellCnt = 0;
         contextTable._logical_cellCnt = 0;
         contextTable._rowCnt = 0;
@@ -290,22 +307,32 @@ export default {
 
     /** table edit controller */
     call_controller_tableEdit: function (tdElement) {
-        const contextTable = this.context.table;
         const tablePlugin = this.plugins.table;
-        const tableController = contextTable.tableController;
-        
+        const contextTable = this.context.table;
+
+        if (!this.getSelection().isCollapsed && !tablePlugin._selectedCell) {
+            this.controllersOff();
+            this.util.removeClass(tdElement, 'ke-table-selected-cell');
+            return;
+        }
+
+        const tableElement = contextTable._element || this.plugins.table._selectedTable || this.util.getParentElement(tdElement, 'TABLE');
+        tablePlugin.setPositionControllerTop.call(this, tableElement);
+        contextTable._maxWidth = this.util.hasClass(tableElement, 'ke-table-size-100') || tableElement.style.width === '100%' || (!tableElement.style.width && !this.util.hasClass(tableElement, 'ke-table-size-auto'));
+        contextTable._fixedColumn = this.util.hasClass(tableElement, 'ke-table-layout-fixed') || tableElement.style.tableLayout === 'fixed';
+        tablePlugin.setTableStyle.call(this, contextTable._maxWidth ? 'width|column' : 'width');
+
         tablePlugin.setPositionControllerDiv.call(this, tdElement, tablePlugin._shift);
+        
+        if (!tablePlugin._shift) this.controllersOn(contextTable.resizeDiv, contextTable.tableController, tablePlugin.init.bind(this), tdElement, 'table');
+    },
 
-        const tableElement = contextTable._element;
+    setPositionControllerTop: function (tableElement) {
+        const tableController = this.context.table.tableController;
         const offset = this.util.getOffset(tableElement, this.context.element.wysiwygFrame);
-
-        contextTable._maxWidth = !tableElement.style.width || tableElement.style.width === '100%';
-        tablePlugin.resizeTable.call(this);
         tableController.style.left = offset.left + 'px';
         tableController.style.display = 'block';
         tableController.style.top = (offset.top - tableController.offsetHeight - 2) + 'px';
-
-        if (!tablePlugin._shift) this.controllersOn(contextTable.resizeDiv, tableController, tablePlugin.init.bind(this));
     },
 
     setPositionControllerDiv: function (tdElement, reset) {
@@ -313,20 +340,29 @@ export default {
         const resizeDiv = contextTable.resizeDiv;
         
         this.plugins.table.setCellInfo.call(this, tdElement, reset);
-
+        
+        resizeDiv.style.visibility = 'hidden';
         resizeDiv.style.display = 'block';
 
-        const offset = this.util.getOffset(tdElement, this.context.element.wysiwygFrame);
-        resizeDiv.style.left = (offset.left - this.context.element.wysiwygFrame.scrollLeft) + 'px';
-        resizeDiv.style.top = (offset.top + tdElement.offsetHeight + 12) + 'px';
-
-        const overLeft = this.context.element.wysiwygFrame.offsetWidth - (resizeDiv.offsetLeft + resizeDiv.offsetWidth);
-        if (overLeft < 0) {
-            resizeDiv.style.left = (resizeDiv.offsetLeft + overLeft) + 'px';
-            resizeDiv.firstElementChild.style.left = (20 - overLeft) + 'px';
+        if (contextTable.cellControllerTop) {
+            const offset = this.util.getOffset(contextTable._element, this.context.element.wysiwygFrame);
+            resizeDiv.style.top = (offset.top - resizeDiv.offsetHeight - 2) + 'px';
+            resizeDiv.style.left = (offset.left + contextTable.tableController.offsetWidth) + 'px';
         } else {
-            resizeDiv.firstElementChild.style.left = '20px';
+            const offset = this.util.getOffset(tdElement, this.context.element.wysiwygFrame);
+            resizeDiv.style.left = (offset.left - this.context.element.wysiwygFrame.scrollLeft) + 'px';
+            resizeDiv.style.top = (offset.top + tdElement.offsetHeight + 12) + 'px';
+    
+            const overLeft = this.context.element.wysiwygFrame.offsetWidth - (resizeDiv.offsetLeft + resizeDiv.offsetWidth);
+            if (overLeft < 0) {
+                resizeDiv.style.left = (resizeDiv.offsetLeft + overLeft) + 'px';
+                resizeDiv.firstElementChild.style.left = (20 - overLeft) + 'px';
+            } else {
+                resizeDiv.firstElementChild.style.left = '20px';
+            }
         }
+
+        resizeDiv.style.visibility = '';
     },
 
     setCellInfo: function (tdElement, reset) {
@@ -946,6 +982,7 @@ export default {
             }
         }
 
+        this.focusEdge(currentCell);
         this.plugins.table.setPositionControllerDiv.call(this, currentCell, true);
     },
 
@@ -1022,6 +1059,7 @@ export default {
         tablePlugin.call_controller_tableEdit.call(this, mergeCell);
 
         util.addClass(mergeCell, 'ke-table-selected-cell');
+        this.focusEdge(mergeCell);
     },
 
     toggleHeader: function () {
@@ -1047,31 +1085,57 @@ export default {
         }
     },
 
-    resizeTable: function () {
+    setTableStyle: function (styles) {
         const contextTable = this.context.table;
-        const icon =  contextTable.resizeIcon;
-        const span = contextTable.resizeText;
+        const tableElement = contextTable._element;
+        let icon, span, sizeIcon, text;
 
-        let removeClass = 'ke-icon-expansion';
-        let addClass = 'ke-icon-reduction';
-        let text = contextTable.minText;
-        let width = '100%';
+        if (styles.indexOf('width') > -1) {
+            icon =  contextTable.resizeButton.firstElementChild;
+            span = contextTable.resizeText;
 
-        if (!contextTable._maxWidth) {
-            removeClass = 'ke-icon-reduction';
-            addClass = 'ke-icon-expansion';
-            text = contextTable.maxText;
-            width = 'auto';
+            if (!contextTable._maxWidth) {
+                sizeIcon = contextTable.icons.expansion;
+                text = contextTable.maxText;
+                contextTable.columnFixedButton.style.display = 'none';
+                this.util.removeClass(tableElement, 'ke-table-size-100');
+                this.util.addClass(tableElement, 'ke-table-size-auto');
+            } else {
+                sizeIcon = contextTable.icons.reduction;
+                text = contextTable.minText;
+                contextTable.columnFixedButton.style.display = 'block';
+                this.util.removeClass(tableElement, 'ke-table-size-auto');
+                this.util.addClass(tableElement, 'ke-table-size-100');
+            }
+            
+            this.util.changeElement(icon, sizeIcon);
+            this.util.changeTxt(span, text);
         }
-        
-        this.util.removeClass(icon, removeClass);
-        this.util.addClass(icon, addClass);
-        this.util.changeTxt(span, text);
-        contextTable._element.style.width = width;
+
+        if (styles.indexOf('column') > -1) {
+            if (!contextTable._fixedColumn) {
+                this.util.removeClass(tableElement, 'ke-table-layout-fixed');
+                this.util.addClass(tableElement, 'ke-table-layout-auto');
+                this.util.removeClass(contextTable.columnFixedButton, 'active');
+            } else {
+                this.util.removeClass(tableElement, 'ke-table-layout-auto');
+                this.util.addClass(tableElement, 'ke-table-layout-fixed');
+                this.util.addClass(contextTable.columnFixedButton, 'active');
+            }
+            
+        }
     },
 
     setActiveButton: function (fixedCell, selectedCell) {
         const contextTable = this.context.table;
+
+        if (/^TH$/i.test(fixedCell.nodeName)) {
+            contextTable.insertRowAboveButton.setAttribute('disabled', true);
+            contextTable.insertRowBelowButton.setAttribute('disabled', true);
+        } else {
+            contextTable.insertRowAboveButton.removeAttribute('disabled');
+            contextTable.insertRowBelowButton.removeAttribute('disabled');
+        }
 
         if (!selectedCell || fixedCell === selectedCell) {
             contextTable.splitButton.removeAttribute('disabled');
@@ -1117,18 +1181,17 @@ export default {
         tablePlugin.call_controller_tableEdit.call(this, tablePlugin._selectedCell || tablePlugin._fixedCell);
 
         tablePlugin._selectedCells = tablePlugin._selectedTable.querySelectorAll('.ke-table-selected-cell');
+        if (tablePlugin._selectedCell && tablePlugin._fixedCell) this.focusEdge(tablePlugin._selectedCell);
 
         if (!tablePlugin._shift) {
             tablePlugin._fixedCell = null;
             tablePlugin._selectedCell = null;
             tablePlugin._fixedCellName = null;
         }
-
-        this._editorRange();
-        this.focus();
     },
 
     _onCellMultiSelect: function (e) {
+        this._antiBlur = true;
         const tablePlugin = this.plugins.table;
         const target = this.util.getParentElement(e.target, this.util.isCell);
 
@@ -1142,7 +1205,7 @@ export default {
 
         if (!target || target === tablePlugin._selectedCell || tablePlugin._fixedCellName !== target.nodeName || 
             tablePlugin._selectedTable !== this.util.getParentElement(target, 'TABLE')) {
-                return;
+            return;
         }
 
         tablePlugin._selectedCell = target;
@@ -1308,7 +1371,7 @@ export default {
             this._wd.addEventListener('mousemove', tablePlugin._bindOnSelect, false);
         } else {
             tablePlugin._bindOffShift = function () {
-                this.controllersOn(this.context.table.resizeDiv, this.context.table.tableController, this.plugins.table.init.bind(this), this.focus.bind(this));
+                this.controllersOn(this.context.table.resizeDiv, this.context.table.tableController, this.plugins.table.init.bind(this), tdElement, 'table');
                 if (!tablePlugin._ref) this.controllersOff();
             }.bind(this);
 
@@ -1317,7 +1380,6 @@ export default {
         }
 
         this._wd.addEventListener('mouseup', tablePlugin._bindOffSelect, false);
-
         tablePlugin._initBind = tablePlugin.init.bind(this);
         this._wd.addEventListener('touchmove', tablePlugin._initBind, false);
     },
@@ -1331,9 +1393,10 @@ export default {
         const command = target.getAttribute('data-command');
         const value = target.getAttribute('data-value');
         const option = target.getAttribute('data-option');
+        const tablePlugin = this.plugins.table;
         
-        if (typeof this.plugins.table._closeSplitMenu === 'function') {
-            this.plugins.table._closeSplitMenu();
+        if (typeof tablePlugin._closeSplitMenu === 'function') {
+            tablePlugin._closeSplitMenu();
             if (command === 'onsplit') return;
         }
 
@@ -1341,37 +1404,48 @@ export default {
 
         e.preventDefault();
         const contextTable = this.context.table;
-
+        const emptyDiv = contextTable._element.parentNode;
         switch (command) {
             case 'insert':
             case 'delete':
-                this.plugins.table.editTable.call(this, value, option);
+                tablePlugin.editTable.call(this, value, option);
                 break;
             case 'header':
-                this.plugins.table.toggleHeader.call(this);
+                tablePlugin.toggleHeader.call(this);
                 break;
             case 'onsplit':
-                this.plugins.table.openSplitMenu.call(this);
+                tablePlugin.openSplitMenu.call(this);
                 break;
             case 'split':
-                this.plugins.table.splitCells.call(this, value);
+                tablePlugin.splitCells.call(this, value);
                 break;
             case 'merge':
-                this.plugins.table.mergeCells.call(this);
+                tablePlugin.mergeCells.call(this);
                 break;
             case 'resize':
-                contextTable.resizeDiv.style.display = 'none';
                 contextTable._maxWidth = !contextTable._maxWidth;
-                this.plugins.table.resizeTable.call(this);
+                tablePlugin.setTableStyle.call(this, 'width');
+                tablePlugin.setPositionControllerTop.call(this, contextTable._element);
+                tablePlugin.setPositionControllerDiv.call(this, contextTable._tdElement, tablePlugin._shift);
+                break;
+            case 'layout':
+                contextTable._fixedColumn = !contextTable._fixedColumn;
+                tablePlugin.setTableStyle.call(this, 'column');
+                tablePlugin.setPositionControllerTop.call(this, contextTable._element);
+                tablePlugin.setPositionControllerDiv.call(this, contextTable._tdElement, tablePlugin._shift);
                 break;
             case 'remove':
                 this.util.removeItem(contextTable._element);
                 this.controllersOff();
+
+                if (emptyDiv !== this.context.element.wysiwyg) this.util.removeItemAllParents(emptyDiv, function (current) { return current.childNodes.length === 0; }, null);
+                this.focus();
+                break;
+            default:
+
         }
 
-        this.focus();
-
         // history stack
-        this.history.push();
+        this.history.push(false);
     }
 };

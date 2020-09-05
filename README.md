@@ -20,7 +20,7 @@ Pure javscript rich text editorweb editor, with no dependencies
 - [Use import statement](#use-import-statement)
   - [Load only what you want](#1-load-only-what-you-want)
   - [Load all plugins](#2-load-all-plugins)
-  - [Plugins can be used directly in the button list](#3-plugins-can-be-used-directly-in-the-button-list)
+  - [Plugins can be used directly in the toolbar item](#3-plugins-can-be-used-directly-in-the-toolbar-item)
 - [Init function](#init-function)
 - [Use CodeMirror](#use-codemirror)
 - [Options](#options)
@@ -64,8 +64,6 @@ $ npm install --save kothing-editor
 ### 1. Include
 
 ```html
-<!-- <link href="../src/assets/css/kothing-editor.css" rel="stylesheet"> -->
-<!-- <link  href="../src/assets/css/kothing-editor-contents.css" rel="stylesheet"> -->
 <link href="../build/css/kothing-editor.min.css" rel="stylesheet" />
 <script src="../build/kothing-editor.min.js"></script>
 <script src="../src/lang/en.js"></script>
@@ -91,7 +89,7 @@ const KothingEditor = KothingEditor.create(
     // All of the plugins are loaded in the "window.KothingEditor" object in build/kothing-editor.min.js file
     // Insert options
     // Language global object (default: en)
-    lang: KothingEditor_LANG["zh_cn"],
+    lang: KothingEditor_Lang["zh_cn"],
   }
 );
 ```
@@ -126,7 +124,7 @@ import { en, zh_cn } from "kothing-editor/src/lang";
 
 KothingEditor.create("document", {
   plugins: [font, fontSize, fontColor, horizontalRule, link, image],
-  buttonList: [
+  toolBarItem: [
     ["font", "fontSize"],
     ["fontColor"],
     ["horizontalRule"],
@@ -145,7 +143,7 @@ import plugins from 'kothing-editor/src/plugins'
 
 KothingEditor.create('document', {
     plugins: plugins,
-    buttonList: [
+    toolBarItem: [
         ['undo', 'redo'],
         ['font', 'fontSize', 'formatBlock'],
         ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -167,15 +165,15 @@ KothingEditor.create('document', {
         plugins.font
         plugins.fontSize
     ],
-    buttonList: [
+    toolBarItem: [
         ['font', 'fontSize'],
-        // Plugins can be used directly in the button list
+        // Plugins can be used directly in the toolbar item
         [plugins.formatBlock]
     ]
 })
 ```
 
-### 3. Plugins can be used directly in the button list
+### 3. Plugins can be used directly in the toolbar item
 
 ```javascript
 import "kothing-editor/build/css/kothing-editor.min.css";
@@ -197,7 +195,7 @@ import {
 } from "kothing-editor/src/plugins";
 
 KothingEditor.create("document", {
-  buttonList: [
+  toolBarItem: [
     ["undo", "redo"],
     [font, fontSize, formatBlock],
     ["bold", "underline", "italic", "strike", "subscript", "superscript"],
@@ -229,7 +227,7 @@ import plugins from "kothing-editor/src/plugins";
 const initEditor = KothingEditor.init({
   plugins: plugins,
   height: 200,
-  buttonList: [
+  toolBarItem: [
     [
       "undo",
       "redo",
@@ -272,7 +270,7 @@ initEditor.create("document_1", {
 initEditor.create("document_2", {
   // The value of the option argument put in the "create" function call takes precedence
   height: "auto",
-  buttonList: [
+  toolBarItem: [
     ["bold", "underline", "italic"],
     ["removeFormat"],
     ["preview", "print"],
@@ -310,7 +308,7 @@ KothingEditor.create("document", {
   //     src: CodeMirror,
   //     options: {...}
   // }
-  buttonList: [["codeView"]],
+  toolBarItem: [["codeView"]],
   height: 400,
 });
 ```
@@ -404,7 +402,7 @@ formats         : Change default formatBlock array.                 default: [..
                   ],
                   Custom: [{
                       tag: 'div', // Tag name
-                      class: '__se__xxx' || null, // Class names must always begin with "__se__"
+                      class: '__ke__xxx' || null, // Class names must always begin with "__ke__"
                       title: 'Custom div' || null, // default: tag name
                       command: 'replace' || 'range' // default: "replace"
                   }]
@@ -473,7 +471,7 @@ templates       : If you use a template plugin, add it.
                   ]
 
 // Buttons--------------------------------------------------------------------------------------------------------
-buttonList      : Defines button list to array {Array}
+toolBarItem      : Defines toolbar item to array {Array}
                   default: [
                     ['undo', 'redo'],
                     // ['font', 'fontSize', 'formatBlock'],
@@ -500,7 +498,7 @@ const editor = KothingEditor.create("example");
 // Add or reset option property
 editor.setOptions({
   minHeight: "300px",
-  buttonList: [["fontColor", "hiliteColor"]],
+  toolBarItem: [["fontColor", "hiliteColor"]],
   colorList: [
     ["#ccc", "#dedede", "OrangeRed", "Orange", "RoyalBlue", "SaddleBrown"],
   ],

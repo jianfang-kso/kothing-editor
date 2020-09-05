@@ -4,8 +4,6 @@
 # project files
 .vscode/**
 .idea/**
-out
-gen
 
 # modules
 node_modules/**
@@ -14,3 +12,4 @@ node_modules/**
 #dev
 .git/**
 package-lock.json
+yarn.lock

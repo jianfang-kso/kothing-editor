@@ -1,14 +1,16 @@
 /*
- * kothing-editor.js
- * Copyright Kothing
+ * Rich Text Editor
+ *
+ * kothing-ditor.js
+ * Copyright Kothing.
  * MIT license.
  */
-'use strict';
 
-import colorPicker from '../modules/colorPicker';
+import colorPicker from '../modules/_colorPicker';
 
 export default {
     name: 'fontColor',
+    display: 'submenu',
     add: function (core, targetElement) {
         core.addModule([colorPicker]);
 
@@ -21,18 +23,17 @@ export default {
 
         /** set submenu */
         let listDiv = this.setSubmenu.call(core);
-        context.fontColor.colorInput = listDiv.querySelector('._se_color_picker_input');
+        context.fontColor.colorInput = listDiv.querySelector('._ke_color_picker_input');
 
         /** add event listeners */
         context.fontColor.colorInput.addEventListener('keyup', this.onChangeInput.bind(core));
-        listDiv.querySelector('._se_color_picker_submit').addEventListener('click', this.submit.bind(core));
-        listDiv.querySelector('._se_color_picker_remove').addEventListener('click', this.remove.bind(core));
+        listDiv.querySelector('._ke_color_picker_submit').addEventListener('click', this.submit.bind(core));
+        listDiv.querySelector('._ke_color_picker_remove').addEventListener('click', this.remove.bind(core));
         listDiv.addEventListener('click', this.pickup.bind(core));
-
         context.fontColor.colorList = listDiv.querySelectorAll('li button');
 
-        /** append html */
-        targetElement.parentNode.appendChild(listDiv);
+        /** append target button menu */
+        core.initMenuTarget(this.name, targetElement, listDiv);
 
         /** empty memory */
         listDiv = null;
@@ -48,6 +49,9 @@ export default {
         return listDiv;
     },
 
+    /**
+     * @Override submenu
+     */
     on: function () {
         const contextPicker = this.context.colorPicker;
         const contextFontColor = this.context.fontColor;
@@ -60,14 +64,11 @@ export default {
         this.plugins.colorPicker.init.call(this, this.getSelectionNode(), null);
     },
 
+     /**
+     * @Override _colorPicker
+     */
     onChangeInput: function (e) {
         this.plugins.colorPicker.setCurrentColor.call(this, e.target.value);
-    },
-    
-    remove: function () {
-        this.nodeChange(null, ['color']);
-        this.submenuOff();
-        this.focus();
     },
 
     submit: function () {
@@ -81,12 +82,17 @@ export default {
         this.plugins.fontColor.applyColor.call(this, e.target.getAttribute('data-value'));
     },
 
+    remove: function () {
+        this.nodeChange(null, ['color'], ['span'], true);
+        this.submenuOff();
+    },
+
     applyColor: function (color) {
         if (!color) return;
 
         const newNode = this.util.createElement('SPAN');
         newNode.style.color = color;
-        this.nodeChange(newNode, ['color']);
+        this.nodeChange(newNode, ['color'], null, null);
 
         this.submenuOff();
     }
