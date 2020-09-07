@@ -46,7 +46,7 @@ interface Core {
     history: History;
 
     /**
-     * @description Elements and user options parameters of the KothingEditor
+     * @description Elements and user options parameters of the kothingEditor
      */
     context: Context;
 
@@ -806,7 +806,7 @@ export default class KothingEditor {
     /**
      * @description Reset the buttons on the toolbar. (Editor is not reloaded)
      * You cannot set a new plugin for the button.
-     * @param toolBarItem Toolbar item 
+     * @param toolBarItem toolbar item
      */
     setToolbarButtons(toolBarItem: any[]): void;
 
@@ -841,20 +841,20 @@ export default class KothingEditor {
     save(): void;
 
     /**
-     * @description Gets the KothingEditor's context object. Contains settings, plugins, and cached element objects
+     * @description Gets the kothingEditor's context object. Contains settings, plugins, and cached element objects
      * @returns
      */
     getContext(): Context;
 
     /**
-     * @description Gets the contents of the KothingEditor
+     * @description Gets the contents of the kothingEditor
      * @param onlyContents - Return only the contents of the body without headers when the "fullPage" option is true
      * @returns
      */
     getContents(onlyContents: boolean): string;
 
     /**
-     * @description Gets only the text of the KothingEditor contents
+     * @description Gets only the text of the kothingEditor contents
      * @returns
      */
     getText(): string;
@@ -913,39 +913,39 @@ export default class KothingEditor {
     insertHTML(html: Element | string, notCleaningData?: boolean, checkCharCount?: boolean, rangeSelection?: boolean): void;
 
     /**
-     * @description Change the contents of the KothingEditor
+     * @description Change the contents of the kothingEditor
      * @param contents Contents to Input
      */
     setContents(contents: string): void;
 
     /**
-     * @description Add contents to the KothingEditor
+     * @description Add contents to the kothingEditor
      * @param contents Contents to Input
      */
     appendContents(contents: string): void;
 
     /**
-     * @description Disable the KothingEditor
+     * @description Disable the kothingEditor
      */
     disabled(): void;
 
     /**
-     * @description Enable the KothingEditor
+     * @description Enable the kothingEditor
      */
     enabled(): void;
 
     /**
-     * @description Show the KothingEditor
+     * @description Show the kothingEditor
      */
     show(): void;
 
     /**
-     * @description Hide the KothingEditor
+     * @description Hide the kothingEditor
      */
     hide(): void;
 
     /**
-     * @description Destroy the KothingEditor
+     * @description Destroy the kothingEditor
      */
     destroy(): void;
 

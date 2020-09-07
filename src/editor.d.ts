@@ -1,4 +1,4 @@
-import { KothingEditorOptions } from './options.d';
+import { KothingEditorOptions } from './options';
 import KothingEditor from './lib/core';
 
 declare namespace _default {
