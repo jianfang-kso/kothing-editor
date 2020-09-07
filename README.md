@@ -64,9 +64,9 @@ $ npm install --save kothing-editor
 ### 1. Include
 
 ```html
-<link href="../build/css/kothing-editor.min.css" rel="stylesheet" />
-<script src="../build/kothing-editor.min.js"></script>
-<script src="../src/lang/en.js"></script>
+<link href="./css/kothing-editor.min.css" rel="stylesheet" />
+<script src="./kothing-editor.min.js"></script>
+<script src="./lib/lang/en.js"></script>
 ```
 
 ### 2. Target Element
@@ -86,7 +86,7 @@ $ npm install --save kothing-editor
 const KothingEditor = KothingEditor.create(
   document.getElementById('document') || 'document',
   {
-    // All of the plugins are loaded in the "window.KothingEditor" object in build/kothing-editor.min.js file
+    // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
     // Insert options
     // Language global object (default: en)
     lang: KothingEditor_Lang['zh_cn'],
@@ -98,7 +98,7 @@ const KothingEditor = KothingEditor.create(
 
 ```text
 When you display a document created by KothingEditor
-You need to include "src/assets/css/kothing-editor-contents.css" or "build/css/kothing-editor.min.css" file.
+You need to include "src/assets/css/kothing-editor-contents.css" or "/css/kothing-editor.min.css" file.
 Then add "kothing-editor-editable" to the class name of the Tag element that displays the content.
 In "kothing-editor-contents.css", you can define the style of all the tags created in KothingEditor.
 ```
@@ -108,7 +108,7 @@ In "kothing-editor-contents.css", you can define the style of all the tags creat
 ### 1. Load only what you want
 
 ```javascript
-import 'kothing-editor/build/css/kothing-editor.min.css'
+import 'kothing-editor/css/kothing-editor.min.css'
 import KothingEditor from 'kothing-editor'
 import {
   font,
@@ -117,10 +117,10 @@ import {
   horizontalRule,
   list,
   image,
-} from 'kothing-editor/src/plugins'
+} from 'kothing-editor/lib/plugins'
 // How to import language files (default: en)
-import lang from 'kothing-editor/src/lang'
-import { en, zh_cn } from 'kothing-editor/src/lang'
+import lang from 'kothing-editor/lib/lang'
+import { en, zh_cn } from 'kothing-editor/lib/lang'
 
 KothingEditor.create('document', {
   plugins: [font, fontSize, fontColor, horizontalRule, link, image],
@@ -137,9 +137,9 @@ KothingEditor.create('document', {
 ### 2. Load all plugins
 
 ```javascript
-import 'kothing-editor/build/css/kothing-editor.min.css'
+import 'kothing-editor/css/kothing-editor.min.css'
 import KothingEditor from 'kothing-editor'
-import plugins from 'kothing-editor/src/plugins'
+import plugins from 'kothing-editor/lib/plugins'
 
 KothingEditor.create('document', {
     plugins: plugins,
@@ -176,7 +176,7 @@ KothingEditor.create('document', {
 ### 3. Plugins can be used directly in the toolbar item
 
 ```javascript
-import 'kothing-editor/build/css/kothing-editor.min.css'
+import 'kothing-editor/css/kothing-editor.min.css'
 import KothingEditor from 'kothing-editor'
 import {
   align,
@@ -192,7 +192,7 @@ import {
   link,
   image,
   video,
-} from 'kothing-editor/src/plugins'
+} from 'kothing-editor/lib/plugins'
 
 KothingEditor.create('document', {
   toolBarItem: [
@@ -219,9 +219,9 @@ The value of the option argument put in the "create" function call takes precede
 ```
 
 ```javascript
-import 'kothing-editor/build/css/kothing-editor.min.css'
+import 'kothing-editor/css/kothing-editor.min.css'
 import KothingEditor from 'kothing-editor'
-import plugins from 'kothing-editor/src/plugins'
+import plugins from 'kothing-editor/lib/plugins'
 
 // all plugins
 const initEditor = KothingEditor.init({
@@ -294,7 +294,7 @@ initEditor.create('document_2', {
 ```
 
 ```javascript
-import 'kothing-editor/build/css/kothing-editor.min.css'
+import 'kothing-editor/css/kothing-editor.min.css'
 import KothingEditor from 'kothing-editor'
 // Import codeMirror
 import CodeMirror from 'codemirror'
