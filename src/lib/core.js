@@ -5919,6 +5919,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             command = 'indent';
           }
           break;
+        default:
       }
 
       if (!command) return false;
