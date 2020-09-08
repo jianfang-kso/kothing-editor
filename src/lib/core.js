@@ -7174,6 +7174,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             return false;
           }
           break;
+        default:
       }
 
       if (shift && /16/.test(keyCode)) {
