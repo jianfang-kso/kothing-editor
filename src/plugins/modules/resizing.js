@@ -764,6 +764,7 @@
         case 'delete':
           currentModule.destroy.call(this);
           break;
+        default:
       }
 
       // history stack
