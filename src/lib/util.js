@@ -204,7 +204,7 @@ const util = {
     if (!path)
       throw Error(
         '[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +' +
-          name +
+          path +
           ', extension: ' +
           extension +
           ')'
