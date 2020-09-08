@@ -1,5 +1,3 @@
-'use strict';
-
 import dialog from '../modules/dialog';
 
 export default {
