@@ -198,8 +198,8 @@ const util = {
       path.slice(0, 2) !== '//' &&
       (path =
         path.indexOf('/') === 0
-          ? location.href.match(/^.*?:\/\/[^\/]*/)[0] + path
-          : location.href.match(/^[^\?]*\/(?:)/)[0] + path);
+          ? window.location.href.match(/^.*?:\/\/[^\/]*/)[0] + path
+          : window.location.href.match(/^[^\?]*\/(?:)/)[0] + path);
 
     if (!path)
       throw Error(
