@@ -1604,6 +1604,8 @@ export default {
             null
           );
         this.focus();
+        break;
+      default:
     }
 
     // history stack
