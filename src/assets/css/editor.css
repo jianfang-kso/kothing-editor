@@ -395,11 +395,11 @@
 /* --- browser - column */
 .kothing-editor .ke-file-browser .ke-file-browser-list .ke-file-item-column {position:relative; display:block; height:auto; float:left;}
 
-/* --- browser --- custom - "se-image-list" - column */
+/* --- browser --- custom - "ke-image-list" - column */
 .kothing-editor .ke-file-browser .ke-file-browser-list.ke-image-list .ke-file-item-column {width:calc(25% - 20px); margin:0 10px;}
 @media screen and (max-width:992px) { .kothing-editor .ke-file-browser .ke-file-browser-list.ke-image-list .ke-file-item-column {width:calc(33% - 20px);} }
 @media screen and (max-width:768px) { .kothing-editor .ke-file-browser .ke-file-browser-list.ke-image-list .ke-file-item-column {width:calc(50% - 20px);} }
-/* --- browser --- custom - "se-image-list" - item */
+/* --- browser --- custom - "ke-image-list" - item */
 .kothing-editor .ke-file-browser .ke-file-browser-list.ke-image-list .ke-file-item-img {position:relative; display:block; cursor: pointer; width:100%; height:auto; border-radius:4px; outline:0; margin:10px 0;}
 .kothing-editor .ke-file-browser .ke-file-browser-list.ke-image-list .ke-file-item-img:hover {opacity:0.8; -webkit-box-shadow:0 0 0 0.2rem #3288ff; box-shadow:0 0 0 0.2rem #3288ff;}
 .kothing-editor .ke-file-browser .ke-file-browser-list.ke-image-list .ke-file-item-img > img {position:relative; display:block; width:100%; border-radius:4px; outline:0; height:auto;}
