@@ -3,8 +3,8 @@
   "sideEffects": [
     "./src/assets/css/*.css"
   ],
-  "version": "1.0.0",
-  "description": "Pure JavaScript rich text editor web editor",
+  "version": "0.0.6",
+  "description": "A powerful WYSIWYG rich text web editor by pure javascript",
   "main": "src/editor.js",
   "keywords": [
     "wysiwyg",

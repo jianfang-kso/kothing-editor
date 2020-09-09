@@ -55,8 +55,6 @@ $ npm install --save kothing-editor
 ```html
 <link href="./kothing-editor.min.css" rel="stylesheet" />
 <script src="./kothing-editor.min.js"></script>
-<!-- languages (Basic Language: English/en) -->
-<script src="./lang/en.js"></script>
 ```
 
 ## Getting Started
@@ -66,41 +64,35 @@ $ npm install --save kothing-editor
 ```html
 <link href="./css/kothing-editor.min.css" rel="stylesheet" />
 <script src="./kothing-editor.min.js"></script>
-<script src="./lib/lang/en.js"></script>
 ```
 
 ### 2. Target Element
 
 ```html
-<textarea id="document">Hi</textarea>
+<textarea id="my-editor">Hi</textarea>
 ```
 
 ### 3. Create
 
 ```javascript
 /**
- * ID : 'kothing-editor_document'
+ * ID : 'my-editor'
  * ClassName : 'kothing-eidtor'
  */
 // ID or DOM object
-const KothingEditor = KothingEditor.create(
-  document.getElementById('document') || 'document',
-  {
-    // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
-    // Insert options
-    // Language global object (default: en)
-    lang: KothingEditor_Lang['zh_cn'],
-  }
-)
+const KothingEditor = KothingEditor.create(document.getElementById('my-editor'), {
+  // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
+  // Insert options
+  // Language global object (default: en)
+  lang: KothingEditor_Lang['zh_cn'],
+});
 ```
 
 ### 4. Contents display
 
 ```text
 When you display a document created by KothingEditor
-You need to include "src/assets/css/kothing-editor-contents.css" or "/css/kothing-editor.min.css" file.
-Then add "kothing-editor-editable" to the class name of the Tag element that displays the content.
-In "kothing-editor-contents.css", you can define the style of all the tags created in KothingEditor.
+You need to include "kothing-editor/css/kothing-editor.min.css" file.
 ```
 
 ## Use import statement
@@ -108,30 +100,16 @@ In "kothing-editor-contents.css", you can define the style of all the tags creat
 ### 1. Load only what you want
 
 ```javascript
-import 'kothing-editor/css/kothing-editor.min.css'
-import KothingEditor from 'kothing-editor'
-import {
-  font,
-  fontSize,
-  fontColor,
-  horizontalRule,
-  list,
-  image,
-} from 'kothing-editor/lib/plugins'
-// How to import language files (default: en)
-import lang from 'kothing-editor/lib/lang'
-import { en, zh_cn } from 'kothing-editor/lib/lang'
+import 'kothing-editor/css/kothing-editor.min.css';
+import KothingEditor from 'kothing-editor';
+import { font, fontSize, fontColor, horizontalRule, list, image } from 'kothing-editor/lib/plugins';
+import lang from 'kothing-editor/lib/lang';
 
-KothingEditor.create('document', {
+KothingEditor.create('my-editor', {
   plugins: [font, fontSize, fontColor, horizontalRule, link, image],
-  toolBarItem: [
-    ['font', 'fontSize'],
-    ['fontColor'],
-    ['horizontalRule'],
-    ['link', 'image'],
-  ],
+  toolBarItem: [['font', 'fontSize'], ['fontColor'], ['horizontalRule'], ['link', 'image']],
   lang: lang.zh_cn,
-})
+});
 ```
 
 ### 2. Load all plugins
@@ -160,7 +138,7 @@ KothingEditor.create('document', {
 })
 
 // You can also load what you want
-KothingEditor.create('document', {
+KothingEditor.create('my-editor', {
     plugins: [
         plugins.font
         plugins.fontSize
@@ -176,8 +154,8 @@ KothingEditor.create('document', {
 ### 3. Plugins can be used directly in the toolbar item
 
 ```javascript
-import 'kothing-editor/css/kothing-editor.min.css'
-import KothingEditor from 'kothing-editor'
+import 'kothing-editor/css/kothing-editor.min.css';
+import KothingEditor from 'kothing-editor';
 import {
   align,
   font,
@@ -192,9 +170,9 @@ import {
   link,
   image,
   video,
-} from 'kothing-editor/lib/plugins'
+} from 'kothing-editor/lib/plugins';
 
-KothingEditor.create('document', {
+KothingEditor.create('my-editor', {
   toolBarItem: [
     ['undo', 'redo'],
     [font, fontSize, formatBlock],
@@ -208,7 +186,7 @@ KothingEditor.create('document', {
     ['preview', 'print'],
     ['save', template],
   ],
-})
+});
 ```
 
 ## Init function
@@ -219,9 +197,9 @@ The value of the option argument put in the "create" function call takes precede
 ```
 
 ```javascript
-import 'kothing-editor/css/kothing-editor.min.css'
-import KothingEditor from 'kothing-editor'
-import plugins from 'kothing-editor/lib/plugins'
+import 'kothing-editor/css/kothing-editor.min.css';
+import KothingEditor from 'kothing-editor';
+import plugins from 'kothing-editor/lib/plugins';
 
 // all plugins
 const initEditor = KothingEditor.init({
@@ -261,21 +239,17 @@ const initEditor = KothingEditor.init({
       'template',
     ],
   ],
-})
+});
 
-initEditor.create('document_1', {
+initEditor.create('my-editor_1', {
   // The value of the option argument put in the "create" function call takes precedence
-})
+});
 
-initEditor.create('document_2', {
+initEditor.create('my-editor_2', {
   // The value of the option argument put in the "create" function call takes precedence
   height: 'auto',
-  toolBarItem: [
-    ['bold', 'underline', 'italic'],
-    ['removeFormat'],
-    ['preview', 'print'],
-  ],
-})
+  toolBarItem: [['bold', 'underline', 'italic'], ['removeFormat'], ['preview', 'print']],
+});
 ```
 
 ## Use CodeMirror
@@ -294,14 +268,14 @@ initEditor.create('document_2', {
 ```
 
 ```javascript
-import 'kothing-editor/css/kothing-editor.min.css'
-import KothingEditor from 'kothing-editor'
+import 'kothing-editor/css/kothing-editor.min.css';
+import KothingEditor from 'kothing-editor';
 // Import codeMirror
-import CodeMirror from 'codemirror'
-import 'codemirror/mode/htmlmixed/htmlmixed'
-import 'codemirror/lib/codemirror.css'
+import CodeMirror from 'codemirror';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/lib/codemirror.css';
 
-KothingEditor.create('document', {
+KothingEditor.create('my-editor', {
   codeMirror: CodeMirror,
   // Set options
   // codeMirror: {
@@ -310,7 +284,7 @@ KothingEditor.create('document', {
   // }
   toolBarItem: [['codeView']],
   height: 400,
-})
+});
 ```
 
 ## Options
@@ -358,6 +332,7 @@ codeMirror      : If you put the CodeMirror object as an option, you can do Code
                             */
                         }
                       }
+
 
 // Display-------------------------------------------------------------------------------------------------------
 position        : The position property of KothingEditor.               default: null {String}
@@ -491,33 +466,31 @@ toolBarItem      : Defines toolbar item to array {Array}
 ## Functions
 
 ```javascript
-import KothingEditor from 'kothing-editor'
+import KothingEditor from 'kothing-editor';
 
-const editor = KothingEditor.create('example')
+const editor = KothingEditor.create('example');
 
 // Add or reset option property
 editor.setOptions({
   minHeight: '300px',
   toolBarItem: [['fontColor', 'hiliteColor']],
-  colorList: [
-    ['#ccc', '#dedede', 'OrangeRed', 'Orange', 'RoyalBlue', 'SaddleBrown'],
-  ],
-})
+  colorList: [['#ccc', '#dedede', 'OrangeRed', 'Orange', 'RoyalBlue', 'SaddleBrown']],
+});
 
 // Open a notice area
-editor.noticeOpen('test notice')
+editor.noticeOpen('test notice');
 
 // Close a notice area
-editor.noticeClose()
+editor.noticeClose();
 
 // Copies the contents of the KothingEditor into a [textarea]
-editor.save()
+editor.save();
 
 // Gets the KothingEditor's context object. Contains settings, plugins, and cached element objects
-editor.getContext()
+editor.getContext();
 
 // Gets the contents of the KothingEditor
-editor.getContents()
+editor.getContents();
 
 // Gets a list of images uploaded to the editor
 /**
@@ -530,62 +503,62 @@ editor.getContents()
  *  delete: delete function
  * }
  **/
-editor.getImagesInfo()
+editor.getImagesInfo();
 
 // Upload images using image plugin
-editor.insertImage(FileList)
+editor.insertImage(FileList);
 
 // Inserts an HTML element or HTML string or plain string at the current cursor position
-editor.insertHTML('<img src="http://kothing.github.io/editor/img/beauty.jpg">')
+editor.insertHTML('<img src="http://kothing.github.io/editor/img/beauty.jpg">');
 
 // Change the contents of the KothingEditor
-editor.setContents('set contents')
+editor.setContents('set contents');
 
 // Add content to the KothingEditor
-editor.appendContents('append contents')
+editor.appendContents('append contents');
 
 // Disable the KothingEditor
-editor.disabled()
+editor.disabled();
 
 // Enabled the KothingEditor
-editor.enabled()
+editor.enabled();
 
 // Hide the KothingEditor
-editor.hide()
+editor.hide();
 
 // Show the KothingEditor
-editor.show()
+editor.show();
 
 // Destroy the KothingEditor
-editor.destroy()
-editor = null
+editor.destroy();
+editor = null;
 
 // Event functions
 // It can be redefined by receiving event object as parameter.
 // It is not called in exceptional cases and is called after the default event function has finished.
 editor.onScroll = function(e) {
-  console.log('onScroll', e)
-}
+  console.log('onScroll', e);
+};
 
 editor.onClick = function(e) {
-  console.log('onClick', e)
-}
+  console.log('onClick', e);
+};
 
 editor.onKeyDown = function(e) {
-  console.log('onKeyDown', e)
-}
+  console.log('onKeyDown', e);
+};
 
 editor.onKeyUp = function(e) {
-  console.log('onKeyUp', e)
-}
+  console.log('onKeyUp', e);
+};
 
 editor.onDrop = function(e) {
-  console.log('onDrop', e)
-}
+  console.log('onDrop', e);
+};
 
 editor.onChange = function(contents) {
-  console.log('onChange', contents)
-}
+  console.log('onChange', contents);
+};
 
 // Paste event.
 // Called before the editor's default event action.
@@ -595,8 +568,8 @@ editor.onChange = function(contents) {
  * maxCharCount : maxChartCount option (true if max character is exceeded)
  */
 editor.onPaste = function(e, cleanData, maxCharCount) {
-  console.log('onPaste', e, cleanData, maxCharCount)
-}
+  console.log('onPaste', e, cleanData, maxCharCount);
+};
 
 // Called when the image is uploaded or the uploaded image is deleted.
 /**
@@ -612,20 +585,12 @@ editor.onPaste = function(e, cleanData, maxCharCount) {
  * }
  * remainingFilesCount: Count of remaining image files
  */
-editor.onImageUpload = function(
-  targetImgElement,
-  index,
-  state,
-  imageInfo,
-  remainingFilesCount
-) {
+editor.onImageUpload = function(targetImgElement, index, state, imageInfo, remainingFilesCount) {
   console.log(
     `targetImgElement:${targetImgElement}, index:${index}, state('create', 'update', 'delete'):${state}`
-  )
-  console.log(
-    `imageInfo:${imageInfo}, remainingFilesCount:${remainingFilesCount}`
-  )
-}
+  );
+  console.log(`imageInfo:${imageInfo}, remainingFilesCount:${remainingFilesCount}`);
+};
 
 // Called when the image is upload failed.
 // If you return false, the default notices are not called.
@@ -634,8 +599,8 @@ editor.onImageUpload = function(
  * result: Result object
  */
 editor.onImageUploadError = function(errorMessage, result) {
-  alert(errorMessage)
-}
+  alert(errorMessage);
+};
 
 // Paste event.
 // Called before the editor's default event action.
@@ -645,9 +610,9 @@ editor.onImageUploadError = function(errorMessage, result) {
  * context: The editor's context object (editor.getContext())
  */
 editor.showInline = function(toolbar, context) {
-  console.log('toolbar', toolbar)
-  console.log('context', context)
-}
+  console.log('toolbar', toolbar);
+  console.log('context', context);
+};
 ```
 
 ## Examples
