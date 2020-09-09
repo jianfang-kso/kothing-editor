@@ -17,7 +17,7 @@ import _util from './util';
 import _notice from '../plugins/modules/_notice';
 
 /**
- * @description SunEditor constuctor function.
+ * @description KothingEditor constuctor function.
  * create core object and event registration.
  * core, event, functions
  * @param {Object} context
@@ -28,7 +28,7 @@ import _notice from '../plugins/modules/_notice';
  * @param {Object} _responsiveButtons
  * @returns {Object} functions Object
  */
-export default function(context, pluginCallButtons, plugins, lang, options, _responsiveButtons) {
+export default function (context, pluginCallButtons, plugins, lang, options, _responsiveButtons) {
   const _d = context.element.originElement.ownerDocument || document;
   const _w = _d.defaultView || window;
   const util = _util;
@@ -187,12 +187,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     currentFileComponentInfo: null,
 
     /**
-     * @description An array of buttons whose class name is not "se-code-view-enabled"
+     * @description An array of buttons whose class name is not "ke-code-view-enabled"
      */
     codeViewDisabledButtons: null,
 
     /**
-     * @description An array of buttons whose class name is not "se-resizing-enabled"
+     * @description An array of buttons whose class name is not "ke-resizing-enabled"
      */
     resizingDisabledButtons: null,
 
@@ -321,21 +321,21 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Information of tags that should maintain HTML structure, style, class name, etc. (In use by "math" plugin)
      * When inserting "html" such as paste, it is executed on the "html" to be inserted. (core.cleanHTML)
      * Basic Editor Actions:
-     * 1. All classes not starting with "__se__" or "se-" in the editor are removed.
+     * 1. All classes not starting with "__ke__" or "ke-" in the editor are removed.
      * 2. The style of all tags except the "span" tag is removed from the editor.
      * "managedTagsInfo" structure ex:
      * managedTagsInfo: {
-     *   query: '.__se__xxx, se-xxx'
+     *   query: '.__ke__xxx, ke-xxx'
      *   map: {
-     *     '__se__xxx': method.bind(core),
-     *     'se-xxx': method.bind(core),
+     *     '__ke__xxx': method.bind(core),
+     *     'ke-xxx': method.bind(core),
      *   }
      * }
      * @example
      * Define in the following return format in the "managedTagInfo" function of the plugin.
      * managedTagInfo() => {
      *  return {
-     *    className: 'string', // Class name to identify the tag. ("__se__xxx", "se-xxx")
+     *    className: 'string', // Class name to identify the tag. ("__ke__xxx", "ke-xxx")
      *    // Change the html of the "element". ("element" is the element found with "className".)
      *    // "method" is executed by binding "core".
      *    method: function (element) {
@@ -426,7 +426,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @property {Number} resizeClientY Remember the vertical size of the editor before resizing the editor (Used when calculating during resize operation)
      * @property {Number} tabSize Indent size of tab (4)
      * @property {Number} codeIndent Indent size of Code view mode (4)
-     * @property {Number} minResizingSize Minimum size of editing area when resized {Number} (.se-wrapper-inner {min-height: 65px;} || 65)
+     * @property {Number} minResizingSize Minimum size of editing area when resized {Number} (.ke-wrapper-inner {min-height: 65px;} || 65)
      * @property {Array} currentNodes  An array of the current cursor's node structure
      * @private
      */
@@ -459,14 +459,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {function} callBackFunction Function to be executed immediately after module call
      * @param {Element|null} _target Plugin target button (This is not necessary if you have a button list when creating the editor)
      */
-    callPlugin: function(pluginName, callBackFunction, _target) {
+    callPlugin: function (pluginName, callBackFunction, _target) {
       _target = _target || pluginCallButtons[pluginName];
 
       if (!this.plugins[pluginName]) {
         throw Error(
-          '[SUNEDITOR.core.callPlugin.fail] The called plugin does not exist or is in an invalid format. (pluginName:"' +
-            pluginName +
-            '")'
+          '[KothingEditor.core.callPlugin.fail] The called plugin does not exist or is in an invalid format. (pluginName:"' +
+          pluginName +
+          '")'
         );
       } else if (!this.initPlugins[pluginName]) {
         this.plugins[pluginName].add(this, _target);
@@ -487,7 +487,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description If the module is not added, add the module and call the 'add' function
      * @param {Array} moduleArray module object's Array [dialog, resizing]
      */
-    addModule: function(moduleArray) {
+    addModule: function (moduleArray) {
       for (let i = 0, len = moduleArray.length, moduleName; i < len; i++) {
         moduleName = moduleArray[i].name;
         if (!this.plugins[moduleName]) {
@@ -508,7 +508,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element|null} target Target button
      * @param {Element} menu Submenu element
      */
-    initMenuTarget: function(pluginName, target, menu) {
+    initMenuTarget: function (pluginName, target, menu) {
       if (!target) {
         this._targetPlugins[pluginName] = menu;
       } else {
@@ -522,7 +522,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Enabled submenu
      * @param {Element} element Submenu's button element to call
      */
-    submenuOn: function(element) {
+    submenuOn: function (element) {
       if (this._bindedSubmenuOff) this._bindedSubmenuOff();
       if (this._bindControllersOff) this.controllersOff();
 
@@ -541,7 +541,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Disable submenu
      */
-    submenuOff: function() {
+    submenuOff: function () {
       this.removeDocEvent('mousedown', this._bindedSubmenuOff);
       this._bindedSubmenuOff = null;
 
@@ -561,7 +561,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Enabled container
      * @param {Element} element Container's button element to call
      */
-    containerOn: function(element) {
+    containerOn: function (element) {
       if (this._bindedContainerOff) this._bindedContainerOff();
 
       const containerName = (this._containerName = element.getAttribute('data-command'));
@@ -579,7 +579,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Disable container
      */
-    containerOff: function() {
+    containerOff: function () {
       this.removeDocEvent('mousedown', this._bindedContainerOff);
       this._bindedContainerOff = null;
 
@@ -601,7 +601,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {*} menu Menu element
      * @private
      */
-    _setMenuPosition: function(element, menu) {
+    _setMenuPosition: function (element, menu) {
       menu.style.top = '-10000px';
       menu.style.visibility = 'hidden';
       menu.style.display = 'block';
@@ -668,7 +668,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Show controller at editor area (controller elements, function, "controller target element(@Required)", "controller name(@Required)", etc..)
      * @param {*} arguments controller elements, functions..
      */
-    controllersOn: function() {
+    controllersOn: function () {
       if (this._bindControllersOff) this._bindControllersOff();
       this.controllerArray = [];
 
@@ -684,7 +684,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
           this.controllerArray.push(arg);
           continue;
         }
-        if (!util.hasClass(arg, 'se-controller')) {
+        if (!util.hasClass(arg, 'ke-controller')) {
           this.currentControllerTarget = arg;
           this.currentFileComponentInfo = this.getFileComponent(arg);
           continue;
@@ -706,7 +706,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Hide controller at editor area (link button, image resize button..)
      * @param {KeyboardEvent|MouseEvent|null} e Event object when called from mousedown and keydown events registered in "core.controllersOn"
      */
-    controllersOff: function(e) {
+    controllersOff: function (e) {
       if (
         this._fileManager.pluginRegExp.test(this.currentControllerName) &&
         e &&
@@ -745,7 +745,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Run event.stopPropagation and event.preventDefault.
      * @param {Object} e Event Object
      */
-    eventStop: function(e) {
+    eventStop: function (e) {
       e.stopPropagation();
       e.preventDefault();
     },
@@ -756,7 +756,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} showDefaultUI javascript execCommand function property
      * @param {String} value javascript execCommand function property
      */
-    execCommand: function(command, showDefaultUI, value) {
+    execCommand: function (command, showDefaultUI, value) {
       this._wd.execCommand(
         command,
         showDefaultUI,
@@ -769,7 +769,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Focus to wysiwyg area using "native focus function"
      */
-    nativeFocus: function() {
+    nativeFocus: function () {
       const caption = util.getParentElement(this.getSelectionNode(), 'figcaption');
       if (caption) {
         caption.focus();
@@ -783,7 +783,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Focus to wysiwyg area
      */
-    focus: function() {
+    focus: function () {
       if (context.element.wysiwygFrame.style.display === 'none') return;
 
       if (options.iframe) {
@@ -823,7 +823,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * If "focusEdge" is null, then selected last element
      * @param {Element|null} focusEl Focus element
      */
-    focusEdge: function(focusEl) {
+    focusEdge: function (focusEl) {
       if (!focusEl) focusEl = context.element.wysiwyg.lastElementChild;
 
       const fileComponentInfo = this.getFileComponent(focusEl);
@@ -832,7 +832,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       } else if (focusEl) {
         focusEl = util.getChildElement(
           focusEl,
-          function(current) {
+          function (current) {
             return current.childNodes.length === 0 || current.nodeType === 3;
           },
           true
@@ -853,7 +853,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Number} endOff The endOffset property of the selection object.
      * @returns {Object} Range object.
      */
-    setRange: function(startCon, startOff, endCon, endOff) {
+    setRange: function (startCon, startOff, endCon, endOff) {
       if (!startCon || !endCon) return;
       if (startOff > startCon.textContent.length) startOff = startCon.textContent.length;
       if (endOff > endCon.textContent.length) endOff = endCon.textContent.length;
@@ -864,7 +864,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         range.setStart(startCon, startOff);
         range.setEnd(endCon, endOff);
       } catch (error) {
-        console.warn('[SUNEDITOR.core.focus.error] ' + error);
+        console.warn('[KothingEditor.core.focus.error] ' + error);
         this.nativeFocus();
         return;
       }
@@ -885,7 +885,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Remove range object and button effect
      */
-    removeRange: function() {
+    removeRange: function () {
       this._variable._range = null;
       this._variable._selectionNode = null;
       this.getSelection().removeAllRanges();
@@ -910,7 +910,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Get current editor's range object
      * @returns {Object}
      */
-    getRange: function() {
+    getRange: function () {
       const range = this._variable._range || this._createDefaultRange();
       const selection = this.getSelection();
       if (
@@ -945,7 +945,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Object} range core.getRange()
      * @returns {Object} range
      */
-    getRange_addLine: function(range) {
+    getRange_addLine: function (range) {
       if (this._selectionVoid(range)) {
         const wysiwyg = context.element.wysiwyg;
         const op = util.createElement('P');
@@ -961,7 +961,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Get window selection obejct
      * @returns {Object}
      */
-    getSelection: function() {
+    getSelection: function () {
       return this._shadowRoot && this._shadowRoot.getSelection
         ? this._shadowRoot.getSelection()
         : this._ww.getSelection();
@@ -971,12 +971,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Get current select node
      * @returns {Node}
      */
-    getSelectionNode: function() {
+    getSelectionNode: function () {
       if (util.isWysiwygDiv(this._variable._selectionNode)) this._editorRange();
       if (!this._variable._selectionNode) {
         const selectionNode = util.getChildElement(
           context.element.wysiwyg.firstChild,
-          function(current) {
+          function (current) {
             return current.childNodes.length === 0 || current.nodeType === 3;
           },
           false
@@ -995,7 +995,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Saving the range object and the currently selected node of editor
      * @private
      */
-    _editorRange: function() {
+    _editorRange: function () {
       const selection = this.getSelection();
       if (!selection) return null;
       let range = null;
@@ -1023,7 +1023,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Object}
      * @private
      */
-    _createDefaultRange: function() {
+    _createDefaultRange: function () {
       const wysiwyg = context.element.wysiwyg;
       wysiwyg.focus();
       const range = this._wd.createRange();
@@ -1047,7 +1047,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Object} range
      * @private
      */
-    _selectionVoid: function(range) {
+    _selectionVoid: function (range) {
       const comm = range.commonAncestorContainer;
       return (
         (util.isWysiwygDiv(range.startContainer) && util.isWysiwygDiv(range.endContainer)) ||
@@ -1062,7 +1062,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Boolean} Returns false if there is no valid selection.
      * @private
      */
-    _resetRangeToTextNode: function() {
+    _resetRangeToTextNode: function () {
       const range = this.getRange();
       if (this._selectionVoid(range)) return false;
 
@@ -1131,7 +1131,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             if (tempChild.length === 0) break;
             tempCon =
               tempChild[tempOffset > 0 ? tempOffset - 1 : tempOffset] ||
-              !/FIGURE/i.test(tempChild[0].nodeName)
+                !/FIGURE/i.test(tempChild[0].nodeName)
                 ? tempChild[0]
                 : tempCon.previousElementSibling || tempCon.previousSibling || startCon;
             tempOffset = tempOffset > 0 ? tempCon.textContent.length : tempOffset;
@@ -1170,7 +1170,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Function|null} validation The validation function. (Replaces the default validation function-util.isFormatElement(current))
      * @returns {Array}
      */
-    getSelectedElements: function(validation) {
+    getSelectedElements: function (validation) {
       if (!this._resetRangeToTextNode()) return [];
       let range = this.getRange();
 
@@ -1192,7 +1192,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       const commonCon = range.commonAncestorContainer;
 
       // get line nodes
-      const lineNodes = util.getListChildren(commonCon, function(current) {
+      const lineNodes = util.getListChildren(commonCon, function (current) {
         return validation ? validation(current) : util.isFormatElement(current);
       });
 
@@ -1205,7 +1205,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       let startIdx = null;
       let endIdx = null;
 
-      const onlyTable = function(current) {
+      const onlyTable = function (current) {
         return util.isTable(current) ? /^TABLE$/i.test(current.nodeName) : true;
       };
 
@@ -1243,20 +1243,20 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} removeDuplicate If true, if there is a parent and child tag among the selected elements, the child tag is excluded.
      * @returns {Array}
      */
-    getSelectedElementsAndComponents: function(removeDuplicate) {
+    getSelectedElementsAndComponents: function (removeDuplicate) {
       const commonCon = this.getRange().commonAncestorContainer;
       const myComponent = util.getParentElement(commonCon, util.isComponent);
       const selectedLines = util.isTable(commonCon)
         ? this.getSelectedElements(null)
         : this.getSelectedElements(
-            function(current) {
-              const component = this.getParentElement(current, this.isComponent);
-              return (
-                (this.isFormatElement(current) && (!component || component === myComponent)) ||
-                (this.isComponent(current) && !this.getFormatElement(current))
-              );
-            }.bind(util)
-          );
+          function (current) {
+            const component = this.getParentElement(current, this.isComponent);
+            return (
+              (this.isFormatElement(current) && (!component || component === myComponent)) ||
+              (this.isComponent(current) && !this.getFormatElement(current))
+            );
+          }.bind(util)
+        );
 
       if (removeDuplicate) {
         for (let i = 0, len = selectedLines.length; i < len; i++) {
@@ -1280,7 +1280,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Number} offset The offset of the selection object. (core.getRange().startOffset...)
      * @returns {Boolean}
      */
-    isEdgePoint: function(container, offset) {
+    isEdgePoint: function (container, offset) {
       return (
         offset === 0 ||
         (!container.nodeValue && offset === 1) ||
@@ -1291,14 +1291,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Show loading box
      */
-    showLoading: function() {
+    showLoading: function () {
       context.element.loading.style.display = 'block';
     },
 
     /**
      * @description Close loading box
      */
-    closeLoading: function() {
+    closeLoading: function () {
       context.element.loading.style.display = 'none';
     },
 
@@ -1310,15 +1310,15 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String|Element|null} formatNode Node name or node obejct to be inserted
      * @returns {Element}
      */
-    appendFormatTag: function(element, formatNode) {
+    appendFormatTag: function (element, formatNode) {
       const currentFormatEl = util.getFormatElement(this.getSelectionNode(), null);
       const oFormatName = formatNode
         ? typeof formatNode === 'string'
           ? formatNode
           : formatNode.nodeName
         : util.isFormatElement(currentFormatEl) && !util.isFreeFormatElement(currentFormatEl)
-        ? currentFormatEl.nodeName
-        : 'P';
+          ? currentFormatEl.nodeName
+          : 'P';
       const oFormat = util.createElement(oFormatName);
       oFormat.innerHTML = '<br>';
 
@@ -1344,7 +1344,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} notSelect If true, Do not automatically select the inserted component.
      * @returns {Element}
      */
-    insertComponent: function(element, notHistoryPush, checkCharCount, notSelect) {
+    insertComponent: function (element, notHistoryPush, checkCharCount, notSelect) {
       if (checkCharCount && !this.checkCharCount(element, null)) {
         return null;
       }
@@ -1369,7 +1369,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         ) {
           const depthFormat = util.getParentElement(
             r.container,
-            function(current) {
+            function (current) {
               return this.isRangeFormatElement(current);
             }.bind(util)
           );
@@ -1406,11 +1406,11 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element} element Target element (figure tag, component div, file tag)
      * @returns {Object|null}
      */
-    getFileComponent: function(element) {
+    getFileComponent: function (element) {
       if (!this._fileManager.queryString || !element) return null;
 
       let target, pluginName;
-      if (/^FIGURE$/i.test(element.nodeName) || /se-component/.test(element.className)) {
+      if (/^FIGURE$/i.test(element.nodeName) || /ke-component/.test(element.className)) {
         target = element.querySelector(this._fileManager.queryString);
       }
       if (!target && element.nodeName && this._fileManager.regExp.test(element.nodeName)) {
@@ -1436,12 +1436,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element} element Element tag (img, iframe, video)
      * @param {String} pluginName Plugin name (image, video)
      */
-    selectComponent: function(element, pluginName) {
+    selectComponent: function (element, pluginName) {
       if (!this.hasFocus) this.focus();
       const plugin = this.plugins[pluginName];
       if (!plugin) return;
       _w.setTimeout(
-        function() {
+        function () {
           if (typeof plugin.select === 'function')
             this.callPlugin(pluginName, plugin.select.bind(this, element), null);
           this._setComponentLineBreaker(element);
@@ -1454,7 +1454,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element} element Element tag (img, iframe, video)
      * @private
      */
-    _setComponentLineBreaker: function(element) {
+    _setComponentLineBreaker: function (element) {
       // line breaker
       this._lineBreaker.style.display = 'none';
       const container = util.getParentElement(element, util.isComponent);
@@ -1510,7 +1510,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} checkCharCount If true, if "options.maxCharCount" is exceeded when "element" is added, null is returned without addition.
      * @returns {Object|Node|null}
      */
-    insertNode: function(oNode, afterNode, checkCharCount) {
+    insertNode: function (oNode, afterNode, checkCharCount) {
       if (checkCharCount && !this.checkCharCount(oNode, null)) {
         return null;
       }
@@ -1525,7 +1525,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         if (r.container.nodeType === 3 || util.isBreak(r.container)) {
           const depthFormat = util.getParentElement(
             r.container,
-            function(current) {
+            function (current) {
               return this.isRangeFormatElement(current) || this.isListCell(current);
             }.bind(util)
           );
@@ -1751,7 +1751,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    _setIntoFreeFormat: function(oNode) {
+    _setIntoFreeFormat: function (oNode) {
       const parentNode = oNode.parentNode;
       let oNodeChildren, lastONode;
 
@@ -1784,10 +1784,10 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * Returns {container: "the last element after deletion", offset: "offset", prevContainer: "previousElementSibling Of the deleted area"}
      * @returns {Object}
      */
-    removeNode: function() {
+    removeNode: function () {
       if (!this._resetRangeToTextNode())
         console.warn(
-          '[SUNEDITOR.core.removeNode.exception] An exception occurred while resetting the "Range" object.'
+          '[KothingEditor.core.removeNode.exception] An exception occurred while resetting the "Range" object.'
         );
 
       const range = this.getRange();
@@ -1886,7 +1886,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             if (item === endCon) {
               beforeNode = util.createTextNode(
                 startCon.substringData(0, startOff) +
-                  endCon.substringData(endOff, endCon.length - endOff)
+                endCon.substringData(endOff, endCon.length - endOff)
               );
               offset = startOff;
             } else {
@@ -1927,13 +1927,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         endCon && endCon.parentNode
           ? endCon
           : startCon && startCon.parentNode
-          ? startCon
-          : range.endContainer || range.startContainer;
+            ? startCon
+            : range.endContainer || range.startContainer;
 
       if (!util.isWysiwygDiv(container)) {
         const rc = util.removeItemAllParents(
           container,
-          function(current) {
+          function (current) {
             if (this.isComponent(current)) return false;
             const text = current.textContent;
             return text.length === 0 || /^(\n|\u200B)+$/.test(text);
@@ -1960,7 +1960,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Appended all selected format Element to the argument element and insert
      * @param {Element} rangeElement Element of wrap the arguments (BLOCKQUOTE...)
      */
-    applyRangeFormatElement: function(rangeElement) {
+    applyRangeFormatElement: function (rangeElement) {
       this.getRange_addLine(this.getRange());
       const rangeLines = this.getSelectedElementsAndComponents(false);
       if (!rangeLines || rangeLines.length === 0) return;
@@ -2022,7 +2022,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       let parentDepth = util.getElementDepth(standTag);
       let listParent = null;
       const lineArr = [];
-      const removeItems = function(parent, origin, before) {
+      const removeItems = function (parent, origin, before) {
         let cc = null;
         if (parent !== origin && !util.isTable(origin)) {
           if (origin && util.getElementDepth(parent) === util.getElementDepth(origin))
@@ -2035,14 +2035,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
       for (
         let i = 0,
-          len = rangeLines.length,
-          line,
-          originParent,
-          depth,
-          before,
-          nextLine,
-          nextList,
-          nested;
+        len = rangeLines.length,
+        line,
+        originParent,
+        depth,
+        before,
+        nextLine,
+        nextList,
+        nested;
         i < len;
         i++
       ) {
@@ -2127,7 +2127,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       util.mergeSameTags(rangeElement, null, false);
       util.mergeNestedTags(
         rangeElement,
-        function(current) {
+        function (current) {
           return this.isList(current);
         }.bind(util)
       );
@@ -2140,7 +2140,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       ) {
         const depthFormat = util.getParentElement(
           beforeTag,
-          function(current) {
+          function (current) {
             return this.isRangeFormatElement(current) && !this.isList(current);
           }.bind(util)
         );
@@ -2181,7 +2181,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} notHistoryPush When true, it does not update the history stack and the selection object and return EdgeNodes (util.getEdgeChildNodes)
      * @returns {Object}
      */
-    detachRangeFormatElement: function(
+    detachRangeFormatElement: function (
       rangeElement,
       selectedFormats,
       newRangeElement,
@@ -2192,7 +2192,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       const so = range.startOffset;
       const eo = range.endOffset;
 
-      let children = util.getListChildNodes(rangeElement, function(current) {
+      let children = util.getListChildNodes(rangeElement, function (current) {
         return current.parentNode === rangeElement;
       });
       let parent = rangeElement.parentNode;
@@ -2313,10 +2313,10 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
                 remove
                   ? inner.nodeName
                   : util.isList(rangeElement.parentNode) || util.isListCell(rangeElement.parentNode)
-                  ? 'LI'
-                  : util.isCell(rangeElement.parentNode)
-                  ? 'DIV'
-                  : 'P'
+                    ? 'LI'
+                    : util.isCell(rangeElement.parentNode)
+                      ? 'DIV'
+                      : 'P'
               );
               const isCell = util.isListCell(insNode);
               const innerChildren = inner.childNodes;
@@ -2360,7 +2360,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
             if (reset) {
               reset = moveComplete = false;
-              children = util.getListChildNodes(rangeElement, function(current) {
+              children = util.getListChildNodes(rangeElement, function (current) {
                 return current.parentNode === rangeElement;
               });
               rangeEl = rangeElement.cloneNode(false);
@@ -2433,13 +2433,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} remove If true, deleted without detached.
      * @returns {Object} {sc: <LI>, ec: <LI>}.
      */
-    detachList: function(selectedFormats, remove) {
+    detachList: function (selectedFormats, remove) {
       let rangeArr = {};
       let listFirst = false;
       let listLast = false;
       let first = null;
       let last = null;
-      const passComponent = function(current) {
+      const passComponent = function (current) {
         return !this.isComponent(current);
       }.bind(util);
 
@@ -2525,7 +2525,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Array|null} removeNodeArray An array of node names to remove types from, remove all formats when "appendNode" is null and there is an empty array or null value. (['span'], ['strong', 'em'] ...])
      * @param {Boolean|null} strictRemove If true, only nodes with all styles and classes removed from the nodes of "removeNodeArray" are removed.
      */
-    nodeChange: function(appendNode, styleArray, removeNodeArray, strictRemove) {
+    nodeChange: function (appendNode, styleArray, removeNodeArray, strictRemove) {
       this._resetRangeToTextNode();
       let range = this.getRange_addLine(this.getRange());
       styleArray = styleArray && styleArray.length > 0 ? styleArray : false;
@@ -2617,14 +2617,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
                 const styleCheck = isRemoveNode
                   ? !!sNode.style[s]
                   : !!sNode.style[s] &&
-                    !!appendNode.style[s] &&
-                    sNode.style[s] === appendNode.style[s];
+                  !!appendNode.style[s] &&
+                  sNode.style[s] === appendNode.style[s];
                 const classCheck =
                   classReg === false
                     ? false
                     : isRemoveNode
-                    ? !!sNode.className.match(classReg)
-                    : !!sNode.className.match(classReg) && !!appendNode.className.match(classReg);
+                      ? !!sNode.className.match(classReg)
+                      : !!sNode.className.match(classReg) && !!appendNode.className.match(classReg);
                 if (styleCheck || classCheck) {
                   checkCnt++;
                 }
@@ -2677,7 +2677,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       /** validation check function */
       const wBoolean = _w.Boolean;
       const _removeCheck = { v: false };
-      const validation = function(checkNode) {
+      const validation = function (checkNode) {
         const vNode = checkNode.cloneNode(false);
 
         // all path
@@ -2771,7 +2771,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       if (!util.getFormatElement(startCon, null)) {
         startCon = util.getChildElement(
           lineNodes[0],
-          function(current) {
+          function (current) {
             return current.nodeType === 3;
           },
           false
@@ -2782,7 +2782,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       if (!util.getFormatElement(endCon, null)) {
         endCon = util.getChildElement(
           lineNodes[lineNodes.length - 1],
-          function(current) {
+          function (current) {
             return current.nodeType === 3;
           },
           false
@@ -2799,7 +2799,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       const isRemoveAnchor =
         isRemoveFormat ||
         (isRemoveNode &&
-          (function(arr) {
+          (function (arr) {
             for (let n = 0, len = arr.length; n < len; n++) {
               if (util._isMaintainedNode(arr[n]) || util._isSizeNode(arr[n])) return true;
             }
@@ -2924,13 +2924,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element|null} child Variable for recursive call. ("null" on the first call)
      * @private
      */
-    _setCommonListStyle: function(el, child) {
+    _setCommonListStyle: function (el, child) {
       if (!util.isListCell(el)) return;
       if (!child) el.removeAttribute('style');
 
       const children = util.getArrayItem(
         (child || el).childNodes,
-        function(current) {
+        function (current) {
           return !util.isBreak(current) && !util.onlyZeroWidthSpace(current.textContent.trim());
         },
         true
@@ -2960,7 +2960,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Node} removeNode The remove node
      * @private
      */
-    _stripRemoveNode: function(removeNode) {
+    _stripRemoveNode: function (removeNode) {
       const element = removeNode.parentNode;
       if (!removeNode || removeNode.nodeType === 3 || !element) return;
 
@@ -2978,7 +2978,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Element}
      * @private
      */
-    _util_getMaintainedNode: function(_isRemove, _isSizeNode, element) {
+    _util_getMaintainedNode: function (_isRemove, _isSizeNode, element) {
       if (!element || _isRemove) return null;
       return (
         this.getParentElement(element, this._isMaintainedNode.bind(this)) ||
@@ -2992,7 +2992,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Element}
      * @private
      */
-    _util_isMaintainedNode: function(_isRemove, _isSizeNode, element) {
+    _util_isMaintainedNode: function (_isRemove, _isSizeNode, element) {
       if (!element || _isRemove || element.nodeType !== 1) return false;
       const anchor = this._isMaintainedNode(element);
       return this.getParentElement(element, this._isMaintainedNode.bind(this))
@@ -3015,7 +3015,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {{ancestor: *, startContainer: *, startOffset: *, endContainer: *, endOffset: *}}
      * @private
      */
-    _nodeChange_oneLine: function(
+    _nodeChange_oneLine: function (
       element,
       newInnerNode,
       validation,
@@ -3130,13 +3130,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
               startContainer.nodeType === 1
                 ? ''
                 : startContainer.substringData(
-                    startOffset,
-                    isSameNode
-                      ? endOffset >= startOffset
-                        ? endOffset - startOffset
-                        : startContainer.data.length - startOffset
+                  startOffset,
+                  isSameNode
+                    ? endOffset >= startOffset
+                      ? endOffset - startOffset
                       : startContainer.data.length - startOffset
-                  )
+                    : startContainer.data.length - startOffset
+                )
             );
 
             if (anchorNode) {
@@ -3379,7 +3379,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
               if (_getMaintainedNode(child)) {
                 const ancestorAnchorNode = util.getParentElement(
                   ancestor,
-                  function(current) {
+                  function (current) {
                     return (
                       this._isMaintainedNode(current.parentNode) || current.parentNode === pNode
                     );
@@ -3488,10 +3488,10 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       endOffset = collapsed
         ? startOffset
         : mergeEndCon
-        ? startContainer.textContent.length
-        : endConReset
-        ? endOffset + newStartOffset.s
-        : endOffset + newEndOffset.s;
+          ? startContainer.textContent.length
+          : endConReset
+            ? endOffset + newStartOffset.s
+            : endOffset + newEndOffset.s;
 
       // tag merge
       const newOffsets = util.mergeSameTags(pNode, [startPath, endPath], true);
@@ -3523,7 +3523,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Object} { ancestor, container, offset, endContainer }
      * @private
      */
-    _nodeChange_startLine: function(
+    _nodeChange_startLine: function (
       element,
       newInnerNode,
       validation,
@@ -3666,7 +3666,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
               if (_getMaintainedNode(child)) {
                 const ancestorAnchorNode = util.getParentElement(
                   ancestor,
-                  function(current) {
+                  function (current) {
                     return (
                       this._isMaintainedNode(current.parentNode) || current.parentNode === pNode
                     );
@@ -3846,7 +3846,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Object} { ancestor, endContainer: "If end container is renewed, returned renewed node" }
      * @private
      */
-    _nodeChange_middleLine: function(
+    _nodeChange_middleLine: function (
       element,
       newInnerNode,
       validation,
@@ -3985,7 +3985,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Object} { ancestor, container, offset }
      * @private
      */
-    _nodeChange_endLine: function(
+    _nodeChange_endLine: function (
       element,
       newInnerNode,
       validation,
@@ -4122,7 +4122,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
               if (_getMaintainedNode(child)) {
                 const ancestorAnchorNode = util.getParentElement(
                   ancestor,
-                  function(current) {
+                  function (current) {
                     return (
                       this._isMaintainedNode(current.parentNode) || current.parentNode === pNode
                     );
@@ -4318,7 +4318,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} display Display type string ('command', 'submenu', 'dialog', 'container')
      * @param {Element} target The element of command button
      */
-    actionCall: function(command, display, target) {
+    actionCall: function (command, display, target) {
       // call plugins
       if (display) {
         if (/more/i.test(display) && target !== this._moreLayerActiveButton) {
@@ -4389,12 +4389,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element} target The element of command button
      * @param {String} command Property of command button (data-value)
      */
-    commandHandler: function(target, command) {
+    commandHandler: function (target, command) {
       const wysiwyg = context.element.wysiwyg;
       const first =
         util.getChildElement(
           wysiwyg.firstChild,
-          function(current) {
+          function (current) {
             return current.childNodes.length === 0 || current.nodeType === 3;
           },
           false
@@ -4402,7 +4402,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       const last =
         util.getChildElement(
           wysiwyg.lastChild,
-          function(current) {
+          function (current) {
             return current.childNodes.length === 0 || current.nodeType === 3;
           },
           true
@@ -4451,7 +4451,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             functions.save();
           } else {
             throw Error(
-              '[SUNEDITOR.core.commandHandler.fail] Please register call back function in creation option. (callBackSave : Function)'
+              '[KothingEditor.core.commandHandler.fail] Please register call back function in creation option. (callBackSave : Function)'
             );
           }
 
@@ -4475,7 +4475,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Remove format of the currently selected range
      */
-    removeFormat: function() {
+    removeFormat: function () {
       this.nodeChange(null, null, null, null);
     },
 
@@ -4484,7 +4484,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * Setted "margin-left" to "25px" in the top "P" tag of the parameter node.
      * @param {String} command Separator ("indent" or "outdent")
      */
-    indent: function(command) {
+    indent: function (command) {
       const range = this.getRange();
       const rangeLines = this.getSelectedElements(null);
       const cells = [];
@@ -4527,10 +4527,10 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Add or remove the class name of "body" so that the code block is visible
      */
-    toggleDisplayBlocks: function() {
+    toggleDisplayBlocks: function () {
       const wysiwyg = context.element.wysiwyg;
-      util.toggleClass(wysiwyg, 'se-show-block');
-      if (util.hasClass(wysiwyg, 'se-show-block')) {
+      util.toggleClass(wysiwyg, 'ke-show-block');
+      if (util.hasClass(wysiwyg, 'ke-show-block')) {
         util.addClass(this._styleCommandMap.showBlocks, 'active');
       } else {
         util.removeClass(this._styleCommandMap.showBlocks, 'active');
@@ -4541,7 +4541,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Changes to code view or wysiwyg view
      */
-    toggleCodeView: function() {
+    toggleCodeView: function () {
       const isCodeView = this._variable.isCodeView;
       this.controllersOff();
       util.setDisabledButtons(!isCodeView, this.codeViewDisabledButtons);
@@ -4627,7 +4627,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Convert the data of the code view and put it in the WYSIWYG area.
      * @private
      */
-    _setCodeDataToEditor: function() {
+    _setCodeDataToEditor: function () {
       const code_html = this._getCodeView();
 
       if (options.fullPage) {
@@ -4662,7 +4662,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Convert the data of the WYSIWYG area and put it in the code view area.
      * @private
      */
-    _setEditorDataToCodeView: function() {
+    _setEditorDataToCodeView: function () {
       const codeContents = this.convertHTMLForCodeView(context.element.wysiwyg);
       let codeValue = '';
 
@@ -4690,7 +4690,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Changes to full screen or default screen
      * @param {Element} element full screen button
      */
-    toggleFullScreen: function(element) {
+    toggleFullScreen: function (element) {
       const topArea = context.element.topArea;
       const toolbar = context.element.toolbar;
       const editorArea = context.element.editorArea;
@@ -4723,7 +4723,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         if (context.element._stickyDummy.style.display !== ('none' && '')) {
           _var._fullScreenAttrs.sticky = true;
           context.element._stickyDummy.style.display = 'none';
-          util.removeClass(toolbar, 'se-toolbar-sticky');
+          util.removeClass(toolbar, 'ke-toolbar-sticky');
         }
 
         _var._bodyOverflow = _d.body.style.overflow;
@@ -4768,19 +4768,19 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         if (options.toolbarContainer) options.toolbarContainer.appendChild(toolbar);
 
         if (options.stickyToolbar > -1) {
-          util.removeClass(toolbar, 'se-toolbar-sticky');
+          util.removeClass(toolbar, 'ke-toolbar-sticky');
         }
 
         if (_var._fullScreenAttrs.sticky && !options.toolbarContainer) {
           _var._fullScreenAttrs.sticky = false;
           context.element._stickyDummy.style.display = 'block';
-          util.addClass(toolbar, 'se-toolbar-sticky');
+          util.addClass(toolbar, 'ke-toolbar-sticky');
         }
 
         this._isInline = _var._fullScreenAttrs.inline;
         this._isBalloon = _var._fullScreenAttrs.balloon;
         if (this._isInline) event._showToolbarInline();
-        if (options.toolbarContainer) util.removeClass(toolbar, 'se-toolbar-balloon');
+        if (options.toolbarContainer) util.removeClass(toolbar, 'ke-toolbar-balloon');
 
         event.onScroll_window();
         util.changeElement(element.firstElementChild, icons.expansion);
@@ -4795,7 +4795,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Prints the current contents of the editor.
      */
-    print: function() {
+    print: function () {
       const iframe = util.createElement('IFRAME');
       iframe.style.display = 'none';
       _d.body.appendChild(iframe);
@@ -4811,16 +4811,16 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
         printDocument.write(
           '' +
-            '<!DOCTYPE html><html>' +
-            '<head>' +
-            wDoc.head.innerHTML +
-            '</head>' +
-            '<body ' +
-            arrts +
-            '>' +
-            contentsHTML +
-            '</body>' +
-            '</html>'
+          '<!DOCTYPE html><html>' +
+          '<head>' +
+          wDoc.head.innerHTML +
+          '</head>' +
+          '<body ' +
+          arrts +
+          '>' +
+          contentsHTML +
+          '</body>' +
+          '</html>'
         );
       } else {
         const links = _d.head.getElementsByTagName('link');
@@ -4835,19 +4835,19 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
         printDocument.write(
           '' +
-            '<!DOCTYPE html><html>' +
-            '<head>' +
-            linkHTML +
-            '</head>' +
-            '<body class="sun-editor-editable">' +
-            contentsHTML +
-            '</body>' +
-            '</html>'
+          '<!DOCTYPE html><html>' +
+          '<head>' +
+          linkHTML +
+          '</head>' +
+          '<body class="sun-editor-editable">' +
+          contentsHTML +
+          '</body>' +
+          '</html>'
         );
       }
 
       this.showLoading();
-      _w.setTimeout(function() {
+      _w.setTimeout(function () {
         try {
           iframe.focus();
           // IE or Edge
@@ -4862,7 +4862,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             iframe.contentWindow.print();
           }
         } catch (error) {
-          throw Error('[SUNEDITOR.core.print.fail] error: ' + error);
+          throw Error('[KothingEditor.core.print.fail] error: ' + error);
         } finally {
           core.closeLoading();
           util.removeItem(iframe);
@@ -4873,7 +4873,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Open the preview window.
      */
-    preview: function() {
+    preview: function () {
       core.submenuOff();
       core.containerOff();
       core.controllersOff();
@@ -4891,19 +4891,19 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
         windowObject.document.write(
           '' +
-            '<!DOCTYPE html><html>' +
-            '<head>' +
-            wDoc.head.innerHTML +
-            '<style>body {overflow:auto !important; width:' +
-            w +
-            '; border:1px solid #ccc; margin: 10px auto !important; height:auto !important;}</style>' +
-            '</head>' +
-            '<body ' +
-            arrts +
-            '>' +
-            contentsHTML +
-            '</body>' +
-            '</html>'
+          '<!DOCTYPE html><html>' +
+          '<head>' +
+          wDoc.head.innerHTML +
+          '<style>body {overflow:auto !important; width:' +
+          w +
+          '; border:1px solid #ccc; margin: 10px auto !important; height:auto !important;}</style>' +
+          '</head>' +
+          '<body ' +
+          arrts +
+          '>' +
+          contentsHTML +
+          '</body>' +
+          '</html>'
         );
       } else {
         const links = _d.head.getElementsByTagName('link');
@@ -4918,21 +4918,21 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
         windowObject.document.write(
           '' +
-            '<!DOCTYPE html><html>' +
-            '<head>' +
-            '<meta charset="utf-8" />' +
-            '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-            '<title>' +
-            lang.toolbar.preview +
-            '</title>' +
-            linkHTML +
-            '</head>' +
-            '<body class="sun-editor-editable" style="width:' +
-            w +
-            '; border:1px solid #ccc; margin:10px auto !important; height:auto !important;">' +
-            contentsHTML +
-            '</body>' +
-            '</html>'
+          '<!DOCTYPE html><html>' +
+          '<head>' +
+          '<meta charset="utf-8" />' +
+          '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+          '<title>' +
+          lang.toolbar.preview +
+          '</title>' +
+          linkHTML +
+          '</head>' +
+          '<body class="sun-editor-editable" style="width:' +
+          w +
+          '; border:1px solid #ccc; margin:10px auto !important; height:auto !important;">' +
+          contentsHTML +
+          '</body>' +
+          '</html>'
         );
       }
     },
@@ -4941,7 +4941,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Sets the HTML string
      * @param {String} html HTML string
      */
-    setContents: function(html) {
+    setContents: function (html) {
       const convertValue = this.convertContentsForEditor(html);
       this._resetComponents();
 
@@ -4960,12 +4960,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} onlyContents Return only the contents of the body without headers when the "fullPage" option is true
      * @returns {Object}
      */
-    getContents: function(onlyContents) {
+    getContents: function (onlyContents) {
       const contents = context.element.wysiwyg.innerHTML;
       const renderHTML = util.createElement('DIV');
       renderHTML.innerHTML = contents;
 
-      const figcaptions = util.getListChildren(renderHTML, function(current) {
+      const figcaptions = util.getListChildren(renderHTML, function (current) {
         return /FIGCAPTION/i.test(current.nodeName);
       });
 
@@ -4996,7 +4996,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} requireFormat If true, text nodes that do not have a format node is wrapped with the format tag.
      * @private
      */
-    _makeLine: function(node, requireFormat) {
+    _makeLine: function (node, requireFormat) {
       // element
       if (node.nodeType === 1) {
         if (util._disallowedTags(node)) return '';
@@ -5038,11 +5038,11 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {String} HTML string
      * @private
      */
-    _tagConvertor: function(text) {
+    _tagConvertor: function (text) {
       if (!this._disallowedTextTagsRegExp) return text;
 
       const ec = { b: 'strong', i: 'em', ins: 'u', strike: 'del', s: 'del' };
-      return text.replace(this._disallowedTextTagsRegExp, function(m, t, n) {
+      return text.replace(this._disallowedTextTagsRegExp, function (m, t, n) {
         return t + (typeof ec[n] === 'string' ? ec[n] : n);
       });
     },
@@ -5053,7 +5053,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {String}
      * @private
      */
-    _deleteDisallowedTags: function(html) {
+    _deleteDisallowedTags: function (html) {
       return html
         .replace(/\n/g, '')
         .replace(/<(script|style).*>(\n|.)*<\/(script|style)>/gi, '')
@@ -5068,10 +5068,10 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * RegExp object is create by util.createTagsWhitelist method. (core.pasteTagsWhitelistRegExp)
      * @returns {String}
      */
-    cleanHTML: function(html, whitelist) {
+    cleanHTML: function (html, whitelist) {
       html = this._deleteDisallowedTags(html).replace(
         /(<[a-zA-Z0-9]+)[^>]*(?=>)/g,
-        function(m, t) {
+        function (m, t) {
           if (/^<[a-z0-9]+\:[a-z0-9]+/i.test(m)) return m;
 
           let v = null;
@@ -5091,7 +5091,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
           if (v) {
             for (let i = 0, len = v.length; i < len; i++) {
-              if (/^class="(?!(__se__|se-|katex))/.test(v[i])) continue;
+              if (/^class="(?!(__ke__|ke-|katex))/.test(v[i])) continue;
               t += ' ' + v[i];
             }
           }
@@ -5104,7 +5104,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       try {
         util._consistencyCheckOfHTML(dom, this._htmlCheckWhitelistRegExp);
       } catch (error) {
-        console.warn('[SUNEDITOR.cleanHTML.consistencyCheck.fail] ' + error);
+        console.warn('[KothingEditor.cleanHTML.consistencyCheck.fail] ' + error);
       }
 
       if (this.managedTagsInfo && this.managedTagsInfo.query) {
@@ -5147,8 +5147,8 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         !cleanHTML
           ? html
           : !whitelist
-          ? cleanHTML
-          : cleanHTML.replace(
+            ? cleanHTML
+            : cleanHTML.replace(
               typeof whitelist === 'string' ? util.createTagsWhitelist(whitelist) : whitelist,
               ''
             )
@@ -5160,13 +5160,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} contents contents
      * @returns {String}
      */
-    convertContentsForEditor: function(contents) {
+    convertContentsForEditor: function (contents) {
       const dom = _d.createRange().createContextualFragment(this._deleteDisallowedTags(contents));
 
       try {
         util._consistencyCheckOfHTML(dom, this._htmlCheckWhitelistRegExp);
       } catch (error) {
-        console.warn('[SUNEDITOR.convertContentsForEditor.consistencyCheck.fail] ' + error);
+        console.warn('[KothingEditor.convertContentsForEditor.consistencyCheck.fail] ' + error);
       }
 
       const domTree = dom.childNodes;
@@ -5186,7 +5186,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Element|String} html WYSIWYG element (context.element.wysiwyg) or HTML string.
      * @returns {String}
      */
-    convertHTMLForCodeView: function(html) {
+    convertHTMLForCodeView: function (html) {
       let returnHTML = '';
       const RegExp = _w.RegExp;
       const brReg = new RegExp(
@@ -5241,8 +5241,8 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             (lineBR || br || elementRegTest
               ? '\n'
               : '' || /^(TH|TD)$/i.test(node.nodeName)
-              ? '\n'
-              : '');
+                ? '\n'
+                : '');
         }
       })(wDoc, '', '\n');
 
@@ -5256,7 +5256,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Function} listener Event listener
      * @param {Boolean} useCapture Use event capture
      */
-    addDocEvent: function(type, listener, useCapture) {
+    addDocEvent: function (type, listener, useCapture) {
       _d.addEventListener(type, listener, useCapture);
       if (options.iframe) {
         this._wd.addEventListener(type, listener);
@@ -5269,7 +5269,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} type Event type
      * @param {Function} listener Event listener
      */
-    removeDocEvent: function(type, listener) {
+    removeDocEvent: function (type, listener) {
       _d.removeEventListener(type, listener);
       if (options.iframe) {
         this._wd.removeEventListener(type, listener);
@@ -5282,7 +5282,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Boolean}
      * @private
      */
-    _charCount: function(inputText) {
+    _charCount: function (inputText) {
       const maxCharCount = options.maxCharCount;
       const countType = options.charCounterType;
       let nextCharCount = 0;
@@ -5327,15 +5327,15 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String|null} charCounterType charCounterType. If it is null, the options.charCounterType
      * @returns {Boolean}
      */
-    checkCharCount: function(element, charCounterType) {
+    checkCharCount: function (element, charCounterType) {
       if (options.maxCharCount) {
         const countType = charCounterType || options.charCounterType;
         const length = this.getCharLength(
           typeof element === 'string'
             ? element
             : this._charTypeHTML
-            ? element.outerHTML
-            : element.textContent,
+              ? element.outerHTML
+              : element.textContent,
           countType
         );
         if (length > 0 && length + functions.getCharCount(countType) > options.maxCharCount) {
@@ -5353,7 +5353,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} charCounterType options.charCounterType
      * @returns {Number}
      */
-    getCharLength: function(content, charCounterType) {
+    getCharLength: function (content, charCounterType) {
       return /byte/.test(charCounterType) ? util.getByteLength(content) : content.length;
     },
 
@@ -5361,9 +5361,9 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Set the char count to charCounter element textContent.
      * @private
      */
-    _setCharCount: function() {
+    _setCharCount: function () {
       if (context.element.charCounter) {
-        _w.setTimeout(function() {
+        _w.setTimeout(function () {
           context.element.charCounter.textContent = functions.getCharCount(options.charCounterType);
         });
       }
@@ -5373,12 +5373,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description The character counter blinks.
      * @private
      */
-    _callCounterBlink: function() {
+    _callCounterBlink: function () {
       const charWrapper = context.element.charWrapper;
-      if (charWrapper && !util.hasClass(charWrapper, 'se-blink')) {
-        util.addClass(charWrapper, 'se-blink');
-        _w.setTimeout(function() {
-          util.removeClass(charWrapper, 'se-blink');
+      if (charWrapper && !util.hasClass(charWrapper, 'ke-blink')) {
+        util.addClass(charWrapper, 'ke-blink');
+        _w.setTimeout(function () {
+          util.removeClass(charWrapper, 'ke-blink');
         }, 600);
       }
     },
@@ -5387,7 +5387,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Check the components such as image and video and modify them according to the format.
      * @private
      */
-    _checkComponents: function() {
+    _checkComponents: function () {
       for (let i = 0, len = this._fileInfoPluginsCheck.length; i < len; i++) {
         this._fileInfoPluginsCheck[i]();
       }
@@ -5397,7 +5397,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Initialize the information of the components.
      * @private
      */
-    _resetComponents: function() {
+    _resetComponents: function () {
       for (let i = 0, len = this._fileInfoPluginsReset.length; i < len; i++) {
         this._fileInfoPluginsReset[i]();
       }
@@ -5408,7 +5408,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} value HTML string
      * @private
      */
-    _setCodeView: function(value) {
+    _setCodeView: function (value) {
       if (options.codeMirrorEditor) {
         options.codeMirrorEditor.getDoc().setValue(value);
       } else {
@@ -5420,7 +5420,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Get method in the code view area
      * @private
      */
-    _getCodeView: function() {
+    _getCodeView: function () {
       return options.codeMirrorEditor
         ? options.codeMirrorEditor.getDoc().getValue()
         : context.element.code.value;
@@ -5432,7 +5432,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} _initHTML initial html string
      * @private
      */
-    _init: function(reload, _initHTML) {
+    _init: function (reload, _initHTML) {
       const RegExp = _w.RegExp;
       this._ww = options.iframe ? context.element.wysiwygFrame.contentWindow : _w;
       this._wd = _d;
@@ -5456,9 +5456,9 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       const disallowTextTags = ['b', 'i', 'ins', 's', 'strike'];
       const allowTextTags = !options.addTagsWhitelist
         ? []
-        : options.addTagsWhitelist.split('|').filter(function(v) {
-            return /b|i|ins|s|strike/i.test(v);
-          });
+        : options.addTagsWhitelist.split('|').filter(function (v) {
+          return /b|i|ins|s|strike/i.test(v);
+        });
       for (let i = 0; i < allowTextTags.length; i++) {
         disallowTextTags.splice(disallowTextTags.indexOf(allowTextTags[i].toLowerCase()), 1);
       }
@@ -5466,9 +5466,9 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         disallowTextTags.length === 0
           ? null
           : new RegExp(
-              '(<\\/?)(' + disallowTextTags.join('|') + ')\\b\\s*(?:[^>^<]+)?\\s*(?=>)',
-              'gi'
-            );
+            '(<\\/?)(' + disallowTextTags.join('|') + ')\\b\\s*(?:[^>^<]+)?\\s*(?=>)',
+            'gi'
+          );
 
       // set whitelist
       const defaultAttr =
@@ -5596,12 +5596,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Caching basic buttons to use
      * @private
      */
-    _cachingButtons: function() {
+    _cachingButtons: function () {
       this.codeViewDisabledButtons = context.element.toolbar.querySelectorAll(
-        '.se-toolbar button:not([class~="se-code-view-enabled"])'
+        '.ke-toolbar button:not([class~="ke-code-view-enabled"])'
       );
       this.resizingDisabledButtons = context.element.toolbar.querySelectorAll(
-        '.se-toolbar button:not([class~="se-resizing-enabled"])'
+        '.ke-toolbar button:not([class~="ke-resizing-enabled"])'
       );
       const tool = context.tool;
       this.commandMap = {
@@ -5627,19 +5627,19 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} _initHTML initial html string
      * @private
      */
-    _initWysiwygArea: function(reload, _initHTML) {
+    _initWysiwygArea: function (reload, _initHTML) {
       context.element.wysiwyg.innerHTML = reload
         ? _initHTML
         : this.convertContentsForEditor(
-            typeof _initHTML === 'string' ? _initHTML : context.element.originElement.value
-          );
+          typeof _initHTML === 'string' ? _initHTML : context.element.originElement.value
+        );
     },
 
     /**
      * @description Called when there are changes to tags in the wysiwyg region.
      * @private
      */
-    _resourcesStateChange: function() {
+    _resourcesStateChange: function () {
       this._iframeAutoHeight();
       this._checkPlaceholder();
     },
@@ -5648,7 +5648,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Called when after execute "history.push"
      * @private
      */
-    _onChange_historyStack: function() {
+    _onChange_historyStack: function () {
       event._applyTagEffects();
       if (context.tool.save) context.tool.save.removeAttribute('disabled');
       if (functions.onChange) functions.onChange(this.getContents(true), this);
@@ -5658,9 +5658,9 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Modify the height value of the iframe when the height of the iframe is automatic.
      * @private
      */
-    _iframeAutoHeight: function() {
+    _iframeAutoHeight: function () {
       if (this._iframeAuto) {
-        _w.setTimeout(function() {
+        _w.setTimeout(function () {
           context.element.wysiwygFrame.style.height = core._iframeAuto.offsetHeight + 'px';
         });
       }
@@ -5670,7 +5670,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Set display property when there is placeholder.
      * @private
      */
-    _checkPlaceholder: function() {
+    _checkPlaceholder: function () {
       if (this._placeholder) {
         if (this._variable.isCodeView) {
           this._placeholder.style.display = 'none';
@@ -5681,7 +5681,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         if (
           !util.onlyZeroWidthSpace(wysiwyg.textContent) ||
           wysiwyg.querySelector(
-            '.se-component, pre, blockquote, hr, li, table, img, iframe, video'
+            '.ke-component, pre, blockquote, hr, li, table, img, iframe, video'
           ) ||
           (wysiwyg.innerText.match(/\n/g) || '').length > 1
         ) {
@@ -5697,7 +5697,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String|null} formatName Format tag name (default: 'P')
      * @private
      */
-    _setDefaultFormat: function(formatName) {
+    _setDefaultFormat: function (formatName) {
       if (this._fileManager.pluginRegExp.test(this.currentControllerName)) return;
 
       const range = this.getRange();
@@ -5775,7 +5775,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} _initHTML Initial html string
      * @private
      */
-    _setOptionsInit: function(el, _initHTML) {
+    _setOptionsInit: function (el, _initHTML) {
       this.context = context = _Context(el.originElement, this._getConstructed(el), options);
       this._componentsInfoReset = true;
       this._editorInit(true, _initHTML);
@@ -5787,7 +5787,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} _initHTML initial html string
      * @private
      */
-    _editorInit: function(reload, _initHTML) {
+    _editorInit: function (reload, _initHTML) {
       // initialize core and add event listeners
       this._init(reload, _initHTML);
       event._addEvent();
@@ -5805,7 +5805,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       this.history.reset(true);
       this._resourcesStateChange();
 
-      _w.setTimeout(function() {
+      _w.setTimeout(function () {
         if (typeof functions.onload === 'function') functions.onload(core, reload);
       });
     },
@@ -5816,7 +5816,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @returns {Object}
      * @private
      */
-    _getConstructed: function(contextEl) {
+    _getConstructed: function (contextEl) {
       return {
         _top: contextEl.topArea,
         _relative: contextEl.relative,
@@ -5867,7 +5867,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       221: ']',
     },
 
-    _shortcutCommand: function(keyCode, shift) {
+    _shortcutCommand: function (keyCode, shift) {
       let command = null;
       const keyStr = event._keyCodeShortcut[keyCode];
 
@@ -5928,7 +5928,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       return true;
     },
 
-    _applyTagEffects: function() {
+    _applyTagEffects: function () {
       let selectionNode = core.getSelectionNode();
       if (selectionNode === core.effectNode) return;
       core.effectNode = selectionNode;
@@ -6016,12 +6016,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         context.element.navigation.textContent = core._variable.currentNodes.join(' > ');
     },
 
-    _cancelCaptionEdit: function() {
+    _cancelCaptionEdit: function () {
       this.setAttribute('contenteditable', false);
       this.removeEventListener('blur', event._cancelCaptionEdit);
     },
 
-    _buttonsEventHandler: function(e) {
+    _buttonsEventHandler: function (e) {
       let target = e.target;
       if (core._bindControllersOff) e.stopPropagation();
 
@@ -6031,7 +6031,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         e.preventDefault();
       }
 
-      if (util.getParentElement(target, '.se-submenu')) {
+      if (util.getParentElement(target, '.ke-submenu')) {
         e.stopPropagation();
         core._notHideToolbar = true;
       } else {
@@ -6040,7 +6040,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
         while (
           !command &&
-          !/se-menu-list/.test(className) &&
+          !/ke-menu-list/.test(className) &&
           !/sun-editor-common/.test(className)
         ) {
           target = target.parentNode;
@@ -6054,7 +6054,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    onClick_toolbar: function(e) {
+    onClick_toolbar: function (e) {
       let target = e.target;
       let display = target.getAttribute('data-display');
       let command = target.getAttribute('data-command');
@@ -6063,8 +6063,8 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       while (
         target.parentNode &&
         !command &&
-        !/se-menu-list/.test(className) &&
-        !/se-toolbar/.test(className)
+        !/ke-menu-list/.test(className) &&
+        !/ke-toolbar/.test(className)
       ) {
         target = target.parentNode;
         command = target.getAttribute('data-command');
@@ -6080,7 +6080,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       core.actionCall(command, display, target);
     },
 
-    onMouseDown_wysiwyg: function(e) {
+    onMouseDown_wysiwyg: function (e) {
       if (util.isNonEditable(context.element.wysiwyg)) return;
 
       const tableCell = util.getParentElement(e.target, util.isCell);
@@ -6089,7 +6089,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         if (tablePlugin && tableCell !== tablePlugin._fixedCell && !tablePlugin._shift) {
           core.callPlugin(
             'table',
-            function() {
+            function () {
               tablePlugin.onTableCellMultiSelect.call(core, tableCell, false);
             },
             null
@@ -6105,7 +6105,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       if (typeof functions.onMouseDown === 'function') functions.onMouseDown(e, core);
     },
 
-    onClick_wysiwyg: function(e) {
+    onClick_wysiwyg: function (e) {
       const targetElement = e.target;
       if (util.isNonEditable(context.element.wysiwyg)) return;
 
@@ -6125,7 +6125,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         if (core._isInline && !core._inlineToolbarAttr.isShow) {
           event._showToolbarInline();
 
-          const hideToolbar = function() {
+          const hideToolbar = function () {
             event._hideToolbar();
             figcaption.removeEventListener('blur', hideToolbar);
           };
@@ -6174,13 +6174,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     },
 
     _balloonDelay: null,
-    _showToolbarBalloonDelay: function() {
+    _showToolbarBalloonDelay: function () {
       if (event._balloonDelay) {
         _w.clearTimeout(event._balloonDelay);
       }
 
       event._balloonDelay = _w.setTimeout(
-        function() {
+        function () {
           _w.clearTimeout(this._balloonDelay);
           this._balloonDelay = null;
           this._showToolbarBalloon();
@@ -6189,7 +6189,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       );
     },
 
-    _toggleToolbarBalloon: function() {
+    _toggleToolbarBalloon: function () {
       core._editorRange();
       const range = core.getRange();
       if (core._bindControllersOff || (!core._isBalloonAlways && range.collapsed))
@@ -6197,7 +6197,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       else event._showToolbarBalloon(range);
     },
 
-    _showToolbarBalloon: function(rangeObj) {
+    _showToolbarBalloon: function (rangeObj) {
       if (!core._isBalloon) return;
 
       const range = rangeObj || core.getRange();
@@ -6307,7 +6307,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       toolbar.style.visibility = '';
     },
 
-    _setToolbarOffset: function(
+    _setToolbarOffset: function (
       isDirTop,
       rects,
       toolbar,
@@ -6334,8 +6334,8 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         absoluteLeft < 0
           ? padding
           : overRight < 0
-          ? absoluteLeft
-          : absoluteLeft - overRight - padding - 1;
+            ? absoluteLeft
+            : absoluteLeft - overRight - padding - 1;
 
       let resetTop = false;
       const space =
@@ -6361,12 +6361,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       toolbar.style.top = _w.Math.floor(t) + 'px';
 
       if (isDirTop) {
-        util.removeClass(context.element._arrow, 'se-arrow-up');
-        util.addClass(context.element._arrow, 'se-arrow-down');
+        util.removeClass(context.element._arrow, 'ke-arrow-up');
+        util.addClass(context.element._arrow, 'ke-arrow-down');
         context.element._arrow.style.top = toolbarHeight + 'px';
       } else {
-        util.removeClass(context.element._arrow, 'se-arrow-down');
-        util.addClass(context.element._arrow, 'se-arrow-up');
+        util.removeClass(context.element._arrow, 'ke-arrow-down');
+        util.addClass(context.element._arrow, 'ke-arrow-up');
         context.element._arrow.style.top = -arrowMargin + 'px';
       }
 
@@ -6375,11 +6375,11 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         (arrow_left + arrowMargin > toolbar.offsetWidth
           ? toolbar.offsetWidth - arrowMargin
           : arrow_left < arrowMargin
-          ? arrowMargin
-          : arrow_left) + 'px';
+            ? arrowMargin
+            : arrow_left) + 'px';
     },
 
-    _showToolbarInline: function() {
+    _showToolbarInline: function () {
       if (!core._isInline) return;
 
       const toolbar = context.element.toolbar;
@@ -6399,14 +6399,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       toolbar.style.visibility = '';
     },
 
-    _hideToolbar: function() {
+    _hideToolbar: function () {
       if (!core._notHideToolbar && !core._variable.isFullScreen) {
         context.element.toolbar.style.display = 'none';
         core._inlineToolbarAttr.isShow = false;
       }
     },
 
-    onInput_wysiwyg: function(e) {
+    onInput_wysiwyg: function (e) {
       core._editorRange();
 
       const data = (e.data === null ? '' : e.data === undefined ? ' ' : e.data) || '';
@@ -6422,7 +6422,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     },
 
     _onShortcutKey: false,
-    onKeyDown_wysiwyg: function(e) {
+    onKeyDown_wysiwyg: function (e) {
       const keyCode = e.keyCode;
       const shift = e.shiftKey;
       const ctrl = e.ctrlKey || e.metaKey || keyCode === 91 || keyCode === 92 || keyCode === 224;
@@ -6552,8 +6552,8 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
                 typeof offset === 'number'
                   ? offset
                   : prev.nodeType === 3
-                  ? prev.textContent.length
-                  : 1;
+                    ? prev.textContent.length
+                    : 1;
               core.setRange(prev, offset, prev, offset);
               break;
             }
@@ -6576,7 +6576,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
                   (!selectionNode.previousSibling ||
                     util.isList(selectionNode.previousSibling)))) &&
               (util.getFormatElement(range.startContainer, null) !==
-              util.getFormatElement(range.endContainer, null)
+                util.getFormatElement(range.endContainer, null)
                 ? rangeEl.contains(range.startContainer)
                 : range.startOffset === 0 && range.collapsed)
             ) {
@@ -6788,7 +6788,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
               (selectionNode.nodeType === 3 &&
                 (!selectionNode.nextSibling || util.isList(selectionNode.nextSibling)) &&
                 (util.getFormatElement(range.startContainer, null) !==
-                util.getFormatElement(range.endContainer, null)
+                  util.getFormatElement(range.endContainer, null)
                   ? rangeEl.contains(range.endContainer)
                   : range.endOffset === selectionNode.textContent.length && range.collapsed)))
           ) {
@@ -7110,12 +7110,12 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
                 const newFormat = util.isCell(rangeEl.parentNode)
                   ? 'DIV'
                   : util.isList(rangeEl.parentNode)
-                  ? 'LI'
-                  : util.isFormatElement(rangeEl.nextElementSibling)
-                  ? rangeEl.nextElementSibling.nodeName
-                  : util.isFormatElement(rangeEl.previousElementSibling)
-                  ? rangeEl.previousElementSibling.nodeName
-                  : 'P';
+                    ? 'LI'
+                    : util.isFormatElement(rangeEl.nextElementSibling)
+                      ? rangeEl.nextElementSibling.nodeName
+                      : util.isFormatElement(rangeEl.previousElementSibling)
+                        ? rangeEl.previousElementSibling.nodeName
+                        : 'P';
                 newEl = util.createElement(newFormat);
                 const edge = core.detachRangeFormatElement(rangeEl, [formatEl], null, true, true);
                 edge.cc.insertBefore(newEl, edge.ec);
@@ -7158,7 +7158,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
             core.callPlugin(
               fileComponentName,
-              function() {
+              function () {
                 core.selectComponent(compContext._element, fileComponentName);
               },
               null
@@ -7205,7 +7205,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       if (typeof functions.onKeyDown === 'function') functions.onKeyDown(e, core);
     },
 
-    onKeyUp_wysiwyg: function(e) {
+    onKeyUp_wysiwyg: function (e) {
       if (event._onShortcutKey) return;
       core._editorRange();
 
@@ -7292,21 +7292,21 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       if (typeof functions.onKeyUp === 'function') functions.onKeyUp(e, core);
     },
 
-    onScroll_wysiwyg: function(e) {
+    onScroll_wysiwyg: function (e) {
       core.controllersOff();
       core._lineBreaker.style.display = 'none';
       if (core._isBalloon) event._hideToolbar();
       if (typeof functions.onScroll === 'function') functions.onScroll(e, core);
     },
 
-    onFocus_wysiwyg: function(e) {
+    onFocus_wysiwyg: function (e) {
       if (core._antiBlur) return;
       core.hasFocus = true;
       if (core._isInline) event._showToolbarInline();
       if (typeof functions.onFocus === 'function') functions.onFocus(e, core);
     },
 
-    onBlur_wysiwyg: function(e) {
+    onBlur_wysiwyg: function (e) {
       if (core._antiBlur) return;
       core.hasFocus = false;
       core.controllersOff();
@@ -7334,7 +7334,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       if (options.showPathLabel) context.element.navigation.textContent = '';
     },
 
-    onMouseDown_resizingBar: function(e) {
+    onMouseDown_resizingBar: function (e) {
       e.stopPropagation();
 
       core._variable.resizeClientY = e.clientY;
@@ -7350,7 +7350,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       _d.addEventListener('mouseup', closureFunc);
     },
 
-    _resize_editor: function(e) {
+    _resize_editor: function (e) {
       const resizeInterval =
         context.element.editorArea.offsetHeight + (e.clientY - core._variable.resizeClientY);
       context.element.wysiwygFrame.style.height = context.element.code.style.height =
@@ -7360,7 +7360,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       core._variable.resizeClientY = e.clientY;
     },
 
-    onResize_window: function() {
+    onResize_window: function () {
       core.controllersOff();
 
       const responsiveSize = event._responsiveButtonSize;
@@ -7412,7 +7412,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    onScroll_window: function() {
+    onScroll_window: function () {
       if (
         core._variable.isFullScreen ||
         context.element.toolbar.offsetWidth === 0 ||
@@ -7443,7 +7443,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    _getEditorOffsets: function(container) {
+    _getEditorOffsets: function (container) {
       let offsetEl = container || context.element.topArea;
       let t = 0;
       let l = 0;
@@ -7463,14 +7463,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       };
     },
 
-    _getPageBottomSpace: function() {
+    _getPageBottomSpace: function () {
       return (
         _d.documentElement.scrollHeight -
         (event._getEditorOffsets(null).top + context.element.topArea.offsetHeight)
       );
     },
 
-    _onStickyToolbar: function() {
+    _onStickyToolbar: function () {
       const element = context.element;
 
       if (!core._isInline && !options.toolbarContainer) {
@@ -7482,11 +7482,11 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       element.toolbar.style.width = core._isInline
         ? core._inlineToolbarAttr.width
         : element.toolbar.offsetWidth + 'px';
-      util.addClass(element.toolbar, 'se-toolbar-sticky');
+      util.addClass(element.toolbar, 'ke-toolbar-sticky');
       core._sticky = true;
     },
 
-    _offStickyToolbar: function() {
+    _offStickyToolbar: function () {
       const element = context.element;
 
       element._stickyDummy.style.display = 'none';
@@ -7494,16 +7494,16 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       element.toolbar.style.width = core._isInline ? core._inlineToolbarAttr.width : '';
       element.editorArea.style.marginTop = '';
 
-      util.removeClass(element.toolbar, 'se-toolbar-sticky');
+      util.removeClass(element.toolbar, 'ke-toolbar-sticky');
       core._sticky = false;
     },
 
-    _codeViewAutoHeight: function() {
+    _codeViewAutoHeight: function () {
       context.element.code.style.height = context.element.code.scrollHeight + 'px';
     },
 
     // FireFox - table delete, Chrome - image, video, audio
-    _hardDelete: function() {
+    _hardDelete: function () {
       const range = core.getRange();
       const sc = range.startContainer;
       const ec = range.endContainer;
@@ -7532,27 +7532,27 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
 
       // component
-      const sComp = sc.nodeType === 1 ? util.getParentElement(sc, '.se-component') : null;
-      const eComp = ec.nodeType === 1 ? util.getParentElement(ec, '.se-component') : null;
+      const sComp = sc.nodeType === 1 ? util.getParentElement(sc, '.ke-component') : null;
+      const eComp = ec.nodeType === 1 ? util.getParentElement(ec, '.ke-component') : null;
       if (sComp) util.removeItem(sComp);
       if (eComp) util.removeItem(eComp);
 
       return false;
     },
 
-    onPaste_wysiwyg: function(e) {
+    onPaste_wysiwyg: function (e) {
       const clipboardData = util.isIE ? _w.clipboardData : e.clipboardData;
       if (!clipboardData) return true;
       return event._dataTransferAction('paste', e, clipboardData);
     },
 
-    _setClipboardComponent: function(e, info, clipboardData) {
+    _setClipboardComponent: function (e, info, clipboardData) {
       e.preventDefault();
       e.stopPropagation();
       clipboardData.setData('text/html', info.component.outerHTML);
     },
 
-    onCopy_wysiwyg: function(e) {
+    onCopy_wysiwyg: function (e) {
       const clipboardData = util.isIE ? _w.clipboardData : e.clipboardData;
       if (typeof functions.onCopy === 'function' && !functions.onCopy(e, clipboardData, core)) {
         e.preventDefault();
@@ -7563,15 +7563,15 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       const info = core.currentFileComponentInfo;
       if (info && !util.isIE) {
         event._setClipboardComponent(e, info, clipboardData);
-        util.addClass(info.component, 'se-component-copy');
+        util.addClass(info.component, 'ke-component-copy');
         // copy effect
-        _w.setTimeout(function() {
-          util.removeClass(info.component, 'se-component-copy');
+        _w.setTimeout(function () {
+          util.removeClass(info.component, 'ke-component-copy');
         }, 150);
       }
     },
 
-    onCut_wysiwyg: function(e) {
+    onCut_wysiwyg: function (e) {
       const clipboardData = util.isIE ? _w.clipboardData : e.clipboardData;
       if (typeof functions.onCut === 'function' && !functions.onCut(e, clipboardData, core)) {
         e.preventDefault();
@@ -7586,13 +7586,13 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         core.controllersOff();
       }
 
-      _w.setTimeout(function() {
+      _w.setTimeout(function () {
         // history stack
         core.history.push(false);
       });
     },
 
-    onDrop_wysiwyg: function(e) {
+    onDrop_wysiwyg: function (e) {
       const dataTransfer = e.dataTransfer;
       if (!dataTransfer) return true;
       if (util.isIE) {
@@ -7606,7 +7606,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       return event._dataTransferAction('drop', e, dataTransfer);
     },
 
-    _setDropLocationSelection: function(e) {
+    _setDropLocationSelection: function (e) {
       if (e.rangeParent) {
         core.setRange(e.rangeParent, e.rangeOffset, e.rangeParent, e.rangeOffset);
       } else if (core._wd.caretRangeFromPoint) {
@@ -7618,7 +7618,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    _dataTransferAction: function(type, e, data) {
+    _dataTransferAction: function (type, e, data) {
       let plainText, cleanData;
       if (util.isIE) {
         plainText = data.getData('Text');
@@ -7639,7 +7639,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
         context.element.relative.appendChild(tempDiv);
         tempDiv.focus();
 
-        _w.setTimeout(function() {
+        _w.setTimeout(function () {
           cleanData = tempDiv.innerHTML;
           util.removeItem(tempDiv);
           core.setRange(tempRange.sc, tempRange.so, tempRange.ec, tempRange.eo);
@@ -7658,7 +7658,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    _setClipboardData: function(type, e, plainText, cleanData, data) {
+    _setClipboardData: function (type, e, plainText, cleanData, data) {
       // MS word
       if (
         /class=["']*Mso(Normal|List)/i.test(cleanData) ||
@@ -7710,7 +7710,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    onMouseMove_wysiwyg: function(e) {
+    onMouseMove_wysiwyg: function (e) {
       if (core.isDisabled) return;
       const component = util.getParentElement(e.target, util.isComponent);
       const lineBreakerStyle = core._lineBreaker.style;
@@ -7766,11 +7766,11 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    _onMouseDown_lineBreak: function(e) {
+    _onMouseDown_lineBreak: function (e) {
       e.preventDefault();
     },
 
-    _onLineBreak: function(e) {
+    _onLineBreak: function (e) {
       e.preventDefault();
 
       const component = core._variable._lineBreakComp;
@@ -7794,7 +7794,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       core.history.push(false);
     },
 
-    _addEvent: function() {
+    _addEvent: function () {
       const eventWysiwyg = options.iframe ? core._ww : context.element.wysiwyg;
 
       /** toolbar event */
@@ -7855,7 +7855,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             false
           );
         } else {
-          util.addClass(context.element.resizingBar, 'se-resizing-none');
+          util.addClass(context.element.resizingBar, 'ke-resizing-none');
         }
       }
 
@@ -7870,7 +7870,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       }
     },
 
-    _removeEvent: function() {
+    _removeEvent: function () {
       const eventWysiwyg = options.iframe ? core._ww : context.element.wysiwyg;
 
       context.element.toolbar.removeEventListener('mousedown', event._buttonsEventHandler);
@@ -7915,7 +7915,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       _w.removeEventListener('scroll', event.onScroll_window);
     },
 
-    _setResponsiveToolbar: function() {
+    _setResponsiveToolbar: function () {
       if (_responsiveButtons.length === 0) {
         _responsiveButtons = null;
         return;
@@ -8161,7 +8161,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * You cannot set a new plugin for the button.
      * @param {Array} buttonList Button list
      */
-    setToolbarButtons: function(buttonList) {
+    setToolbarButtons: function (buttonList) {
       core.submenuOff();
       core.containerOff();
 
@@ -8205,7 +8205,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
       if (core._variable.isCodeView) util.addClass(core._styleCommandMap.codeView, 'active');
       if (core._variable.isFullScreen) util.addClass(core._styleCommandMap.fullScreen, 'active');
-      if (util.hasClass(context.element.wysiwyg, 'se-show-block'))
+      if (util.hasClass(context.element.wysiwyg, 'ke-show-block'))
         util.addClass(core._styleCommandMap.showBlocks, 'active');
     },
 
@@ -8213,7 +8213,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Add or reset option property (Editor is reloaded)
      * @param {Object} _options Options
      */
-    setOptions: function(_options) {
+    setOptions: function (_options) {
       event._removeEvent();
       core._resetComponents();
 
@@ -8223,7 +8223,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       core._iframeAuto = null;
 
       core.plugins = _options.plugins || core.plugins;
-      const mergeOptions = [options, _options].reduce(function(init, option) {
+      const mergeOptions = [options, _options].reduce(function (init, option) {
         for (const key in option) {
           if (!util.hasOwn(option, key)) continue;
           if (key === 'plugins' && option[key] && init[key]) {
@@ -8231,16 +8231,16 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
             let o = option[key];
             i = i.length
               ? i
-              : _w.Object.keys(i).map(function(name) {
-                  return i[name];
-                });
+              : _w.Object.keys(i).map(function (name) {
+                return i[name];
+              });
             o = o.length
               ? o
-              : _w.Object.keys(o).map(function(name) {
-                  return o[name];
-                });
+              : _w.Object.keys(o).map(function (name) {
+                return o[name];
+              });
             init[key] = o
-              .filter(function(val) {
+              .filter(function (val) {
                 return i.indexOf(val) === -1;
               })
               .concat(i);
@@ -8273,7 +8273,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       core.lang = lang = options.lang;
 
       if (options.iframe) {
-        el.wysiwygFrame.addEventListener('load', function() {
+        el.wysiwygFrame.addEventListener('load', function () {
           util._setIframeDocument(this, options);
           core._setOptionsInit(el, _initHTML);
         });
@@ -8292,7 +8292,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * It can also be defined with the "setOptions" method, but the "setDefaultStyle" method does not render the editor again.
      * @param {String} style Style string
      */
-    setDefaultStyle: function(style) {
+    setDefaultStyle: function (style) {
       const newStyles = (options._editorStyles = util._setDefaultOptionStyle(options, style));
       const el = context.element;
 
@@ -8319,21 +8319,21 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Open a notice area
      * @param {String} message Notice message
      */
-    noticeOpen: function(message) {
+    noticeOpen: function (message) {
       core.notice.open.call(core, message);
     },
 
     /**
      * @description Close a notice area
      */
-    noticeClose: function() {
+    noticeClose: function () {
       core.notice.close.call(core);
     },
 
     /**
      * @description Copying the contents of the editor to the original textarea
      */
-    save: function() {
+    save: function () {
       context.element.originElement.value = core.getContents(false);
     },
 
@@ -8341,7 +8341,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Gets the kothingEditor's context object. Contains settings, plugins, and cached element objects
      * @returns {Object}
      */
-    getContext: function() {
+    getContext: function () {
       return context;
     },
 
@@ -8350,7 +8350,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} onlyContents - Return only the contents of the body without headers when the "fullPage" option is true
      * @returns {String}
      */
-    getContents: function(onlyContents) {
+    getContents: function (onlyContents) {
       return core.getContents(onlyContents);
     },
 
@@ -8358,7 +8358,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Gets only the text of the kothingEditor contents
      * @returns {String}
      */
-    getText: function() {
+    getText: function () {
       return context.element.wysiwyg.textContent;
     },
 
@@ -8369,7 +8369,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * If argument is no value, the currently set "charCounterType" option is used.
      * @returns {Number}
      */
-    getCharCount: function(charCounterType) {
+    getCharCount: function (charCounterType) {
       charCounterType =
         typeof charCounterType === 'string' ? charCounterType : options.charCounterType;
       return core.getCharLength(
@@ -8391,7 +8391,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * - src: src attribute of tag
      * @returns {Array}
      */
-    getImagesInfo: function() {
+    getImagesInfo: function () {
       return context.image ? context.image._infoList : [];
     },
 
@@ -8409,7 +8409,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {String} pluginName Plugin name (image, video, audio)
      * @returns {Array}
      */
-    getFilesInfo: function(pluginName) {
+    getFilesInfo: function (pluginName) {
       return context[pluginName] ? context[pluginName]._infoList : [];
     },
 
@@ -8417,7 +8417,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Upload images using image plugin
      * @param {FileList} files FileList
      */
-    insertImage: function(files) {
+    insertImage: function (files) {
       if (!core.plugins.image || !files) return;
 
       if (!core.initPlugins.image)
@@ -8433,7 +8433,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @param {Boolean} checkCharCount If true, if "options.maxCharCount" is exceeded when "element" is added, null is returned without addition.
      * @param {Boolean} rangeSelection If true, range select the inserted node.
      */
-    insertHTML: function(html, notCleaningData, checkCharCount, rangeSelection) {
+    insertHTML: function (html, notCleaningData, checkCharCount, rangeSelection) {
       if (typeof html === 'string') {
         if (!notCleaningData) html = core.cleanHTML(html, null);
         try {
@@ -8487,7 +8487,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Change the contents of the kothingEditor
      * @param {String} contents Contents to Input
      */
-    setContents: function(contents) {
+    setContents: function (contents) {
       core.setContents(contents);
     },
 
@@ -8495,7 +8495,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
      * @description Add contents to the kothingEditor
      * @param {String} contents Contents to Input
      */
-    appendContents: function(contents) {
+    appendContents: function (contents) {
       const convertValue = core.convertContentsForEditor(contents);
 
       if (!core._variable.isCodeView) {
@@ -8518,7 +8518,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Disable the kothingEditor
      */
-    disabled: function() {
+    disabled: function () {
       context.tool.cover.style.display = 'block';
       context.element.wysiwyg.setAttribute('contenteditable', false);
       core.isDisabled = true;
@@ -8533,7 +8533,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Enable the kothingEditor
      */
-    enabled: function() {
+    enabled: function () {
       context.tool.cover.style.display = 'none';
       context.element.wysiwyg.setAttribute('contenteditable', true);
       core.isDisabled = false;
@@ -8548,7 +8548,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Show the kothingEditor
      */
-    show: function() {
+    show: function () {
       const topAreaStyle = context.element.topArea.style;
       if (topAreaStyle.display === 'none') topAreaStyle.display = options.display;
     },
@@ -8556,14 +8556,14 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
     /**
      * @description Hide the kothingEditor
      */
-    hide: function() {
+    hide: function () {
       context.element.topArea.style.display = 'none';
     },
 
     /**
      * @description Destroy the kothingEditor
      */
-    destroy: function() {
+    destroy: function () {
       /** off menus */
       core.submenuOff();
       core.containerOff();
@@ -8608,21 +8608,21 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       /**
        * @description Disable the toolbar
        */
-      disabled: function() {
+      disabled: function () {
         context.tool.cover.style.display = 'block';
       },
 
       /**
        * @description Enable the toolbar
        */
-      enabled: function() {
+      enabled: function () {
         context.tool.cover.style.display = 'none';
       },
 
       /**
        * @description Show the toolbar
        */
-      show: function() {
+      show: function () {
         if (core._isInline) {
           event._showToolbarInline();
         } else {
@@ -8634,7 +8634,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
       /**
        * @description Hide the toolbar
        */
-      hide: function() {
+      hide: function () {
         if (core._isInline) {
           event._hideToolbar();
         } else {
@@ -8658,7 +8658,7 @@ export default function(context, pluginCallButtons, plugins, lang, options, _res
 
   // init
   if (options.iframe) {
-    contextEl.wysiwygFrame.addEventListener('load', function() {
+    contextEl.wysiwygFrame.addEventListener('load', function () {
       util._setIframeDocument(this, options);
       core._editorInit(false, options.value);
       options.value = null;
