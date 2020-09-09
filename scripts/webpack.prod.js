@@ -9,16 +9,16 @@ const common = require('./webpack.common')
 
 module.exports = merge(common, {
   mode: 'production',
-  entry: './src/index',
+  entry: './src/build.js',
   output: {
     filename: 'kothing-editor.min.js',
-    path: path.resolve(__dirname, '../build'),
+    path: path.resolve(__dirname, '../dist'),
   },
 
   plugins: [
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new CleanWebpackPlugin(['../build'], {
+    new CleanWebpackPlugin(['../dist'], {
       root: __dirname,
       allowExternal: true,
     }),
@@ -27,4 +27,4 @@ module.exports = merge(common, {
       filename: 'css/kothing-editor.min.css',
     }),
   ],
-})
+});

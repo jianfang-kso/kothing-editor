@@ -11,12 +11,12 @@ module.exports = merge(common, {
   entry: './public/index',
   output: {
     filename: 'kothing-editor.[hash].js',
-    path: path.resolve(__dirname, 'build'),
+    path: path.resolve(__dirname, 'dist'),
   },
 
   devtool: 'cheap-module-eval-source-map',
   devServer: {
-    contentBase: 'build',
+    contentBase: 'dist',
     host: 'localhost',
     port: 8080,
   },
@@ -31,4 +31,4 @@ module.exports = merge(common, {
       inject: true,
     }),
   ],
-})
+});
