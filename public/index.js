@@ -285,7 +285,7 @@ let ss = window.ss = kothintEditor.create(document.getElementById('editor1'), {
         }
     ],
     // maxCharCount: 670,
-    imageGalleryUrl: 'https://etyswjpn79.execute-api.ap-northeast-1.amazonaws.com/suneditor-demo',
+    imageGalleryUrl: '',
     toolBarItem: [
         // default
         ['undo', 'redo'],
