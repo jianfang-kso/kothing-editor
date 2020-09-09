@@ -4650,8 +4650,8 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
           if (attrs[i].name === 'contenteditable') continue;
           this._wd.body.setAttribute(attrs[i].name, attrs[i].value);
         }
-        if (!util.hasClass(this._wd.body, 'sun-editor-editable'))
-          util.addClass(this._wd.body, 'sun-editor-editable');
+        if (!util.hasClass(this._wd.body, 'kothing-editor-editable'))
+          util.addClass(this._wd.body, 'kothing-editor-editable');
       } else {
         context.element.wysiwyg.innerHTML =
           code_html.length > 0 ? this.convertContentsForEditor(code_html) : '<p><br></p>';
@@ -4807,7 +4807,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
       if (options.iframe) {
         const arrts = options.fullPage
           ? util.getAttributesToString(wDoc.body, ['contenteditable'])
-          : 'class="sun-editor-editable"';
+          : 'class="kothing-editor-editable"';
 
         printDocument.write(
           '' +
@@ -4839,7 +4839,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
           '<head>' +
           linkHTML +
           '</head>' +
-          '<body class="sun-editor-editable">' +
+          '<body class="kothing-editor-editable">' +
           contentsHTML +
           '</body>' +
           '</html>'
@@ -4887,7 +4887,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
       if (options.iframe) {
         const arrts = options.fullPage
           ? util.getAttributesToString(wDoc.body, ['contenteditable'])
-          : 'class="sun-editor-editable"';
+          : 'class="kothing-editor-editable"';
 
         windowObject.document.write(
           '' +
@@ -4927,7 +4927,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
           '</title>' +
           linkHTML +
           '</head>' +
-          '<body class="sun-editor-editable" style="width:' +
+          '<body class="kothing-editor-editable" style="width:' +
           w +
           '; border:1px solid #ccc; margin:10px auto !important; height:auto !important;">' +
           contentsHTML +
@@ -6041,7 +6041,7 @@ export default function (context, pluginCallButtons, plugins, lang, options, _re
         while (
           !command &&
           !/ke-menu-list/.test(className) &&
-          !/sun-editor-common/.test(className)
+          !/kothing-editor-common/.test(className)
         ) {
           target = target.parentNode;
           command = target.getAttribute('data-command');
