@@ -80,11 +80,10 @@ $ npm install --save kothing-editor
  * ClassName : 'kothing-eidtor'
  */
 // ID or DOM object
-const KothingEditor = KothingEditor.create(document.getElementById('my-editor'), {
+KothingEditor.create(document.getElementById('my-editor'), {
   // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
   // Insert options
-  // Language global object (default: en)
-  lang: KothingEditor_Lang['zh_cn'],
+  width: '100%',
 });
 ```
 
