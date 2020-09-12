@@ -2,4 +2,5 @@ build/
 dist/
 public/
 document/
+lib/
 node_modules/
