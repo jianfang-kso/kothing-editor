@@ -12,11 +12,11 @@
     module.exports = global.document
       ? factory(global, true)
       : function(w) {
-          if (!w.document) {
-            throw new Error('KothingEditor_Modules a window with a document');
-          }
-          return factory(w);
-        };
+        if (!w.document) {
+          throw new Error('KothingEditor_Modules a window with a document');
+        }
+        return factory(w);
+      };
   } else {
     factory(global);
   }
@@ -292,11 +292,11 @@
      * @returns {String}
      */
     _module_getSizeX: function(contextPlugin, element, cover, container) {
-      if (!element) element = contextPlugin._element;
-      if (!cover) cover = contextPlugin._cover;
-      if (!container) container = contextPlugin._container;
+      if (!element) { element = contextPlugin._element; }
+      if (!cover) { cover = contextPlugin._cover; }
+      if (!container) { container = contextPlugin._container; }
 
-      if (!element) return '';
+      if (!element) { return ''; }
 
       return !/%$/.test(element.style.width)
         ? element.style.width
@@ -312,18 +312,18 @@
      * @returns {String}
      */
     _module_getSizeY: function(contextPlugin, element, cover, container) {
-      if (!element) element = contextPlugin._element;
-      if (!cover) cover = contextPlugin._cover;
-      if (!container) container = contextPlugin._container;
+      if (!element) { element = contextPlugin._element; }
+      if (!cover) { cover = contextPlugin._cover; }
+      if (!container) { container = contextPlugin._container; }
 
-      if (!container || !cover) return (element && element.style.height) || '';
+      if (!container || !cover) { return (element && element.style.height) || ''; }
 
       return this.util.getNumber(cover.style.paddingBottom, 0) > 0 &&
         !this.context.resizing._rotateVertical
         ? cover.style.height
         : !/%$/.test(element.style.height) || !/%$/.test(element.style.width)
-        ? element.style.height
-        : ((container && this.util.getNumber(container.style.height, 2)) || 100) + '%';
+          ? element.style.height
+          : ((container && this.util.getNumber(container.style.height, 2)) || 100) + '%';
     },
 
     /**
@@ -340,8 +340,8 @@
       let x = percentageRotation
         ? ''
         : this.plugins.resizing._module_getSizeX.call(this, contextPlugin);
-      if (x === contextPlugin._defaultSizeX) x = '';
-      if (contextPlugin._onlyPercentage) x = this.util.getNumber(x, 2);
+      if (x === contextPlugin._defaultSizeX) { x = ''; }
+      if (contextPlugin._onlyPercentage) { x = this.util.getNumber(x, 2); }
       contextPlugin.inputX.value = x;
       pluginObj.setInputSize.call(this, 'x');
 
@@ -349,8 +349,8 @@
         let y = percentageRotation
           ? ''
           : this.plugins.resizing._module_getSizeY.call(this, contextPlugin);
-        if (y === contextPlugin._defaultSizeY) y = '';
-        if (contextPlugin._onlyPercentage) y = this.util.getNumber(y, 2);
+        if (y === contextPlugin._defaultSizeY) { y = ''; }
+        if (contextPlugin._onlyPercentage) { y = this.util.getNumber(y, 2); }
         contextPlugin.inputY.value = y;
       }
 
@@ -370,7 +370,7 @@
      */
     _module_setInputSize: function(contextPlugin, xy) {
       if (contextPlugin._onlyPercentage) {
-        if (xy === 'x' && contextPlugin.inputX.value > 100) contextPlugin.inputX.value = 100;
+        if (xy === 'x' && contextPlugin.inputX.value > 100) { contextPlugin.inputX.value = 100; }
         return;
       }
 
@@ -383,7 +383,7 @@
         const xUnit = contextPlugin.inputX.value.replace(/\d+|\./g, '') || contextPlugin.sizeUnit;
         const yUnit = contextPlugin.inputY.value.replace(/\d+|\./g, '') || contextPlugin.sizeUnit;
 
-        if (xUnit !== yUnit) return;
+        if (xUnit !== yUnit) { return; }
 
         const dec = xUnit === '%' ? 2 : 0;
 
@@ -453,7 +453,7 @@
       const x = this.plugins.resizing._module_getSizeX.call(this, contextPlugin);
       const y = this.plugins.resizing._module_getSizeY.call(this, contextPlugin);
       contextPlugin._element.setAttribute('data-size', x + ',' + y);
-      if (contextPlugin._videoRatio) contextPlugin._videoRatio = y;
+      if (contextPlugin._videoRatio) { contextPlugin._videoRatio = y; }
     },
 
     /**
@@ -545,9 +545,7 @@
         contextResizing.alignIcons[align]
       );
       for (let i = 0, len = alignList.length; i < len; i++) {
-        if (alignList[i].getAttribute('data-value') === align)
-          this.util.addClass(alignList[i], 'on');
-        else this.util.removeClass(alignList[i], 'on');
+        if (alignList[i].getAttribute('data-value') === align) { this.util.addClass(alignList[i], 'on'); } else { this.util.removeClass(alignList[i], 'on'); }
       }
 
       // percentage active
@@ -650,7 +648,7 @@
       const command =
         target.getAttribute('data-command') || target.parentNode.getAttribute('data-command');
 
-      if (!command) return;
+      if (!command) { return; }
 
       const value =
         target.getAttribute('data-value') || target.parentNode.getAttribute('data-value');
@@ -664,7 +662,7 @@
 
       if (typeof this.plugins.resizing._closeAlignMenu === 'function') {
         this.plugins.resizing._closeAlignMenu();
-        if (command === 'onalign') return;
+        if (command === 'onalign') { return; }
       }
 
       switch (command) {
@@ -677,7 +675,7 @@
           let percentY = this.plugins.resizing._module_getSizeY.call(this, currentContext);
           if (this.context.resizing._rotateVertical) {
             const percentage = contextEl.getAttribute('data-percentage');
-            if (percentage) percentY = percentage.split(',')[1];
+            if (percentage) { percentY = percentage.split(',')[1]; }
           }
 
           this.plugins.resizing.resetTransform.call(this, contextEl);
@@ -855,8 +853,7 @@
         element.getAttribute('data-rotateY') || ''
       );
 
-      if (isVertical) element.style.maxWidth = 'none';
-      else element.style.maxWidth = '';
+      if (isVertical) { element.style.maxWidth = 'none'; } else { element.style.maxWidth = ''; }
 
       this.plugins.resizing.setCaptionPosition.call(this, element);
     },
@@ -935,11 +932,18 @@
       contextResizing.resizeDiv.style.float = /l/.test(direction)
         ? 'right'
         : /r/.test(direction)
-        ? 'left'
-        : 'none';
+          ? 'left'
+          : 'none';
 
+      const resizing_element_bind = this.plugins.resizing.resizing_element.bind(
+        this,
+        contextResizing,
+        direction,
+        this.context[contextResizing._resize_plugin]
+      );
+      
       const closureFunc_bind = function closureFunc(e) {
-        if (e.type === 'keydown' && e.keyCode !== 27) return;
+        if (e.type === 'keydown' && e.keyCode !== 27) { return; }
 
         const change = contextResizing._isChange;
         contextResizing._isChange = false;
@@ -956,16 +960,10 @@
           // element resize
           this.plugins.resizing.cancel_controller_resize.call(this, direction);
           // history stack
-          if (change) this.history.push(false);
+          if (change) { this.history.push(false); }
         }
       }.bind(this);
 
-      const resizing_element_bind = this.plugins.resizing.resizing_element.bind(
-        this,
-        contextResizing,
-        direction,
-        this.context[contextResizing._resize_plugin]
-      );
       this.addDocEvent('mousemove', resizing_element_bind);
       this.addDocEvent('mouseup', closureFunc_bind);
       this.addDocEvent('keydown', closureFunc_bind);
@@ -998,10 +996,11 @@
           : contextResizing._resizeClientY - clientY);
       const wh = (plugin._element_h / plugin._element_w) * w;
 
-      if (/t/.test(direction))
+      if (/t/.test(direction)) {
         contextResizing.resizeDiv.style.top =
-          plugin._element_h - (/h/.test(direction) ? h : wh) + 'px';
-      if (/l/.test(direction)) contextResizing.resizeDiv.style.left = plugin._element_w - w + 'px';
+          plugin._element_h - (/h/.test(direction) ? h : wh) + 'px'; 
+      }
+      if (/l/.test(direction)) { contextResizing.resizeDiv.style.left = plugin._element_w - w + 'px'; }
 
       if (/r|l/.test(direction)) {
         contextResizing.resizeDiv.style.width = w + 'px';

@@ -78,7 +78,7 @@ export default {
       target = target.parentNode;
     }
 
-    if (!value) return;
+    if (!value) { return; }
 
     const oNode = this.plugins.horizontalRule.appendHr.call(this, '__ke__' + value);
     if (oNode) {

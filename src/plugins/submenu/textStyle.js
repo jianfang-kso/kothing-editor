@@ -69,7 +69,7 @@ export default {
 
       if (typeof t === 'string') {
         const defaultStyle = defaultList[t.toLowerCase()];
-        if (!defaultStyle) continue;
+        if (!defaultStyle) { continue; }
         t = defaultStyle;
       }
 
@@ -150,7 +150,7 @@ export default {
           node = node.parentNode;
         }
 
-        if (!active) break;
+        if (!active) { break; }
       }
 
       active ? util.addClass(btn, 'active') : util.removeClass(btn, 'active');
@@ -174,7 +174,7 @@ export default {
       target = target.parentNode;
     }
 
-    if (!command) return;
+    if (!command) { return; }
 
     const checkStyles = tag.style.cssText.replace(/:.+(;|$)/g, ',').split(',');
     checkStyles.pop();

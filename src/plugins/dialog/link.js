@@ -155,10 +155,10 @@ export default {
     context._linkValue = this.textContent = !value
       ? ''
       : protocol && value.indexOf('://') === -1 && value.indexOf('#') !== 0
-      ? protocol + value
-      : value.indexOf('://') === -1
-      ? '/' + value
-      : value;
+        ? protocol + value
+        : value.indexOf('://') === -1
+          ? '/' + value
+          : value;
   },
 
   submit: function(e) {
@@ -169,7 +169,7 @@ export default {
 
     const submitAction = function() {
       const contextLink = this.context.link;
-      if (contextLink._linkValue.length === 0) return false;
+      if (contextLink._linkValue.length === 0) { return false; }
 
       const url = contextLink._linkValue;
       const anchor = contextLink.linkAnchorText;
@@ -185,9 +185,9 @@ export default {
         if (selectedFormats.length > 1) {
           const oFormat = this.util.createElement(selectedFormats[0].nodeName);
           oFormat.appendChild(oA);
-          if (!this.insertNode(oFormat, null, true)) return;
+          if (!this.insertNode(oFormat, null, true)) { return; }
         } else {
-          if (!this.insertNode(oA, null, true)) return;
+          if (!this.insertNode(oA, null, true)) { return; }
         }
 
         this.setRange(oA.childNodes[0], 0, oA.childNodes[0], oA.textContent.length);
@@ -284,7 +284,7 @@ export default {
 
     const command =
       e.target.getAttribute('data-command') || e.target.parentNode.getAttribute('data-command');
-    if (!command) return;
+    if (!command) { return; }
 
     e.preventDefault();
 

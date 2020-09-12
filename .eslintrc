@@ -9,92 +9,49 @@
     "eslint:recommended"
   ],
   "rules": {
-    // 定义对象的set存取器属性时，强制定义get
     // "accessor-pairs": "error",
-
-    // 指定数组的元素之间要以空格隔开(,后面)， never参数：[ 之前和 ] 之后不能带空格，always参数：[ 之前和 ] 之后必须带空格
     "array-bracket-spacing": ["error", "never"],
-
-    // 箭头函数的箭头（=>）之前/之后标准化间距样式
     "arrow-spacing": ["error", {
       "before": true,
       "after": true
     }],
-
-    // 在块级作用域外访问块内定义的变量是否报错提示
     "block-scoped-var": "error",
-
-    // 规则在打开的块令牌内和同一行上的下一个令牌内强制执行一致的间距
     "block-spacing": ["error", "always"],
-
-    // 花括号相对于其控制语句和正文的位置
     "brace-style": ["error", "1tbs", {
       "allowSingleLine": true
     }],
-
-    // 对象文字中的尾随逗号是有效的
     "comma-dangle": ["error", "always-multiline"],
-
-    // 逗号前后的间距
     "comma-spacing": ["error", {
       "before": false,
       "after": true
     }],
-
-    // 逗号风格
     "comma-style": ["error", "last"],
-
-    // 派生类的构造函数必须调用super()。非派生类的构造函数不得调用super()
     "constructor-super": "error",
-
-    // 当代码块只有一条语句时，也不允许省略大括号，强制使用大括号， 错误示例：if(x) return x
     "curly": ["error", "all"],
-
-    // ===和!==的规则
     "eqeqeq": ["error", "always", { "null": "ignore" }],
-
-    // 嵌套块和语句的特定缩进
     "indent": ["error", 2, { "SwitchCase": 1 }],
-
-    // 对象属性的键和值之间的间距
     "key-spacing": ["error", {
       "beforeColon": false,
       "afterColon": true
     }],
-
-    // 关键字间距
     "keyword-spacing": [2, {
       "before": true,
       "after": true
     }],
-
-    // 禁止出现未使用过的变量
     // "no-unused-vars": "off",
     "no-unused-vars": ["error", { "args": "none" }],
-
-    // 禁止变量定义前使用
     "no-use-before-define": "error",
-
-    // 规定对于三元运算符 ? 和 : 与他们所负责的代码处于同一行。
     "operator-linebreak": ["error", "after", {
       "overrides": {
         "?": "before",
         ":": "before"
       }
     }],
-
-    // 规则定义代码中不要出现多余留白
     "padded-blocks": ["error", { "blocks": "never", "switches": "never", "classes": "never" }],
-
-    // 引号规则
     // "quotes": ["error", "double", {
     //   "avoidEscape": true
     // }],
-
-    // 末尾分号规则
     "semi": ["error", "always"],
-
-    // 分号之前或之后的空格规则
     "semi-spacing": ["error", {
       "before": false,
       "after": true

@@ -48,7 +48,7 @@ export default {
 
     /** add event listeners */
     audio_dialog.querySelector('.ke-btn-primary').addEventListener('click', this.submit.bind(core));
-    if (contextAudio.audioInputFile)
+    if (contextAudio.audioInputFile) {
       audio_dialog
         .querySelector('.ke-dialog-files-edge-button')
         .addEventListener(
@@ -58,18 +58,21 @@ export default {
             contextAudio.audioUrlFile,
             contextAudio.preview
           )
-        );
-    if (contextAudio.audioInputFile && contextAudio.audioUrlFile)
+        ); 
+    }
+    if (contextAudio.audioInputFile && contextAudio.audioUrlFile) {
       contextAudio.audioInputFile.addEventListener(
         'change',
         this._fileInputChange.bind(contextAudio)
-      );
+      ); 
+    }
     audio_controller.addEventListener('click', this.onClick_controller.bind(core));
-    if (contextAudio.audioUrlFile)
+    if (contextAudio.audioUrlFile) {
       contextAudio.audioUrlFile.addEventListener(
         'input',
         this._onLinkPreview.bind(contextAudio.preview, contextAudio, context.options.linkProtocol)
-      );
+      ); 
+    }
 
     /** append html */
     context.dialog.modal.appendChild(audio_dialog);
@@ -222,10 +225,10 @@ export default {
     element.setAttribute('controls', true);
 
     const attrs = this.context.options.audioTagAttrs;
-    if (!attrs) return;
+    if (!attrs) { return; }
 
     for (const key in attrs) {
-      if (!this.util.hasOwn(attrs, key)) continue;
+      if (!this.util.hasOwn(attrs, key)) { continue; }
       element.setAttribute(key, attrs[key]);
     }
   },
@@ -235,10 +238,10 @@ export default {
     context._linkValue = this.textContent = !value
       ? ''
       : protocol && value.indexOf('://') === -1 && value.indexOf('#') !== 0
-      ? protocol + value
-      : value.indexOf('://') === -1
-      ? '/' + value
-      : value;
+        ? protocol + value
+        : value.indexOf('://') === -1
+          ? '/' + value
+          : value;
   },
 
   /**
@@ -269,14 +272,15 @@ export default {
     this.plugins.audio.init.call(this);
     this.controllersOff();
 
-    if (emptyDiv !== this.context.element.wysiwyg)
+    if (emptyDiv !== this.context.element.wysiwyg) {
       this.util.removeItemAllParents(
         emptyDiv,
         function(current) {
           return current.childNodes.length === 0;
         },
         null
-      );
+      ); 
+    }
 
     // focus
     this.focusEdge(focusEl);
@@ -322,17 +326,14 @@ export default {
 
     if (!update) {
       this.plugins.audio.init.call(this);
-      if (contextAudio.audioInputFile && this.context.options.audioMultipleFile)
-        contextAudio.audioInputFile.setAttribute('multiple', 'multiple');
+      if (contextAudio.audioInputFile && this.context.options.audioMultipleFile) { contextAudio.audioInputFile.setAttribute('multiple', 'multiple'); }
     } else if (contextAudio._element) {
       this.context.dialog.updateModal = true;
       contextAudio._linkValue = contextAudio.preview.textContent = contextAudio.audioUrlFile.value =
         contextAudio._element.src;
-      if (contextAudio.audioInputFile && this.context.options.audioMultipleFile)
-        contextAudio.audioInputFile.removeAttribute('multiple');
+      if (contextAudio.audioInputFile && this.context.options.audioMultipleFile) { contextAudio.audioInputFile.removeAttribute('multiple'); }
     } else {
-      if (contextAudio.audioInputFile && this.context.options.audioMultipleFile)
-        contextAudio.audioInputFile.removeAttribute('multiple');
+      if (contextAudio.audioInputFile && this.context.options.audioMultipleFile) { contextAudio.audioInputFile.removeAttribute('multiple'); }
     }
   },
 
@@ -368,7 +369,7 @@ export default {
   },
 
   submitAction: function(fileList) {
-    if (fileList.length === 0) return;
+    if (fileList.length === 0) { return; }
 
     let fileSize = 0;
     let files = [];
@@ -429,12 +430,12 @@ export default {
         }.bind(this)
       );
 
-      if (typeof result === 'undefined') return;
+      if (typeof result === 'undefined') { return; }
       if (!result) {
         this.closeLoading();
         return;
       }
-      if (typeof result === 'object' && result.length > 0) files = result;
+      if (typeof result === 'object' && result.length > 0) { files = result; }
     }
 
     this.plugins.audio.upload.call(this, info, files);
@@ -498,8 +499,7 @@ export default {
     const fileList = response.result;
 
     for (let i = 0, len = fileList.length, file, oAudio; i < len; i++) {
-      if (info.isUpdate) oAudio = info.element;
-      else oAudio = this.plugins.audio._createAudioTag.call(this);
+      if (info.isUpdate) { oAudio = info.element; } else { oAudio = this.plugins.audio._createAudioTag.call(this); }
 
       file = { name: fileList[i].name, size: fileList[i].size };
       this.plugins.audio.create_audio.call(this, oAudio, fileList[i].url, file, info.isUpdate);
@@ -510,7 +510,7 @@ export default {
 
   setupUrl: function(src) {
     try {
-      if (src.length === 0) return false;
+      if (src.length === 0) { return false; }
       this.plugins.audio.create_audio.call(
         this,
         this.plugins.audio._createAudioTag.call(this),
@@ -537,13 +537,15 @@ export default {
         this.focus();
         return;
       }
-    } // update
-    else {
-      if (contextAudio._element) element = contextAudio._element;
+    } else {
+      // update
+      if (contextAudio._element) {
+        element = contextAudio._element;
+      }
       if (element && element.src !== src) {
         element.src = src;
       } else {
-        this.selectComponent(element, 'audio');
+        this.selectComponent(element, "audio");
         return;
       }
     }
@@ -557,7 +559,7 @@ export default {
       false
     );
     this.selectComponent(element, 'audio');
-    if (isUpdate) this.history.push(false);
+    if (isUpdate) { this.history.push(false); }
   },
 
   updateCover: function(element) {
@@ -635,14 +637,14 @@ export default {
       contextAudio._linkValue = contextAudio.preview.textContent = contextAudio.audioUrlFile.value =
         contextAudio._element.src;
     }
-    if (!notOpen) this.plugins.dialog.open.call(this, 'audio', true);
+    if (!notOpen) { this.plugins.dialog.open.call(this, 'audio', true); }
   },
 
   onClick_controller: function(e) {
     e.stopPropagation();
 
     const command = e.target.getAttribute('data-command');
-    if (!command) return;
+    if (!command) { return; }
 
     e.preventDefault();
 
@@ -665,13 +667,14 @@ export default {
    * @Required @Override dialog
    */
   init: function() {
-    if (this.context.dialog.updateModal) return;
+    if (this.context.dialog.updateModal) { return; }
     const contextAudio = this.context.audio;
 
-    if (contextAudio.audioInputFile) contextAudio.audioInputFile.value = '';
-    if (contextAudio.audioUrlFile)
+    if (contextAudio.audioInputFile) { contextAudio.audioInputFile.value = ''; }
+    if (contextAudio.audioUrlFile) {
       contextAudio._linkValue = contextAudio.preview.textContent = contextAudio.audioUrlFile.value =
-        '';
+        ''; 
+    }
     if (contextAudio.audioInputFile && contextAudio.audioUrlFile) {
       contextAudio.audioUrlFile.removeAttribute('disabled');
       contextAudio.preview.style.textDecoration = '';

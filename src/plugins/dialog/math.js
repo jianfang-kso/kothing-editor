@@ -160,7 +160,7 @@ export default {
     return {
       className: 'katex',
       method: function(element) {
-        if (!element.getAttribute('data-exp')) return;
+        if (!element.getAttribute('data-exp')) { return; }
         const dom = this._d
           .createRange()
           .createContextualFragment(
@@ -190,13 +190,13 @@ export default {
     e.stopPropagation();
 
     const submitAction = function() {
-      if (this.context.math.focusElement.value.trim().length === 0) return false;
+      if (this.context.math.focusElement.value.trim().length === 0) { return false; }
 
       const contextMath = this.context.math;
       const mathExp = contextMath.focusElement.value;
       const katexEl = contextMath.previewElement.querySelector('.katex');
 
-      if (!katexEl) return false;
+      if (!katexEl) { return false; }
       katexEl.className = '__ke__katex ' + katexEl.className;
       katexEl.setAttribute('contenteditable', false);
       katexEl.setAttribute('data-exp', this.util.HTMLEncoder(mathExp));
@@ -209,9 +209,9 @@ export default {
         if (selectedFormats.length > 1) {
           const oFormat = this.util.createElement(selectedFormats[0].nodeName);
           oFormat.appendChild(katexEl);
-          if (!this.insertNode(oFormat, null, true)) return false;
+          if (!this.insertNode(oFormat, null, true)) { return false; }
         } else {
-          if (!this.insertNode(katexEl, null, true)) return false;
+          if (!this.insertNode(katexEl, null, true)) { return false; }
         }
 
         const empty = this.util.createTextNode(this.util.zeroWidthSpace);
@@ -306,7 +306,7 @@ export default {
 
     const command =
       e.target.getAttribute('data-command') || e.target.parentNode.getAttribute('data-command');
-    if (!command) return;
+    if (!command) { return; }
 
     e.preventDefault();
 

@@ -42,11 +42,11 @@ export default {
 
     const sizeList = !option.lineHeights
       ? [
-          { text: '1', value: 1 },
-          { text: '1.15', value: 1.15 },
-          { text: '1.5', value: 1.5 },
-          { text: '2', value: 2 },
-        ]
+        { text: '1', value: 1 },
+        { text: '1.15', value: 1.15 },
+        { text: '1.5', value: 1.5 },
+        { text: '2', value: 2 },
+      ]
       : option.lineHeights;
 
     let list =
@@ -98,7 +98,7 @@ export default {
   },
 
   pickup: function(e) {
-    if (!/^BUTTON$/i.test(e.target.tagName)) return false;
+    if (!/^BUTTON$/i.test(e.target.tagName)) { return false; }
 
     e.preventDefault();
     e.stopPropagation();

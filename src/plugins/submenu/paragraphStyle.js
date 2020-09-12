@@ -64,7 +64,7 @@ export default {
 
       if (typeof p === 'string') {
         const defaultStyle = defaultList[p.toLowerCase()];
-        if (!defaultStyle) continue;
+        if (!defaultStyle) { continue; }
         p = defaultStyle;
       }
 
@@ -121,17 +121,17 @@ export default {
 
     while (!/^UL$/i.test(target.tagName)) {
       value = target.getAttribute('data-value');
-      if (value) break;
+      if (value) { break; }
       target = target.parentNode;
     }
 
-    if (!value) return;
+    if (!value) { return; }
 
     let selectedFormsts = this.getSelectedElements();
     if (selectedFormsts.length === 0) {
       this.getRange_addLine(this.getRange());
       selectedFormsts = this.getSelectedElements();
-      if (selectedFormsts.length === 0) return;
+      if (selectedFormsts.length === 0) { return; }
     }
 
     // change format class

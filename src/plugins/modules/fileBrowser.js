@@ -11,11 +11,11 @@
     module.exports = global.document
       ? factory(global, true)
       : function(w) {
-          if (!w.document) {
-            throw new Error('KothingEditor_Modules a window with a document');
-          }
-          return factory(w);
-        };
+        if (!w.document) {
+          throw new Error('KothingEditor_Modules a window with a document');
+        }
+        return factory(w);
+      };
   } else {
     factory(global);
   }
@@ -146,7 +146,7 @@
       }
 
       this.plugins.fileBrowser._bindClose = function(e) {
-        if (!/27/.test(e.keyCode)) return;
+        if (!/27/.test(e.keyCode)) { return; }
         this.plugins.fileBrowser.close.call(this);
       }.bind(this);
       this._d.addEventListener('keydown', this.plugins.fileBrowser._bindClose);
@@ -199,8 +199,7 @@
       fileBrowserContext.list.innerHTML = fileBrowserContext.tagArea.innerHTML = fileBrowserContext.titleArea.textContent =
         '';
 
-      if (typeof this.plugins[fileBrowserContext.contextPlugin].init === 'function')
-        this.plugins[fileBrowserContext.contextPlugin].init.call(this);
+      if (typeof this.plugins[fileBrowserContext.contextPlugin].init === 'function') { this.plugins[fileBrowserContext.contextPlugin].init.call(this); }
       fileBrowserContext.contextPlugin = '';
     },
 
@@ -311,7 +310,7 @@
 
     onClickTag: function(e) {
       const target = e.target;
-      if (!this.util.isAnchor(target)) return;
+      if (!this.util.isAnchor(target)) { return; }
 
       const tagName = target.textContent;
       const fileBrowserPlugin = this.plugins.fileBrowser;
@@ -334,10 +333,10 @@
         selectedTags.length === 0
           ? fileBrowserContext.items
           : fileBrowserContext.items.filter(function(item) {
-              return item.tag.some(function(tag) {
-                return selectedTags.indexOf(tag) > -1;
-              });
-            }),
+            return item.tag.some(function(tag) {
+              return selectedTags.indexOf(tag) > -1;
+            });
+          }),
         false
       );
     },
@@ -351,15 +350,15 @@
       let target = e.target;
       let command = null;
 
-      if (target === listEl) return;
+      if (target === listEl) { return; }
 
       while (listEl !== target.parentNode) {
         command = target.getAttribute('data-command');
-        if (command) break;
+        if (command) { break; }
         target = target.parentNode;
       }
 
-      if (!command) return;
+      if (!command) { return; }
 
       const handler =
         fileBrowserContext.selectorHandler ||

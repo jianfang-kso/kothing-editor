@@ -35,24 +35,24 @@ export default {
   create: function(idOrElement, options, _init_options) {
     util._propertiesInit();
 
-    if (typeof options !== 'object') options = {};
+    if (typeof options !== 'object') { options = {}; }
     if (_init_options) {
       options = [_init_options, options].reduce(function(init, option) {
         for (const key in option) {
-          if (!util.hasOwn(option, key)) continue;
+          if (!util.hasOwn(option, key)) { continue; }
           if (key === 'plugins' && option[key] && init[key]) {
             let i = init[key];
             let o = option[key];
             i = i.length
               ? i
               : Object.keys(i).map(function(name) {
-                  return i[name];
-                });
+                return i[name];
+              });
             o = o.length
               ? o
               : Object.keys(o).map(function(name) {
-                  return o[name];
-                });
+                return o[name];
+              });
             init[key] = o
               .filter(function(val) {
                 return i.indexOf(val) === -1;

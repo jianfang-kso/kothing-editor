@@ -11,11 +11,11 @@
     module.exports = global.document
       ? factory(global, true)
       : function(w) {
-          if (!w.document) {
-            throw new Error('KothingEditor_Modules a window with a document');
-          }
-          return factory(w);
-        };
+        if (!w.document) {
+          throw new Error('KothingEditor_Modules a window with a document');
+        }
+        return factory(w);
+      };
   } else {
     factory(global);
   }
@@ -98,14 +98,14 @@
      * @param {Boolean} update Whether it will open for update ('image' === this.currentControllerName)
      */
     open: function(kind, update) {
-      if (this.modalForm) return false;
+      if (this.modalForm) { return false; }
       if (this.plugins.dialog._bindClose) {
         this._d.removeEventListener('keydown', this.plugins.dialog._bindClose);
         this.plugins.dialog._bindClose = null;
       }
 
       this.plugins.dialog._bindClose = function(e) {
-        if (!/27/.test(e.keyCode)) return;
+        if (!/27/.test(e.keyCode)) { return; }
         this.plugins.dialog.close.call(this);
       }.bind(this);
       this._d.addEventListener('keydown', this.plugins.dialog._bindClose);
@@ -122,14 +122,14 @@
       this.modalForm = this.context[kind].modal;
       const focusElement = this.context[kind].focusElement;
 
-      if (typeof this.plugins[kind].on === 'function') this.plugins[kind].on.call(this, update);
+      if (typeof this.plugins[kind].on === 'function') { this.plugins[kind].on.call(this, update); }
 
       this.context.dialog.modalArea.style.display = 'block';
       this.context.dialog.back.style.display = 'block';
       this.context.dialog.modal.style.display = 'block';
       this.modalForm.style.display = 'block';
 
-      if (focusElement) focusElement.focus();
+      if (focusElement) { focusElement.focus(); }
     },
 
     _bindClose: null,
@@ -149,7 +149,7 @@
       this.context.dialog.back.style.display = 'none';
       this.context.dialog.modalArea.style.display = 'none';
       this.context.dialog.updateModal = false;
-      if (typeof this.plugins[kind].init === 'function') this.plugins[kind].init.call(this);
+      if (typeof this.plugins[kind].init === 'function') { this.plugins[kind].init.call(this); }
       this.context.dialog.kind = '';
       this.modalForm = null;
       this.focus();

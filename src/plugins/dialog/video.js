@@ -65,7 +65,7 @@ export default {
 
     /** add event listeners */
     video_dialog.querySelector('.ke-btn-primary').addEventListener('click', this.submit.bind(core));
-    if (contextVideo.videoInputFile)
+    if (contextVideo.videoInputFile) {
       video_dialog
         .querySelector('.ke-dialog-files-edge-button')
         .addEventListener(
@@ -75,17 +75,20 @@ export default {
             contextVideo.videoUrlFile,
             contextVideo.preview
           )
-        );
-    if (contextVideo.videoInputFile && contextVideo.videoUrlFile)
+        ); 
+    }
+    if (contextVideo.videoInputFile && contextVideo.videoUrlFile) {
       contextVideo.videoInputFile.addEventListener(
         'change',
         this._fileInputChange.bind(contextVideo)
-      );
-    if (contextVideo.videoUrlFile)
+      ); 
+    }
+    if (contextVideo.videoUrlFile) {
       contextVideo.videoUrlFile.addEventListener(
         'input',
         this._onLinkPreview.bind(contextVideo.preview, contextVideo, context.options.linkProtocol)
-      );
+      ); 
+    }
 
     contextVideo.proportion = {};
     contextVideo.videoRatioOption = {};
@@ -230,7 +233,7 @@ export default {
         '"' +
         ratioDisplay +
         '>';
-      if (!heightDisplay) html += '<option value=""> - </option>';
+      if (!heightDisplay) { html += '<option value=""> - </option>'; }
       for (let i = 0, len = ratioList.length; i < len; i++) {
         html +=
           '<option value="' +
@@ -317,10 +320,10 @@ export default {
       context._linkValue = this.textContent = !value
         ? ''
         : protocol && value.indexOf('://') === -1 && value.indexOf('#') !== 0
-        ? protocol + value
-        : value.indexOf('://') === -1
-        ? '/' + value
-        : value;
+          ? protocol + value
+          : value.indexOf('://') === -1
+            ? '/' + value
+            : value;
     }
   },
 
@@ -328,10 +331,10 @@ export default {
     element.setAttribute('controls', true);
 
     const attrs = this.context.options.videoTagAttrs;
-    if (!attrs) return;
+    if (!attrs) { return; }
 
     for (const key in attrs) {
-      if (!this.util.hasOwn(attrs, key)) continue;
+      if (!this.util.hasOwn(attrs, key)) { continue; }
       element.setAttribute(key, attrs[key]);
     }
   },
@@ -347,10 +350,10 @@ export default {
     element.allowFullscreen = true;
 
     const attrs = this.context.options.videoIframeAttrs;
-    if (!attrs) return;
+    if (!attrs) { return; }
 
     for (const key in attrs) {
-      if (!this.util.hasOwn(attrs, key)) continue;
+      if (!this.util.hasOwn(attrs, key)) { continue; }
       element.setAttribute(key, attrs[key]);
     }
   },
@@ -393,14 +396,15 @@ export default {
     this.plugins.video.init.call(this);
     this.controllersOff();
 
-    if (emptyDiv !== this.context.element.wysiwyg)
+    if (emptyDiv !== this.context.element.wysiwyg) {
       this.util.removeItemAllParents(
         emptyDiv,
         function(current) {
           return current.childNodes.length === 0;
         },
         null
-      );
+      ); 
+    }
 
     // focus
     this.focusEdge(focusEl);
@@ -433,11 +437,9 @@ export default {
           ? ''
           : this.context.option.videoHeight;
       contextVideo.proportion.disabled = true;
-      if (contextVideo.videoInputFile && this.context.options.videoMultipleFile)
-        contextVideo.videoInputFile.setAttribute('multiple', 'multiple');
+      if (contextVideo.videoInputFile && this.context.options.videoMultipleFile) { contextVideo.videoInputFile.setAttribute('multiple', 'multiple'); }
     } else {
-      if (contextVideo.videoInputFile && this.context.options.videoMultipleFile)
-        contextVideo.videoInputFile.removeAttribute('multiple');
+      if (contextVideo.videoInputFile && this.context.options.videoMultipleFile) { contextVideo.videoInputFile.removeAttribute('multiple'); }
     }
 
     if (contextVideo._resizing) {
@@ -525,7 +527,7 @@ export default {
   },
 
   submitAction: function(fileList) {
-    if (fileList.length === 0) return;
+    if (fileList.length === 0) { return; }
 
     let fileSize = 0;
     let files = [];
@@ -589,12 +591,12 @@ export default {
         }.bind(this)
       );
 
-      if (typeof result === 'undefined') return;
+      if (typeof result === 'undefined') { return; }
       if (!result) {
         this.closeLoading();
         return;
       }
-      if (typeof result === 'object' && result.length > 0) files = result;
+      if (typeof result === 'object' && result.length > 0) { files = result; }
     }
 
     this.plugins.video.upload.call(this, info, files);
@@ -682,7 +684,7 @@ export default {
       const contextVideo = this.context.video;
       let url = contextVideo._linkValue;
 
-      if (url.length === 0) return false;
+      if (url.length === 0) { return false; }
 
       /** iframe source */
       if (/^<iframe.*\/iframe>$/.test(url)) {
@@ -690,12 +692,12 @@ export default {
           .parseFromString(url, 'text/html')
           .querySelector('iframe');
         url = oIframe.src;
-        if (url.length === 0) return false;
+        if (url.length === 0) { return false; }
       }
 
       /** youtube */
       if (/youtu\.?be/.test(url)) {
-        if (!/^http/.test(url)) url = 'https://' + url;
+        if (!/^http/.test(url)) { url = 'https://' + url; }
         url = url.replace('watch?v=', '');
         if (!/^\/\/.+\/embed\//.test(url)) {
           url = url
@@ -831,12 +833,11 @@ export default {
   },
 
   _update_videoCover: function(oFrame) {
-    if (!oFrame) return;
+    if (!oFrame) { return; }
 
     const contextVideo = this.context.video;
 
-    if (/^video$/i.test(oFrame.nodeName)) this.plugins.video._setTagAttrs.call(this, oFrame);
-    else this.plugins.video._setIframeAttrs.call(this, oFrame);
+    if (/^video$/i.test(oFrame.nodeName)) { this.plugins.video._setTagAttrs.call(this, oFrame); } else { this.plugins.video._setIframeAttrs.call(this, oFrame); }
 
     const existElement =
       this.util.getParentElement(oFrame, this.util.isMediaComponent) ||
@@ -871,7 +872,7 @@ export default {
     this.plugins.video.applySize.call(this, size[0], size[1]);
 
     existElement.parentNode.replaceChild(container, existElement);
-    if (caption) existElement.parentNode.insertBefore(caption, container.nextElementSibling);
+    if (caption) { existElement.parentNode.insertBefore(caption, container.nextElementSibling); }
     this.plugins.fileManager.setInfo.call(
       this,
       'video',
@@ -918,11 +919,12 @@ export default {
   openModify: function(notOpen) {
     const contextVideo = this.context.video;
 
-    if (contextVideo.videoUrlFile)
+    if (contextVideo.videoUrlFile) {
       contextVideo._linkValue = contextVideo.preview.textContent = contextVideo.videoUrlFile.value =
         contextVideo._element.src ||
         (contextVideo._element.querySelector('source') || '').src ||
-        '';
+        ''; 
+    }
     contextVideo.modal.querySelector(
       'input[name="kothing-editor_video_radio"][value="' + contextVideo._align + '"]'
     ).checked = true;
@@ -935,11 +937,10 @@ export default {
         contextVideo
       ));
       const ratioSelected = this.plugins.video.setVideoRatioSelect.call(this, y);
-      if (!ratioSelected)
-        contextVideo.inputY.value = contextVideo._onlyPercentage ? this.util.getNumber(y, 2) : y;
+      if (!ratioSelected) { contextVideo.inputY.value = contextVideo._onlyPercentage ? this.util.getNumber(y, 2) : y; }
     }
 
-    if (!notOpen) this.plugins.dialog.open.call(this, 'video', true);
+    if (!notOpen) { this.plugins.dialog.open.call(this, 'video', true); }
   },
 
   setVideoRatioSelect: function(value) {
@@ -947,16 +948,14 @@ export default {
     const contextVideo = this.context.video;
     const ratioOptions = contextVideo.videoRatioOption.options;
 
-    if (/%$/.test(value) || contextVideo._onlyPercentage)
-      value = this.util.getNumber(value, 2) / 100 + '';
-    else if (!this.util.isNumber(value) || value * 1 >= 1) value = '';
+    if (/%$/.test(value) || contextVideo._onlyPercentage) { value = this.util.getNumber(value, 2) / 100 + ''; } else if (!this.util.isNumber(value) || value * 1 >= 1) { value = ''; }
 
     contextVideo.inputY.placeholder = '';
     for (let i = 0, len = ratioOptions.length; i < len; i++) {
       if (ratioOptions[i].value === value) {
         ratioSelected = ratioOptions[i].selected = true;
         contextVideo.inputY.placeholder = !value ? '' : value * 100 + '%';
-      } else ratioOptions[i].selected = false;
+      } else { ratioOptions[i].selected = false; }
     }
 
     return ratioSelected;
@@ -996,8 +995,8 @@ export default {
   applySize: function(w, h) {
     const contextVideo = this.context.video;
 
-    if (!w) w = contextVideo.inputX.value || this.context.option.videoWidth;
-    if (!h) h = contextVideo.inputY.value || this.context.option.videoHeight;
+    if (!w) { w = contextVideo.inputX.value || this.context.option.videoWidth; }
+    if (!h) { h = contextVideo.inputY.value || this.context.option.videoHeight; }
 
     if (contextVideo._onlyPercentage || /%$/.test(w) || !w) {
       this.plugins.video.setPercentSize.call(
@@ -1031,11 +1030,11 @@ export default {
     const onlyW = /^(rw|lw)$/.test(direction);
     const onlyH = /^(th|bh)$/.test(direction);
 
-    if (!onlyH) w = this.util.getNumber(w, 0);
-    if (!onlyW) h = this.util.isNumber(h) ? h + contextVideo.sizeUnit : !h ? '' : h;
+    if (!onlyH) { w = this.util.getNumber(w, 0); }
+    if (!onlyW) { h = this.util.isNumber(h) ? h + contextVideo.sizeUnit : !h ? '' : h; }
 
-    if (!onlyH) contextVideo._element.style.width = w ? w + contextVideo.sizeUnit : '';
-    if (!onlyW) contextVideo._cover.style.paddingBottom = contextVideo._cover.style.height = h;
+    if (!onlyH) { contextVideo._element.style.width = w ? w + contextVideo.sizeUnit : ''; }
+    if (!onlyW) { contextVideo._cover.style.paddingBottom = contextVideo._cover.style.height = h; }
 
     if (!onlyH && !/%$/.test(w)) {
       contextVideo._cover.style.width = '';
@@ -1048,7 +1047,7 @@ export default {
       contextVideo._element.style.height = '';
     }
 
-    if (!notResetPercentage) contextVideo._element.removeAttribute('data-percentage');
+    if (!notResetPercentage) { contextVideo._element.removeAttribute('data-percentage'); }
 
     // save current size
     this.plugins.resizing._module_saveCurrentSize.call(this, contextVideo);
@@ -1103,8 +1102,8 @@ export default {
           ? h + '%'
           : h
         : this.util.isNumber(h)
-        ? h + contextVideo.sizeUnit
-        : h || contextVideo._defaultRatio;
+          ? h + contextVideo.sizeUnit
+          : h || contextVideo._defaultRatio;
 
     contextVideo._container.style.width = this.util.isNumber(w) ? w + '%' : w;
     contextVideo._container.style.height = '';
@@ -1115,8 +1114,7 @@ export default {
     contextVideo._element.style.height = '100%';
     contextVideo._element.style.maxWidth = '';
 
-    if (contextVideo._align === 'center')
-      this.plugins.video.setAlign.call(this, null, null, null, null);
+    if (contextVideo._align === 'center') { this.plugins.video.setAlign.call(this, null, null, null, null); }
     contextVideo._element.setAttribute('data-percentage', w + ',' + h);
 
     // save current size
@@ -1138,8 +1136,7 @@ export default {
     this.util.removeClass(contextVideo._container, this.context.video._floatClassRegExp);
     this.util.addClass(contextVideo._container, '__ke__float-' + contextVideo._align);
 
-    if (contextVideo._align === 'center')
-      this.plugins.video.setAlign.call(this, null, null, null, null);
+    if (contextVideo._align === 'center') { this.plugins.video.setAlign.call(this, null, null, null, null); }
   },
 
   /**
@@ -1148,10 +1145,10 @@ export default {
   setAlign: function(align, element, cover, container) {
     const contextVideo = this.context.video;
 
-    if (!align) align = contextVideo._align;
-    if (!element) element = contextVideo._element;
-    if (!cover) cover = contextVideo._cover;
-    if (!container) container = contextVideo._container;
+    if (!align) { align = contextVideo._align; }
+    if (!element) { element = contextVideo._element; }
+    if (!cover) { cover = contextVideo._cover; }
+    if (!container) { container = contextVideo._container; }
 
     if (align && align !== 'none') {
       cover.style.margin = 'auto';
@@ -1166,10 +1163,10 @@ export default {
       cover.style.paddingBottom = !/%$/.test(cover.style.height)
         ? cover.style.height
         : this.util.getNumber(
-            (this.util.getNumber(cover.style.height, 2) / 100) *
+          (this.util.getNumber(cover.style.height, 2) / 100) *
               this.util.getNumber(cover.style.width, 2),
-            2
-          ) + '%';
+          2
+        ) + '%';
     } else {
       container.style.minWidth = '';
       cover.style.width = this.context.resizing._rotateVertical
@@ -1200,10 +1197,11 @@ export default {
    */
   init: function() {
     const contextVideo = this.context.video;
-    if (contextVideo.videoInputFile) contextVideo.videoInputFile.value = '';
-    if (contextVideo.videoUrlFile)
+    if (contextVideo.videoInputFile) { contextVideo.videoInputFile.value = ''; }
+    if (contextVideo.videoUrlFile) {
       contextVideo._linkValue = contextVideo.preview.textContent = contextVideo.videoUrlFile.value =
-        '';
+        ''; 
+    }
     if (contextVideo.videoInputFile && contextVideo.videoUrlFile) {
       contextVideo.videoUrlFile.removeAttribute('disabled');
       contextVideo.preview.style.textDecoration = '';

@@ -1,8 +1,8 @@
-import './assets/css/editor.css'
-import './assets/css/editor-contents.css'
+import './assets/css/editor.css';
+import './assets/css/editor-contents.css';
 
-import plugins from './plugins'
-import KothingEditor from './editor'
+import plugins from './plugins';
+import KothingEditor from './editor';
 
 Object.defineProperty(window, 'KothingEditor', {
   enumerable: true,
@@ -11,6 +11,6 @@ Object.defineProperty(window, 'KothingEditor', {
   value: KothingEditor.init({
     plugins: plugins,
   }),
-})
+});
 
-export default KothingEditor
+export default KothingEditor;

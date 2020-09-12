@@ -151,7 +151,7 @@ export default {
       target = target.parentNode;
     }
 
-    if (!value) return;
+    if (!value) { return; }
 
     const selectedFormsts = this.getSelectedElements();
     for (let i = 0, len = selectedFormsts.length; i < len; i++) {

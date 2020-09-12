@@ -17,7 +17,7 @@ const util = {
   isIE_Edge: null,
   isOSX_IOS: null,
   _propertiesInit: function() {
-    if (this._d) return;
+    if (this._d) { return; }
     this._d = document;
     this._w = window;
     this.isIE = navigator.userAgent.indexOf('Trident') > -1;
@@ -67,7 +67,7 @@ const util = {
    * @returns {Boolean}
    */
   onlyZeroWidthSpace: function(text) {
-    if (typeof text !== 'string') text = text.textContent;
+    if (typeof text !== 'string') { text = text.textContent; }
     return text === '' || this.onlyZeroWidthRegExp.test(text);
   },
 
@@ -192,7 +192,7 @@ const util = {
       }
     }
 
-    if (path === '') path = pathList.length > 0 ? pathList[0][src] : '';
+    if (path === '') { path = pathList.length > 0 ? pathList[0][src] : ''; }
 
     path.indexOf(':/') === -1 &&
       path.slice(0, 2) !== '//' &&
@@ -201,14 +201,15 @@ const util = {
           ? window.location.href.match(/^.*?:\/\/[^\/]*/)[0] + path
           : window.location.href.match(/^[^\?]*\/(?:)/)[0] + path);
 
-    if (!path)
+    if (!path) {
       throw Error(
         '[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +' +
           path +
           ', extension: ' +
           extension +
           ')'
-      );
+      ); 
+    }
 
     return path;
   },
@@ -245,7 +246,7 @@ const util = {
    */
   getIframeDocument: function(iframe) {
     let wDocument = iframe.contentWindow || iframe.contentDocument;
-    if (wDocument.document) wDocument = wDocument.document;
+    if (wDocument.document) { wDocument = wDocument.document; }
     return wDocument;
   },
 
@@ -256,13 +257,13 @@ const util = {
    * @returns {String}
    */
   getAttributesToString: function(element, exceptAttrs) {
-    if (!element.attributes) return '';
+    if (!element.attributes) { return ''; }
 
     const attrs = element.attributes;
     let attrString = '';
 
     for (let i = 0, len = attrs.length; i < len; i++) {
-      if (exceptAttrs && exceptAttrs.indexOf(attrs[i].name) > -1) continue;
+      if (exceptAttrs && exceptAttrs.indexOf(attrs[i].name) > -1) { continue; }
       attrString += attrs[i].name + '="' + attrs[i].value + '" ';
     }
 
@@ -462,7 +463,7 @@ const util = {
    * @returns {Element|null}
    */
   getFormatElement: function(element, validation) {
-    if (!element) return null;
+    if (!element) { return null; }
     if (!validation) {
       validation = function() {
         return true;
@@ -470,9 +471,9 @@ const util = {
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) return null;
-      if (this.isRangeFormatElement(element)) return element.firstElementChild;
-      if (this.isFormatElement(element) && validation(element)) return element;
+      if (this.isWysiwygDiv(element)) { return null; }
+      if (this.isRangeFormatElement(element)) { return element.firstElementChild; }
+      if (this.isFormatElement(element) && validation(element)) { return element; }
 
       element = element.parentNode;
     }
@@ -487,7 +488,7 @@ const util = {
    * @returns {Element|null}
    */
   getRangeFormatElement: function(element, validation) {
-    if (!element) return null;
+    if (!element) { return null; }
     if (!validation) {
       validation = function() {
         return true;
@@ -495,13 +496,12 @@ const util = {
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) return null;
+      if (this.isWysiwygDiv(element)) { return null; }
       if (
         this.isRangeFormatElement(element) &&
         !/^(THEAD|TBODY|TR)$/i.test(element.nodeName) &&
         validation(element)
-      )
-        return element;
+      ) { return element; }
       element = element.parentNode;
     }
 
@@ -515,7 +515,7 @@ const util = {
    * @returns {Element|null}
    */
   getFreeFormatElement: function(element, validation) {
-    if (!element) return null;
+    if (!element) { return null; }
     if (!validation) {
       validation = function() {
         return true;
@@ -523,8 +523,8 @@ const util = {
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) return null;
-      if (this.isFreeFormatElement(element) && validation(element)) return element;
+      if (this.isWysiwygDiv(element)) { return null; }
+      if (this.isFreeFormatElement(element) && validation(element)) { return element; }
 
       element = element.parentNode;
     }
@@ -539,7 +539,7 @@ const util = {
    * @returns {Element|null}
    */
   getClosureFreeFormatElement: function(element, validation) {
-    if (!element) return null;
+    if (!element) { return null; }
     if (!validation) {
       validation = function() {
         return true;
@@ -547,8 +547,8 @@ const util = {
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) return null;
-      if (this.isClosureFreeFormatElement(element) && validation(element)) return element;
+      if (this.isWysiwygDiv(element)) { return null; }
+      if (this.isClosureFreeFormatElement(element) && validation(element)) { return element; }
 
       element = element.parentNode;
     }
@@ -571,8 +571,8 @@ const util = {
       this.addClass(originEl, classes[i]);
     }
 
-    if (!originEl.style.cssText) originEl.removeAttribute('style');
-    if (!originEl.className.trim()) originEl.removeAttribute('class');
+    if (!originEl.style.cssText) { originEl.removeAttribute('style'); }
+    if (!originEl.className.trim()) { originEl.removeAttribute('class'); }
   },
 
   /**
@@ -595,7 +595,7 @@ const util = {
    * @returns {Array|Node|null}
    */
   getArrayItem: function(array, validation, multi) {
-    if (!array || array.length === 0) return null;
+    if (!array || array.length === 0) { return null; }
 
     validation =
       validation ||
@@ -607,8 +607,7 @@ const util = {
     for (let i = 0, len = array.length, a; i < len; i++) {
       a = array[i];
       if (validation(a)) {
-        if (!multi) return a;
-        else arr.push(a);
+        if (!multi) { return a; } else { arr.push(a); }
       }
     }
 
@@ -641,7 +640,7 @@ const util = {
    */
   nextIdx: function(array, item) {
     const idx = this.getArrayIndex(array, item);
-    if (idx === -1) return -1;
+    if (idx === -1) { return -1; }
     return idx + 1;
   },
 
@@ -653,7 +652,7 @@ const util = {
    */
   prevIdx: function(array, item) {
     const idx = this.getArrayIndex(array, item);
-    if (idx === -1) return -1;
+    if (idx === -1) { return -1; }
     return idx - 1;
   },
 
@@ -687,7 +686,7 @@ const util = {
     this.getParentElement(
       node,
       function(el) {
-        if (el === parentNode) finds = false;
+        if (el === parentNode) { finds = false; }
         if (finds && !this.isWysiwygDiv(el)) {
           // merge text nodes
           if (_newOffsets && el.nodeType === 3) {
@@ -738,7 +737,7 @@ const util = {
 
     for (let i = 0, len = offsets.length; i < len; i++) {
       nodes = current.childNodes;
-      if (nodes.length === 0) break;
+      if (nodes.length === 0) { break; }
       if (nodes.length <= offsets[i]) {
         current = nodes[nodes.length - 1];
       } else {
@@ -757,15 +756,15 @@ const util = {
    * @returns {Boolean}
    */
   isSameAttributes: function(a, b) {
-    if (a.nodeType === 3 && b.nodeType === 3) return true;
-    if (a.nodeType === 3 || b.nodeType === 3) return false;
+    if (a.nodeType === 3 && b.nodeType === 3) { return true; }
+    if (a.nodeType === 3 || b.nodeType === 3) { return false; }
 
     const style_a = a.style;
     const style_b = b.style;
     let compStyle = 0;
 
     for (let i = 0, len = style_a.length; i < len; i++) {
-      if (style_a[style_a[i]] === style_b[style_a[i]]) compStyle++;
+      if (style_a[style_a[i]] === style_b[style_a[i]]) { compStyle++; }
     }
 
     const class_a = a.classList;
@@ -774,7 +773,7 @@ const util = {
     let compClass = 0;
 
     for (let i = 0, len = class_a.length; i < len; i++) {
-      if (reg('(s|^)' + class_a[i] + '(s|$)').test(class_b.value)) compClass++;
+      if (reg('(s|^)' + class_a[i] + '(s|$)').test(class_b.value)) { compClass++; }
     }
 
     return (
@@ -869,17 +868,17 @@ const util = {
    * @returns {Number}
    */
   getNumber: function(text, maxDec) {
-    if (!text) return 0;
+    if (!text) { return 0; }
 
     let number = (text + '').match(/-?\d+(\.\d+)?/);
-    if (!number || !number[0]) return 0;
+    if (!number || !number[0]) { return 0; }
 
     number = number[0];
     return maxDec < 0
       ? number * 1
       : maxDec === 0
-      ? this._w.Math.round(number * 1)
-      : (number * 1).toFixed(maxDec) * 1;
+        ? this._w.Math.round(number * 1)
+        : (number * 1).toFixed(maxDec) * 1;
   },
 
   /**
@@ -890,7 +889,7 @@ const util = {
    */
   getListChildren: function(element, validation) {
     const children = [];
-    if (!element || !element.children || element.children.length === 0) return children;
+    if (!element || !element.children || element.children.length === 0) { return children; }
 
     validation =
       validation ||
@@ -919,7 +918,7 @@ const util = {
    */
   getListChildNodes: function(element, validation) {
     const children = [];
-    if (!element || element.childNodes.length === 0) return children;
+    if (!element || element.childNodes.length === 0) { return children; }
 
     validation =
       validation ||
@@ -948,7 +947,7 @@ const util = {
    * @returns {Number}
    */
   getElementDepth: function(element) {
-    if (!element || this.isWysiwygDiv(element)) return -1;
+    if (!element || this.isWysiwygDiv(element)) { return -1; }
 
     let depth = 0;
     element = element.parentNode;
@@ -975,7 +974,7 @@ const util = {
       bNode = bNode.parentNode;
     }
 
-    if (!aNode || !bNode) return { ancestor: null, a: a, b: b, result: 0 };
+    if (!aNode || !bNode) { return { ancestor: null, a: a, b: b, result: 0 }; }
 
     const children = aNode.parentNode.childNodes;
     const aIndex = this.getArrayIndex(children, aNode);
@@ -1091,13 +1090,11 @@ const util = {
    * @returns {Object}
    */
   getEdgeChildNodes: function(first, last) {
-    if (!first) return;
-    if (!last) last = first;
+    if (!first) { return; }
+    if (!last) { last = first; }
 
-    while (first && first.nodeType === 1 && first.childNodes.length > 0 && !this.isBreak(first))
-      first = first.firstChild;
-    while (last && last.nodeType === 1 && last.childNodes.length > 0 && !this.isBreak(last))
-      last = last.lastChild;
+    while (first && first.nodeType === 1 && first.childNodes.length > 0 && !this.isBreak(first)) { first = first.firstChild; }
+    while (last && last.nodeType === 1 && last.childNodes.length > 0 && !this.isBreak(last)) { last = last.lastChild; }
 
     return {
       sc: first,
@@ -1145,7 +1142,7 @@ const util = {
    * @returns {Number}
    */
   getOverlapRangeAtIndex: function(aStart, aEnd, bStart, bEnd) {
-    if (aStart <= bEnd ? aEnd < bStart : aEnd > bStart) return 0;
+    if (aStart <= bEnd ? aEnd < bStart : aEnd > bStart) { return 0; }
 
     const overlap = (aStart > bStart ? aStart : bStart) - (aEnd < bEnd ? aEnd : bEnd);
     return (overlap < 0 ? overlap * -1 : overlap) + 1;
@@ -1157,7 +1154,7 @@ const util = {
    * @param {String} txt Text to be applied
    */
   changeTxt: function(element, txt) {
-    if (!element || !txt) return;
+    if (!element || !txt) { return; }
     element.textContent = txt;
   },
 
@@ -1202,7 +1199,7 @@ const util = {
    * @returns {Boolean}
    */
   hasClass: function(element, className) {
-    if (!element) return;
+    if (!element) { return; }
 
     return new this._w.RegExp(className).test(element.className);
   },
@@ -1213,10 +1210,10 @@ const util = {
    * @param {String} className Class name to be add
    */
   addClass: function(element, className) {
-    if (!element) return;
+    if (!element) { return; }
 
     const check = new this._w.RegExp('(\\s|^)' + className + '(\\s|$)');
-    if (check.test(element.className)) return;
+    if (check.test(element.className)) { return; }
 
     element.className += (element.className.length > 0 ? ' ' : '') + className;
   },
@@ -1227,12 +1224,12 @@ const util = {
    * @param {String} className Class name to be remove
    */
   removeClass: function(element, className) {
-    if (!element) return;
+    if (!element) { return; }
 
     const check = new this._w.RegExp('(\\s|^)' + className + '(\\s|$)');
     element.className = element.className.replace(check, ' ').trim();
 
-    if (!element.className.trim()) element.removeAttribute('class');
+    if (!element.className.trim()) { element.removeAttribute('class'); }
   },
 
   /**
@@ -1241,7 +1238,7 @@ const util = {
    * @param {String} className Class name to be change
    */
   toggleClass: function(element, className) {
-    if (!element) return;
+    if (!element) { return; }
 
     const check = new this._w.RegExp('(\\s|^)' + className + '(\\s|$)');
     if (check.test(element.className)) {
@@ -1250,7 +1247,7 @@ const util = {
       element.className += ' ' + className;
     }
 
-    if (!element.className.trim()) element.removeAttribute('class');
+    if (!element.className.trim()) { element.removeAttribute('class'); }
   },
 
   /**
@@ -1271,11 +1268,11 @@ const util = {
    * @param {Node} item Node to be remove
    */
   removeItem: function(item) {
-    if (!item) return;
+    if (!item) { return; }
     try {
       item.remove();
     } catch (e) {
-      if (item.parentNode) item.parentNode.removeChild(item);
+      if (item.parentNode) { item.parentNode.removeChild(item); }
     }
   },
 
@@ -1288,11 +1285,11 @@ const util = {
    * @returns {Object|null} {sc: previousSibling, ec: nextSibling}
    */
   removeItemAllParents: function(item, validation, stopParent) {
-    if (!item) return null;
+    if (!item) { return null; }
     let cc = null;
     if (!validation) {
       validation = function(current) {
-        if (current === stopParent || this.isComponent(current)) return false;
+        if (current === stopParent || this.isComponent(current)) { return false; }
         const text = current.textContent.trim();
         return text.length === 0 || /^(\n|\u200B)+$/.test(text);
       }.bind(this);
@@ -1365,7 +1362,7 @@ const util = {
 
     if (rNode) {
       rNode.parentNode.insertBefore(rangeElement, rNode.nextSibling);
-      if (cNodes && cNodes.length === 0) this.removeItem(rNode);
+      if (cNodes && cNodes.length === 0) { this.removeItem(rNode); }
     }
 
     return rangeElement === baseNode ? rangeElement.parentNode : rangeElement;
@@ -1393,7 +1390,7 @@ const util = {
           while (c[index]) {
             liParent.insertBefore(c[index], liSibling);
           }
-          if (c.length === 0) this.removeItem(child);
+          if (c.length === 0) { this.removeItem(child); }
         } else {
           liParent.appendChild(child);
         }
@@ -1403,7 +1400,7 @@ const util = {
       parent = liParent.parentNode;
     }
 
-    if (baseParent.children.length === 0) this.removeItem(baseParent);
+    if (baseParent.children.length === 0) { this.removeItem(baseParent); }
 
     return liParent;
   },
@@ -1423,18 +1420,18 @@ const util = {
     let children;
     let temp;
     let next = true;
-    if (!depth || depth < 0) depth = 0;
+    if (!depth || depth < 0) { depth = 0; }
 
     if (baseNode.nodeType === 3) {
       index = this.getPositionIndex(baseNode);
       if (offset >= 0) {
         baseNode.splitText(offset);
         const after = this.getNodeFromPath([index + 1], bp);
-        if (this.onlyZeroWidthSpace(after)) after.data = this.zeroWidthSpace;
+        if (this.onlyZeroWidthSpace(after)) { after.data = this.zeroWidthSpace; }
       }
     } else if (baseNode.nodeType === 1) {
       if (!baseNode.previousSibling) {
-        if (this.getElementDepth(baseNode) === depth) next = false;
+        if (this.getElementDepth(baseNode) === depth) { next = false; }
       } else {
         baseNode = baseNode.previousSibling;
       }
@@ -1453,7 +1450,7 @@ const util = {
         if (this.isListCell(newEl) && this.isList(temp) && temp.firstElementChild) {
           newEl.innerHTML = temp.firstElementChild.innerHTML;
           util.removeItem(temp.firstElementChild);
-          if (temp.children.length > 0) newEl.appendChild(temp);
+          if (temp.children.length > 0) { newEl.appendChild(temp); }
         } else {
           newEl.appendChild(temp);
         }
@@ -1467,12 +1464,11 @@ const util = {
     if (
       depthEl.childNodes.length <= 1 &&
       (!depthEl.firstChild || depthEl.firstChild.textContent.length === 0)
-    )
-      depthEl.innerHTML = '<br>';
+    ) { depthEl.innerHTML = '<br>'; }
 
     const pElement = depthEl.parentNode;
-    if (next) depthEl = depthEl.nextSibling;
-    if (!newEl) return depthEl;
+    if (next) { depthEl = depthEl.nextSibling; }
+    if (!newEl) { return depthEl; }
 
     this.mergeSameTags(newEl, null, false);
     this.mergeNestedTags(
@@ -1482,10 +1478,9 @@ const util = {
       }.bind(this)
     );
 
-    if (newEl.childNodes.length > 0) pElement.insertBefore(newEl, depthEl);
-    else newEl = depthEl;
+    if (newEl.childNodes.length > 0) { pElement.insertBefore(newEl, depthEl); } else { newEl = depthEl; }
 
-    if (bp.childNodes.length === 0) this.removeItem(bp);
+    if (bp.childNodes.length === 0) { this.removeItem(bp); }
 
     return newEl;
   },
@@ -1517,7 +1512,7 @@ const util = {
       for (let i = 0, len = children.length, child, next; i < len; i++) {
         child = children[i];
         next = children[i + 1];
-        if (!child) break;
+        if (!child) { break; }
         if (
           (onlyText && inst._isIgnoreNodeChange(child)) ||
           (!onlyText &&
@@ -1564,7 +1559,7 @@ const util = {
           inst.removeItem(current);
         }
         if (!next) {
-          if (child.nodeType === 1) recursionFunc(child, depth + 1, i);
+          if (child.nodeType === 1) { recursionFunc(child, depth + 1, i); }
           break;
         }
 
@@ -1576,7 +1571,7 @@ const util = {
           const childs = child.childNodes;
           let childLength = 0;
           for (let n = 0, nLen = childs.length; n < nLen; n++) {
-            if (childs[n].textContent.length > 0) childLength++;
+            if (childs[n].textContent.length > 0) { childLength++; }
           }
 
           const l = child.lastChild;
@@ -1596,15 +1591,14 @@ const util = {
               l.nodeType === 3 &&
               r.nodeType === 3 &&
               (l.textContent.length > 0 || r.textContent.length > 0)
-            )
-              childLength--;
+            ) { childLength--; }
 
             if (nodePathLen) {
               let path = null;
               for (let n = 0; n < nodePathLen; n++) {
                 path = nodePathArray[n];
                 if (path && path[depth] > i) {
-                  if (depth > 0 && path[depth - 1] !== depthIndex) continue;
+                  if (depth > 0 && path[depth - 1] !== depthIndex) { continue; }
 
                   path[depth] -= 1;
                   if (path[depth + 1] >= 0 && path[depth] === i) {
@@ -1628,7 +1622,7 @@ const util = {
               for (let n = 0; n < nodePathLen; n++) {
                 path = nodePathArray[n];
                 if (path && path[depth] > i) {
-                  if (depth > 0 && path[depth - 1] !== depthIndex) continue;
+                  if (depth > 0 && path[depth - 1] !== depthIndex) { continue; }
 
                   path[depth] -= 1;
                   if (path[depth + 1] >= 0 && path[depth] === i) {
@@ -1705,8 +1699,7 @@ const util = {
     }
 
     (function recursionFunc(current) {
-      if (inst._notTextNode(current) || current === notRemoveNode || inst.isNonEditable(current))
-        return 0;
+      if (inst._notTextNode(current) || current === notRemoveNode || inst.isNonEditable(current)) { return 0; }
       if (
         current !== element &&
         inst.onlyZeroWidthSpace(current.textContent) &&
@@ -1719,7 +1712,7 @@ const util = {
       } else {
         const children = current.children;
         for (let i = 0, len = children.length, r = 0; i < len; i++) {
-          if (!children[i + r] || inst.isComponent(children[i + r])) continue;
+          if (!children[i + r] || inst.isComponent(children[i + r])) { continue; }
           r += recursionFunc(children[i + r]);
         }
       }
@@ -1727,7 +1720,7 @@ const util = {
       return 0;
     })(element);
 
-    if (element.childNodes.length === 0) element.innerHTML = '<br>';
+    if (element.childNodes.length === 0) { element.innerHTML = '<br>'; }
   },
 
   /**
@@ -1736,7 +1729,7 @@ const util = {
    * @returns {String}
    */
   htmlRemoveWhiteSpace: function(html) {
-    if (!html) return '';
+    if (!html) { return ''; }
     return html
       .trim()
       .replace(
@@ -1758,7 +1751,7 @@ const util = {
 
     array.sort(
       function(a, b) {
-        if (!this.isListCell(a) || !this.isListCell(b)) return 0;
+        if (!this.isListCell(a) || !this.isListCell(b)) { return 0; }
         a = this.getElementDepth(a);
         b = this.getElementDepth(b);
         return a > b ? t : a < b ? f : 0;
@@ -1874,7 +1867,7 @@ const util = {
     const wrongTags = this.getListChildNodes(
       documentFragment,
       function(current) {
-        if (current.nodeType !== 1) return false;
+        if (current.nodeType !== 1) { return false; }
 
         // white list
         if (
@@ -1939,7 +1932,7 @@ const util = {
     for (let i = 0, len = wrongTags.length, t, p; i < len; i++) {
       t = wrongTags[i];
       p = t.parentNode;
-      if (!p || !p.parentNode) continue;
+      if (!p || !p.parentNode) { continue; }
       p.parentNode.insertBefore(t, p);
       checkTags.push(p);
     }
@@ -1965,7 +1958,7 @@ const util = {
       }
 
       p = t.parentNode;
-      if (!p) continue;
+      if (!p) { continue; }
       p.insertBefore(tp, t);
       this.removeItem(t);
     }
@@ -1980,13 +1973,13 @@ const util = {
 
   _setDefaultOptionStyle: function(options, defaultStyle) {
     let optionStyle = '';
-    if (options.height) optionStyle += 'height:' + options.height + ';';
-    if (options.minHeight) optionStyle += 'min-height:' + options.minHeight + ';';
-    if (options.maxHeight) optionStyle += 'max-height:' + options.maxHeight + ';';
-    if (options.position) optionStyle += 'position:' + options.position + ';';
-    if (options.width) optionStyle += 'width:' + options.width + ';';
-    if (options.minWidth) optionStyle += 'min-width:' + options.minWidth + ';';
-    if (options.maxWidth) optionStyle += 'max-width:' + options.maxWidth + ';';
+    if (options.height) { optionStyle += 'height:' + options.height + ';'; }
+    if (options.minHeight) { optionStyle += 'min-height:' + options.minHeight + ';'; }
+    if (options.maxHeight) { optionStyle += 'max-height:' + options.maxHeight + ';'; }
+    if (options.position) { optionStyle += 'position:' + options.position + ';'; }
+    if (options.width) { optionStyle += 'width:' + options.width + ';'; }
+    if (options.minWidth) { optionStyle += 'min-width:' + options.minWidth + ';'; }
+    if (options.maxWidth) { optionStyle += 'max-width:' + options.maxWidth + ';'; }
 
     let top = '';
     let frame = '';
@@ -1995,7 +1988,7 @@ const util = {
     const styleArr = defaultStyle.split(';');
     for (let i = 0, len = styleArr.length, s; i < len; i++) {
       s = styleArr[i].trim();
-      if (!s) continue;
+      if (!s) { continue; }
       if (/^(min-|max-)?width\s*:/.test(s)) {
         top += s + ';';
         continue;
@@ -2050,14 +2043,15 @@ const util = {
           i++
         ) {
           styleTag = c[i].href.match(CSSFileName);
-          if (styleTag) path.push(styleTag[0]);
+          if (styleTag) { path.push(styleTag[0]); }
         }
       }
 
-      if (!path || path.length === 0)
+      if (!path || path.length === 0) {
         throw Error(
           '[KothingEditor.constructor.iframe.fail] The kothingEditor CSS files installation path could not be automatically detected. Please set the option property "iframeCSSFileName" before creating editor instances.'
-        );
+        ); 
+      }
 
       for (let i = 0, len = path.length; i < len; i++) {
         tagString += '<link href="' + path[i] + '" rel="stylesheet">';

@@ -78,7 +78,7 @@ export default {
       .querySelector('.ke-dialog-tabs')
       .addEventListener('click', this.openTab.bind(core));
     image_dialog.querySelector('.ke-btn-primary').addEventListener('click', this.submit.bind(core));
-    if (contextImage.imgInputFile)
+    if (contextImage.imgInputFile) {
       image_dialog
         .querySelector('.ke-file-remove')
         .addEventListener(
@@ -88,12 +88,14 @@ export default {
             contextImage.imgUrlFile,
             contextImage.previewSrc
           )
-        );
-    if (contextImage.imgInputFile && contextImage.imgUrlFile)
+        ); 
+    }
+    if (contextImage.imgInputFile && contextImage.imgUrlFile) {
       contextImage.imgInputFile.addEventListener(
         'change',
         this._fileInputChange.bind(contextImage)
-      );
+      ); 
+    }
 
     contextImage.imgLink.addEventListener(
       'input',
@@ -103,7 +105,7 @@ export default {
         context.options.linkProtocol
       )
     );
-    if (contextImage.imgUrlFile)
+    if (contextImage.imgUrlFile) {
       contextImage.imgUrlFile.addEventListener(
         'input',
         this._onLinkPreview.bind(
@@ -111,11 +113,11 @@ export default {
           contextImage._v_src,
           context.options.linkProtocol
         )
-      );
+      ); 
+    }
 
     const imageGalleryButton = image_dialog.querySelector('.__ke__gallery');
-    if (imageGalleryButton)
-      imageGalleryButton.addEventListener('click', this._openGallery.bind(core));
+    if (imageGalleryButton) { imageGalleryButton.addEventListener('click', this._openGallery.bind(core)); }
 
     contextImage.proportion = {};
     contextImage.inputX = {};
@@ -375,10 +377,10 @@ export default {
     context._linkValue = this.textContent = !value
       ? ''
       : protocol && value.indexOf('://') === -1 && value.indexOf('#') !== 0
-      ? protocol + value
-      : value.indexOf('://') === -1
-      ? '/' + value
-      : value;
+        ? protocol + value
+        : value.indexOf('://') === -1
+          ? '/' + value
+          : value;
   },
 
   /**
@@ -414,14 +416,15 @@ export default {
     this.plugins.image.init.call(this);
     this.controllersOff();
 
-    if (emptyDiv !== this.context.element.wysiwyg)
+    if (emptyDiv !== this.context.element.wysiwyg) {
       this.util.removeItemAllParents(
         emptyDiv,
         function(current) {
           return current.childNodes.length === 0;
         },
         null
-      );
+      ); 
+    }
 
     // focus
     this.focusEdge(focusEl);
@@ -453,11 +456,9 @@ export default {
         this.context.option.imageHeight === contextImage._defaultSizeY
           ? ''
           : this.context.option.imageHeight;
-      if (contextImage.imgInputFile && this.context.options.imageMultipleFile)
-        contextImage.imgInputFile.setAttribute('multiple', 'multiple');
+      if (contextImage.imgInputFile && this.context.options.imageMultipleFile) { contextImage.imgInputFile.setAttribute('multiple', 'multiple'); }
     } else {
-      if (contextImage.imgInputFile && this.context.options.imageMultipleFile)
-        contextImage.imgInputFile.removeAttribute('multiple');
+      if (contextImage.imgInputFile && this.context.options.imageMultipleFile) { contextImage.imgInputFile.removeAttribute('multiple'); }
     }
   },
 
@@ -519,7 +520,7 @@ export default {
       'input[name="kothing-editor_image_radio"]:checked'
     ).value;
     contextImage._captionChecked = contextImage.captionCheckEl.checked;
-    if (contextImage._resizing) contextImage._proportionChecked = contextImage.proportion.checked;
+    if (contextImage._resizing) { contextImage._proportionChecked = contextImage.proportion.checked; }
 
     try {
       if (this.context.dialog.updateModal) {
@@ -544,7 +545,7 @@ export default {
   },
 
   submitAction: function(fileList) {
-    if (fileList.length === 0) return;
+    if (fileList.length === 0) { return; }
 
     let fileSize = 0;
     let files = [];
@@ -610,12 +611,12 @@ export default {
         }.bind(this)
       );
 
-      if (typeof result === 'undefined') return;
+      if (typeof result === 'undefined') { return; }
       if (!result) {
         this.closeLoading();
         return;
       }
-      if (this._w.Array.isArray(result) && result.length > 0) files = result;
+      if (this._w.Array.isArray(result) && result.length > 0) { files = result; }
     }
 
     this.plugins.image.upload.call(this, info, files);
@@ -738,8 +739,7 @@ export default {
         reader.onload = function(update, updateElement, file, close) {
           this.context.image.inputX.value = width;
           this.context.image.inputY.value = height;
-          if (update) this.plugins.image.update_src.call(this, reader.result, updateElement, file);
-          else
+          if (update) { this.plugins.image.update_src.call(this, reader.result, updateElement, file); } else {
             this.plugins.image.create_image.call(
               this,
               reader.result,
@@ -749,9 +749,10 @@ export default {
               height,
               align,
               file
-            );
+            ); 
+          }
 
-          if (close) this.closeLoading();
+          if (close) { this.closeLoading(); }
         }.bind(this, isUpdate, this.context.image._element, file, i === filesLen);
 
         reader.readAsDataURL(file);
@@ -764,18 +765,18 @@ export default {
 
   onRender_imgUrl: function() {
     const contextImage = this.context.image;
-    if (contextImage._v_src._linkValue.length === 0) return false;
+    if (contextImage._v_src._linkValue.length === 0) { return false; }
 
     try {
       const file = { name: contextImage._v_src._linkValue.split('/').pop(), size: 0 };
-      if (this.context.dialog.updateModal)
+      if (this.context.dialog.updateModal) {
         this.plugins.image.update_src.call(
           this,
           contextImage._v_src._linkValue,
           contextImage._element,
           file
-        );
-      else
+        ); 
+      } else {
         this.plugins.image.create_image.call(
           this,
           contextImage._v_src._linkValue,
@@ -785,7 +786,8 @@ export default {
           contextImage.inputY.value,
           contextImage._align,
           file
-        );
+        ); 
+      }
     } catch (e) {
       throw Error('[KothingEditor.image.URLRendering.fail] cause : "' + e.message + '"');
     } finally {
@@ -894,7 +896,7 @@ export default {
     imagePlugin.setAlign.call(this, align, oImg, cover, container);
 
     oImg.onload = imagePlugin._image_create_onload.bind(this, oImg, contextImage.svgDefaultSize);
-    if (this.insertComponent(container, true, true, true))
+    if (this.insertComponent(container, true, true, true)) {
       this.plugins.fileManager.setInfo.call(
         this,
         'image',
@@ -902,13 +904,14 @@ export default {
         this.functions.onImageUpload,
         file,
         true
-      );
+      ); 
+    }
     this.context.resizing._resize_plugin = '';
   },
 
   _image_create_onload: function(oImg, svgDefaultSize) {
     // svg exception handling
-    if (oImg.offsetWidth === 0) this.plugins.image.applySize.call(this, svgDefaultSize, '');
+    if (oImg.offsetWidth === 0) { this.plugins.image.applySize.call(this, svgDefaultSize, ''); }
     this.selectComponent.call(this, oImg, 'image');
   },
 
@@ -1005,8 +1008,8 @@ export default {
         this.util.isWysiwygDiv(contextImage._element.parentNode)
           ? contextImage._element
           : /^A$/i.test(contextImage._element.parentNode.nodeName)
-          ? contextImage._element.parentNode
-          : this.util.getFormatElement(contextImage._element) || contextImage._element;
+            ? contextImage._element.parentNode
+            : this.util.getFormatElement(contextImage._element) || contextImage._element;
 
       existElement.parentNode.replaceChild(container, existElement);
       imageEl = container.querySelector('img');
@@ -1067,7 +1070,7 @@ export default {
     }
 
     // history stack
-    if (!notHistoryPush) this.history.push(false);
+    if (!notHistoryPush) { this.history.push(false); }
   },
 
   update_src: function(src, element, file) {
@@ -1089,7 +1092,7 @@ export default {
    * @Required @Override fileManager, resizing
    */
   onModifyMode: function(element, size) {
-    if (!element) return;
+    if (!element) { return; }
 
     const contextImage = this.context.image;
     contextImage._linkElement = /^A$/i.test(element.parentNode.nodeName)
@@ -1147,7 +1150,7 @@ export default {
       this.plugins.resizing._module_setModifyInputSize.call(this, contextImage, this.plugins.image);
     }
 
-    if (!notOpen) this.plugins.dialog.open.call(this, 'image', true);
+    if (!notOpen) { this.plugins.dialog.open.call(this, 'image', true); }
   },
 
   /**
@@ -1163,8 +1166,8 @@ export default {
   applySize: function(w, h) {
     const contextImage = this.context.image;
 
-    if (!w) w = contextImage.inputX.value || this.context.option.imageWidth;
-    if (!h) h = contextImage.inputY.value || this.context.option.imageHeight;
+    if (!w) { w = contextImage.inputX.value || this.context.option.imageWidth; }
+    if (!h) { h = contextImage.inputY.value || this.context.option.imageHeight; }
 
     if ((contextImage._onlyPercentage && !!w) || /%$/.test(w)) {
       this.plugins.image.setPercentSize.call(this, w, h);
@@ -1188,18 +1191,17 @@ export default {
 
     this.plugins.image.cancelPercentAttr.call(this);
 
-    if (!onlyH)
-      contextImage._element.style.width = this.util.isNumber(w) ? w + contextImage.sizeUnit : w;
-    if (!onlyW)
+    if (!onlyH) { contextImage._element.style.width = this.util.isNumber(w) ? w + contextImage.sizeUnit : w; }
+    if (!onlyW) {
       contextImage._element.style.height = this.util.isNumber(h)
         ? h + contextImage.sizeUnit
         : /%$/.test(h)
-        ? ''
-        : h;
+          ? ''
+          : h; 
+    }
 
-    if (contextImage._align === 'center')
-      this.plugins.image.setAlign.call(this, null, null, null, null);
-    if (!notResetPercentage) contextImage._element.removeAttribute('data-percentage');
+    if (contextImage._align === 'center') { this.plugins.image.setAlign.call(this, null, null, null, null); }
+    if (!notResetPercentage) { contextImage._element.removeAttribute('data-percentage'); }
 
     // save current size
     this.plugins.resizing._module_saveCurrentSize.call(this, contextImage);
@@ -1264,8 +1266,8 @@ export default {
           ? h + '%'
           : h
         : this.util.isNumber(h)
-        ? h + contextImage.sizeUnit
-        : h || '';
+          ? h + contextImage.sizeUnit
+          : h || '';
     const heightPercentage = /%$/.test(h);
 
     contextImage._container.style.width = this.util.isNumber(w) ? w + '%' : w;
@@ -1276,8 +1278,7 @@ export default {
     contextImage._element.style.height = heightPercentage ? '' : h;
     contextImage._element.style.maxWidth = '';
 
-    if (contextImage._align === 'center')
-      this.plugins.image.setAlign.call(this, null, null, null, null);
+    if (contextImage._align === 'center') { this.plugins.image.setAlign.call(this, null, null, null, null); }
 
     contextImage._element.setAttribute('data-percentage', w + ',' + h);
     this.plugins.resizing.setCaptionPosition.call(this, contextImage._element);
@@ -1300,8 +1301,7 @@ export default {
     this.util.removeClass(contextImage._container, this.context.image._floatClassRegExp);
     this.util.addClass(contextImage._container, '__ke__float-' + contextImage._align);
 
-    if (contextImage._align === 'center')
-      this.plugins.image.setAlign.call(this, null, null, null, null);
+    if (contextImage._align === 'center') { this.plugins.image.setAlign.call(this, null, null, null, null); }
   },
 
   /**
@@ -1310,10 +1310,10 @@ export default {
   setAlign: function(align, element, cover, container) {
     const contextImage = this.context.image;
 
-    if (!align) align = contextImage._align;
-    if (!element) element = contextImage._element;
-    if (!cover) cover = contextImage._cover;
-    if (!container) container = contextImage._container;
+    if (!align) { align = contextImage._align; }
+    if (!element) { element = contextImage._element; }
+    if (!cover) { cover = contextImage._cover; }
+    if (!container) { container = contextImage._container; }
 
     if (align && align !== 'none') {
       cover.style.margin = 'auto';
@@ -1329,8 +1329,8 @@ export default {
       cover.style.width = this.context.resizing._rotateVertical
         ? element.style.height || element.offsetHeight
         : !element.style.width || element.style.width === 'auto'
-        ? ''
-        : element.style.width || '100%';
+          ? ''
+          : element.style.width || '100%';
     }
 
     if (!this.util.hasClass(container, '__ke__float-' + align)) {
@@ -1355,10 +1355,11 @@ export default {
    */
   init: function() {
     const contextImage = this.context.image;
-    if (contextImage.imgInputFile) contextImage.imgInputFile.value = '';
-    if (contextImage.imgUrlFile)
+    if (contextImage.imgInputFile) { contextImage.imgInputFile.value = ''; }
+    if (contextImage.imgUrlFile) {
       contextImage._v_src._linkValue = contextImage.previewSrc.textContent = contextImage.imgUrlFile.value =
-        '';
+        ''; 
+    }
     if (contextImage.imgInputFile && contextImage.imgUrlFile) {
       contextImage.imgUrlFile.removeAttribute('disabled');
       contextImage.previewSrc.style.textDecoration = '';

@@ -119,10 +119,10 @@ export default {
       : selectedCells;
 
     if (selectedFormats.length === 0) {
-      if (selectedCells) return;
+      if (selectedCells) { return; }
       range = this.getRange_addLine(range);
       selectedFormats = this.getSelectedElementsAndComponents(false);
-      if (selectedFormats.length === 0) return;
+      if (selectedFormats.length === 0) { return; }
     }
 
     const util = this.util;
@@ -191,11 +191,11 @@ export default {
         return !this.isComponent(current);
       }.bind(util);
 
-      if (!cancel) tempList = util.createElement(command);
+      if (!cancel) { tempList = util.createElement(command); }
 
       for (let i = 0, len = selectedFormats.length, r, o; i < len; i++) {
         o = util.getRangeFormatElement(selectedFormats[i], passComponent);
-        if (!o || !util.isList(o)) continue;
+        if (!o || !util.isList(o)) { continue; }
 
         if (!r) {
           r = o;
@@ -215,7 +215,7 @@ export default {
             }
 
             o = selectedFormats[i].parentNode;
-            if (!cancel) tempList = util.createElement(command);
+            if (!cancel) { tempList = util.createElement(command); }
 
             r = o;
             rangeArr = { r: r, f: [util.getParentElement(selectedFormats[i], 'LI')] };
@@ -301,9 +301,9 @@ export default {
         util.copyFormatAttributes(newCell, fTag);
         if (util.isComponent(fTag)) {
           const isHR = /^HR$/i.test(fTag.nodeName);
-          if (!isHR) newCell.innerHTML = '<br>';
+          if (!isHR) { newCell.innerHTML = '<br>'; }
           newCell.innerHTML += fTag.outerHTML;
-          if (isHR) newCell.innerHTML += '<br>';
+          if (isHR) { newCell.innerHTML += '<br>'; }
         } else {
           const fChildren = fTag.childNodes;
           while (fChildren[0]) {
@@ -312,19 +312,19 @@ export default {
         }
         list.appendChild(newCell);
 
-        if (!next) lastList = list;
+        if (!next) { lastList = list; }
         if (!next || parentTag !== nextParent || util.isRangeFormatElement(siblingTag)) {
-          if (!firstList) firstList = list;
+          if (!firstList) { firstList = list; }
           if (
             (!mergeTop || !next || parentTag !== nextParent) &&
             !(next && util.isList(nextParent) && nextParent === originParent)
           ) {
-            if (list.parentNode !== parentTag) parentTag.insertBefore(list, siblingTag);
+            if (list.parentNode !== parentTag) { parentTag.insertBefore(list, siblingTag); }
           }
         }
 
         util.removeItem(fTag);
-        if (mergeTop && topNumber === null) topNumber = list.children.length - 1;
+        if (mergeTop && topNumber === null) { topNumber = list.children.length - 1; }
         if (
           next &&
           (util.getRangeFormatElement(nextParent, passComponent) !==
@@ -336,7 +336,7 @@ export default {
           list = util.createElement(command);
         }
 
-        if (rangeTag && rangeTag.children.length === 0) util.removeItem(rangeTag);
+        if (rangeTag && rangeTag.children.length === 0) { util.removeItem(rangeTag); }
       }
 
       if (topNumber) {
@@ -377,7 +377,7 @@ export default {
       last.appendChild(newList);
     }
 
-    if (originList.children.length === 0) this.util.removeItem(originList);
+    if (originList.children.length === 0) { this.util.removeItem(originList); }
     this.util.mergeSameTags(parentNode);
 
     const edge = this.util.getEdgeChildNodes(first, last);
@@ -392,10 +392,10 @@ export default {
   editInsideList: function(remove, selectedCells) {
     selectedCells = !selectedCells
       ? this.getSelectedElements().filter(
-          function(el) {
-            return this.isListCell(el);
-          }.bind(this.util)
-        )
+        function(el) {
+          return this.isListCell(el);
+        }.bind(this.util)
+      )
       : selectedCells;
     const cellsLen = selectedCells.length;
     if (
@@ -517,7 +517,7 @@ export default {
 
       this.util.mergeSameTags(originList, [nodePath.s, nodePath.e, slPath], false);
       this.util.mergeNestedTags(originList);
-      if (slPath) nodePath.sl = this.util.getNodeFromPath(slPath, originList);
+      if (slPath) { nodePath.sl = this.util.getNodeFromPath(slPath, originList); }
     }
 
     return innerList;
@@ -535,10 +535,10 @@ export default {
       target = target.parentNode;
     }
 
-    if (!command) return;
+    if (!command) { return; }
 
     const range = this.plugins.list.editList.call(this, command, null, false);
-    if (range) this.setRange(range.sc, range.so, range.ec, range.eo);
+    if (range) { this.setRange(range.sc, range.so, range.ec, range.eo); }
 
     this.submenuOff();
 

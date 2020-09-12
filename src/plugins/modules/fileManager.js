@@ -11,11 +11,11 @@
     module.exports = global.document
       ? factory(global, true)
       : function(w) {
-          if (!w.document) {
-            throw new Error('KothingEditor_Modules a window with a document');
-          }
-          return factory(w);
-        };
+        if (!w.document) {
+          throw new Error('KothingEditor_Modules a window with a document');
+        }
+        return factory(w);
+      };
   } else {
     factory(global);
   }
@@ -134,13 +134,13 @@
             }
           }
           // pass
-          if (!infoUpdate) return;
+          if (!infoUpdate) { return; }
         }
       }
 
       // check
       const _resize_plugin = resizing ? this.context.resizing._resize_plugin : '';
-      if (resizing) this.context.resizing._resize_plugin = pluginName;
+      if (resizing) { this.context.resizing._resize_plugin = pluginName; }
       const currentTags = [];
       const infoIndex = [];
       for (let i = 0, len = infoList.length; i < len; i++) {
@@ -169,15 +169,14 @@
 
       for (let i = 0, dataIndex; i < infoList.length; i++) {
         dataIndex = infoList[i].index;
-        if (currentTags.indexOf(dataIndex) > -1) continue;
+        if (currentTags.indexOf(dataIndex) > -1) { continue; }
 
         infoList.splice(i, 1);
-        if (typeof uploadEventHandler === 'function')
-          uploadEventHandler(null, dataIndex, 'delete', null, 0, this);
+        if (typeof uploadEventHandler === 'function') { uploadEventHandler(null, dataIndex, 'delete', null, 0, this); }
         i--;
       }
 
-      if (resizing) this.context.resizing._resize_plugin = _resize_plugin;
+      if (resizing) { this.context.resizing._resize_plugin = _resize_plugin; }
     },
 
     /**
@@ -193,7 +192,7 @@
      */
     setInfo: function(pluginName, element, uploadEventHandler, file, resizing) {
       const _resize_plugin = resizing ? this.context.resizing._resize_plugin : '';
-      if (resizing) this.context.resizing._resize_plugin = pluginName;
+      if (resizing) { this.context.resizing._resize_plugin = pluginName; }
 
       const plguin = this.plugins[pluginName];
       const context = this.context[pluginName];
@@ -299,7 +298,7 @@
         this.context.resizing._resize_plugin = _resize_plugin;
       }
 
-      if (typeof uploadEventHandler === 'function')
+      if (typeof uploadEventHandler === 'function') {
         uploadEventHandler(
           element,
           dataIndex,
@@ -307,7 +306,8 @@
           info,
           --context._uploadFileLength < 0 ? 0 : context._uploadFileLength,
           this
-        );
+        ); 
+      }
     },
 
     /**
@@ -323,8 +323,7 @@
         for (let i = 0, len = infoList.length; i < len; i++) {
           if (index === infoList[i].index) {
             infoList.splice(i, 1);
-            if (typeof uploadEventHandler === 'function')
-              uploadEventHandler(null, index, 'delete', null, 0, this);
+            if (typeof uploadEventHandler === 'function') { uploadEventHandler(null, index, 'delete', null, 0, this); }
             return;
           }
         }

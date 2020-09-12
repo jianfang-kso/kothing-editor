@@ -92,7 +92,7 @@ export default {
   },
 
   applyColor: function(color) {
-    if (!color) return;
+    if (!color) { return; }
 
     const newNode = this.util.createElement('SPAN');
     newNode.style.color = color;

@@ -43,15 +43,15 @@ export default {
     let font, text, i, len;
     const fontList = !option.font
       ? [
-          'Arial',
-          'Comic Sans MS',
-          'Courier New',
-          'Impact',
-          'Georgia',
-          'tahoma',
-          'Trebuchet MS',
-          'Verdana',
-        ]
+        'Arial',
+        'Comic Sans MS',
+        'Courier New',
+        'Impact',
+        'Georgia',
+        'tahoma',
+        'Trebuchet MS',
+        'Verdana',
+      ]
       : option.font;
 
     let list =
@@ -127,7 +127,7 @@ export default {
   },
 
   pickup: function(e) {
-    if (!/^BUTTON$/i.test(e.target.tagName)) return false;
+    if (!/^BUTTON$/i.test(e.target.tagName)) { return false; }
 
     e.preventDefault();
     e.stopPropagation();
