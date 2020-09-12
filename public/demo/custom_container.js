@@ -1,44 +1,43 @@
 import icons from '../src/assets/defaultIcons';
 
 export default {
+  // @Required
+  // plugin name
+  name: 'custom_container',
+
+  // @Required
+  // data display
+  display: 'container',
+
+  // @Required
+  // add function - It is called only once when the plugin is first run.
+  // This function generates HTML to append and register the event.
+  // arguments - (core : core object, targetElement : clicked button element)
+  add: function (core, targetElement) {
     // @Required
-    // plugin name
-    name: 'custom_container',
+    // Registering a namespace for caching as a plugin name in the context object
+    const context = core.context;
+    context.customContainer = {};
+
+    // Generate submenu HTML
+    // Always bind "core" when calling a plugin function
+    let listDiv = this.setSubmenu.call(core);
+
+    // You must bind "core" object when registering an event.
+    /** add event listeners */
+    listDiv.querySelector('.__ke_container').addEventListener('click', this.onClick.bind(core));
 
     // @Required
-    // data display
-    display: 'container',
+    // You must add the "submenu" element using the "core.initMenuTarget" method.
+    /** append target button menu */
+    core.initMenuTarget(this.name, targetElement, listDiv);
+  },
 
-    // @Required
-    // add function - It is called only once when the plugin is first run.
-    // This function generates HTML to append and register the event.
-    // arguments - (core : core object, targetElement : clicked button element)
-    add: function (core, targetElement) {
+  setSubmenu: function () {
+    const listDiv = this.util.createElement('DIV');
 
-        // @Required
-        // Registering a namespace for caching as a plugin name in the context object
-        const context = core.context;
-        context.customContainer = {};
-
-        // Generate submenu HTML
-        // Always bind "core" when calling a plugin function
-        let listDiv = this.setSubmenu.call(core);
-
-        // You must bind "core" object when registering an event.
-        /** add event listeners */
-        listDiv.querySelector('.__ke_container').addEventListener('click', this.onClick.bind(core));
-
-        // @Required
-        // You must add the "submenu" element using the "core.initMenuTarget" method.
-        /** append target button menu */
-        core.initMenuTarget(this.name, targetElement, listDiv);
-    },
-
-    setSubmenu: function () {
-        const listDiv = this.util.createElement('DIV');
-
-        listDiv.className = 'ke-submenu ke-list-layer';
-        listDiv.innerHTML = '' +
+    listDiv.className = 'ke-submenu ke-list-layer';
+    listDiv.innerHTML = '' +
             '<div class="ke-list-inner">' +
             '<ul>' +
             '<li>' +
@@ -90,25 +89,25 @@ export default {
             '</ul>' +
             '</div>';
 
-        return listDiv;
-    },
+    return listDiv;
+  },
 
-    onClick: function (e) {
-        e.preventDefault();
-        e.stopPropagation();
+  onClick: function (e) {
+    e.preventDefault();
+    e.stopPropagation();
 
-        let target = e.target;
-        let command = '';
+    let target = e.target;
+    let command = '';
 
-        while (!command && !/^UL$/i.test(target.tagName)) {
-            command = target.getAttribute('data-command');
-            if (command) break;
-            target = target.parentNode;
-        }
-
-        if (!command) return;
-
-        const plugin = this.plugins[command];
-        this.actionCall(command, (plugin ? plugin.display : ''), target);
+    while (!command && !/^UL$/i.test(target.tagName)) {
+      command = target.getAttribute('data-command');
+      if (command) { break; }
+      target = target.parentNode;
     }
+
+    if (!command) { return; }
+
+    const plugin = this.plugins[command];
+    this.actionCall(command, (plugin ? plugin.display : ''), target);
+  },
 };

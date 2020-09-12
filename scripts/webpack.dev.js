@@ -1,34 +1,57 @@
-const webpack = require('webpack')
-const path = require('path')
-const merge = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
+const config = require('./webpack.config');
+const util = require('./util');
 
-const common = require('./webpack.common')
+const devServerConfig = {
+  contentBase: util.resolve('dist'),
+  clientLogLevel: 'warning',
+  port: 3000,
+  hot: true,
+  host: 'localhost',
+  compress: true,
+  open: true,
+  quiet: true,
+  overlay: {
+    warnings: true,
+    errors: true,
+  },
+  proxy: {
+    // detail: https://www.webpackjs.com/configuration/dev-server/#devserver-proxy
+    '/base': {
+      target: 'https://test.cn',
+      secure: true,
+      changeOrigin: true,
+      pathRewrite: {
+        '^/base': '',
+      },
+    },
+  },
+  historyApiFallback: true,
+};
 
-module.exports = merge(common, {
+module.exports = merge(config, {
   mode: 'development',
-  entry: './public/index',
+  entry: util.resolve('public/index.js'),
   output: {
-    filename: 'kothing-editor.[hash].js',
-    path: path.resolve(__dirname, 'dist'),
+    filename: '[name].js',
+    chunkFilename: "[chunkhash].js",
+    jsonpFunction: "myWebpackJsonp",
   },
-
-  devtool: 'cheap-module-eval-source-map',
-  devServer: {
-    contentBase: 'dist',
-    host: 'localhost',
-    port: 8080,
-  },
-
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'css/kothing-editor.[hash].css',
+    new webpack.DefinePlugin({
+      'env.PRODUCTION': "false",
     }),
-    new webpack.NamedModulesPlugin(),
-    new HtmlWebpackPlugin({
-      template: './public/index.html',
-      inject: true,
+    new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new FriendlyErrorsPlugin({
+      compilationSuccessInfo: {
+        messages: [`App running at:\n\n - Local:   http://localhost:${devServerConfig.port}\n - Network: http://${util.localAddress()}:${devServerConfig.port}`],
+      },
+      clearConsole: true,
     }),
   ],
+  devServer: devServerConfig,
+  devtool: "source-map",
 });

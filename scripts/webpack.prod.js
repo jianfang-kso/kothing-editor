@@ -1,30 +1,67 @@
-const webpack = require('webpack')
-const path = require('path')
-const merge = require('webpack-merge')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const config = require('./webpack.config');
+const util = require('./util');
 
-const common = require('./webpack.common')
-
-module.exports = merge(common, {
+module.exports = merge(config, {
   mode: 'production',
-  entry: './src/build.js',
+  entry: util.resolve('/src/build.js'),
   output: {
-    filename: 'kothing-editor.min.js',
-    path: path.resolve(__dirname, '../dist'),
+    path: util.resolve('dist'),
+    filename: util.staticPath('kothing-editor.min.js'),
+    publicPath: './',
   },
-
+  performance: {
+    hints: false,
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [
+      // This is only used in production mode
+      new TerserPlugin({
+        terserOptions: {
+          parse: {
+            ecma: 8,
+          },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2,
+          },
+          mangle: {
+            safari10: true,
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+            ascii_only: true,
+          },
+        },
+      }),
+      // This is only used in production mode
+      new OptimizeCSSAssetsPlugin({
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
+      }),
+    ],
+  },
   plugins: [
+    new webpack.DefinePlugin({
+      'env.PRODUCTION': "true",
+    }),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
-    new CleanWebpackPlugin(['../dist'], {
-      root: __dirname,
-      allowExternal: true,
-    }),
-    new OptimizeCSSPlugin(),
+    new UglifyJSPlugin(),
+    new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
-      filename: 'css/kothing-editor.min.css',
+      filename: util.staticPath('css/kothing-editor.min.css'),
     }),
   ],
 });
