@@ -1385,18 +1385,18 @@ export default function (
       const selectedLines = util.isTable(commonCon)
         ? this.getSelectedElements(null)
         : this.getSelectedElements(
-          function (current) {
-            const component = this.getParentElement(
-              current,
-              this.isComponent
-            );
-            return (
-              (this.isFormatElement(current) &&
+            function (current) {
+              const component = this.getParentElement(
+                current,
+                this.isComponent
+              );
+              return (
+                (this.isFormatElement(current) &&
                   (!component || component === myComponent)) ||
                 (this.isComponent(current) && !this.getFormatElement(current))
-            );
-          }.bind(util)
-        );
+              );
+            }.bind(util)
+          );
 
       if (removeDuplicate) {
         for (let i = 0, len = selectedLines.length; i < len; i++) {
@@ -1461,8 +1461,8 @@ export default function (
           : formatNode.nodeName
         : util.isFormatElement(currentFormatEl) &&
           !util.isFreeFormatElement(currentFormatEl)
-          ? currentFormatEl.nodeName
-          : "P";
+        ? currentFormatEl.nodeName
+        : "P";
       const oFormat = util.createElement(oFormatName);
       oFormat.innerHTML = "<br>";
 
@@ -2182,8 +2182,8 @@ export default function (
         endCon && endCon.parentNode
           ? endCon
           : startCon && startCon.parentNode
-            ? startCon
-            : range.endContainer || range.startContainer;
+          ? startCon
+          : range.endContainer || range.startContainer;
 
       if (!util.isWysiwygDiv(container)) {
         const rc = util.removeItemAllParents(
@@ -2648,10 +2648,10 @@ export default function (
                   ? inner.nodeName
                   : util.isList(rangeElement.parentNode) ||
                     util.isListCell(rangeElement.parentNode)
-                    ? "LI"
-                    : util.isCell(rangeElement.parentNode)
-                      ? "DIV"
-                      : "P"
+                  ? "LI"
+                  : util.isCell(rangeElement.parentNode)
+                  ? "DIV"
+                  : "P"
               );
               const isCell = util.isListCell(insNode);
               const innerChildren = inner.childNodes;
@@ -3019,8 +3019,8 @@ export default function (
                   classReg === false
                     ? false
                     : isRemoveNode
-                      ? !!sNode.className.match(classReg)
-                      : !!sNode.className.match(classReg) &&
+                    ? !!sNode.className.match(classReg)
+                    : !!sNode.className.match(classReg) &&
                       !!appendNode.className.match(classReg);
                 if (styleCheck || classCheck) {
                   checkCnt++;
@@ -3588,13 +3588,13 @@ export default function (
               startContainer.nodeType === 1
                 ? ""
                 : startContainer.substringData(
-                  startOffset,
-                  isSameNode
-                    ? endOffset >= startOffset
-                      ? endOffset - startOffset
+                    startOffset,
+                    isSameNode
+                      ? endOffset >= startOffset
+                        ? endOffset - startOffset
+                        : startContainer.data.length - startOffset
                       : startContainer.data.length - startOffset
-                    : startContainer.data.length - startOffset
-                )
+                  )
             );
 
             if (anchorNode) {
@@ -3679,9 +3679,9 @@ export default function (
               endContainer.nodeType === 1
                 ? ""
                 : endContainer.substringData(
-                  endOffset,
-                  endContainer.length - endOffset
-                )
+                    endOffset,
+                    endContainer.length - endOffset
+                  )
             );
             const textNode = util.createTextNode(
               isSameNode || endContainer.nodeType === 1
@@ -4006,10 +4006,10 @@ export default function (
       endOffset = collapsed
         ? startOffset
         : mergeEndCon
-          ? startContainer.textContent.length
-          : endConReset
-            ? endOffset + newStartOffset.s
-            : endOffset + newEndOffset.s;
+        ? startContainer.textContent.length
+        : endConReset
+        ? endOffset + newStartOffset.s
+        : endOffset + newEndOffset.s;
 
       // tag merge
       const newOffsets = util.mergeSameTags(pNode, [startPath, endPath], true);
@@ -5809,8 +5809,8 @@ export default function (
         !cleanHTML
           ? html
           : !whitelist
-            ? cleanHTML
-            : cleanHTML.replace(
+          ? cleanHTML
+          : cleanHTML.replace(
               typeof whitelist === "string"
                 ? util.createTagsWhitelist(whitelist)
                 : whitelist,
@@ -5925,8 +5925,8 @@ export default function (
             (lineBR || br || elementRegTest
               ? "\n"
               : "" || /^(TH|TD)$/i.test(node.nodeName)
-                ? "\n"
-                : "");
+              ? "\n"
+              : "");
         }
       })(wDoc, "", "\n");
 
@@ -6027,8 +6027,8 @@ export default function (
           typeof element === "string"
             ? element
             : this._charTypeHTML
-              ? element.outerHTML
-              : element.textContent,
+            ? element.outerHTML
+            : element.textContent,
           countType
         );
         if (
@@ -6159,8 +6159,8 @@ export default function (
       const allowTextTags = !options.addTagsWhitelist
         ? []
         : options.addTagsWhitelist.split("|").filter(function (v) {
-          return /b|i|ins|s|strike/i.test(v);
-        });
+            return /b|i|ins|s|strike/i.test(v);
+          });
       for (let i = 0; i < allowTextTags.length; i++) {
         disallowTextTags.splice(
           disallowTextTags.indexOf(allowTextTags[i].toLowerCase()),
@@ -6171,11 +6171,11 @@ export default function (
         disallowTextTags.length === 0
           ? null
           : new RegExp(
-            "(<\\/?)(" +
+              "(<\\/?)(" +
                 disallowTextTags.join("|") +
                 ")\\b\\s*(?:[^>^<]+)?\\s*(?=>)",
-            "gi"
-          );
+              "gi"
+            );
 
       // set whitelist
       const defaultAttr =
@@ -6354,10 +6354,10 @@ export default function (
       context.element.wysiwyg.innerHTML = reload
         ? _initHTML
         : this.convertContentsForEditor(
-          typeof _initHTML === "string"
-            ? _initHTML
-            : context.element.originElement.value
-        );
+            typeof _initHTML === "string"
+              ? _initHTML
+              : context.element.originElement.value
+          );
     },
 
     /**
@@ -7166,8 +7166,8 @@ export default function (
         absoluteLeft < 0
           ? padding
           : overRight < 0
-            ? absoluteLeft
-            : absoluteLeft - overRight - padding - 1;
+          ? absoluteLeft
+          : absoluteLeft - overRight - padding - 1;
 
       let resetTop = false;
       const space =
@@ -7210,8 +7210,8 @@ export default function (
         (arrow_left + arrowMargin > toolbar.offsetWidth
           ? toolbar.offsetWidth - arrowMargin
           : arrow_left < arrowMargin
-            ? arrowMargin
-            : arrow_left) + "px";
+          ? arrowMargin
+          : arrow_left) + "px";
     },
 
     _showToolbarInline: function () {
@@ -7410,8 +7410,8 @@ export default function (
                 typeof offset === "number"
                   ? offset
                   : prev.nodeType === 3
-                    ? prev.textContent.length
-                    : 1;
+                  ? prev.textContent.length
+                  : 1;
               core.setRange(prev, offset, prev, offset);
               break;
             }
@@ -8065,12 +8065,12 @@ export default function (
                 const newFormat = util.isCell(rangeEl.parentNode)
                   ? "DIV"
                   : util.isList(rangeEl.parentNode)
-                    ? "LI"
-                    : util.isFormatElement(rangeEl.nextElementSibling)
-                      ? rangeEl.nextElementSibling.nodeName
-                      : util.isFormatElement(rangeEl.previousElementSibling)
-                        ? rangeEl.previousElementSibling.nodeName
-                        : "P";
+                  ? "LI"
+                  : util.isFormatElement(rangeEl.nextElementSibling)
+                  ? rangeEl.nextElementSibling.nodeName
+                  : util.isFormatElement(rangeEl.previousElementSibling)
+                  ? rangeEl.previousElementSibling.nodeName
+                  : "P";
                 newEl = util.createElement(newFormat);
                 const edge = core.detachRangeFormatElement(
                   rangeEl,
@@ -9438,13 +9438,13 @@ export default function (
             i = i.length
               ? i
               : _w.Object.keys(i).map(function (name) {
-                return i[name];
-              });
+                  return i[name];
+                });
             o = o.length
               ? o
               : _w.Object.keys(o).map(function (name) {
-                return o[name];
-              });
+                  return o[name];
+                });
             init[key] = o
               .filter(function (val) {
                 return i.indexOf(val) === -1;
