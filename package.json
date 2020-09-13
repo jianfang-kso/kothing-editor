@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config ./scripts/webpack.dev.js",
     "build": "cross-env NODE_ENV=production node ./scripts/build.js",
-    "babel-build": "babel src --out-dir lib",
+    "build-lib": "babel src --out-dir lib",
     "lint": "eslint src --fix",
     "lint:create": "eslint --init"
   },
