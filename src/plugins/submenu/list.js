@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /*
  * Rich Text Editor
@@ -8,14 +9,14 @@
  */
 
 export default {
-  name: 'list',
-  display: 'submenu',
-  add: function(core, targetElement) {
+  name: "list",
+  display: "submenu",
+  add: function (core, targetElement) {
     const context = core.context;
     context.list = {
       targetButton: targetElement,
       _list: null,
-      currentList: '',
+      currentList: "",
       icons: {
         bullets: core.icons.list_bullets,
         number: core.icons.list_number,
@@ -24,11 +25,11 @@ export default {
 
     /** set submenu */
     let listDiv = this.setSubmenu.call(core);
-    let listUl = listDiv.querySelector('ul');
+    let listUl = listDiv.querySelector("ul");
 
     /** add event listeners */
-    listUl.addEventListener('click', this.pickup.bind(core));
-    context.list._list = listUl.querySelectorAll('li button');
+    listUl.addEventListener("click", this.pickup.bind(core));
+    context.list._list = listUl.querySelectorAll("li button");
 
     /** append target button menu */
     core.initMenuTarget(this.name, targetElement, listDiv);
@@ -38,27 +39,27 @@ export default {
     listUl = null;
   },
 
-  setSubmenu: function() {
+  setSubmenu: function () {
     const lang = this.lang;
-    const listDiv = this.util.createElement('DIV');
+    const listDiv = this.util.createElement("DIV");
 
-    listDiv.className = 'ke-submenu ke-list-layer';
+    listDiv.className = "ke-submenu ke-list-layer";
     listDiv.innerHTML =
-      '' +
+      "" +
       '<div class="ke-list-inner">' +
       '<ul class="ke-list-basic">' +
       '<li><button type="button" class="ke-btn-list ke-tooltip" data-command="OL" title="' +
       lang.toolbar.orderList +
       '">' +
       this.icons.list_number +
-      '</button></li>' +
+      "</button></li>" +
       '<li><button type="button" class="ke-btn-list ke-tooltip" data-command="UL" title="' +
       lang.toolbar.unorderList +
       '">' +
       this.icons.list_bullets +
-      '</button></li>' +
-      '</ul>' +
-      '</div>';
+      "</button></li>" +
+      "</ul>" +
+      "</div>";
 
     return listDiv;
   },
@@ -66,19 +67,19 @@ export default {
   /**
    * @Override core
    */
-  active: function(element) {
+  active: function (element) {
     const button = this.context.list.targetButton;
     const icon = button.firstElementChild;
     const util = this.util;
 
     if (!element) {
-      button.removeAttribute('data-focus');
+      button.removeAttribute("data-focus");
       util.changeElement(icon, this.context.list.icons.number);
-      util.removeClass(button, 'active');
+      util.removeClass(button, "active");
     } else if (util.isList(element)) {
       const nodeName = element.nodeName;
-      button.setAttribute('data-focus', nodeName);
-      util.addClass(button, 'active');
+      button.setAttribute("data-focus", nodeName);
+      util.addClass(button, "active");
       if (/UL/i.test(nodeName)) {
         util.changeElement(icon, this.context.list.icons.bullets);
       } else {
@@ -94,17 +95,18 @@ export default {
   /**
    * @Override submenu
    */
-  on: function() {
+  on: function () {
     const listContext = this.context.list;
     const list = listContext._list;
-    const currentList = listContext.targetButton.getAttribute('data-focus') || '';
+    const currentList =
+      listContext.targetButton.getAttribute("data-focus") || "";
 
     if (currentList !== listContext.currentList) {
       for (let i = 0, len = list.length; i < len; i++) {
-        if (currentList === list[i].getAttribute('data-command')) {
-          this.util.addClass(list[i], 'active');
+        if (currentList === list[i].getAttribute("data-command")) {
+          this.util.addClass(list[i], "active");
         } else {
-          this.util.removeClass(list[i], 'active');
+          this.util.removeClass(list[i], "active");
         }
       }
 
@@ -112,17 +114,21 @@ export default {
     }
   },
 
-  editList: function(command, selectedCells, detach) {
+  editList: function (command, selectedCells, detach) {
     let range = this.getRange();
     let selectedFormats = !selectedCells
       ? this.getSelectedElementsAndComponents(false)
       : selectedCells;
 
     if (selectedFormats.length === 0) {
-      if (selectedCells) { return; }
+      if (selectedCells) {
+        return;
+      }
       range = this.getRange_addLine(range);
       selectedFormats = this.getSelectedElementsAndComponents(false);
-      if (selectedFormats.length === 0) { return; }
+      if (selectedFormats.length === 0) {
+        return;
+      }
     }
 
     const util = this.util;
@@ -132,11 +138,13 @@ export default {
     const firstSel = selectedFormats[0];
     const lastSel = selectedFormats[selectedFormats.length - 1];
     let topEl =
-      (util.isListCell(firstSel) || util.isComponent(firstSel)) && !firstSel.previousElementSibling
+      (util.isListCell(firstSel) || util.isComponent(firstSel)) &&
+      !firstSel.previousElementSibling
         ? firstSel.parentNode.previousElementSibling
         : firstSel.previousElementSibling;
     let bottomEl =
-      (util.isListCell(lastSel) || util.isComponent(lastSel)) && !lastSel.nextElementSibling
+      (util.isListCell(lastSel) || util.isComponent(lastSel)) &&
+      !lastSel.nextElementSibling
         ? lastSel.parentNode.nextElementSibling
         : lastSel.nextElementSibling;
 
@@ -154,8 +162,11 @@ export default {
         !util.isList(
           util.getRangeFormatElement(
             selectedFormats[i],
-            function(current) {
-              return this.getRangeFormatElement(current) && current !== selectedFormats[i];
+            function (current) {
+              return (
+                this.getRangeFormatElement(current) &&
+                current !== selectedFormats[i]
+              );
             }.bind(util)
           )
         )
@@ -167,9 +178,12 @@ export default {
 
     if (
       isRemove &&
-      (!topEl || (firstSel.tagName !== topEl.tagName || command !== topEl.tagName.toUpperCase())) &&
+      (!topEl ||
+        firstSel.tagName !== topEl.tagName ||
+        command !== topEl.tagName.toUpperCase()) &&
       (!bottomEl ||
-        (lastSel.tagName !== bottomEl.tagName || command !== bottomEl.tagName.toUpperCase()))
+        lastSel.tagName !== bottomEl.tagName ||
+        command !== bottomEl.tagName.toUpperCase())
     ) {
       if (detach) {
         for (let i = 0, len = selectedFormats.length; i < len; i++) {
@@ -187,19 +201,26 @@ export default {
       const currentFormat = util.getRangeFormatElement(firstSel);
       const cancel = currentFormat && currentFormat.tagName === command;
       let rangeArr, tempList;
-      const passComponent = function(current) {
+      const passComponent = function (current) {
         return !this.isComponent(current);
       }.bind(util);
 
-      if (!cancel) { tempList = util.createElement(command); }
+      if (!cancel) {
+        tempList = util.createElement(command);
+      }
 
       for (let i = 0, len = selectedFormats.length, r, o; i < len; i++) {
         o = util.getRangeFormatElement(selectedFormats[i], passComponent);
-        if (!o || !util.isList(o)) { continue; }
+        if (!o || !util.isList(o)) {
+          continue;
+        }
 
         if (!r) {
           r = o;
-          rangeArr = { r: r, f: [util.getParentElement(selectedFormats[i], 'LI')] };
+          rangeArr = {
+            r: r,
+            f: [util.getParentElement(selectedFormats[i], "LI")],
+          };
         } else {
           if (r !== o) {
             if (detach && util.isListCell(o.parentNode)) {
@@ -215,12 +236,17 @@ export default {
             }
 
             o = selectedFormats[i].parentNode;
-            if (!cancel) { tempList = util.createElement(command); }
+            if (!cancel) {
+              tempList = util.createElement(command);
+            }
 
             r = o;
-            rangeArr = { r: r, f: [util.getParentElement(selectedFormats[i], 'LI')] };
+            rangeArr = {
+              r: r,
+              f: [util.getParentElement(selectedFormats[i], "LI")],
+            };
           } else {
-            rangeArr.f.push(util.getParentElement(selectedFormats[i], 'LI'));
+            rangeArr.f.push(util.getParentElement(selectedFormats[i], "LI"));
           }
         }
 
@@ -242,11 +268,15 @@ export default {
       const topElParent = topEl ? topEl.parentNode : topEl;
       const bottomElParent = bottomEl ? bottomEl.parentNode : bottomEl;
       topEl =
-        topElParent && !util.isWysiwygDiv(topElParent) && topElParent.nodeName === command
+        topElParent &&
+        !util.isWysiwygDiv(topElParent) &&
+        topElParent.nodeName === command
           ? topElParent
           : topEl;
       bottomEl =
-        bottomElParent && !util.isWysiwygDiv(bottomElParent) && bottomElParent.nodeName === command
+        bottomElParent &&
+        !util.isWysiwygDiv(bottomElParent) &&
+        bottomElParent.nodeName === command
           ? bottomElParent
           : bottomEl;
 
@@ -259,7 +289,7 @@ export default {
       let topNumber = null;
       let bottomNumber = null;
 
-      const passComponent = function(current) {
+      const passComponent = function (current) {
         return !this.isComponent(current) && !this.isList(current);
       }.bind(util);
 
@@ -287,9 +317,13 @@ export default {
         originParent = fTag.parentNode;
         nextParent = next ? next.parentNode : null;
         isCell = util.isListCell(fTag);
-        rangeTag = util.isRangeFormatElement(originParent) ? originParent : null;
+        rangeTag = util.isRangeFormatElement(originParent)
+          ? originParent
+          : null;
         parentTag =
-          isCell && !util.isWysiwygDiv(originParent) ? originParent.parentNode : originParent;
+          isCell && !util.isWysiwygDiv(originParent)
+            ? originParent.parentNode
+            : originParent;
         siblingTag =
           isCell && !util.isWysiwygDiv(originParent)
             ? !next || util.isListCell(parentTag)
@@ -297,13 +331,17 @@ export default {
               : originParent.nextSibling
             : fTag.nextSibling;
 
-        newCell = util.createElement('LI');
+        newCell = util.createElement("LI");
         util.copyFormatAttributes(newCell, fTag);
         if (util.isComponent(fTag)) {
           const isHR = /^HR$/i.test(fTag.nodeName);
-          if (!isHR) { newCell.innerHTML = '<br>'; }
+          if (!isHR) {
+            newCell.innerHTML = "<br>";
+          }
           newCell.innerHTML += fTag.outerHTML;
-          if (isHR) { newCell.innerHTML += '<br>'; }
+          if (isHR) {
+            newCell.innerHTML += "<br>";
+          }
         } else {
           const fChildren = fTag.childNodes;
           while (fChildren[0]) {
@@ -312,31 +350,46 @@ export default {
         }
         list.appendChild(newCell);
 
-        if (!next) { lastList = list; }
-        if (!next || parentTag !== nextParent || util.isRangeFormatElement(siblingTag)) {
-          if (!firstList) { firstList = list; }
+        if (!next) {
+          lastList = list;
+        }
+        if (
+          !next ||
+          parentTag !== nextParent ||
+          util.isRangeFormatElement(siblingTag)
+        ) {
+          if (!firstList) {
+            firstList = list;
+          }
           if (
             (!mergeTop || !next || parentTag !== nextParent) &&
             !(next && util.isList(nextParent) && nextParent === originParent)
           ) {
-            if (list.parentNode !== parentTag) { parentTag.insertBefore(list, siblingTag); }
+            if (list.parentNode !== parentTag) {
+              parentTag.insertBefore(list, siblingTag);
+            }
           }
         }
 
         util.removeItem(fTag);
-        if (mergeTop && topNumber === null) { topNumber = list.children.length - 1; }
+        if (mergeTop && topNumber === null) {
+          topNumber = list.children.length - 1;
+        }
         if (
           next &&
           (util.getRangeFormatElement(nextParent, passComponent) !==
             util.getRangeFormatElement(originParent, passComponent) ||
             (util.isList(nextParent) &&
               util.isList(originParent) &&
-              util.getElementDepth(nextParent) !== util.getElementDepth(originParent)))
+              util.getElementDepth(nextParent) !==
+                util.getElementDepth(originParent)))
         ) {
           list = util.createElement(command);
         }
 
-        if (rangeTag && rangeTag.children.length === 0) { util.removeItem(rangeTag); }
+        if (rangeTag && rangeTag.children.length === 0) {
+          util.removeItem(rangeTag);
+        }
       }
 
       if (topNumber) {
@@ -355,7 +408,7 @@ export default {
     return originRange;
   },
 
-  _detachNested: function(cells) {
+  _detachNested: function (cells) {
     const first = cells[0];
     const last = cells[cells.length - 1];
     const next = last.nextElementSibling;
@@ -377,7 +430,9 @@ export default {
       last.appendChild(newList);
     }
 
-    if (originList.children.length === 0) { this.util.removeItem(originList); }
+    if (originList.children.length === 0) {
+      this.util.removeItem(originList);
+    }
     this.util.mergeSameTags(parentNode);
 
     const edge = this.util.getEdgeChildNodes(first, last);
@@ -389,20 +444,20 @@ export default {
     };
   },
 
-  editInsideList: function(remove, selectedCells) {
+  editInsideList: function (remove, selectedCells) {
     selectedCells = !selectedCells
       ? this.getSelectedElements().filter(
-        function(el) {
-          return this.isListCell(el);
-        }.bind(this.util)
-      )
+          function (el) {
+            return this.isListCell(el);
+          }.bind(this.util)
+        )
       : selectedCells;
     const cellsLen = selectedCells.length;
     if (
       cellsLen === 0 ||
       (!remove &&
-        (!this.util.isListCell(selectedCells[0].previousElementSibling) &&
-          !this.util.isListCell(selectedCells[cellsLen - 1].nextElementSibling)))
+        !this.util.isListCell(selectedCells[0].previousElementSibling) &&
+        !this.util.isListCell(selectedCells[cellsLen - 1].nextElementSibling))
     ) {
       return {
         sc: selectedCells[0],
@@ -443,7 +498,14 @@ export default {
       for (let i = 0, len = cellsLen, c; i < len; i++) {
         c = selectedCells[i];
         if (c.parentNode !== originList) {
-          this.plugins.list._insiedList.call(this, originList, innerList, prev, next, nodePath);
+          this.plugins.list._insiedList.call(
+            this,
+            originList,
+            innerList,
+            prev,
+            next,
+            nodePath
+          );
           originList = c.parentNode;
           innerList = this.util.createElement(originList.nodeName);
         }
@@ -453,7 +515,14 @@ export default {
         innerList.appendChild(c);
       }
 
-      this.plugins.list._insiedList.call(this, originList, innerList, prev, next, nodePath);
+      this.plugins.list._insiedList.call(
+        this,
+        originList,
+        innerList,
+        prev,
+        next,
+        nodePath
+      );
 
       const sc = this.util.getNodeFromPath(nodePath.s, nodePath.sl);
       const ec = this.util.getNodeFromPath(nodePath.e, nodePath.el);
@@ -468,7 +537,7 @@ export default {
     return range;
   },
 
-  _insiedList: function(originList, innerList, prev, next, nodePath) {
+  _insiedList: function (originList, innerList, prev, next, nodePath) {
     let insertPrev = false;
 
     if (prev && innerList.tagName === prev.tagName) {
@@ -512,33 +581,47 @@ export default {
       const slPath = originList.contains(nodePath.sl)
         ? this.util.getNodePath(nodePath.sl, originList)
         : null;
-      nodePath.e = this.util.getNodePath(innerList.lastElementChild.firstChild, originList, null);
+      nodePath.e = this.util.getNodePath(
+        innerList.lastElementChild.firstChild,
+        originList,
+        null
+      );
       nodePath.el = originList;
 
-      this.util.mergeSameTags(originList, [nodePath.s, nodePath.e, slPath], false);
+      this.util.mergeSameTags(
+        originList,
+        [nodePath.s, nodePath.e, slPath],
+        false
+      );
       this.util.mergeNestedTags(originList);
-      if (slPath) { nodePath.sl = this.util.getNodeFromPath(slPath, originList); }
+      if (slPath) {
+        nodePath.sl = this.util.getNodeFromPath(slPath, originList);
+      }
     }
 
     return innerList;
   },
 
-  pickup: function(e) {
+  pickup: function (e) {
     e.preventDefault();
     e.stopPropagation();
 
     let target = e.target;
-    let command = '';
+    let command = "";
 
     while (!command && !/^UL$/i.test(target.tagName)) {
-      command = target.getAttribute('data-command');
+      command = target.getAttribute("data-command");
       target = target.parentNode;
     }
 
-    if (!command) { return; }
+    if (!command) {
+      return;
+    }
 
     const range = this.plugins.list.editList.call(this, command, null, false);
-    if (range) { this.setRange(range.sc, range.so, range.ec, range.eo); }
+    if (range) {
+      this.setRange(range.sc, range.so, range.ec, range.eo);
+    }
 
     this.submenuOff();
 

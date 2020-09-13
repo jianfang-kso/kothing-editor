@@ -1,4 +1,4 @@
-import { FileBrowserPlugin } from '../FileBrowserPlugin';
+import { FileBrowserPlugin } from "../FileBrowserPlugin";
 
 declare const imageGallery: FileBrowserPlugin;
 

@@ -6,22 +6,22 @@
  * MIT license.
  */
 
-(function(global, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
+(function (global, factory) {
+  if (typeof module === "object" && typeof module.exports === "object") {
     module.exports = global.document
       ? factory(global, true)
-      : function(w) {
-        if (!w.document) {
-          throw new Error('KothingEditor_Modules a window with a document');
-        }
-        return factory(w);
-      };
+      : function (w) {
+          if (!w.document) {
+            throw new Error("KothingEditor_Modules a window with a document");
+          }
+          return factory(w);
+        };
   } else {
     factory(global);
   }
-})(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+})(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
   const fileManager = {
-    name: 'fileManager',
+    name: "fileManager",
     _xmlHttp: null,
 
     /**
@@ -33,7 +33,13 @@
      * @param {Function|null} errorCallBack Error call back function
      * @example this.plugins.fileManager.upload.call(this, imageUploadUrl, this.context.option.imageUploadHeader, formData, this.plugins.image.callBack_imgUpload.bind(this, info), this.functions.onImageUploadError);
      */
-    upload: function(uploadUrl, uploadHeader, formData, callBack, errorCallBack) {
+    upload: function (
+      uploadUrl,
+      uploadHeader,
+      formData,
+      callBack,
+      errorCallBack
+    ) {
       this.showLoading();
       const filePlugin = this.plugins.fileManager;
       const xmlHttp = (filePlugin._xmlHttp = this.util.getXMLHttpRequest());
@@ -44,10 +50,10 @@
         callBack,
         errorCallBack
       );
-      xmlHttp.open('post', uploadUrl, true);
+      xmlHttp.open("post", uploadUrl, true);
       if (
         uploadHeader !== null &&
-        typeof uploadHeader === 'object' &&
+        typeof uploadHeader === "object" &&
         this._w.Object.keys(uploadHeader).length > 0
       ) {
         for (const key in uploadHeader) {
@@ -57,14 +63,16 @@
       xmlHttp.send(formData);
     },
 
-    _callBackUpload: function(xmlHttp, callBack, errorCallBack) {
+    _callBackUpload: function (xmlHttp, callBack, errorCallBack) {
       if (xmlHttp.readyState === 4) {
         if (xmlHttp.status === 200) {
           try {
             callBack(xmlHttp);
           } catch (e) {
             throw Error(
-              '[KothingEditor.fileManager.upload.callBack.fail] cause : "' + e.message + '"'
+              '[KothingEditor.fileManager.upload.callBack.fail] cause : "' +
+                e.message +
+                '"'
             );
           } finally {
             this.closeLoading();
@@ -72,12 +80,17 @@
         } else {
           // exception
           this.closeLoading();
-          const res = !xmlHttp.responseText ? xmlHttp : JSON.parse(xmlHttp.responseText);
-          if (typeof errorCallBack !== 'function' || errorCallBack('', res, this)) {
+          const res = !xmlHttp.responseText
+            ? xmlHttp
+            : JSON.parse(xmlHttp.responseText);
+          if (
+            typeof errorCallBack !== "function" ||
+            errorCallBack("", res, this)
+          ) {
             const err =
-              '[KothingEditor.fileManager.upload.serverException] status: ' +
+              "[KothingEditor.fileManager.upload.serverException] status: " +
               xmlHttp.status +
-              ', response: ' +
+              ", response: " +
               (res.errorMessage || xmlHttp.responseText);
             this.functions.noticeOpen(err);
             throw Error(err);
@@ -101,11 +114,19 @@
      *  }.bind(this);
      *  this.plugins.fileManager.checkInfo.call(this, 'image', ['img'], this.functions.onImageUpload, modifyHandler, true);
      */
-    checkInfo: function(pluginName, tagNames, uploadEventHandler, modifyHandler, resizing) {
+    checkInfo: function (
+      pluginName,
+      tagNames,
+      uploadEventHandler,
+      modifyHandler,
+      resizing
+    ) {
       let tags = [];
       for (let i = 0, len = tagNames.length; i < len; i++) {
         tags = tags.concat(
-          [].slice.call(this.context.element.wysiwyg.getElementsByTagName(tagNames[i]))
+          [].slice.call(
+            this.context.element.wysiwyg.getElementsByTagName(tagNames[i])
+          )
         );
       }
 
@@ -117,7 +138,13 @@
         // reset
         if (this._componentsInfoReset) {
           for (let i = 0, len = tags.length; i < len; i++) {
-            setFileInfo(pluginName, tags[i], uploadEventHandler, null, resizing);
+            setFileInfo(
+              pluginName,
+              tags[i],
+              uploadEventHandler,
+              null,
+              resizing
+            );
           }
           return;
         } else {
@@ -125,8 +152,11 @@
           for (let i = 0, len = infoList.length, info; i < len; i++) {
             info = infoList[i];
             if (
-              tags.filter(function(t) {
-                return info.src === t.src && info.index.toString() === t.getAttribute('data-index');
+              tags.filter(function (t) {
+                return (
+                  info.src === t.src &&
+                  info.index.toString() === t.getAttribute("data-index")
+                );
               }).length === 0
             ) {
               infoUpdate = true;
@@ -134,13 +164,19 @@
             }
           }
           // pass
-          if (!infoUpdate) { return; }
+          if (!infoUpdate) {
+            return;
+          }
         }
       }
 
       // check
-      const _resize_plugin = resizing ? this.context.resizing._resize_plugin : '';
-      if (resizing) { this.context.resizing._resize_plugin = pluginName; }
+      const _resize_plugin = resizing
+        ? this.context.resizing._resize_plugin
+        : "";
+      if (resizing) {
+        this.context.resizing._resize_plugin = pluginName;
+      }
       const currentTags = [];
       const infoIndex = [];
       for (let i = 0, len = infoList.length; i < len; i++) {
@@ -156,27 +192,33 @@
           currentTags.push(context._infoIndex);
           modifyHandler(tag);
         } else if (
-          !tag.getAttribute('data-index') ||
-          infoIndex.indexOf(tag.getAttribute('data-index') * 1) < 0
+          !tag.getAttribute("data-index") ||
+          infoIndex.indexOf(tag.getAttribute("data-index") * 1) < 0
         ) {
           currentTags.push(context._infoIndex);
-          tag.removeAttribute('data-index');
+          tag.removeAttribute("data-index");
           setFileInfo(pluginName, tag, uploadEventHandler, null, resizing);
         } else {
-          currentTags.push(tag.getAttribute('data-index') * 1);
+          currentTags.push(tag.getAttribute("data-index") * 1);
         }
       }
 
       for (let i = 0, dataIndex; i < infoList.length; i++) {
         dataIndex = infoList[i].index;
-        if (currentTags.indexOf(dataIndex) > -1) { continue; }
+        if (currentTags.indexOf(dataIndex) > -1) {
+          continue;
+        }
 
         infoList.splice(i, 1);
-        if (typeof uploadEventHandler === 'function') { uploadEventHandler(null, dataIndex, 'delete', null, 0, this); }
+        if (typeof uploadEventHandler === "function") {
+          uploadEventHandler(null, dataIndex, "delete", null, 0, this);
+        }
         i--;
       }
 
-      if (resizing) { this.context.resizing._resize_plugin = _resize_plugin; }
+      if (resizing) {
+        this.context.resizing._resize_plugin = _resize_plugin;
+      }
     },
 
     /**
@@ -190,34 +232,46 @@
      * uploadCallBack {.. file = { name: fileList[i].name, size: fileList[i].size };
      * this.plugins.fileManager.setInfo.call(this, 'image', oImg, this.functions.onImageUpload, file, true);
      */
-    setInfo: function(pluginName, element, uploadEventHandler, file, resizing) {
-      const _resize_plugin = resizing ? this.context.resizing._resize_plugin : '';
-      if (resizing) { this.context.resizing._resize_plugin = pluginName; }
+    setInfo: function (
+      pluginName,
+      element,
+      uploadEventHandler,
+      file,
+      resizing
+    ) {
+      const _resize_plugin = resizing
+        ? this.context.resizing._resize_plugin
+        : "";
+      if (resizing) {
+        this.context.resizing._resize_plugin = pluginName;
+      }
 
       const plguin = this.plugins[pluginName];
       const context = this.context[pluginName];
       const infoList = context._infoList;
-      let dataIndex = element.getAttribute('data-index');
+      let dataIndex = element.getAttribute("data-index");
       let info = null;
-      let state = '';
+      let state = "";
 
       if (!file) {
         file = {
           name:
-            element.getAttribute('data-file-name') ||
-            (typeof element.src === 'string' ? element.src.split('/').pop() : ''),
-          size: element.getAttribute('data-file-size') || 0,
+            element.getAttribute("data-file-name") ||
+            (typeof element.src === "string"
+              ? element.src.split("/").pop()
+              : ""),
+          size: element.getAttribute("data-file-size") || 0,
         };
       }
 
       // create
       if (!dataIndex || this._componentsInfoInit) {
-        state = 'create';
+        state = "create";
         dataIndex = context._infoIndex++;
 
-        element.setAttribute('data-index', dataIndex);
-        element.setAttribute('data-file-name', file.name);
-        element.setAttribute('data-file-size', file.size);
+        element.setAttribute("data-index", dataIndex);
+        element.setAttribute("data-file-name", file.name);
+        element.setAttribute("data-file-size", file.size);
 
         info = {
           src: element.src,
@@ -229,7 +283,7 @@
         infoList.push(info);
       } else {
         // update
-        state = 'update';
+        state = "update";
         dataIndex *= 1;
 
         for (let i = 0, len = infoList.length; i < len; i++) {
@@ -246,26 +300,32 @@
         }
 
         info.src = element.src;
-        info.name = element.getAttribute('data-file-name');
-        info.size = element.getAttribute('data-file-size') * 1;
+        info.name = element.getAttribute("data-file-name");
+        info.size = element.getAttribute("data-file-size") * 1;
       }
 
       // method bind
       info.element = element;
       info.delete = plguin.destroy.bind(this, element);
-      info.select = function(element) {
+      info.select = function (element) {
         element.scrollIntoView(true);
         this._w.setTimeout(plguin.select.bind(this, element));
       }.bind(this, element);
 
       if (resizing) {
-        if (!element.getAttribute('origin-size') && element.naturalWidth) {
-          element.setAttribute('origin-size', element.naturalWidth + ',' + element.naturalHeight);
+        if (!element.getAttribute("origin-size") && element.naturalWidth) {
+          element.setAttribute(
+            "origin-size",
+            element.naturalWidth + "," + element.naturalHeight
+          );
         }
 
-        if (!element.getAttribute('data-origin')) {
-          const container = this.util.getParentElement(element, this.util.isMediaComponent);
-          const cover = this.util.getParentElement(element, 'FIGURE');
+        if (!element.getAttribute("data-origin")) {
+          const container = this.util.getParentElement(
+            element,
+            this.util.isMediaComponent
+          );
+          const cover = this.util.getParentElement(element, "FIGURE");
 
           const w = this.plugins.resizing._module_getSizeX.call(
             this,
@@ -281,16 +341,16 @@
             cover,
             container
           );
-          element.setAttribute('data-origin', w + ',' + h);
-          element.setAttribute('data-size', w + ',' + h);
+          element.setAttribute("data-origin", w + "," + h);
+          element.setAttribute("data-size", w + "," + h);
         }
 
         if (!element.style.width) {
           const size = (
-            element.getAttribute('data-size') ||
-            element.getAttribute('data-origin') ||
-            ''
-          ).split(',');
+            element.getAttribute("data-size") ||
+            element.getAttribute("data-origin") ||
+            ""
+          ).split(",");
           plguin.onModifyMode.call(this, element, null);
           plguin.applySize.call(this, size[0], size[1]);
         }
@@ -298,7 +358,7 @@
         this.context.resizing._resize_plugin = _resize_plugin;
       }
 
-      if (typeof uploadEventHandler === 'function') {
+      if (typeof uploadEventHandler === "function") {
         uploadEventHandler(
           element,
           dataIndex,
@@ -306,7 +366,7 @@
           info,
           --context._uploadFileLength < 0 ? 0 : context._uploadFileLength,
           this
-        ); 
+        );
       }
     },
 
@@ -316,14 +376,16 @@
      * @param {Number} index index of info object (this.context[pluginName]._infoList[].index)
      * @param {Function|null} uploadEventHandler Event handler to process updated file info (created in setInfo)
      */
-    deleteInfo: function(pluginName, index, uploadEventHandler) {
+    deleteInfo: function (pluginName, index, uploadEventHandler) {
       if (index >= 0) {
         const infoList = this.context[pluginName]._infoList;
 
         for (let i = 0, len = infoList.length; i < len; i++) {
           if (index === infoList[i].index) {
             infoList.splice(i, 1);
-            if (typeof uploadEventHandler === 'function') { uploadEventHandler(null, index, 'delete', null, 0, this); }
+            if (typeof uploadEventHandler === "function") {
+              uploadEventHandler(null, index, "delete", null, 0, this);
+            }
             return;
           }
         }
@@ -335,13 +397,13 @@
      * @param {String} pluginName Plugin name
      * @param {Function|null} uploadEventHandler Event handler to process updated file info (created in setInfo)
      */
-    resetInfo: function(pluginName, uploadEventHandler) {
+    resetInfo: function (pluginName, uploadEventHandler) {
       const context = this.context[pluginName];
 
-      if (typeof uploadEventHandler === 'function') {
+      if (typeof uploadEventHandler === "function") {
         const infoList = context._infoList;
         for (let i = 0, len = infoList.length; i < len; i++) {
-          uploadEventHandler(null, infoList[i].index, 'delete', null, 0, this);
+          uploadEventHandler(null, infoList[i].index, "delete", null, 0, this);
         }
       }
 
@@ -352,7 +414,7 @@
 
   if (typeof noGlobal === typeof undefined) {
     if (!window.KothingEditor_Modules) {
-      Object.defineProperty(window, 'KothingEditor_Modules', {
+      Object.defineProperty(window, "KothingEditor_Modules", {
         enumerable: true,
         writable: false,
         configurable: false,
@@ -360,7 +422,7 @@
       });
     }
 
-    Object.defineProperty(window.KothingEditor_Modules, 'fileManager', {
+    Object.defineProperty(window.KothingEditor_Modules, "fileManager", {
       enumerable: true,
       writable: false,
       configurable: false,

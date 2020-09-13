@@ -7,9 +7,9 @@
  */
 
 export default {
-  name: 'paragraphStyle',
-  display: 'submenu',
-  add: function(core, targetElement) {
+  name: "paragraphStyle",
+  display: "submenu",
+  add: function (core, targetElement) {
     const context = core.context;
     context.paragraphStyle = {
       _classList: null,
@@ -19,9 +19,11 @@ export default {
     let listDiv = this.setSubmenu.call(core);
 
     /** add event listeners */
-    listDiv.querySelector('ul').addEventListener('click', this.pickUp.bind(core));
+    listDiv
+      .querySelector("ul")
+      .addEventListener("click", this.pickUp.bind(core));
 
-    context.paragraphStyle._classList = listDiv.querySelectorAll('li button');
+    context.paragraphStyle._classList = listDiv.querySelectorAll("li button");
 
     /** append target button menu */
     core.initMenuTarget(this.name, targetElement, listDiv);
@@ -30,65 +32,71 @@ export default {
     listDiv = null;
   },
 
-  setSubmenu: function() {
+  setSubmenu: function () {
     const option = this.context.option;
-    const listDiv = this.util.createElement('DIV');
-    listDiv.className = 'ke-submenu ke-list-layer ke-list-format';
+    const listDiv = this.util.createElement("DIV");
+    listDiv.className = "ke-submenu ke-list-layer ke-list-format";
 
     const menuLang = this.lang.menu;
     const defaultList = {
       spaced: {
         name: menuLang.spaced,
-        class: '__ke__p-spaced',
-        _class: '',
+        class: "__ke__p-spaced",
+        _class: "",
       },
       bordered: {
         name: menuLang.bordered,
-        class: '__ke__p-bordered',
-        _class: '',
+        class: "__ke__p-bordered",
+        _class: "",
       },
       neon: {
         name: menuLang.neon,
-        class: '__ke__p-neon',
-        _class: '',
+        class: "__ke__p-neon",
+        _class: "",
       },
     };
     const paragraphStyles =
       !option.paragraphStyles || option.paragraphStyles.length === 0
-        ? ['spaced', 'bordered', 'neon']
+        ? ["spaced", "bordered", "neon"]
         : option.paragraphStyles;
 
     let list = '<div class="ke-list-inner"><ul class="ke-list-basic">';
-    for (let i = 0, len = paragraphStyles.length, p, name, attrs, _class; i < len; i++) {
+    for (
+      let i = 0, len = paragraphStyles.length, p, name, attrs, _class;
+      i < len;
+      i++
+    ) {
       p = paragraphStyles[i];
 
-      if (typeof p === 'string') {
+      if (typeof p === "string") {
         const defaultStyle = defaultList[p.toLowerCase()];
-        if (!defaultStyle) { continue; }
+        if (!defaultStyle) {
+          continue;
+        }
         p = defaultStyle;
       }
 
       name = p.name;
-      attrs = p.class ? ' class="' + p.class + '"' : '';
+      attrs = p.class ? ' class="' + p.class + '"' : "";
       _class = p._class;
 
       list +=
-        '<li>' +
+        "<li>" +
         '<button type="button" class="ke-btn-list' +
-        (_class ? ' ' + _class : '') +
+        (_class ? " " + _class : "") +
         '" data-value="' +
         p.class +
         '" title="' +
         name +
         '">' +
-        '<div' +
+        "<div" +
         attrs +
-        '>' +
+        ">" +
         name +
-        '</div>' +
-        '</button></li>';
+        "</div>" +
+        "</button></li>";
     }
-    list += '</ul></div>';
+    list += "</ul></div>";
 
     listDiv.innerHTML = list;
 
@@ -98,21 +106,26 @@ export default {
   /**
    * @Override submenu
    */
-  on: function() {
+  on: function () {
     const paragraphContext = this.context.paragraphStyle;
     const paragraphList = paragraphContext._classList;
     const currentFormat = this.util.getFormatElement(this.getSelectionNode());
 
     for (let i = 0, len = paragraphList.length; i < len; i++) {
-      if (this.util.hasClass(currentFormat, paragraphList[i].getAttribute('data-value'))) {
-        this.util.addClass(paragraphList[i], 'active');
+      if (
+        this.util.hasClass(
+          currentFormat,
+          paragraphList[i].getAttribute("data-value")
+        )
+      ) {
+        this.util.addClass(paragraphList[i], "active");
       } else {
-        this.util.removeClass(paragraphList[i], 'active');
+        this.util.removeClass(paragraphList[i], "active");
       }
     }
   },
 
-  pickUp: function(e) {
+  pickUp: function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -120,22 +133,28 @@ export default {
     let value = null;
 
     while (!/^UL$/i.test(target.tagName)) {
-      value = target.getAttribute('data-value');
-      if (value) { break; }
+      value = target.getAttribute("data-value");
+      if (value) {
+        break;
+      }
       target = target.parentNode;
     }
 
-    if (!value) { return; }
+    if (!value) {
+      return;
+    }
 
     let selectedFormsts = this.getSelectedElements();
     if (selectedFormsts.length === 0) {
       this.getRange_addLine(this.getRange());
       selectedFormsts = this.getSelectedElements();
-      if (selectedFormsts.length === 0) { return; }
+      if (selectedFormsts.length === 0) {
+        return;
+      }
     }
 
     // change format class
-    const toggleClass = this.util.hasClass(target, 'active')
+    const toggleClass = this.util.hasClass(target, "active")
       ? this.util.removeClass.bind(this.util)
       : this.util.addClass.bind(this.util);
     for (let i = 0, len = selectedFormsts.length; i < len; i++) {

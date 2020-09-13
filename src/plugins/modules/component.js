@@ -6,32 +6,32 @@
  * MIT license.
  */
 
-(function(global, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
+(function (global, factory) {
+  if (typeof module === "object" && typeof module.exports === "object") {
     module.exports = global.document
       ? factory(global, true)
-      : function(w) {
-        if (!w.document) {
-          throw new Error('KothingEditor_Modules a window with a document');
-        }
-        return factory(w);
-      };
+      : function (w) {
+          if (!w.document) {
+            throw new Error("KothingEditor_Modules a window with a document");
+          }
+          return factory(w);
+        };
   } else {
     factory(global);
   }
-})(typeof window !== 'undefined' ? window : this, function(window, noGlobal) {
+})(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
   const component = {
-    name: 'component',
+    name: "component",
     /**
      * @description Create a container for the resizing component and insert the element.
      * @param {Element} cover Cover element (FIGURE)
      * @param {String} className Class name of container (fixed: ke-component)
      * @returns {Element} Created container element
      */
-    set_container: function(cover, className) {
-      const container = this.util.createElement('DIV');
-      container.className = 'ke-component ' + className;
-      container.setAttribute('contenteditable', false);
+    set_container: function (cover, className) {
+      const container = this.util.createElement("DIV");
+      container.className = "ke-component " + className;
+      container.setAttribute("contenteditable", false);
       container.appendChild(cover);
 
       return container;
@@ -41,8 +41,8 @@
      * @description Cover the target element with a FIGURE element.
      * @param {Element} element Target element
      */
-    set_cover: function(element) {
-      const cover = this.util.createElement('FIGURE');
+    set_cover: function (element) {
+      const cover = this.util.createElement("FIGURE");
       cover.appendChild(element);
 
       return cover;
@@ -52,17 +52,17 @@
      * @description Return HTML string of caption(FIGCAPTION) element
      * @returns {String}
      */
-    create_caption: function() {
-      const caption = this.util.createElement('FIGCAPTION');
-      caption.setAttribute('contenteditable', true);
-      caption.innerHTML = '<div>' + this.lang.dialogBox.caption + '</div>';
+    create_caption: function () {
+      const caption = this.util.createElement("FIGCAPTION");
+      caption.setAttribute("contenteditable", true);
+      caption.innerHTML = "<div>" + this.lang.dialogBox.caption + "</div>";
       return caption;
     },
   };
 
   if (typeof noGlobal === typeof undefined) {
     if (!window.KothingEditor_Modules) {
-      Object.defineProperty(window, 'KothingEditor_Modules', {
+      Object.defineProperty(window, "KothingEditor_Modules", {
         enumerable: true,
         writable: false,
         configurable: false,
@@ -70,7 +70,7 @@
       });
     }
 
-    Object.defineProperty(window.KothingEditor_Modules, 'component', {
+    Object.defineProperty(window.KothingEditor_Modules, "component", {
       enumerable: true,
       writable: false,
       configurable: false,

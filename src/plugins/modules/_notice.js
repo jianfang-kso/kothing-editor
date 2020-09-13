@@ -7,24 +7,24 @@
  */
 
 export default {
-  name: 'notice',
+  name: "notice",
   /**
    * @description Constructor
    * @param {Object} core Core object
    */
-  add: function(core) {
+  add: function (core) {
     const context = core.context;
     context.notice = {};
 
     /** dialog */
-    let notice_div = core.util.createElement('DIV');
-    const notice_span = core.util.createElement('SPAN');
-    const notice_button = core.util.createElement('BUTTON');
+    let notice_div = core.util.createElement("DIV");
+    const notice_span = core.util.createElement("SPAN");
+    const notice_button = core.util.createElement("BUTTON");
 
-    notice_div.className = 'ke-notice';
-    notice_button.className = 'close';
-    notice_button.setAttribute('aria-label', 'Close');
-    notice_button.setAttribute('title', core.lang.dialogBox.close);
+    notice_div.className = "ke-notice";
+    notice_button.className = "close";
+    notice_button.setAttribute("aria-label", "Close");
+    notice_button.setAttribute("title", core.lang.dialogBox.close);
     notice_button.innerHTML = core.icons.cancel;
 
     notice_div.appendChild(notice_span);
@@ -34,7 +34,7 @@ export default {
     context.notice.message = notice_span;
 
     /** add event listeners */
-    notice_button.addEventListener('click', this.onClick_cancel.bind(core));
+    notice_button.addEventListener("click", this.onClick_cancel.bind(core));
 
     /** append html */
     context.element.editorArea.appendChild(notice_div);
@@ -47,7 +47,7 @@ export default {
    * @description Event when clicking the cancel button
    * @param {MouseEvent} e Event object
    */
-  onClick_cancel: function(e) {
+  onClick_cancel: function (e) {
     e.preventDefault();
     e.stopPropagation();
     this.plugins.notice.close.call(this);
@@ -57,15 +57,15 @@ export default {
    * @description  Open the notice panel
    * @param {String} text Notice message
    */
-  open: function(text) {
+  open: function (text) {
     this.context.notice.message.textContent = text;
-    this.context.notice.modal.style.display = 'block';
+    this.context.notice.modal.style.display = "block";
   },
 
   /**
    * @description  Open the notice panel
    */
-  close: function() {
-    this.context.notice.modal.style.display = 'none';
+  close: function () {
+    this.context.notice.modal.style.display = "none";
   },
 };

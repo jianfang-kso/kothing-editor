@@ -1,4 +1,4 @@
-import { CommandPlugin } from '../CommandPlugin';
+import { CommandPlugin } from "../CommandPlugin";
 
 declare const blockquote: CommandPlugin;
 

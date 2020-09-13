@@ -1,4 +1,4 @@
-import { DialogPlugin } from '../DialogPlugin';
+import { DialogPlugin } from "../DialogPlugin";
 
 declare const math: DialogPlugin;
 

@@ -7,23 +7,25 @@
  */
 
 export default {
-  name: 'formatBlock',
-  display: 'submenu',
-  add: function(core, targetElement) {
+  name: "formatBlock",
+  display: "submenu",
+  add: function (core, targetElement) {
     const context = core.context;
     context.formatBlock = {
-      targetText: targetElement.querySelector('.txt'),
-      targetTooltip: targetElement.parentNode.querySelector('.ke-tooltip-text'),
+      targetText: targetElement.querySelector(".txt"),
+      targetTooltip: targetElement.parentNode.querySelector(".ke-tooltip-text"),
       _formatList: null,
-      currentFormat: '',
+      currentFormat: "",
     };
 
     /** set submenu */
     let listDiv = this.setSubmenu.call(core);
 
     /** add event listeners */
-    listDiv.querySelector('ul').addEventListener('click', this.pickUp.bind(core));
-    context.formatBlock._formatList = listDiv.querySelectorAll('li button');
+    listDiv
+      .querySelector("ul")
+      .addEventListener("click", this.pickUp.bind(core));
+    context.formatBlock._formatList = listDiv.querySelectorAll("li button");
 
     /** append target button menu */
     core.initMenuTarget(this.name, targetElement, listDiv);
@@ -32,41 +34,67 @@ export default {
     listDiv = null;
   },
 
-  setSubmenu: function() {
+  setSubmenu: function () {
     const option = this.context.option;
     const lang_toolbar = this.lang.toolbar;
-    const listDiv = this.util.createElement('DIV');
-    listDiv.className = 'ke-submenu ke-list-layer ke-list-format';
+    const listDiv = this.util.createElement("DIV");
+    listDiv.className = "ke-submenu ke-list-layer ke-list-format";
 
-    const defaultFormats = ['p', 'div', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
+    const defaultFormats = [
+      "p",
+      "div",
+      "blockquote",
+      "pre",
+      "h1",
+      "h2",
+      "h3",
+      "h4",
+      "h5",
+      "h6",
+    ];
     const formatList =
-      !option.formats || option.formats.length === 0 ? defaultFormats : option.formats;
+      !option.formats || option.formats.length === 0
+        ? defaultFormats
+        : option.formats;
 
     let list = '<div class="ke-list-inner"><ul class="ke-list-basic">';
     for (
-      let i = 0, len = formatList.length, format, tagName, command, name, h, attrs, className;
+      let i = 0,
+        len = formatList.length,
+        format,
+        tagName,
+        command,
+        name,
+        h,
+        attrs,
+        className;
       i < len;
       i++
     ) {
       format = formatList[i];
 
-      if (typeof format === 'string' && defaultFormats.indexOf(format) > -1) {
+      if (typeof format === "string" && defaultFormats.indexOf(format) > -1) {
         tagName = format.toLowerCase();
-        command = tagName === 'blockquote' ? 'range' : tagName === 'pre' ? 'free' : 'replace';
-        h = /^h/.test(tagName) ? tagName.match(/\d+/)[0] : '';
-        name = lang_toolbar['tag_' + (h ? 'h' : tagName)] + h;
-        className = '';
-        attrs = '';
+        command =
+          tagName === "blockquote"
+            ? "range"
+            : tagName === "pre"
+            ? "free"
+            : "replace";
+        h = /^h/.test(tagName) ? tagName.match(/\d+/)[0] : "";
+        name = lang_toolbar["tag_" + (h ? "h" : tagName)] + h;
+        className = "";
+        attrs = "";
       } else {
         tagName = format.tag.toLowerCase();
         command = format.command;
         name = format.name || tagName;
         className = format.class;
-        attrs = className ? ' class="' + className + '"' : '';
+        attrs = className ? ' class="' + className + '"' : "";
       }
 
       list +=
-        '<li>' +
+        "<li>" +
         '<button type="button" class="ke-btn-list" data-command="' +
         command +
         '" data-value="' +
@@ -76,17 +104,17 @@ export default {
         '" title="' +
         name +
         '">' +
-        '<' +
+        "<" +
         tagName +
         attrs +
-        '>' +
+        ">" +
         name +
-        '</' +
+        "</" +
         tagName +
-        '>' +
-        '</button></li>';
+        ">" +
+        "</button></li>";
     }
-    list += '</ul></div>';
+    list += "</ul></div>";
 
     listDiv.innerHTML = list;
 
@@ -96,7 +124,7 @@ export default {
   /**
    * @Override core
    */
-  active: function(element) {
+  active: function (element) {
     let formatTitle = this.lang.toolbar.formats;
     const target = this.context.formatBlock.targetText;
     const tooltip = this.context.formatBlock.targetTooltip;
@@ -108,13 +136,15 @@ export default {
       const formatContext = this.context.formatBlock;
       const formatList = formatContext._formatList;
       const nodeName = element.nodeName.toLowerCase();
-      const className = (element.className.match(/(\s|^)__ke__format__[^\s]+/) || [''])[0].trim();
+      const className = (element.className.match(
+        /(\s|^)__ke__format__[^\s]+/
+      ) || [""])[0].trim();
 
       for (let i = 0, len = formatList.length, f; i < len; i++) {
         f = formatList[i];
         if (
-          nodeName === f.getAttribute('data-value') &&
-          className === f.getAttribute('data-class')
+          nodeName === f.getAttribute("data-value") &&
+          className === f.getAttribute("data-class")
         ) {
           formatTitle = f.title;
           break;
@@ -123,8 +153,8 @@ export default {
 
       this.util.changeTxt(target, formatTitle);
       this.util.changeTxt(tooltip, formatTitle);
-      target.setAttribute('data-value', nodeName);
-      target.setAttribute('data-class', className);
+      target.setAttribute("data-value", nodeName);
+      target.setAttribute("data-class", className);
 
       return true;
     }
@@ -135,20 +165,24 @@ export default {
   /**
    * @Override submenu
    */
-  on: function() {
+  on: function () {
     const formatContext = this.context.formatBlock;
     const formatList = formatContext._formatList;
     const target = formatContext.targetText;
     const currentFormat =
-      (target.getAttribute('data-value') || '') + (target.getAttribute('data-class') || '');
+      (target.getAttribute("data-value") || "") +
+      (target.getAttribute("data-class") || "");
 
     if (currentFormat !== formatContext.currentFormat) {
       for (let i = 0, len = formatList.length, f; i < len; i++) {
         f = formatList[i];
-        if (currentFormat === f.getAttribute('data-value') + f.getAttribute('data-class')) {
-          this.util.addClass(f, 'active');
+        if (
+          currentFormat ===
+          f.getAttribute("data-value") + f.getAttribute("data-class")
+        ) {
+          this.util.addClass(f, "active");
         } else {
-          this.util.removeClass(f, 'active');
+          this.util.removeClass(f, "active");
         }
       }
 
@@ -156,7 +190,7 @@ export default {
     }
   },
 
-  pickUp: function(e) {
+  pickUp: function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -164,12 +198,12 @@ export default {
     let command = null;
     let value = null;
     let tag = null;
-    let className = '';
+    let className = "";
 
     while (!command && !/UL/i.test(target.tagName)) {
-      command = target.getAttribute('data-command');
-      value = target.getAttribute('data-value');
-      className = target.getAttribute('data-class');
+      command = target.getAttribute("data-command");
+      value = target.getAttribute("data-value");
+      className = target.getAttribute("data-class");
       if (command) {
         tag = target.firstChild;
         break;
@@ -177,10 +211,12 @@ export default {
       target = target.parentNode;
     }
 
-    if (!command) { return; }
+    if (!command) {
+      return;
+    }
 
     // blockquote
-    if (command === 'range') {
+    if (command === "range") {
       const rangeElement = tag.cloneNode(false);
       this.applyRangeFormatElement(rangeElement);
     } else {

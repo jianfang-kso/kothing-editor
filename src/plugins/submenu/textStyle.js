@@ -7,9 +7,9 @@
  */
 
 export default {
-  name: 'textStyle',
-  display: 'submenu',
-  add: function(core, targetElement) {
+  name: "textStyle",
+  display: "submenu",
+  add: function (core, targetElement) {
     const context = core.context;
     context.textStyle = {
       _styleList: null,
@@ -17,12 +17,12 @@ export default {
 
     /** set submenu */
     let listDiv = this.setSubmenu.call(core);
-    let listUl = listDiv.querySelector('ul');
+    let listUl = listDiv.querySelector("ul");
 
     /** add event listeners */
-    listUl.addEventListener('click', this.pickup.bind(core));
+    listUl.addEventListener("click", this.pickup.bind(core));
 
-    context.textStyle._styleList = listDiv.querySelectorAll('li button');
+    context.textStyle._styleList = listDiv.querySelectorAll("li button");
 
     /** append target button menu */
     core.initMenuTarget(this.name, targetElement, listDiv);
@@ -32,68 +32,80 @@ export default {
     listUl = null;
   },
 
-  setSubmenu: function() {
+  setSubmenu: function () {
     const option = this.context.option;
-    const listDiv = this.util.createElement('DIV');
-    listDiv.className = 'ke-submenu ke-list-layer ke-list-format';
+    const listDiv = this.util.createElement("DIV");
+    listDiv.className = "ke-submenu ke-list-layer ke-list-format";
 
     const defaultList = {
       code: {
         name: this.lang.menu.code,
-        class: '__ke__t-code',
-        tag: 'code',
+        class: "__ke__t-code",
+        tag: "code",
       },
       translucent: {
         name: this.lang.menu.translucent,
-        style: 'opacity: 0.5;',
-        tag: 'span',
+        style: "opacity: 0.5;",
+        tag: "span",
       },
       shadow: {
         name: this.lang.menu.shadow,
-        class: '__ke__t-shadow',
-        tag: 'span',
+        class: "__ke__t-shadow",
+        tag: "span",
       },
     };
-    const styleList = !option.textStyles ? this._w.Object.keys(defaultList) : option.textStyles;
+    const styleList = !option.textStyles
+      ? this._w.Object.keys(defaultList)
+      : option.textStyles;
 
     let list = '<div class="ke-list-inner"><ul class="ke-list-basic">';
     for (
-      let i = 0, len = styleList.length, t, tag, name, attrs, command, value, _class;
+      let i = 0,
+        len = styleList.length,
+        t,
+        tag,
+        name,
+        attrs,
+        command,
+        value,
+        _class;
       i < len;
       i++
     ) {
       t = styleList[i];
-      attrs = '';
-      value = '';
+      attrs = "";
+      value = "";
       command = [];
 
-      if (typeof t === 'string') {
+      if (typeof t === "string") {
         const defaultStyle = defaultList[t.toLowerCase()];
-        if (!defaultStyle) { continue; }
+        if (!defaultStyle) {
+          continue;
+        }
         t = defaultStyle;
       }
 
       name = t.name;
-      tag = t.tag || 'span';
+      tag = t.tag || "span";
       _class = t._class;
 
       if (t.style) {
         attrs += ' style="' + t.style + '"';
-        value += t.style.replace(/:[^;]+(;|$)\s*/g, ',');
-        command.push('style');
+        value += t.style.replace(/:[^;]+(;|$)\s*/g, ",");
+        command.push("style");
       }
       if (t.class) {
         attrs += ' class="' + t.class + '"';
-        value += '.' + t.class.trim().replace(/\s+/g, ',.');
-        command.push('class');
+        value += "." + t.class.trim().replace(/\s+/g, ",.");
+        command.push("class");
       }
 
-      value = value.replace(/,$/, '');
+      value = value.replace(/,$/, "");
 
       list +=
-        '<li>' +
+        "<li>" +
         '<button type="button" class="ke-btn-list' +
-        (_class ? ' ' + _class : '') +
+        (_class ? " " + _class : "") +
         '" data-command="' +
         tag +
         '" data-value="' +
@@ -101,17 +113,17 @@ export default {
         '" title="' +
         name +
         '">' +
-        '<' +
+        "<" +
         tag +
         attrs +
-        '>' +
+        ">" +
         name +
-        '</' +
+        "</" +
         tag +
-        '>' +
-        '</button></li>';
+        ">" +
+        "</button></li>";
     }
-    list += '</ul></div>';
+    list += "</ul></div>";
 
     listDiv.innerHTML = list;
 
@@ -121,26 +133,33 @@ export default {
   /**
    * @Override submenu
    */
-  on: function() {
+  on: function () {
     const util = this.util;
     const textStyleContext = this.context.textStyle;
     const styleToolBarItem = textStyleContext._styleList;
     const selectionNode = this.getSelectionNode();
 
-    for (let i = 0, len = styleToolBarItem.length, btn, data, active; i < len; i++) {
+    for (
+      let i = 0, len = styleToolBarItem.length, btn, data, active;
+      i < len;
+      i++
+    ) {
       btn = styleToolBarItem[i];
-      data = btn.getAttribute('data-value').split(',');
+      data = btn.getAttribute("data-value").split(",");
 
       for (let v = 0, node, value; v < data.length; v++) {
         node = selectionNode;
         active = false;
 
         while (node && !util.isFormatElement(node) && !util.isComponent(node)) {
-          if (node.nodeName.toLowerCase() === btn.getAttribute('data-command').toLowerCase()) {
+          if (
+            node.nodeName.toLowerCase() ===
+            btn.getAttribute("data-command").toLowerCase()
+          ) {
             value = data[v];
             if (
               /^\./.test(value)
-                ? util.hasClass(node, value.replace(/^\./, ''))
+                ? util.hasClass(node, value.replace(/^\./, ""))
                 : !!node.style[value]
             ) {
               active = true;
@@ -150,14 +169,16 @@ export default {
           node = node.parentNode;
         }
 
-        if (!active) { break; }
+        if (!active) {
+          break;
+        }
       }
 
-      active ? util.addClass(btn, 'active') : util.removeClass(btn, 'active');
+      active ? util.addClass(btn, "active") : util.removeClass(btn, "active");
     }
   },
 
-  pickup: function(e) {
+  pickup: function (e) {
     e.preventDefault();
     e.stopPropagation();
 
@@ -166,7 +187,7 @@ export default {
     let tag = null;
 
     while (!command && !/UL/i.test(target.tagName)) {
-      command = target.getAttribute('data-command');
+      command = target.getAttribute("data-command");
       if (command) {
         tag = target.firstChild;
         break;
@@ -174,17 +195,21 @@ export default {
       target = target.parentNode;
     }
 
-    if (!command) { return; }
+    if (!command) {
+      return;
+    }
 
-    const checkStyles = tag.style.cssText.replace(/:.+(;|$)/g, ',').split(',');
+    const checkStyles = tag.style.cssText.replace(/:.+(;|$)/g, ",").split(",");
     checkStyles.pop();
 
     const classes = tag.classList;
     for (let i = 0, len = classes.length; i < len; i++) {
-      checkStyles.push('.' + classes[i]);
+      checkStyles.push("." + classes[i]);
     }
 
-    const newNode = this.util.hasClass(target, 'active') ? null : tag.cloneNode(false);
+    const newNode = this.util.hasClass(target, "active")
+      ? null
+      : tag.cloneNode(false);
     const removeNodes = newNode ? null : [tag.nodeName];
     this.nodeChange(newNode, checkStyles, removeNodes, true);
 

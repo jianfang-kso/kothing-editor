@@ -7,24 +7,26 @@
  */
 
 export default {
-  name: 'font',
-  display: 'submenu',
-  add: function(core, targetElement) {
+  name: "font",
+  display: "submenu",
+  add: function (core, targetElement) {
     const context = core.context;
     context.font = {
-      targetText: targetElement.querySelector('.txt'),
-      targetTooltip: targetElement.parentNode.querySelector('.ke-tooltip-text'),
+      targetText: targetElement.querySelector(".txt"),
+      targetTooltip: targetElement.parentNode.querySelector(".ke-tooltip-text"),
       _fontList: null,
-      currentFont: '',
+      currentFont: "",
     };
 
     /** set submenu */
     let listDiv = this.setSubmenu.call(core);
 
     /** add event listeners */
-    listDiv.querySelector('.ke-list-inner').addEventListener('click', this.pickup.bind(core));
+    listDiv
+      .querySelector(".ke-list-inner")
+      .addEventListener("click", this.pickup.bind(core));
 
-    context.font._fontList = listDiv.querySelectorAll('ul li button');
+    context.font._fontList = listDiv.querySelectorAll("ul li button");
 
     /** append target button menu */
     core.initMenuTarget(this.name, targetElement, listDiv);
@@ -33,25 +35,25 @@ export default {
     listDiv = null;
   },
 
-  setSubmenu: function() {
+  setSubmenu: function () {
     const option = this.context.option;
     const lang = this.lang;
-    const listDiv = this.util.createElement('DIV');
+    const listDiv = this.util.createElement("DIV");
 
-    listDiv.className = 'ke-submenu ke-list-layer ke-list-font-family';
+    listDiv.className = "ke-submenu ke-list-layer ke-list-font-family";
 
     let font, text, i, len;
     const fontList = !option.font
       ? [
-        'Arial',
-        'Comic Sans MS',
-        'Courier New',
-        'Impact',
-        'Georgia',
-        'tahoma',
-        'Trebuchet MS',
-        'Verdana',
-      ]
+          "Arial",
+          "Comic Sans MS",
+          "Courier New",
+          "Impact",
+          "Georgia",
+          "tahoma",
+          "Trebuchet MS",
+          "Verdana",
+        ]
       : option.font;
 
     let list =
@@ -61,10 +63,10 @@ export default {
       lang.toolbar.default +
       '">(' +
       lang.toolbar.default +
-      ')</button></li>';
+      ")</button></li>";
     for (i = 0, len = fontList.length; i < len; i++) {
       font = fontList[i];
-      text = font.split(',')[0];
+      text = font.split(",")[0];
       list +=
         '<li><button type="button" class="ke-btn-list" data-value="' +
         font +
@@ -76,9 +78,9 @@ export default {
         font +
         ';">' +
         text +
-        '</button></li>';
+        "</button></li>";
     }
-    list += '</ul></div>';
+    list += "</ul></div>";
     listDiv.innerHTML = list;
 
     return listDiv;
@@ -87,7 +89,7 @@ export default {
   /**
    * @Override core
    */
-  active: function(element) {
+  active: function (element) {
     const target = this.context.font.targetText;
     const tooltip = this.context.font.targetTooltip;
 
@@ -96,7 +98,7 @@ export default {
       this.util.changeTxt(target, font);
       this.util.changeTxt(tooltip, font);
     } else if (element.style && element.style.fontFamily.length > 0) {
-      const selectFont = element.style.fontFamily.replace(/["']/g, '');
+      const selectFont = element.style.fontFamily.replace(/["']/g, "");
       this.util.changeTxt(target, selectFont);
       this.util.changeTxt(tooltip, selectFont);
       return true;
@@ -108,17 +110,17 @@ export default {
   /**
    * @Override submenu
    */
-  on: function() {
+  on: function () {
     const fontContext = this.context.font;
     const fontList = fontContext._fontList;
     const currentFont = fontContext.targetText.textContent;
 
     if (currentFont !== fontContext.currentFont) {
       for (let i = 0, len = fontList.length; i < len; i++) {
-        if (currentFont === fontList[i].getAttribute('data-value')) {
-          this.util.addClass(fontList[i], 'active');
+        if (currentFont === fontList[i].getAttribute("data-value")) {
+          this.util.addClass(fontList[i], "active");
         } else {
-          this.util.removeClass(fontList[i], 'active');
+          this.util.removeClass(fontList[i], "active");
         }
       }
 
@@ -126,20 +128,22 @@ export default {
     }
   },
 
-  pickup: function(e) {
-    if (!/^BUTTON$/i.test(e.target.tagName)) { return false; }
+  pickup: function (e) {
+    if (!/^BUTTON$/i.test(e.target.tagName)) {
+      return false;
+    }
 
     e.preventDefault();
     e.stopPropagation();
 
-    const value = e.target.getAttribute('data-value');
+    const value = e.target.getAttribute("data-value");
 
     if (value) {
-      const newNode = this.util.createElement('SPAN');
+      const newNode = this.util.createElement("SPAN");
       newNode.style.fontFamily = value;
-      this.nodeChange(newNode, ['font-family'], null, null);
+      this.nodeChange(newNode, ["font-family"], null, null);
     } else {
-      this.nodeChange(null, ['font-family'], ['span'], true);
+      this.nodeChange(null, ["font-family"], ["span"], true);
     }
 
     this.submenuOff();

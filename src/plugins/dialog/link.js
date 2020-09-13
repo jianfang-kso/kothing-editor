@@ -6,12 +6,12 @@
  * MIT license.
  */
 
-import dialog from '../modules/dialog';
+import dialog from "../modules/dialog";
 
 export default {
-  name: 'link',
-  display: 'dialog',
-  add: function(core) {
+  name: "link",
+  display: "dialog",
+  add: function (core) {
     core.addModule([dialog]);
 
     const context = core.context;
@@ -20,29 +20,40 @@ export default {
       linkNewWindowCheck: null,
       linkAnchorText: null,
       _linkAnchor: null,
-      _linkValue: '',
+      _linkValue: "",
     };
 
     /** link dialog */
     let link_dialog = this.setDialog.call(core);
     context.link.modal = link_dialog;
-    context.link.focusElement = link_dialog.querySelector('._ke_link_url');
-    context.link.linkAnchorText = link_dialog.querySelector('._ke_link_text');
-    context.link.linkNewWindowCheck = link_dialog.querySelector('._ke_link_check');
-    context.link.preview = link_dialog.querySelector('.ke-link-preview');
+    context.link.focusElement = link_dialog.querySelector("._ke_link_url");
+    context.link.linkAnchorText = link_dialog.querySelector("._ke_link_text");
+    context.link.linkNewWindowCheck = link_dialog.querySelector(
+      "._ke_link_check"
+    );
+    context.link.preview = link_dialog.querySelector(".ke-link-preview");
 
     /** link controller */
     let link_controller = this.setController_LinkButton.call(core);
     context.link.linkController = link_controller;
     context.link._linkAnchor = null;
-    link_controller.addEventListener('mousedown', core.eventStop);
+    link_controller.addEventListener("mousedown", core.eventStop);
 
     /** add event listeners */
-    link_dialog.querySelector('.ke-btn-primary').addEventListener('click', this.submit.bind(core));
-    link_controller.addEventListener('click', this.onClick_linkController.bind(core));
+    link_dialog
+      .querySelector(".ke-btn-primary")
+      .addEventListener("click", this.submit.bind(core));
+    link_controller.addEventListener(
+      "click",
+      this.onClick_linkController.bind(core)
+    );
     context.link.focusElement.addEventListener(
-      'input',
-      this._onLinkPreview.bind(context.link.preview, context.link, context.options.linkProtocol)
+      "input",
+      this._onLinkPreview.bind(
+        context.link.preview,
+        context.link,
+        context.options.linkProtocol
+      )
     );
 
     /** append html */
@@ -57,65 +68,65 @@ export default {
   },
 
   /** dialog */
-  setDialog: function() {
+  setDialog: function () {
     const lang = this.lang;
-    const dialog = this.util.createElement('DIV');
+    const dialog = this.util.createElement("DIV");
 
-    dialog.className = 'ke-dialog-content';
-    dialog.style.display = 'none';
+    dialog.className = "ke-dialog-content";
+    dialog.style.display = "none";
     dialog.innerHTML =
-      '' +
+      "" +
       '<form class="editor_link">' +
       '<div class="ke-dialog-header">' +
       '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' +
       lang.dialogBox.close +
       '">' +
       this.icons.cancel +
-      '</button>' +
+      "</button>" +
       '<span class="ke-modal-title">' +
       lang.dialogBox.linkBox.title +
-      '</span>' +
-      '</div>' +
+      "</span>" +
+      "</div>" +
       '<div class="ke-dialog-body">' +
       '<div class="ke-dialog-form">' +
-      '<label>' +
+      "<label>" +
       lang.dialogBox.linkBox.url +
-      '</label>' +
+      "</label>" +
       '<input class="ke-input-form _ke_link_url" type="text" />' +
       '<pre class="ke-link-preview"></pre>' +
-      '</div>' +
+      "</div>" +
       '<div class="ke-dialog-form">' +
-      '<label>' +
+      "<label>" +
       lang.dialogBox.linkBox.text +
       '</label><input class="ke-input-form _ke_link_text" type="text" />' +
-      '</div>' +
+      "</div>" +
       '<div class="ke-dialog-form-footer">' +
       '<label><input type="checkbox" class="ke-dialog-btn-check _ke_link_check" />&nbsp;' +
       lang.dialogBox.linkBox.newWindowCheck +
-      '</label>' +
-      '</div>' +
-      '</div>' +
+      "</label>" +
+      "</div>" +
+      "</div>" +
       '<div class="ke-dialog-footer">' +
       '<button type="submit" class="ke-btn-primary" title="' +
       lang.dialogBox.submitButton +
       '"><span>' +
       lang.dialogBox.submitButton +
-      '</span></button>' +
-      '</div>' +
-      '</form>';
+      "</span></button>" +
+      "</div>" +
+      "</form>";
 
     return dialog;
   },
 
   /** modify controller button */
-  setController_LinkButton: function() {
+  setController_LinkButton: function () {
     const lang = this.lang;
     const icons = this.icons;
-    const link_btn = this.util.createElement('DIV');
+    const link_btn = this.util.createElement("DIV");
 
-    link_btn.className = 'ke-controller ke-controller-link';
+    link_btn.className = "ke-controller ke-controller-link";
     link_btn.innerHTML =
-      '' +
+      "" +
       '<div class="ke-arrow ke-arrow-up"></div>' +
       '<div class="link-content"><span><a target="_blank" href=""></a>&nbsp;</span>' +
       '<div class="ke-btn-group">' +
@@ -123,22 +134,22 @@ export default {
       icons.edit +
       '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
       lang.controller.edit +
-      '</span></span>' +
-      '</button>' +
+      "</span></span>" +
+      "</button>" +
       '<button type="button" data-command="unlink" tabindex="-1" class="ke-btn ke-tooltip">' +
       icons.unlink +
       '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
       lang.controller.unlink +
-      '</span></span>' +
-      '</button>' +
+      "</span></span>" +
+      "</button>" +
       '<button type="button" data-command="delete" tabindex="-1" class="ke-btn ke-tooltip">' +
       icons.delete +
       '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
       lang.controller.remove +
-      '</span></span>' +
-      '</button>' +
-      '</div>' +
-      '</div>';
+      "</span></span>" +
+      "</button>" +
+      "</div>" +
+      "</div>";
 
     return link_btn;
   },
@@ -146,55 +157,72 @@ export default {
   /**
    * @Override dialog
    */
-  open: function() {
-    this.plugins.dialog.open.call(this, 'link', this.currentControllerName === 'link');
+  open: function () {
+    this.plugins.dialog.open.call(
+      this,
+      "link",
+      this.currentControllerName === "link"
+    );
   },
 
-  _onLinkPreview: function(context, protocol, e) {
+  _onLinkPreview: function (context, protocol, e) {
     const value = e.target.value.trim();
     context._linkValue = this.textContent = !value
-      ? ''
-      : protocol && value.indexOf('://') === -1 && value.indexOf('#') !== 0
-        ? protocol + value
-        : value.indexOf('://') === -1
-          ? '/' + value
-          : value;
+      ? ""
+      : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
+      ? protocol + value
+      : value.indexOf("://") === -1
+      ? "/" + value
+      : value;
   },
 
-  submit: function(e) {
+  submit: function (e) {
     this.showLoading();
 
     e.preventDefault();
     e.stopPropagation();
 
-    const submitAction = function() {
+    const submitAction = function () {
       const contextLink = this.context.link;
-      if (contextLink._linkValue.length === 0) { return false; }
+      if (contextLink._linkValue.length === 0) {
+        return false;
+      }
 
       const url = contextLink._linkValue;
       const anchor = contextLink.linkAnchorText;
       const anchorText = anchor.value.length === 0 ? url : anchor.value;
 
       if (!this.context.dialog.updateModal) {
-        const oA = this.util.createElement('A');
+        const oA = this.util.createElement("A");
         oA.href = url;
         oA.textContent = anchorText;
-        oA.target = contextLink.linkNewWindowCheck.checked ? '_blank' : '';
+        oA.target = contextLink.linkNewWindowCheck.checked ? "_blank" : "";
 
         const selectedFormats = this.getSelectedElements();
         if (selectedFormats.length > 1) {
           const oFormat = this.util.createElement(selectedFormats[0].nodeName);
           oFormat.appendChild(oA);
-          if (!this.insertNode(oFormat, null, true)) { return; }
+          if (!this.insertNode(oFormat, null, true)) {
+            return;
+          }
         } else {
-          if (!this.insertNode(oA, null, true)) { return; }
+          if (!this.insertNode(oA, null, true)) {
+            return;
+          }
         }
 
-        this.setRange(oA.childNodes[0], 0, oA.childNodes[0], oA.textContent.length);
+        this.setRange(
+          oA.childNodes[0],
+          0,
+          oA.childNodes[0],
+          oA.textContent.length
+        );
       } else {
         contextLink._linkAnchor.href = url;
         contextLink._linkAnchor.textContent = anchorText;
-        contextLink._linkAnchor.target = contextLink.linkNewWindowCheck.checked ? '_blank' : '';
+        contextLink._linkAnchor.target = contextLink.linkNewWindowCheck.checked
+          ? "_blank"
+          : "";
 
         // set range
         const textNode = contextLink._linkAnchor.childNodes[0];
@@ -202,7 +230,7 @@ export default {
       }
 
       contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value = contextLink.linkAnchorText.value =
-        '';
+        "";
     }.bind(this);
 
     try {
@@ -220,12 +248,15 @@ export default {
   /**
    * @Override core
    */
-  active: function(element) {
+  active: function (element) {
     if (!element) {
       if (this.controllerArray.indexOf(this.context.link.linkController) > -1) {
         this.controllersOff();
       }
-    } else if (this.util.isAnchor(element) && element.getAttribute('data-image-link') === null) {
+    } else if (
+      this.util.isAnchor(element) &&
+      element.getAttribute("data-image-link") === null
+    ) {
       if (this.controllerArray.indexOf(this.context.link.linkController) < 0) {
         this.plugins.link.call_controller.call(this, element);
       }
@@ -238,7 +269,7 @@ export default {
   /**
    * @Override dialog
    */
-  on: function(update) {
+  on: function (update) {
     const contextLink = this.context.link;
     if (!update) {
       this.plugins.link.init.call(this);
@@ -248,43 +279,53 @@ export default {
       contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value =
         contextLink._linkAnchor.href;
       contextLink.linkAnchorText.value = contextLink._linkAnchor.textContent;
-      contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(contextLink._linkAnchor.target);
+      contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(
+        contextLink._linkAnchor.target
+      );
     }
   },
 
-  call_controller: function(selectionATag) {
+  call_controller: function (selectionATag) {
     this.editLink = this.context.link._linkAnchor = selectionATag;
     const linkBtn = this.context.link.linkController;
-    const link = linkBtn.querySelector('a');
+    const link = linkBtn.querySelector("a");
 
     link.href = selectionATag.href;
     link.title = selectionATag.textContent;
     link.textContent = selectionATag.textContent;
 
-    const offset = this.util.getOffset(selectionATag, this.context.element.wysiwygFrame);
-    linkBtn.style.top = offset.top + selectionATag.offsetHeight + 10 + 'px';
-    linkBtn.style.left = offset.left - this.context.element.wysiwygFrame.scrollLeft + 'px';
+    const offset = this.util.getOffset(
+      selectionATag,
+      this.context.element.wysiwygFrame
+    );
+    linkBtn.style.top = offset.top + selectionATag.offsetHeight + 10 + "px";
+    linkBtn.style.left =
+      offset.left - this.context.element.wysiwygFrame.scrollLeft + "px";
 
-    linkBtn.style.display = 'block';
+    linkBtn.style.display = "block";
 
     const overLeft =
-      this.context.element.wysiwygFrame.offsetWidth - (linkBtn.offsetLeft + linkBtn.offsetWidth);
+      this.context.element.wysiwygFrame.offsetWidth -
+      (linkBtn.offsetLeft + linkBtn.offsetWidth);
     if (overLeft < 0) {
-      linkBtn.style.left = linkBtn.offsetLeft + overLeft + 'px';
-      linkBtn.firstElementChild.style.left = 20 - overLeft + 'px';
+      linkBtn.style.left = linkBtn.offsetLeft + overLeft + "px";
+      linkBtn.firstElementChild.style.left = 20 - overLeft + "px";
     } else {
-      linkBtn.firstElementChild.style.left = '20px';
+      linkBtn.firstElementChild.style.left = "20px";
     }
 
-    this.controllersOn(linkBtn, selectionATag, 'link');
+    this.controllersOn(linkBtn, selectionATag, "link");
   },
 
-  onClick_linkController: function(e) {
+  onClick_linkController: function (e) {
     e.stopPropagation();
 
     const command =
-      e.target.getAttribute('data-command') || e.target.parentNode.getAttribute('data-command');
-    if (!command) { return; }
+      e.target.getAttribute("data-command") ||
+      e.target.parentNode.getAttribute("data-command");
+    if (!command) {
+      return;
+    }
 
     e.preventDefault();
 
@@ -293,25 +334,27 @@ export default {
       contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value =
         contextLink._linkAnchor.href;
       contextLink.linkAnchorText.value = contextLink._linkAnchor.textContent;
-      contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(contextLink._linkAnchor.target);
-      this.plugins.dialog.open.call(this, 'link', true);
+      contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(
+        contextLink._linkAnchor.target
+      );
+      this.plugins.dialog.open.call(this, "link", true);
     } else if (/unlink/.test(command)) {
       const sc = this.util.getChildElement(
         this.context.link._linkAnchor,
-        function(current) {
+        function (current) {
           return current.childNodes.length === 0 || current.nodeType === 3;
         },
         false
       );
       const ec = this.util.getChildElement(
         this.context.link._linkAnchor,
-        function(current) {
+        function (current) {
           return current.childNodes.length === 0 || current.nodeType === 3;
         },
         true
       );
       this.setRange(sc, 0, ec, ec.textContent.length);
-      this.nodeChange(null, null, ['A'], false);
+      this.nodeChange(null, null, ["A"], false);
     } else {
       /** delete */
       this.util.removeItem(this.context.link._linkAnchor);
@@ -328,12 +371,13 @@ export default {
   /**
    * @Override dialog
    */
-  init: function() {
+  init: function () {
     const contextLink = this.context.link;
-    contextLink.linkController.style.display = 'none';
+    contextLink.linkController.style.display = "none";
     contextLink._linkAnchor = null;
-    contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value = '';
-    contextLink.linkAnchorText.value = '';
+    contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value =
+      "";
+    contextLink.linkAnchorText.value = "";
     contextLink.linkNewWindowCheck.checked = false;
   },
 };

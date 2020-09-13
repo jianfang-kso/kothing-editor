@@ -1,8 +1,9 @@
-import { Lang } from './lang/Lang'
-import { Plugin } from './plugins/Plugin'
+/* eslint-disable @typescript-eslint/ban-types */
+import { Lang } from "./lang/Lang";
+import { Plugin } from "./plugins/Plugin";
 
 export interface KothingEditorOptions {
-  plugins: Plugin[] | Record<string, Plugin>
+  plugins: Plugin[] | Record<string, Plugin>;
   /**
    * Values
    * ======
@@ -10,12 +11,12 @@ export interface KothingEditorOptions {
   /**
    * language object
    */
-  lang?: Lang
+  lang?: Lang;
   /**
    * Initial value(html string) of the edit area.
    * If not, the value of the "target textarea".
    */
-  value?: string
+  value?: string;
   /**
    * Whitelist
    * ======
@@ -23,15 +24,15 @@ export interface KothingEditorOptions {
   /**
    * Add tags to the default tags whitelist of editor.
    */
-  addTagsWhitelist?: string
+  addTagsWhitelist?: string;
   /**
    * Whitelist of tags when pasting.
    */
-  pasteTagsWhitelist?: string
+  pasteTagsWhitelist?: string;
   /**
    * Add attributes whitelist of tags that should be kept undeleted from the editor.
    */
-  attributesWhitelist?: Record<string, string>
+  attributesWhitelist?: Record<string, string>;
   /**
    * Layout
    * ======
@@ -39,46 +40,46 @@ export interface KothingEditorOptions {
   /**
    * The mode of the editor (classic, inline, balloon, balloon-always)
    */
-  mode?: 'classic' | 'inline' | 'balloon' | 'balloon-always'
+  mode?: "classic" | "inline" | "balloon" | "balloon-always";
   /**
    * TooleBar Item
    */
-  toolBarItem?: ToolBarItem[]
+  toolBarItem?: ToolBarItem[];
   /**
      * The width of the toolbar.
       Applies only when the editor mode is 'inline' or 'balloon' mode.
      */
-  toolbarWidth?: string
+  toolbarWidth?: string;
   /**
      * A custom HTML selector placing the toolbar inside.
       The class name of the element must be 'kothing-editor'.
       Element or querySelector argument.
      */
-  toolbarContainer?: HTMLElement | string
+  toolbarContainer?: HTMLElement | string;
   /**
    * Reference height value that should be changed to sticky toolbar mode
    */
-  stickyToolbar?: number
+  stickyToolbar?: number;
   /**
    * Content will be placed in an iframe and isolated from the rest of the page
    */
-  iframe?: boolean
+  iframe?: boolean;
   /**
    * Allows the usage of HTML, HEAD, BODY tags and DOCTYPE declaration
    */
-  fullPage?: boolean
+  fullPage?: boolean;
   /**
    * Name of the CSS file(s) to apply inside the iframe.
    */
-  iframeCSSFileName?: string | string[]
+  iframeCSSFileName?: string | string[];
   /**
    * CodeMirror core object
    */
-  codeMirror?: any | { src: any; options: object }
+  codeMirror?: any | { src: any; options: object };
   /**
    * Use "math" plugin
    */
-  katex?: any | { src: any; options: object }
+  katex?: any | { src: any; options: object };
   /**
    * Display
    * =======
@@ -86,15 +87,15 @@ export interface KothingEditorOptions {
   /**
    * The position property of editor
    */
-  position?: string
+  position?: string;
   /**
    * The display property of editor
    */
-  display?: string
+  display?: string;
   /**
    * Size of background area when activating dialog window ('full'||'local')
    */
-  popupDisplay?: 'full' | 'local'
+  popupDisplay?: "full" | "local";
   /**
    * Bottom resizing bar
    * ===================
@@ -102,11 +103,11 @@ export interface KothingEditorOptions {
   /**
    * Show the bottom resizing bar
    */
-  resizingBar?: boolean
+  resizingBar?: boolean;
   /**
    * Displays the current node structure to resizingBar
    */
-  showPathLabel?: boolean
+  showPathLabel?: boolean;
   /**
    * Character count
    * ===============
@@ -114,19 +115,19 @@ export interface KothingEditorOptions {
   /**
    * Shows the number of characters in the editor
    */
-  charCounter?: boolean
+  charCounter?: boolean;
   /**
    * Defines the calculation method of the "charCounter" option
    */
-  charCounterType?: 'char' | 'byte' | 'byte-html'
+  charCounterType?: "char" | "byte" | "byte-html";
   /**
    * Text to be displayed in the "charCounter" area of the bottom bar.
    */
-  charCounterLabel?: string
+  charCounterLabel?: string;
   /**
    * The maximum number of characters allowed to be inserted into the editor
    */
-  maxCharCount?: number
+  maxCharCount?: number;
   /**
    * Size
    * ====
@@ -134,31 +135,31 @@ export interface KothingEditorOptions {
   /**
    * The width size of the editor
    */
-  width?: string
+  width?: string;
   /**
    * The min-width size of the editor
    */
-  minWidth?: string
+  minWidth?: string;
   /**
    * The max-width size of the editor
    */
-  maxWidth?: string
+  maxWidth?: string;
   /**
    * The height size of the editor
    */
-  height?: string
+  height?: string;
   /**
    * The min-height size of the editor
    */
-  minHeight?: string
+  minHeight?: string;
   /**
    * The max-height size of the editor
    */
-  maxHeight?: string
+  maxHeight?: string;
   /**
    * Editing area default style
    */
-  defaultStyle?: string
+  defaultStyle?: string;
   /**
    * Defining menu items
    * ===================
@@ -166,35 +167,35 @@ export interface KothingEditorOptions {
   /**
    * Change default font-family array
    */
-  font?: string[]
+  font?: string[];
   /**
    * Change default font-size array
    */
-  fontSize?: number[]
+  fontSize?: number[];
   /**
    *
    */
-  fontSizeUnit?: string
+  fontSizeUnit?: string;
   /**
    * Change default formatBlock array
    */
-  formats?: FormatTagName[]
+  formats?: FormatTagName[];
   /**
    * Change default color array of color picker
    */
-  colorList?: string[]
+  colorList?: string[];
   /**
    * Line Heights
    */
-  lineHeights?: LineHeightsItem[]
+  lineHeights?: LineHeightsItem[];
   /**
    * Paragraph Styles
    */
-  paragraphStyles?: ParagraphStyles
+  paragraphStyles?: ParagraphStyles;
   /**
    * Text Styles
    */
-  textStyles?: TextStyles
+  textStyles?: TextStyles;
   /**
    * Image
    * =====
@@ -202,69 +203,69 @@ export interface KothingEditorOptions {
   /**
    * Can resize the image
    */
-  imageResizing?: boolean
+  imageResizing?: boolean;
   /**
    * Choose whether the image height input is visible.
    */
-  imageHeightShow?: boolean
+  imageHeightShow?: boolean;
   /**
    * The default width size of the image frame
    */
-  imageWidth?: string
+  imageWidth?: string;
   /**
    * The default height size of the image frame
    */
-  imageHeight?: string
+  imageHeight?: string;
   /**
    * If true, image size can only be scaled by percentage.
    */
-  imageSizeOnlyPercentage?: boolean
+  imageSizeOnlyPercentage?: boolean;
   /**
    * It is determined by "imageSizeOnlyPercentage".
    * @pivate
    */
-  _videoSizeUnit?: '%' | 'px'
+  _videoSizeUnit?: "%" | "px";
   /**
    * Choose whether to image rotation buttons display.
    * When "imageSizeOnlyPercentage" is "true" or  or "imageHeightShow" is "false" the default value is false.
    * If you want the button to be visible, put it a true.
    */
-  imageRotation?: boolean
+  imageRotation?: boolean;
   /**
    * Choose whether to create a file input tag in the image upload window
    */
-  imageFileInput?: boolean
+  imageFileInput?: boolean;
   /**
    * Choose whether to create a image url input tag in the image upload window
    */
-  imageUrlInput?: boolean
+  imageUrlInput?: boolean;
   /**
    * Http Header when uploading images.
    */
-  imageUploadHeader?: Record<string, string>
+  imageUploadHeader?: Record<string, string>;
   /**
    * The image upload to server mapping address
    */
-  imageUploadUrl?: string
+  imageUploadUrl?: string;
   /**
    * The size of the total uploadable images (in bytes)
    */
-  imageUploadSizeLimit?: number
+  imageUploadSizeLimit?: number;
   /**
    * If true, multiple images can be selected.
    */
-  imageMultipleFile?: boolean
+  imageMultipleFile?: boolean;
   /**
    * Define the "accept" attribute of the input.
    * ex) "*" or ".jpg, .png .."
    */
-  imageAccept?: string
+  imageAccept?: string;
   /**
    * Image - image gallery
    * =====
    * The url of the image gallery, if you use the image gallery
    */
-  imageGalleryUrl?: string
+  imageGalleryUrl?: string;
   /**
    * Video
    * =====
@@ -272,85 +273,85 @@ export interface KothingEditorOptions {
   /**
    * Can resize the video iframe
    */
-  videoResizing?: boolean
+  videoResizing?: boolean;
   /**
    * Choose whether the video height input is visible.
    */
-  videoHeightShow?: boolean
+  videoHeightShow?: boolean;
   /**
    * Choose whether the video ratio options is visible.
    */
-  videoRatioShow?: boolean
+  videoRatioShow?: boolean;
   /**
    * The default width size of the video frame
    */
-  videoWidth?: string
+  videoWidth?: string;
   /**
    * The default height size of the video frame
    */
-  videoHeight?: string
+  videoHeight?: string;
   /**
    * If true, video size can only be scaled by percentage.
    */
-  videoSizeOnlyPercentage?: boolean
+  videoSizeOnlyPercentage?: boolean;
   /**
    * Choose whether to video rotation buttons display.
    * When "videoSizeOnlyPercentage" is "true" or "videoHeightShow" is "false" the default value is false.
    * If you want the button to be visible, put it a true.
    */
-  videoRotation?: boolean
+  videoRotation?: boolean;
   /**
    * The default aspect ratio of the video.
    * Up to four decimal places are allowed.
    */
-  videoRatio?: number
+  videoRatio?: number;
   /**
    * Video ratio selection options.
    */
-  videoRatioList?: { name: string; value: number }[]
+  videoRatioList?: { name: string; value: number }[];
   /**
    * The query string of a YouTube embedded URL
    */
-  youtubeQuery?: string
+  youtubeQuery?: string;
   /**
    * Choose whether to create a file input tag in the video upload window
    */
-  videoFileInput?: boolean
+  videoFileInput?: boolean;
   /**
    * Choose whether to create a video url input tag in the video upload window
    */
-  videoUrlInput?: boolean
+  videoUrlInput?: boolean;
   /**
    * Http Header when uploading videos.
    */
-  videoUploadHeader?: Record<string, string>
+  videoUploadHeader?: Record<string, string>;
   /**
    * The video upload to server mapping address
    */
-  videoUploadUrl?: string
+  videoUploadUrl?: string;
   /**
    * The size of the total uploadable videos (in bytes)
    */
-  videoUploadSizeLimit?: number
+  videoUploadSizeLimit?: number;
   /**
    * If true, multiple videos can be selected.
    */
-  videoMultipleFile?: boolean
+  videoMultipleFile?: boolean;
   /**
    * Define "Attributes" of the video tag.
    * @example { poster: "http://videourl.com/videoPic.png", autoplay: true }
    */
-  videoTagAttrs?: Record<string, string | boolean>
+  videoTagAttrs?: Record<string, string | boolean>;
   /**
    * Define "Attributes" of the iframe tag. (Youtube, Vimeo).
    * @example { style: "border: 2px solid red;" }
    */
-  videoIframeAttrs?: Record<string, string | boolean>
+  videoIframeAttrs?: Record<string, string | boolean>;
   /**
    * Define the "accept" attribute of the input.
    * "*" or ".mp4, .avi .."
    */
-  videoAccept?: string
+  videoAccept?: string;
   /**
    * Audio
    * =====
@@ -358,45 +359,45 @@ export interface KothingEditorOptions {
   /**
    * The default width size of the audio frame
    */
-  audioWidth?: string
+  audioWidth?: string;
   /**
    * The default height size of the audio frame
    */
-  audioHeight?: string
+  audioHeight?: string;
   /**
    * Choose whether to create a file input tag in the audio upload window
    */
-  audioFileInput?: boolean
+  audioFileInput?: boolean;
   /**
    * Choose whether to create a audio url input tag in the audio upload window
    */
-  audioUrlInput?: boolean
+  audioUrlInput?: boolean;
   /**
    * Http Header when uploading audios.
    */
-  audioUploadHeader?: Record<string, string>
+  audioUploadHeader?: Record<string, string>;
   /**
    * The audio upload to server mapping address
    */
-  audioUploadUrl?: string
+  audioUploadUrl?: string;
   /**
    * The size of the total uploadable audios (in bytes)
    */
-  audioUploadSizeLimit?: number
+  audioUploadSizeLimit?: number;
   /**
    * If true, videos images can be selected.
    */
-  audioMultipleFile?: boolean
+  audioMultipleFile?: boolean;
   /**
    * Define "Attributes" of the audio tag.
    * @example { controlslist: "nodownload", autoplay: true }
    */
-  audioTagAttrs?: Record<string, string | boolean>
+  audioTagAttrs?: Record<string, string | boolean>;
   /**
    * Define the "accept" attribute of the input.
    * "*" or ".mp3, .wav .."
    */
-  audioAccept?: string
+  audioAccept?: string;
   /**
    * Table
    * =====
@@ -404,7 +405,7 @@ export interface KothingEditorOptions {
   /**
    * Define position to the table cell controller. ('cell', 'top')
    */
-  tableCellControllerPosition?: string
+  tableCellControllerPosition?: string;
   /**
    * Key actions
    * =====
@@ -412,9 +413,9 @@ export interface KothingEditorOptions {
   /**
    * If true, disables the interaction of the editor and tab key
    */
-  tabDisable?: boolean
-  shortcutsDisable?: string[]
-  shortcutsHint?: boolean
+  tabDisable?: boolean;
+  shortcutsDisable?: string[];
+  shortcutsHint?: boolean;
   /**
    * Defining save button
    * ====================
@@ -422,7 +423,7 @@ export interface KothingEditorOptions {
   /**
    * Callback functions that is called when the Save button is clicked
    */
-  callBackSave?: (contents: string) => void
+  callBackSave?: (contents: string) => void;
   /**
    * Templates Array
    * ===============
@@ -430,7 +431,7 @@ export interface KothingEditorOptions {
   /**
    * Templates array
    */
-  templates?: TemplatesItem[]
+  templates?: TemplatesItem[];
   /**
    * ETC
    * ===
@@ -438,79 +439,81 @@ export interface KothingEditorOptions {
   /**
    * The placeholder text
    */
-  placeholder?: string
+  placeholder?: string;
   /**
    * Protocol for the links (if link has been added without any protocol this one will be used).
    */
-  linkProtocol?: string
+  linkProtocol?: string;
   /**
    * You can redefine icons.
    */
-  icons?: Record<string, string>
+  icons?: Record<string, string>;
 }
 export type FormatTagName =
-  | 'p'
-  | 'div'
-  | 'blockquote'
-  | 'pre'
-  | 'h1'
-  | 'h2'
-  | 'h3'
-  | 'h4'
-  | 'h5'
-  | 'h6'
+  | "p"
+  | "div"
+  | "blockquote"
+  | "pre"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
   | {
-      tag: string
-      name?: string
-      command: 'replace' | 'range' | 'free'
-      class: string
-    }
-export type TemplatesItem = { name: string; html: string }
-export type LineHeightsItem = { text: string; value: number }
+      tag: string;
+      name?: string;
+      command: "replace" | "range" | "free";
+      class: string;
+    };
+export type TemplatesItem = { name: string; html: string };
+export type LineHeightsItem = { text: string; value: number };
 export type ParagraphStyles = (
   | string
-  | { name: string; class: string; _class?: string })[]
+  | { name: string; class: string; _class?: string }
+)[];
 export type TextStyles = (
   | string
-  | { name: string; style: string; tag: string; _class?: string })[]
+  | { name: string; style: string; tag: string; _class?: string }
+)[];
 export type ToolBarItemDefaults =
-  | '/' // Line Break
-  | 'bold'
-  | 'underline'
-  | 'italic'
-  | 'strike'
-  | 'subscript'
-  | 'superscript'
-  | 'removeFormat'
-  | 'indent'
-  | 'outdent'
-  | 'fullScreen'
-  | 'showBlocks'
-  | 'codeView'
-  | 'undo'
-  | 'redo'
-  | 'preview'
-  | 'print'
-  | 'save'
-  | 'font'
-  | 'formatBlock'
-  | 'fontSize'
-  | 'fontColor'
-  | 'hiliteColor'
-  | 'align'
-  | 'list'
-  | 'horizontalRule'
-  | 'table'
-  | 'lineHeight'
-  | 'template'
-  | 'paragraphStyle'
-  | 'textStyle'
-  | 'link'
-  | 'image'
-  | 'video'
-  | 'math'
-  | 'imageGallery'
+  | "/" // Line Break
+  | "bold"
+  | "underline"
+  | "italic"
+  | "strike"
+  | "subscript"
+  | "superscript"
+  | "removeFormat"
+  | "indent"
+  | "outdent"
+  | "fullScreen"
+  | "showBlocks"
+  | "codeView"
+  | "undo"
+  | "redo"
+  | "preview"
+  | "print"
+  | "save"
+  | "font"
+  | "formatBlock"
+  | "fontSize"
+  | "fontColor"
+  | "hiliteColor"
+  | "align"
+  | "list"
+  | "horizontalRule"
+  | "table"
+  | "lineHeight"
+  | "template"
+  | "paragraphStyle"
+  | "textStyle"
+  | "link"
+  | "image"
+  | "video"
+  | "math"
+  | "imageGallery";
 export type ToolBarItem =
   | ToolBarItemDefaults
   | ToolBarItemDefaults[]
-  | string[]
+  | string[];

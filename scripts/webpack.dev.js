@@ -1,15 +1,15 @@
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
-const config = require('./webpack.config');
-const util = require('./util');
+const webpack = require("webpack");
+const merge = require("webpack-merge");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const config = require("./webpack.config");
+const util = require("./util");
 
 const devServerConfig = {
-  contentBase: util.resolve('dist'),
-  clientLogLevel: 'warning',
-  port: 3000,
+  contentBase: util.resolve("dist"),
+  clientLogLevel: "warning",
+  port: 8080,
   hot: true,
-  host: 'localhost',
+  host: "localhost",
   compress: true,
   open: true,
   quiet: true,
@@ -19,12 +19,12 @@ const devServerConfig = {
   },
   proxy: {
     // detail: https://www.webpackjs.com/configuration/dev-server/#devserver-proxy
-    '/base': {
-      target: 'https://test.cn',
+    "/base": {
+      target: "https://test.cn",
       secure: true,
       changeOrigin: true,
       pathRewrite: {
-        '^/base': '',
+        "^/base": "",
       },
     },
   },
@@ -32,22 +32,26 @@ const devServerConfig = {
 };
 
 module.exports = merge(config, {
-  mode: 'development',
-  entry: util.resolve('public/index.js'),
+  mode: "development",
+  entry: util.resolve("public/index.js"),
   output: {
-    filename: '[name].js',
+    filename: "[name].js",
     chunkFilename: "[chunkhash].js",
     jsonpFunction: "myWebpackJsonp",
   },
   plugins: [
     new webpack.DefinePlugin({
-      'env.PRODUCTION': "false",
+      "env.PRODUCTION": "false",
     }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
-        messages: [`App running at:\n\n - Local:   http://localhost:${devServerConfig.port}\n - Network: http://${util.localAddress()}:${devServerConfig.port}`],
+        messages: [
+          `App running at:\n\n - Local:   http://localhost:${
+            devServerConfig.port
+          }\n - Network: http://${util.localAddress()}:${devServerConfig.port}`,
+        ],
       },
       clearConsole: true,
     }),

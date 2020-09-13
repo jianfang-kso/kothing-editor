@@ -1,4 +1,4 @@
-import { SubmenuPlugin } from '../SubmenuPlugin';
+import { SubmenuPlugin } from "../SubmenuPlugin";
 
 declare const formatBlock: SubmenuPlugin;
 
