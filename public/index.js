@@ -7,7 +7,7 @@ import lang from '../src/lang';
  * ID : 'my-editor'
  * ClassName : 'kothing-eidtor'
  */
-KothingEditor.create(document.getElementById('my-editor'), {
+const editor = KothingEditor.create(document.getElementById('my-editor'), {
   // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
   // Insert options
   width: '100%',
@@ -29,3 +29,8 @@ KothingEditor.create(document.getElementById('my-editor'), {
     ['save', 'template'],
   ],
 });
+
+const getValueBtn = document.getElementById("get-content");
+getValueBtn.addEventListener('click', () => {
+  alert(editor.getContents());
+}, false); 
