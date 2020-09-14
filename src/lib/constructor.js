@@ -62,7 +62,7 @@ export default {
     const editor_div = doc.createElement("DIV");
     editor_div.className = "ke-wrapper";
 
-    /** --- init elements and create bottom bar --- */
+    /** --- init elements and create tollbar --- */
     const initElements = this._initElements(
       options,
       top_div,
