@@ -10,7 +10,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack-dev-server --inline --progress --config ./scripts/webpack.dev.js",
     "build": "cross-env NODE_ENV=production node ./scripts/build.js",
-    "build-lib": "babel src --out-dir dist/lib",
+    "babel": "babel src --out-dir dist/lib",
     "lint": "eslint src --fix --ext .js,.ts",
     "lint:create": "eslint --init"
   },
