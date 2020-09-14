@@ -20,6 +20,42 @@
     factory(global);
   }
 })(typeof window !== "undefined" ? window : this, function (window, noGlobal) {
+  /**
+   * @description Append the className value of the argument value element
+   * @param {Element} element Elements to add class name
+   * @param {String} className Class name to be add
+   */
+  const addClass = (element, className) => {
+    if (!element) {
+      return;
+    }
+
+    const check = new window.RegExp("(\\s|^)" + className + "(\\s|$)");
+    if (check.test(element.className)) {
+      return;
+    }
+
+    element.className += (element.className.length > 0 ? " " : "") + className;
+  };
+
+  /**
+   * @description Delete the className value of the argument value element
+   * @param {Element} element Elements to remove class name
+   * @param {String} className Class name to be remove
+   */
+  const removeClass = (element, className) => {
+    if (!element) {
+      return;
+    }
+
+    const check = new window.RegExp("(\\s|^)" + className + "(\\s|$)");
+    element.className = element.className.replace(check, " ").trim();
+
+    if (!element.className.trim()) {
+      element.removeAttribute("class");
+    }
+  };
+
   const dialog = {
     name: "dialog",
     /**
@@ -130,6 +166,7 @@
       } else {
         this.context.dialog.modalArea.style.position = "absolute";
       }
+      addClass(this.context.dialog.modalArea, "dialog--open");
 
       this.context.dialog.kind = kind;
       this.modalForm = this.context[kind].modal;
@@ -162,16 +199,28 @@
       }
 
       const kind = this.context.dialog.kind;
-      this.modalForm.style.display = "none";
-      this.context.dialog.back.style.display = "none";
-      this.context.dialog.modalArea.style.display = "none";
-      this.context.dialog.updateModal = false;
-      if (typeof this.plugins[kind].init === "function") {
-        this.plugins[kind].init.call(this);
-      }
-      this.context.dialog.kind = "";
-      this.modalForm = null;
-      this.focus();
+      removeClass(this.context.dialog.modalArea, "dialog--open");
+      addClass(this.context.dialog.modalArea, "dialog--close");
+
+      const rmCls = new Promise((resolve) => {
+        setTimeout(() => {
+          removeClass(this.context.dialog.modalArea, "dialog--close");
+          resolve();
+        }, 200);
+      });
+
+      rmCls.then(() => {
+        this.modalForm.style.display = "none";
+        this.context.dialog.back.style.display = "none";
+        this.context.dialog.modalArea.style.display = "none";
+        this.context.dialog.updateModal = false;
+        if (typeof this.plugins[kind].init === "function") {
+          this.plugins[kind].init.call(this);
+        }
+        this.context.dialog.kind = "";
+        this.modalForm = null;
+        this.focus();
+      });
     },
   };
 
