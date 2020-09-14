@@ -57,7 +57,6 @@ module.exports = merge(config, {
       "env.PRODUCTION": "true",
     }),
     new webpack.HashedModuleIdsPlugin(),
-    new webpack.optimize.ModuleConcatenationPlugin(),
     new UglifyJSPlugin(),
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin({
