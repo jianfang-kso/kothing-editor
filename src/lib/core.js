@@ -769,8 +769,8 @@ export default function (
       ) {
         return;
       }
-      context.element.lineBreaker_t.style.display = context.element.lineBreaker_b.style.display =
-        "none";
+      context.element.lineBreaker_t.style.display = "none";
+      context.element.lineBreaker_b.style.display = "none";
       this._variable._lineBreakComp = null;
 
       this.currentControllerName = "";
