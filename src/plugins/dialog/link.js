@@ -229,8 +229,10 @@ export default {
         this.setRange(textNode, 0, textNode, textNode.textContent.length);
       }
 
-      contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value = contextLink.linkAnchorText.value =
-        "";
+      contextLink._linkValue = "";
+      contextLink.preview.textContent = "";
+      contextLink.focusElement.value = "";
+      contextLink.linkAnchorText.value = "";
     }.bind(this);
 
     try {
@@ -276,8 +278,9 @@ export default {
       contextLink.linkAnchorText.value = this.getSelection().toString();
     } else if (contextLink._linkAnchor) {
       this.context.dialog.updateModal = true;
-      contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value =
-        contextLink._linkAnchor.href;
+      contextLink._linkValue = contextLink._linkAnchor.href;
+      contextLink.preview.textContent = contextLink._linkAnchor.href;
+      contextLink.focusElement.value = contextLink._linkAnchor.href;
       contextLink.linkAnchorText.value = contextLink._linkAnchor.textContent;
       contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(
         contextLink._linkAnchor.target
@@ -286,7 +289,8 @@ export default {
   },
 
   call_controller: function (selectionATag) {
-    this.editLink = this.context.link._linkAnchor = selectionATag;
+    this.editLink = selectionATag;
+    this.context.link._linkAnchor = selectionATag;
     const linkBtn = this.context.link.linkController;
     const link = linkBtn.querySelector("a");
 
@@ -331,8 +335,9 @@ export default {
 
     if (/update/.test(command)) {
       const contextLink = this.context.link;
-      contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value =
-        contextLink._linkAnchor.href;
+      contextLink._linkValue = contextLink._linkAnchor.href;
+      contextLink.preview.textContent = contextLink._linkAnchor.href;
+      contextLink.focusElement.value = contextLink._linkAnchor.href;
       contextLink.linkAnchorText.value = contextLink._linkAnchor.textContent;
       contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(
         contextLink._linkAnchor.target
@@ -375,8 +380,9 @@ export default {
     const contextLink = this.context.link;
     contextLink.linkController.style.display = "none";
     contextLink._linkAnchor = null;
-    contextLink._linkValue = contextLink.preview.textContent = contextLink.focusElement.value =
-      "";
+    contextLink._linkValue = "";
+    contextLink.preview.textContent = "";
+    contextLink.focusElement.value = "";
     contextLink.linkAnchorText.value = "";
     contextLink.linkNewWindowCheck.checked = false;
   },
