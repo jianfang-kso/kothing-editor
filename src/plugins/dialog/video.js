@@ -1047,7 +1047,15 @@ export default {
     const contextVideo = this.context.video;
 
     if (contextVideo.videoUrlFile) {
-      contextVideo._linkValue = contextVideo.preview.textContent = contextVideo.videoUrlFile.value =
+      contextVideo._linkValue =
+        contextVideo._element.src ||
+        (contextVideo._element.querySelector("source") || "").src ||
+        "";
+      contextVideo.preview.textContent =
+        contextVideo._element.src ||
+        (contextVideo._element.querySelector("source") || "").src ||
+        "";
+      contextVideo.videoUrlFile.value =
         contextVideo._element.src ||
         (contextVideo._element.querySelector("source") || "").src ||
         "";
