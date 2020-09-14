@@ -3,6 +3,8 @@ import '../src/assets/css/editor-contents.css';
 import KothingEditor from '../src/editor';
 import plugins from '../src/plugins';
 import lang from '../src/lang';
+import katex from 'katex';
+import 'katex/dist/katex.min.css'
 /**
  * ID : 'my-editor'
  * ClassName : 'kothing-eidtor'
@@ -13,6 +15,7 @@ const editor = KothingEditor.create(document.getElementById('my-editor'), {
   width: '100%',
   height: '400px',
   plugins: plugins,
+  katex: katex,
   lang: lang.zh_cn,
   toolBarItem: [
     ['undo', 'redo'],
