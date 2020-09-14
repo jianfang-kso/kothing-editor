@@ -48,6 +48,20 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(eot|svg|ttf|woff|woff2)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              publicPath: "../",
+              name: "fonts/[hash].[ext]",
+              limit: 5000,
+              mimetype: "application/font-woff",
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
