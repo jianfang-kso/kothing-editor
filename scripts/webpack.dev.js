@@ -43,7 +43,6 @@ module.exports = merge(config, {
     new webpack.DefinePlugin({
       "env.PRODUCTION": "false",
     }),
-    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new FriendlyErrorsPlugin({
       compilationSuccessInfo: {
