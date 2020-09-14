@@ -322,7 +322,7 @@ export default {
 
     html +=
       "" +
-      '<div class="ke-dialog-form ke-dialog-form-footer">' +
+      '<div class="ke-dialog-form ke-dialog-form">' +
       '<label><input type="checkbox" class="ke-dialog-btn-check _ke_image_check_caption" />&nbsp;' +
       lang.dialogBox.caption +
       "</label>" +

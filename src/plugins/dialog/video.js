@@ -289,7 +289,7 @@ export default {
         this.icons.revert +
         "</button>" +
         "</div>" +
-        '<div class="ke-dialog-form ke-dialog-form-footer"' +
+        '<div class="ke-dialog-form ke-dialog-form"' +
         onlyPercentDisplay +
         onlyWidthDisplay +
         ">" +

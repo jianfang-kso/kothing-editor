@@ -94,7 +94,7 @@ export default {
             '<div class="ke-dialog-form">' +
             '<label>' + lang.dialogBox.linkBox.text + '</label><input class="ke-input-form _ke_link_text" type="text" />' +
             '</div>' +
-            '<div class="ke-dialog-form ke-dialog-form-footer">' +
+            '<div class="ke-dialog-form ke-dialog-form">' +
             '<select class="ke-input-select" title="links">';
     for (let i = 0, len = targetList.length, t, selected; i < len; i++) {
       t = targetList[i];

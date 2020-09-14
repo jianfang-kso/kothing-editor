@@ -100,7 +100,7 @@ export default {
       lang.dialogBox.linkBox.text +
       '</label><input class="ke-input-form _ke_link_text" type="text" />' +
       "</div>" +
-      '<div class="ke-dialog-form-footer">' +
+      '<div class="ke-dialog-form">' +
       '<label><input type="checkbox" class="ke-dialog-btn-check _ke_link_check" />&nbsp;' +
       lang.dialogBox.linkBox.newWindowCheck +
       "</label>" +

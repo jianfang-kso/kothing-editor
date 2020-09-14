@@ -13,10 +13,10 @@ const editor = KothingEditor.create(document.getElementById('my-editor'), {
   // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
   // Insert options
   width: '100%',
-  height: '400px',
+  height: '200px',
   plugins: plugins,
   katex: katex,
-  lang: lang.zh_cn,
+  lang: lang.en,
   toolBarItem: [
     ['undo', 'redo'],
     ['font', 'fontSize', 'formatBlock'],
@@ -31,6 +31,7 @@ const editor = KothingEditor.create(document.getElementById('my-editor'), {
     ['preview', 'print'],
     ['save', 'template'],
   ],
+  charCounter: true,
 });
 
 const getValueBtn = document.getElementById("get-content");

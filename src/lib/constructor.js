@@ -377,6 +377,7 @@ export default {
     let navigation = null;
     let charWrapper = null;
     let charCounter = null;
+    let poweredBy = null;
     if (options.resizingBar) {
       resizingBar = document.createElement("DIV");
       resizingBar.className = "ke-resizing-bar kothing-editor-common";
@@ -419,6 +420,12 @@ export default {
       placeholder.className = "ke-placeholder";
       placeholder.innerText = options.placeholder;
     }
+
+    /** poweredBy */
+    poweredBy = document.createElement("DIV");
+    poweredBy.className = "ke-powered-by";
+    poweredBy.innerHTML = `<a href="https://github.com/kothing/kothing-editor" target="_blank" title="Kothing-Editor">Powered By Kothing</a>`;
+    resizingBar.appendChild(poweredBy);
 
     return {
       bottomBar: {
@@ -477,16 +484,16 @@ export default {
     options.toolbarContainer = /balloon/i.test(options.mode)
       ? null
       : typeof options.toolbarContainer === "string"
-        ? document.querySelector(options.toolbarContainer)
-        : options.toolbarContainer;
+      ? document.querySelector(options.toolbarContainer)
+      : options.toolbarContainer;
     options.stickyToolbar =
       /balloon/i.test(options.mode) || !!options.toolbarContainer
         ? -1
         : options.stickyToolbar === undefined
-          ? 0
-          : /^\d+/.test(options.stickyToolbar)
-            ? util.getNumber(options.stickyToolbar, 0)
-            : -1;
+        ? 0
+        : /^\d+/.test(options.stickyToolbar)
+        ? util.getNumber(options.stickyToolbar, 0)
+        : -1;
     options.fullPage = !!options.fullPage;
     options.iframe = options.fullPage || options.iframe;
     options.iframeCSSFileName = options.iframe
@@ -516,15 +523,15 @@ export default {
     options.showPathLabel = !options.resizingBar
       ? false
       : typeof options.showPathLabel === "boolean"
-        ? options.showPathLabel
-        : true;
+      ? options.showPathLabel
+      : true;
     /** Character count */
     options.charCounter =
       options.maxCharCount > 0
         ? true
         : typeof options.charCounter === "boolean"
-          ? options.charCounter
-          : false;
+        ? options.charCounter
+        : false;
     options.charCounterType =
       typeof options.charCounterType === "string"
         ? options.charCounterType
@@ -543,8 +550,8 @@ export default {
         ? options.width + "px"
         : options.width
       : element.clientWidth
-        ? element.clientWidth + "px"
-        : "100%";
+      ? element.clientWidth + "px"
+      : "100%";
     options.minWidth =
       (util.isNumber(options.minWidth)
         ? options.minWidth + "px"
@@ -559,8 +566,8 @@ export default {
         ? options.height + "px"
         : options.height
       : element.clientHeight
-        ? element.clientHeight + "px"
-        : "auto";
+      ? element.clientHeight + "px"
+      : "auto";
     options.minHeight =
       (util.isNumber(options.minHeight)
         ? options.minHeight + "px"
@@ -594,13 +601,13 @@ export default {
     options.imageWidth = !options.imageWidth
       ? "auto"
       : util.isNumber(options.imageWidth)
-        ? options.imageWidth + "px"
-        : options.imageWidth;
+      ? options.imageWidth + "px"
+      : options.imageWidth;
     options.imageHeight = !options.imageHeight
       ? "auto"
       : util.isNumber(options.imageHeight)
-        ? options.imageHeight + "px"
-        : options.imageHeight;
+      ? options.imageHeight + "px"
+      : options.imageHeight;
     options.imageSizeOnlyPercentage = !!options.imageSizeOnlyPercentage;
     options._imageSizeUnit = options.imageSizeOnlyPercentage ? "%" : "px";
     options.imageRotation =
@@ -642,14 +649,14 @@ export default {
       !options.videoWidth || !util.getNumber(options.videoWidth, 0)
         ? ""
         : util.isNumber(options.videoWidth)
-          ? options.videoWidth + "px"
-          : options.videoWidth;
+        ? options.videoWidth + "px"
+        : options.videoWidth;
     options.videoHeight =
       !options.videoHeight || !util.getNumber(options.videoHeight, 0)
         ? ""
         : util.isNumber(options.videoHeight)
-          ? options.videoHeight + "px"
-          : options.videoHeight;
+        ? options.videoHeight + "px"
+        : options.videoHeight;
     options.videoSizeOnlyPercentage = !!options.videoSizeOnlyPercentage;
     options._videoSizeUnit = options.videoSizeOnlyPercentage ? "%" : "px";
     options.videoRotation =
@@ -685,13 +692,13 @@ export default {
     options.audioWidth = !options.audioWidth
       ? ""
       : util.isNumber(options.audioWidth)
-        ? options.audioWidth + "px"
-        : options.audioWidth;
+      ? options.audioWidth + "px"
+      : options.audioWidth;
     options.audioHeight = !options.audioHeight
       ? ""
       : util.isNumber(options.audioHeight)
-        ? options.audioHeight + "px"
-        : options.audioHeight;
+      ? options.audioHeight + "px"
+      : options.audioHeight;
     options.audioFileInput = !!options.audioFileInput;
     options.audioUrlInput =
       options.audioUrlInput === undefined || !options.audioFileInput
@@ -722,8 +729,8 @@ export default {
       Array.isArray(options.shortcutsDisable) &&
       options.shortcutsDisable.length > 0
         ? options.shortcutsDisable.map(function (v) {
-          return v.toLowerCase();
-        })
+            return v.toLowerCase();
+          })
         : [];
     options.shortcutsHint =
       options.shortcutsHint === undefined ? true : !!options.shortcutsHint;
@@ -757,13 +764,13 @@ export default {
       !options.icons || typeof options.icons !== "object"
         ? _icons
         : [_icons, options.icons].reduce(function (_default, _new) {
-          for (const key in _new) {
-            if (util.hasOwn(_new, key)) {
-              _default[key] = _new[key];
+            for (const key in _new) {
+              if (util.hasOwn(_new, key)) {
+                _default[key] = _new[key];
+              }
             }
-          }
-          return _default;
-        }, {});
+            return _default;
+          }, {});
 
     /** _init options */
     options._editorStyles = util._setDefaultOptionStyle(
@@ -1142,8 +1149,8 @@ export default {
       const pluginsValues = _plugins.length
         ? _plugins
         : Object.keys(_plugins).map(function (name) {
-          return _plugins[name];
-        });
+            return _plugins[name];
+          });
       for (let i = 0, len = pluginsValues.length, p; i < len; i++) {
         p = pluginsValues[i].default || pluginsValues[i];
         plugins[p.name] = p;
