@@ -1282,12 +1282,17 @@ export default {
   openModify: function (notOpen) {
     const contextImage = this.context.image;
     if (contextImage.imgUrlFile) {
-      contextImage._v_src._linkValue = contextImage.previewSrc.textContent = contextImage.imgUrlFile.value =
-        contextImage._element.src;
+      contextImage._v_src._linkValue = contextImage._element.src;
+      contextImage.previewSrc.textContent = contextImage._element.src;
+      contextImage.imgUrlFile.value = contextImage._element.src;
     }
-    contextImage._altText = contextImage.altText.value =
-      contextImage._element.alt;
-    contextImage._v_link._linkValue = contextImage.previewLink.textContent = contextImage.imgLink.value =
+    contextImage._altText = contextImage._element.alt;
+    contextImage.altText.value = contextImage._element.alt;
+    contextImage._v_link._linkValue =
+      contextImage._linkElement === null ? "" : contextImage._linkElement.href;
+    contextImage.previewLink.textContent =
+      contextImage._linkElement === null ? "" : contextImage._linkElement.href;
+    contextImage.imgLink.value =
       contextImage._linkElement === null ? "" : contextImage._linkElement.href;
     contextImage.imgLinkNewWindowCheck.checked =
       contextImage._linkElement &&
@@ -1300,7 +1305,8 @@ export default {
     contextImage._align = contextImage.modal.querySelector(
       'input[name="kothing-editor_image_radio"]:checked'
     ).value;
-    contextImage._captionChecked = contextImage.captionCheckEl.checked = !!contextImage._caption;
+    contextImage._captionChecked = !!contextImage._caption;
+    contextImage.captionCheckEl.checked = !!contextImage._caption;
 
     if (contextImage._resizing) {
       this.plugins.resizing._module_setModifyInputSize.call(
