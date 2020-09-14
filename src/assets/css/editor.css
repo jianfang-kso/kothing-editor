@@ -130,6 +130,14 @@
     float: right;
     width: 10px;
     height: 10px;
+    -webkit-transition: .3s ease-out;
+    -moz-transition: .3s ease-out;
+    -ms-transition: .3s ease-out;
+    -o-transition: .3s ease-out;
+    transition: .3s ease-out;
+}
+.kothing-editor .ke-btn-select.on > svg {
+    transform: rotate(180deg);
 }
 /* ke-btn-list inner icon */
 .kothing-editor .ke-btn-list > .ke-list-icon {
