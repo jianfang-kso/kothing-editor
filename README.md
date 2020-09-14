@@ -1,6 +1,6 @@
 # KothingEditor
 
-Pure javscript rich text editorweb editor, with no dependencies
+A powerful WYSIWYG rich text web editor by pure javascript
 
 > #### Demo : <a href="http://kothing.github.io/editor" target="_blank">kothing.github.io/editor</a>
 
