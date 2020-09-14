@@ -14,12 +14,6 @@
     text-align: left;
     background-color: #FFF;
     color: #000;
-    user-select: none;
-    -o-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
 }
 
 .kothing-editor * {
