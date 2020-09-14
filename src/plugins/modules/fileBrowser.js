@@ -220,8 +220,9 @@
       fileBrowserContext.selectorHandler = null;
       fileBrowserContext.selectedTags = [];
       fileBrowserContext.items = [];
-      fileBrowserContext.list.innerHTML = fileBrowserContext.tagArea.innerHTML = fileBrowserContext.titleArea.textContent =
-        "";
+      fileBrowserContext.list.innerHTML = "";
+      fileBrowserContext.tagArea.innerHTML = "";
+      fileBrowserContext.titleArea.textContent = "";
 
       if (
         typeof this.plugins[fileBrowserContext.contextPlugin].init ===
