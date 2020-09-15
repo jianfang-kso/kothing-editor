@@ -20,16 +20,24 @@ const editor = KothingEditor.create(document.getElementById('my-editor'), {
   toolBarItem: [
     ['undo', 'redo'],
     ['font', 'fontSize', 'formatBlock'],
-    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-    ['removeFormat'],
-    ['fontColor', 'hiliteColor'],
-    ['outdent', 'indent'],
-    ['align', 'horizontalRule', 'list', 'table'],
-    ['link', 'image', 'audio', 'video'],
+    ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'fontColor', 'hiliteColor'],
+    ['outdent', 'indent', 'align', 'list', 'horizontalRule'],
+    ['link', 'table', 'image', 'audio', 'video'],
     ['lineHeight', 'paragraphStyle', 'textStyle'],
-    ['fullScreen', 'showBlocks', 'codeView'],
-    ['preview', 'print'],
+    ['showBlocks', 'codeView'],
+    ['preview', 'print', 'fullScreen'],
     ['save', 'template'],
+    ['removeFormat']
+  ],
+  templates: [
+    {
+      name: 'Template-1',
+      html: '<p>HTML source1</p>'
+    },
+    {
+      name: 'Template-2',
+      html: '<p>HTML source2</p>'
+    },
   ],
   charCounter: true,
 });
