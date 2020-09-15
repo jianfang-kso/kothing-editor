@@ -45,15 +45,6 @@ export default {
     const colorList =
       !option.colorList || option.colorList.length === 0
         ? [
-            "#ff0000",
-            "#ff5e00",
-            "#ffe400",
-            "#abf200",
-            "#00d8ff",
-            "#0055ff",
-            "#6600ff",
-            "#ff00dd",
-            "#000000",
             "#ffd8d8",
             "#fae0d4",
             "#faf4c0",
@@ -99,6 +90,15 @@ export default {
             "#290066",
             "#660058",
             "#222222",
+            "#ff0000",
+            "#ff5e00",
+            "#ffe400",
+            "#abf200",
+            "#00d8ff",
+            "#0055ff",
+            "#6600ff",
+            "#ff00dd",
+            "#000000",
           ]
         : option.colorList;
 
