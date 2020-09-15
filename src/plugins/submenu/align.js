@@ -46,52 +46,42 @@ export default {
     const listDiv = this.util.createElement("DIV");
 
     listDiv.className = "ke-submenu ke-list-layer ke-list-align";
-    listDiv.innerHTML =
-      "" +
-      '<div class="ke-list-inner">' +
-      '<ul class="ke-list-basic">' +
-      "<li>" +
-      '<button type="button" class="ke-btn-list ke-btn-align" data-command="justifyleft" data-value="left" title="' +
-      lang.toolbar.alignLeft +
-      '">' +
-      '<span class="ke-list-icon">' +
-      icons.align_left +
-      "</span>" +
-      lang.toolbar.alignLeft +
-      "</button>" +
-      "</li>" +
-      "<li>" +
-      '<button type="button" class="ke-btn-list ke-btn-align" data-command="justifycenter" data-value="center" title="' +
-      lang.toolbar.alignCenter +
-      '">' +
-      '<span class="ke-list-icon">' +
-      icons.align_center +
-      "</span>" +
-      lang.toolbar.alignCenter +
-      "</button>" +
-      "</li>" +
-      "<li>" +
-      '<button type="button" class="ke-btn-list ke-btn-align" data-command="justifyright" data-value="right" title="' +
-      lang.toolbar.alignRight +
-      '">' +
-      '<span class="ke-list-icon">' +
-      icons.align_right +
-      "</span>" +
-      lang.toolbar.alignRight +
-      "</button>" +
-      "</li>" +
-      "<li>" +
-      '<button type="button" class="ke-btn-list ke-btn-align" data-command="justifyfull" data-value="justify" title="' +
-      lang.toolbar.alignJustify +
-      '">' +
-      '<span class="ke-list-icon">' +
-      icons.align_justify +
-      "</span>" +
-      lang.toolbar.alignJustify +
-      "</button>" +
-      "</li>" +
-      "</ul>" +
-      "</div>";
+    listDiv.innerHTML = `<div class="ke-list-inner">
+        <ul class="ke-list-basic">
+          <li>
+            <button type="button" class="ke-btn-list ke-btn-align" data-command="justifyleft" data-value="left" title="${lang.toolbar.alignLeft}">
+              <span class="ke-list-icon">
+                ${icons.align_left}
+              </span>
+              ${lang.toolbar.alignLeft}
+            </button>
+          </li>
+          <li>
+            <button type="button" class="ke-btn-list ke-btn-align" data-command="justifycenter" data-value="center" title="${lang.toolbar.alignCenter}">
+              <span class="ke-list-icon">
+                ${icons.align_center}
+              </span>
+              ${lang.toolbar.alignCenter}
+            </button>
+          </li>
+          <li>
+            <button type="button" class="ke-btn-list ke-btn-align" data-command="justifyright" data-value="right" title="${lang.toolbar.alignRight}">
+              <span class="ke-list-icon">
+                ${icons.align_right}
+              </span>
+              ${lang.toolbar.alignRight}
+            </button>
+          </li>
+          <li>
+            <button type="button" class="ke-btn-list ke-btn-align" data-command="justifyfull" data-value="justify" title="${lang.toolbar.alignJustify}">
+              <span class="ke-list-icon">
+                ${icons.align_justify}
+              </span>
+              ${lang.toolbar.alignJustify}
+            </button>
+          </li>
+        </ul>
+      </div>`;
 
     return listDiv;
   },
