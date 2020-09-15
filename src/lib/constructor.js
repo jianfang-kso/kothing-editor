@@ -374,17 +374,23 @@ export default {
 
     /** resize bar */
     let resizingBar = null;
+    let resizinIcon = null;
     let navigation = null;
     let charWrapper = null;
     let charCounter = null;
     let poweredBy = null;
     if (options.resizingBar) {
       resizingBar = document.createElement("DIV");
-      resizingBar.className = "ke-resizing-bar kothing-editor-common";
+      resizingBar.className = "ke-resizing-bar";
+
+      /** resizinIcon */
+      resizinIcon = document.createElement("DIV");
+      resizinIcon.className = "ke-resizin-icon";
+      resizingBar.appendChild(resizinIcon);
 
       /** navigation */
       navigation = document.createElement("DIV");
-      navigation.className = "ke-navigation kothing-editor-common";
+      navigation.className = "ke-navigation";
       resizingBar.appendChild(navigation);
 
       /** char counter */
