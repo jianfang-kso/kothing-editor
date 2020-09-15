@@ -2,13 +2,13 @@
 import blockquote from "./command/blockquote";
 
 // submenu
-import align from "./submenu/align";
 import font from "./submenu/font";
 import fontSize from "./submenu/fontSize";
 import fontColor from "./submenu/fontColor";
 import hiliteColor from "./submenu/hiliteColor";
 import horizontalRule from "./submenu/horizontalRule";
 import list from "./submenu/list";
+import align from "./submenu/align";
 import table from "./submenu/table";
 import formatBlock from "./submenu/formatBlock";
 import lineHeight from "./submenu/lineHeight";
@@ -49,15 +49,15 @@ export {
   imageGallery,
 };
 export default {
-  blockquote,
-  align,
   font,
   fontSize,
   fontColor,
   hiliteColor,
   horizontalRule,
   list,
+  align,
   table,
+  blockquote,
   formatBlock,
   lineHeight,
   template,
