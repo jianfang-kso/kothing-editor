@@ -73,7 +73,11 @@
     border: 0;
 }
 
-.kothing-editor-common dl, .kothing-editor-common ul, .kothing-editor-common ol, .kothing-editor-common menu, .kothing-editor-common li {
+.kothing-editor-common dl, 
+.kothing-editor-common ul, 
+.kothing-editor-common ol, 
+.kothing-editor-common menu, 
+.kothing-editor-common li {
     list-style: none !important;
 }
 
@@ -87,16 +91,22 @@
     padding: 0;
 }
 
+/** button */
 .kothing-editor button {
-    border: 0 none;
     background-color: transparent;
     touch-action: manipulation;
     cursor: pointer;
     outline: none;
+    border: none;
+    border-radius: 0;
 }
 
-.kothing-editor input, .kothing-editor select, .kothing-editor textarea, .kothing-editor button {
+.kothing-editor input,
+.kothing-editor select, 
+.kothing-editor textarea, 
+.kothing-editor button {
     vertical-align: middle;
+    border-radius: 0;
 }
 
 .kothing-editor button span {
@@ -123,7 +133,8 @@
     -moz-backface-visibility: hidden;
 }
 /* default svg */
-.kothing-editor button > svg, .kothing-editor .ke-svg {
+.kothing-editor button > svg, 
+.kothing-editor .ke-svg {
     margin: auto;
     fill: currentColor;
     display: block;
@@ -131,7 +142,8 @@
     float: none;
 }
 /* close class icon */
-.kothing-editor .close > svg, .kothing-editor .ke-dialog-close > svg {
+.kothing-editor .close > svg, 
+.kothing-editor .ke-dialog-close > svg {
     width: 10px;
     height: 10px;
 }
@@ -180,7 +192,8 @@
 }
 
 /** --- arrow icon ---------------------------------------------------------- */
-.kothing-editor .ke-arrow, .kothing-editor .ke-arrow::after {
+.kothing-editor .ke-arrow, 
+.kothing-editor .ke-arrow::after {
     position: absolute;
     display: block;
     width: 0;
@@ -228,11 +241,6 @@
     border-top-color: #fafafa;
 }
 
-/** button */
-.kothing-editor button {
-    color: #000;
-}
-
 /** --- ke-btn button */
 .kothing-editor .ke-btn {
     display: inline-block;
@@ -243,7 +251,8 @@
     border-radius: 3px;
 }
 
-.kothing-editor .ke-btn:enabled:hover, .kothing-editor .ke-btn:enabled:focus {
+.kothing-editor .ke-btn:enabled:hover, 
+.kothing-editor .ke-btn:enabled:focus {
     background-color: #ebebeb;
     border-color: #d1d1d1;
     outline: 0 none
@@ -278,7 +287,8 @@
     border-radius: 2px
 }
 
-.kothing-editor .ke-btn-primary:hover, .kothing-editor .ke-btn-primary:focus {
+.kothing-editor .ke-btn-primary:hover, 
+.kothing-editor .ke-btn-primary:focus {
     color: #fff;
     background-color: #3295fd;
     border-color: #3295fd;
@@ -294,7 +304,9 @@
 }
 
 /** --- Input */
-.kothing-editor input, .kothing-editor select, .kothing-editor textarea {
+.kothing-editor input, 
+.kothing-editor select, 
+.kothing-editor textarea {
     color: #000;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -318,7 +330,8 @@
     outline: 0 none;
 }
 
-.kothing-editor .ke-btn:enabled.active:hover, .kothing-editor .ke-btn:enabled.active:focus {
+.kothing-editor .ke-btn:enabled.active:hover, 
+.kothing-editor .ke-btn:enabled.active:focus {
     background-color: #e5e5e5;
     border-color: #d1d1d1;
     outline: 0 none;
@@ -337,7 +350,8 @@
     outline: 0 none;
 }
 
-.kothing-editor .ke-btn:enabled.on:hover, .kothing-editor .ke-btn:enabled.on:focus {
+.kothing-editor .ke-btn:enabled.on:hover, 
+.kothing-editor .ke-btn:enabled.on:focus {
     background-color: #d1d1d1;
     border-color: #c1c1c1;
     outline: 0 none;
@@ -350,7 +364,9 @@
     box-shadow: inset 0 3px 5px #b1b1b1;
 }
 /* disabled buttons, icon blur */
-.kothing-editor .ke-btn:disabled, .kothing-editor .ke-btn-list:disabled, .kothing-editor button:disabled {
+.kothing-editor .ke-btn:disabled, 
+.kothing-editor .ke-btn-list:disabled, 
+.kothing-editor button:disabled {
     cursor: not-allowed;
     background-color: inherit;
     color: #bdbdbd;
@@ -539,7 +555,8 @@
     padding: 0 4px;
 }
 
-.kothing-editor .ke-btn-module .ke-btn-more:hover, .kothing-editor .ke-btn-module .ke-btn-more:focus {
+.kothing-editor .ke-btn-module .ke-btn-more:hover, 
+.kothing-editor .ke-btn-module .ke-btn-more:focus {
     color: #000;
     background-color: #d1d1d1;
     border-color: #c1c1c1;
@@ -704,7 +721,8 @@
     border-bottom: 1px dotted #b1b1b1;
 }
 
-.kothing-editor .ke-btn-list:hover, .kothing-editor .ke-btn-list:focus {
+.kothing-editor .ke-btn-list:hover, 
+.kothing-editor .ke-btn-list:focus {
     background-color: #e5e5e5;
     border-color: #d1d1d1;
     outline: 0 none;
@@ -760,7 +778,7 @@
 }
 
 .kothing-editor .ke-list-layer.ke-list-format ul .ke-btn-list[data-value="h2"] {
-    height: 34px;
+    height: 30px;
 }
 
 .kothing-editor .ke-list-layer.ke-list-format ul p {
@@ -834,7 +852,7 @@
 .kothing-editor .ke-selector-table {
     display: none;
     position: absolute;
-    top: 34px;
+    top: 30px;
     left: 1px;
     z-index: 5;
     padding: 5px 0;
@@ -891,9 +909,9 @@
 .kothing-editor .ke-list-layer .ke-selector-color {
     display: flex;
     width: max-content;
-    max-width: 270px;
+    max-width: 282px;
     height: auto;
-    padding: 0;
+    padding: 0 6px;
     margin: auto;
 }
 
@@ -912,7 +930,6 @@
 
 .kothing-editor .ke-list-layer .ke-selector-color .ke-color-pallet button {
     display: block;
-    cursor: default;
     width: 30px;
     height: 30px;
     text-indent: -9999px;
@@ -939,16 +956,15 @@
     height: 33px;
     color: #555;
     font-size: 12px;
-    margin: 1px 0 1px 0;
-    padding: 0;
-    border-radius: 0.25rem;
+    padding: 0 4px;
+    border-radius: 3px;
     border: 1px solid #ccc;
 }
 
 .kothing-editor .ke-submenu-form-group button {
     float: right;
-    width: 34px;
-    height: 34px;
+    width: 30px;
+    height: 30px;
     margin: 0 0 0 4px !important;
 }
 
@@ -963,14 +979,8 @@
 /** submenu layer - color input */
 .kothing-editor .ke-submenu-form-group .ke-color-input {
     width: 72px;
-    text-transform: uppercase;
     border: none;
-    border-bottom: 2px solid #b1b1b1;
     outline: none;
-}
-
-.kothing-editor .ke-submenu-form-group .ke-color-input:focus {
-    border-bottom: 3px solid #b1b1b1;
 }
 
 /** --- editor area */
@@ -1382,7 +1392,7 @@
 .kothing-editor .ke-dialog .ke-dialog-inner .ke-dialog-form .ke-input-select {
     display: inline-block;
     width: auto;
-    height: 34px;
+    height: 30px;
     font-size: 14px;
     text-align: center;
     line-height: 1.42857143;
@@ -1391,7 +1401,7 @@
 .kothing-editor .ke-dialog .ke-dialog-inner .ke-dialog-form .ke-input-control {
     display: inline-block;
     width: 70px;
-    height: 34px;
+    height: 30px;
     font-size: 14px;
     text-align: center;
     line-height: 1.42857143;
@@ -1560,7 +1570,7 @@
 
 .kothing-editor .ke-controller .ke-btn-group button {
     position: relative;
-    min-height: 34px;
+    min-height: 30px;
     height: auto;
     border: none;
     border-radius: 4px;
@@ -1577,7 +1587,8 @@
     touch-action: manipulation;
 }
 
-.kothing-editor .ke-controller .ke-btn-group button:hover:enabled, .kothing-editor .ke-controller .ke-btn-group button:focus:enabled {
+.kothing-editor .ke-controller .ke-btn-group button:hover:enabled, 
+.kothing-editor .ke-controller .ke-btn-group button:focus:enabled {
     background-color: #e5e5e5;
     border-color: #d1d1d1;
     outline: 0 none;
@@ -1602,7 +1613,8 @@
     outline: 0 none;
 }
 
-.kothing-editor .ke-controller .ke-btn-group button:enabled.active:hover, .kothing-editor .ke-controller .ke-btn-group button:enabled.active:focus {
+.kothing-editor .ke-controller .ke-btn-group button:enabled.active:hover, 
+.kothing-editor .ke-controller .ke-btn-group button:enabled.active:focus {
     background-color: #e5e5e5;
     border-color: #d1d1d1;
     outline: 0 none;
@@ -1621,7 +1633,8 @@
     outline: 0 none;
 }
 
-.kothing-editor .ke-controller .ke-btn-group button:enabled.on:hover, .kothing-editor .ke-controller .ke-btn-group button:enabled.on:focus {
+.kothing-editor .ke-controller .ke-btn-group button:enabled.on:hover, 
+.kothing-editor .ke-controller .ke-btn-group button:enabled.on:focus {
     background-color: #d1d1d1;
     border-color: #c1c1c1;
     outline: 0 none;
@@ -1765,7 +1778,8 @@
     line-height: 1.42857143;
 }
 
-.kothing-editor .ke-controller-link::before, .kothing-editor .ke-controller-link::after {
+.kothing-editor .ke-controller-link::before, 
+.kothing-editor .ke-controller-link::after {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
@@ -1798,7 +1812,9 @@
     z-index: 2147483647;
 }
 
-.kothing-editor .ke-file-browser label, .kothing-editor .ke-file-browser input, .kothing-editor .ke-file-browser button {
+.kothing-editor .ke-file-browser label,
+.kothing-editor .ke-file-browser input, 
+.kothing-editor .ke-file-browser button {
     font-size: 14px;
     line-height: 1.5;
     color: #111;
@@ -2074,7 +2090,7 @@
     font-size: 0.9em;
     margin: 0;
     padding: 4px 6px;
-    border-radius: 2px;
+    border-radius: 3px;
     background-color: #333;
     color: #fff;
     text-align: center;
