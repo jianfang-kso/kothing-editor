@@ -1049,6 +1049,7 @@
 
 /** --- resizing bar */
 .kothing-editor .ke-resizing-bar {
+    position: relative;
     display: flex;
     width: auto;
     height: auto;
@@ -1058,6 +1059,17 @@
     border-radius: 0 0 6px 6px;
     background-color: #fafafa;
     cursor: ns-resize;
+    align-items: center
+}
+
+.kothing-editor .ke-resizing-bar .ke-resizin-icon {
+    height: 4px;
+    width: 20px;
+    top: calc(50% - 2px);
+    left: calc(50% - 10px);
+    position: absolute;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .kothing-editor .ke-resizing-bar .ke-powered-by {
@@ -1100,6 +1112,7 @@
     font-size: 10px;
     line-height: 1.5;
     background: transparent;
+    cursor: row-resize;
 }
 
 /** resizing bar - charCounter */
