@@ -114,12 +114,17 @@ KothingEditor.create('my-editor', {
 ### 2. Load all plugins
 
 ```javascript
-import 'kothing-editor/css/kothing-editor.min.css'
-import KothingEditor from 'kothing-editor'
-import plugins from 'kothing-editor/lib/plugins'
+import KothingEditor from 'kothing-editor';
+import plugins from 'kothing-editor/lib/plugins';
+import 'kothing-editor/css/kothing-editor.min.css';
+import katex from 'katex';
+import 'katex/dist/katex.min.css'
 
 KothingEditor.create('document', {
+    width: '100%',
+    height: '200px',
     plugins: plugins,
+    katex: katex,
     toolBarItem: [
       ['undo', 'redo'],
       ['font', 'fontSize', 'formatBlock'],
