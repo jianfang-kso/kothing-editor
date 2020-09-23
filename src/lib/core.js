@@ -6791,7 +6791,7 @@ export default function (
 
       /**  Displays the current node structure to resizingBar */
       if (options.showPathLabel) {
-        context.element.navigation.textContent = core._variable.currentNodes.join(
+        context.element.navigation.textContent = core._variable.currentNodes.map(item => item.toLowerCase()).join(
           " > "
         );
       }
