@@ -13,7 +13,7 @@ const editor = KothingEditor.create(document.getElementById('my-editor'), {
   // All of the plugins are loaded in the "window.KothingEditor" object in kothing-editor.min.js file
   // Insert options
   width: '100%',
-  height: '200px',
+  height: 'auto',
   plugins: plugins,
   katex: katex,
   lang: lang.en,
