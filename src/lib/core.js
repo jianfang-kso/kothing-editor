@@ -6718,7 +6718,7 @@ export default function (
         if (element.nodeType !== 1 || util.isBreak(element)) {
           continue;
         }
-        nodeName = element.nodeName.toLowerCase();
+        nodeName = element.nodeName.toUpperCase();
         currentNodes.push(nodeName);
 
         /* Active plugins */
