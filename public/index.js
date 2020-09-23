@@ -25,6 +25,7 @@ const editor = KothingEditor.create(document.getElementById('my-editor'), {
     ['link', 'table', 'image', 'audio', 'video'],
     ['lineHeight', 'paragraphStyle', 'textStyle'],
     ['showBlocks', 'codeView'],
+    ['math'],
     ['preview', 'print', 'fullScreen'],
     ['save', 'template'],
     ['removeFormat']
