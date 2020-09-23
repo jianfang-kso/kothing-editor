@@ -286,6 +286,33 @@ KothingEditor.create('my-editor', {
 });
 ```
 
+## Use KaTeX (math plugin)
+```html
+<!-- https://github.com/KaTeX/KaTeX -->
+<!-- KaTeX (^0.11.1) -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+```
+```javascript
+import 'kothing-editor/dist/css/suneditor.min.css'
+import KothingEditor from 'kothing-editor'
+// Import katex
+import katex from 'katex'
+import 'katex/dist/katex.min.css'
+
+KothingEditor.create('sample', {
+    katex: katex // window.katex,
+    // Set options
+    // katex: {
+    //     src: katex,
+    //     options: {...}
+    // }
+    buttonList: [
+        ['math']
+    ]
+});
+```
+
 ## Options
 
 ```javascript
