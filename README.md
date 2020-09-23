@@ -123,7 +123,7 @@ import 'katex/dist/katex.min.css'
 
 KothingEditor.create('document', {
     width: '100%',
-    height: '200px',
+    height: 'auto',
     lang: lang.en,
     plugins: plugins,
     katex: katex,
