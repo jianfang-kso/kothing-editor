@@ -121,19 +121,30 @@ import plugins from 'kothing-editor/lib/plugins'
 KothingEditor.create('document', {
     plugins: plugins,
     toolBarItem: [
-        ['undo', 'redo'],
-        ['font', 'fontSize', 'formatBlock'],
-        ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
-        ['removeFormat'],
-        '/', // Line break
-        ['fontColor', 'hiliteColor'],
-        ['outdent', 'indent'],
-        ['align', 'horizontalRule', 'list', 'table'],
-        ['link', 'image', 'video'],
-        ['fullScreen', 'showBlocks', 'codeView'],
-        ['preview', 'print'],
-        ['save', 'template']
-    ]
+      ['undo', 'redo'],
+      ['font', 'fontSize', 'formatBlock'],
+      ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'fontColor', 'hiliteColor'],
+      ['outdent', 'indent', 'align', 'list', 'horizontalRule'],
+      ['link', 'table', 'image', 'audio', 'video'],
+      '/', // Line break
+      ['lineHeight', 'paragraphStyle', 'textStyle'],
+      ['showBlocks', 'codeView'],
+      ['math'],
+      ['preview', 'print', 'fullScreen'],
+      ['save', 'template'],
+      ['removeFormat']
+    ],
+    templates: [
+      {
+        name: 'Template-1',
+        html: '<p>HTML source1</p>'
+      },
+      {
+        name: 'Template-2',
+        html: '<p>HTML source2</p>'
+      },
+    ],
+    charCounter: true,
 })
 
 // You can also load what you want
