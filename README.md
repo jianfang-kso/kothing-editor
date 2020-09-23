@@ -115,6 +115,7 @@ KothingEditor.create('my-editor', {
 
 ```javascript
 import KothingEditor from 'kothing-editor';
+import lang from 'kothing-editor/lib/lang';
 import plugins from 'kothing-editor/lib/plugins';
 import 'kothing-editor/css/kothing-editor.min.css';
 import katex from 'katex';
@@ -123,6 +124,7 @@ import 'katex/dist/katex.min.css'
 KothingEditor.create('document', {
     width: '100%',
     height: '200px',
+    lang: lang.en,
     plugins: plugins,
     katex: katex,
     toolBarItem: [
