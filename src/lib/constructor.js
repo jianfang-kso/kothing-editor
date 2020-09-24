@@ -396,6 +396,12 @@ export default {
 
         resizingBar.appendChild(charWrapper);
       }
+
+      /** poweredBy */
+      poweredBy = document.createElement("DIV");
+      poweredBy.className = "ke-powered-by";
+      poweredBy.innerHTML = `<a href="https://github.com/kothing/kothing-editor" target="_blank" title="Kothing-Editor">Powered By Kothing</a>`;
+      resizingBar.appendChild(poweredBy);
     }
 
     let placeholder = null;
@@ -404,12 +410,6 @@ export default {
       placeholder.className = "ke-placeholder";
       placeholder.innerText = options.placeholder;
     }
-
-    /** poweredBy */
-    poweredBy = document.createElement("DIV");
-    poweredBy.className = "ke-powered-by";
-    poweredBy.innerHTML = `<a href="https://github.com/kothing/kothing-editor" target="_blank" title="Kothing-Editor">Powered By Kothing</a>`;
-    resizingBar.appendChild(poweredBy);
 
     return {
       bottomBar: {
@@ -1267,7 +1267,7 @@ export default {
         _buttonTray.appendChild(moduleElement.div);
         vertical = true;
       } else if (/^\/$/.test(buttonGroup)) {
-      /** line break  */
+        /** line break  */
         const enterDiv = doc.createElement("DIV");
         enterDiv.className = "ke-btn-module-enter";
         _buttonTray.appendChild(enterDiv);
