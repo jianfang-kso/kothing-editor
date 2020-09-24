@@ -1,8 +1,3 @@
-/* eslint-disable no-use-before-define */
-/* eslint-disable no-case-declarations */
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-labels */
-/* eslint-disable no-unsafe-finally */
 /*
  * Rich Text Editor
  *
@@ -95,7 +90,7 @@ export default function (
     history: null,
 
     /**
-     * @description Elements and user options parameters of the kothingEditor
+     * @description Elements and user options parameters of the KothingEditor
      */
     context: context,
 
@@ -519,9 +514,8 @@ export default function (
         }
         if (!this.initPlugins[moduleName]) {
           this.initPlugins[moduleName] = true;
-          if (typeof this.plugins[moduleName].add === "function") {
+          if (typeof this.plugins[moduleName].add === "function")
             this.plugins[moduleName].add(this);
-          }
         }
       }
     },
@@ -548,17 +542,13 @@ export default function (
      * @param {Element} element Submenu's button element to call
      */
     submenuOn: function (element) {
-      if (this._bindedSubmenuOff) {
-        this._bindedSubmenuOff();
-      }
-      if (this._bindControllersOff) {
-        this.controllersOff();
-      }
+      if (this._bindedSubmenuOff) this._bindedSubmenuOff();
+      if (this._bindControllersOff) this.controllersOff();
 
-      const submenuName = (this._submenuName = element.getAttribute(
-        "data-command"
-      ));
-      const menu = (this.submenu = this._menuTray[submenuName]);
+      const submenuName = element.getAttribute("data-command");
+      this._submenuName = element.getAttribute("data-command");
+      const menu = this._menuTray[submenuName];
+      this.submenu = this._menuTray[submenuName];
       this.submenuActiveButton = element;
       this._setMenuPosition(element, menu);
 
@@ -595,14 +585,12 @@ export default function (
      * @param {Element} element Container's button element to call
      */
     containerOn: function (element) {
-      if (this._bindedContainerOff) {
-        this._bindedContainerOff();
-      }
+      if (this._bindedContainerOff) this._bindedContainerOff();
 
-      const containerName = (this._containerName = element.getAttribute(
-        "data-command"
-      ));
-      const menu = (this.container = this._menuTray[containerName]);
+      const containerName = element.getAttribute("data-command");
+      this._containerName = element.getAttribute("data-command");
+      const menu = this._menuTray[containerName];
+      this.container = this._menuTray[containerName];
       this.containerActiveButton = element;
       this._setMenuPosition(element, menu);
 
@@ -652,11 +640,8 @@ export default function (
       const menuW = menu.offsetWidth;
       const l = element.parentElement.offsetLeft + 3;
       const overLeft = toolbarW <= menuW ? 0 : toolbarW - (l + menuW);
-      if (overLeft < 0) {
-        menu.style.left = l + overLeft + "px";
-      } else {
-        menu.style.left = l + "px";
-      }
+      if (overLeft < 0) menu.style.left = l + overLeft + "px";
+      else menu.style.left = l + "px";
 
       // get element top
       let t = 0;
@@ -675,10 +660,10 @@ export default function (
 
       // set menu position
       const toolbarTop = event._getEditorOffsets(context.element.toolbar).top;
-      const menuHeight = menu.offsetHeight;
+      let menuHeight = menu.offsetHeight;
       let el = context.element.topArea;
       let scrollTop = 0;
-      while (el) {
+      while (!!el) {
         scrollTop += el.scrollTop;
         el = el.parentElement;
       }
@@ -712,16 +697,12 @@ export default function (
      * @param {*} arguments controller elements, functions..
      */
     controllersOn: function () {
-      if (this._bindControllersOff) {
-        this._bindControllersOff();
-      }
+      if (this._bindControllersOff) this._bindControllersOff();
       this.controllerArray = [];
 
       for (let i = 0, arg; i < arguments.length; i++) {
         arg = arguments[i];
-        if (!arg) {
-          continue;
-        }
+        if (!arg) continue;
 
         if (typeof arg === "string") {
           this.currentControllerName = arg;
@@ -736,9 +717,7 @@ export default function (
           this.currentFileComponentInfo = this.getFileComponent(arg);
           continue;
         }
-        if (arg.style) {
-          arg.style.display = "block";
-        }
+        if (arg.style) arg.style.display = "block";
         this.controllerArray.push(arg);
       }
 
@@ -747,13 +726,12 @@ export default function (
       this.addDocEvent("keydown", this._bindControllersOff, false);
       this._antiBlur = true;
 
-      if (typeof functions.showController === "function") {
+      if (typeof functions.showController === "function")
         functions.showController(
           this.currentControllerName,
           this.controllerArray,
           this
         );
-      }
     },
 
     /**
@@ -788,11 +766,9 @@ export default function (
       const len = this.controllerArray.length;
       if (len > 0) {
         for (let i = 0; i < len; i++) {
-          if (typeof this.controllerArray[i] === "function") {
+          if (typeof this.controllerArray[i] === "function")
             this.controllerArray[i]();
-          } else {
-            this.controllerArray[i].style.display = "none";
-          }
+          else this.controllerArray[i].style.display = "none";
         }
 
         this.controllerArray = [];
@@ -847,9 +823,7 @@ export default function (
      * @description Focus to wysiwyg area
      */
     focus: function () {
-      if (context.element.wysiwygFrame.style.display === "none") {
-        return;
-      }
+      if (context.element.wysiwygFrame.style.display === "none") return;
 
       if (options.iframe) {
         this.nativeFocus();
@@ -880,9 +854,7 @@ export default function (
       }
 
       event._applyTagEffects();
-      if (this._isBalloon) {
-        event._toggleToolbarBalloon();
-      }
+      if (this._isBalloon) event._toggleToolbarBalloon();
     },
 
     /**
@@ -891,9 +863,7 @@ export default function (
      * @param {Element|null} focusEl Focus element
      */
     focusEdge: function (focusEl) {
-      if (!focusEl) {
-        focusEl = context.element.wysiwyg.lastElementChild;
-      }
+      if (!focusEl) focusEl = context.element.wysiwyg.lastElementChild;
 
       const fileComponentInfo = this.getFileComponent(focusEl);
       if (fileComponentInfo) {
@@ -909,16 +879,14 @@ export default function (
           },
           true
         );
-        if (!focusEl) {
-          this.nativeFocus();
-        } else {
+        if (!focusEl) this.nativeFocus();
+        else
           this.setRange(
             focusEl,
             focusEl.textContent.length,
             focusEl,
             focusEl.textContent.length
           );
-        }
       } else {
         this.focus();
       }
@@ -933,15 +901,11 @@ export default function (
      * @returns {Object} Range object.
      */
     setRange: function (startCon, startOff, endCon, endOff) {
-      if (!startCon || !endCon) {
-        return;
-      }
-      if (startOff > startCon.textContent.length) {
+      if (!startCon || !endCon) return;
+      if (startOff > startCon.textContent.length)
         startOff = startCon.textContent.length;
-      }
-      if (endOff > endCon.textContent.length) {
+      if (endOff > endCon.textContent.length)
         endOff = endCon.textContent.length;
-      }
 
       const range = this._wd.createRange();
 
@@ -962,9 +926,7 @@ export default function (
 
       selection.addRange(range);
       this._editorRange();
-      if (options.iframe) {
-        this.nativeFocus();
-      }
+      if (options.iframe) this.nativeFocus();
 
       return range;
     },
@@ -979,10 +941,8 @@ export default function (
 
       const commandMap = this.commandMap;
       const activePlugins = this.activePlugins;
-      for (const key in commandMap) {
-        if (!util.hasOwn(commandMap, key)) {
-          continue;
-        }
+      for (let key in commandMap) {
+        if (!util.hasOwn(commandMap, key)) continue;
         if (activePlugins.indexOf(key) > -1) {
           plugins[key].active.call(this, null);
         } else if (commandMap.OUTDENT && /^OUTDENT$/i.test(key)) {
@@ -1005,9 +965,8 @@ export default function (
       if (
         range.collapsed === selection.isCollapsed ||
         !context.element.wysiwyg.contains(selection.focusNode)
-      ) {
+      )
         return range;
-      }
 
       if (selection.rangeCount > 0) {
         this._variable._range = selection.getRangeAt(0);
@@ -1020,7 +979,11 @@ export default function (
         const compareValue = util.compareElements(sc, ec);
         const rightDir =
           compareValue.ancestor &&
-          (compareValue.result === 0 ? so <= eo : compareValue.result > 1);
+          (compareValue.result === 0
+            ? so <= eo
+            : compareValue.result > 1
+            ? true
+            : false);
         return this.setRange(
           rightDir ? sc : ec,
           rightDir ? so : eo,
@@ -1063,9 +1026,7 @@ export default function (
      * @returns {Node}
      */
     getSelectionNode: function () {
-      if (util.isWysiwygDiv(this._variable._selectionNode)) {
-        this._editorRange();
-      }
+      if (util.isWysiwygDiv(this._variable._selectionNode)) this._editorRange();
       if (!this._variable._selectionNode) {
         const selectionNode = util.getChildElement(
           context.element.wysiwyg.firstChild,
@@ -1090,9 +1051,7 @@ export default function (
      */
     _editorRange: function () {
       const selection = this.getSelection();
-      if (!selection) {
-        return null;
-      }
+      if (!selection) return null;
       let range = null;
       let selectionNode = null;
 
@@ -1160,9 +1119,7 @@ export default function (
      */
     _resetRangeToTextNode: function () {
       const range = this.getRange();
-      if (this._selectionVoid(range)) {
-        return false;
-      }
+      if (this._selectionVoid(range)) return false;
 
       let startCon = range.startContainer;
       let startOff = range.startOffset;
@@ -1240,9 +1197,7 @@ export default function (
         if (!onlyBreak) {
           while (tempCon && !util.isBreak(tempCon) && tempCon.nodeType === 1) {
             tempChild = tempCon.childNodes;
-            if (tempChild.length === 0) {
-              break;
-            }
+            if (tempChild.length === 0) break;
             tempCon =
               tempChild[tempOffset > 0 ? tempOffset - 1 : tempOffset] ||
               !/FIGURE/i.test(tempChild[0].nodeName)
@@ -1288,16 +1243,12 @@ export default function (
      * @returns {Array}
      */
     getSelectedElements: function (validation) {
-      if (!this._resetRangeToTextNode()) {
-        return [];
-      }
+      if (!this._resetRangeToTextNode()) return [];
       let range = this.getRange();
 
       if (util.isWysiwygDiv(range.startContainer)) {
         const children = context.element.wysiwyg.children;
-        if (children.length === 0) {
-          return [];
-        }
+        if (children.length === 0) return [];
 
         this.setRange(
           children[0],
@@ -1320,15 +1271,12 @@ export default function (
       if (
         !util.isWysiwygDiv(commonCon) &&
         !util.isRangeFormatElement(commonCon)
-      ) {
+      )
         lineNodes.unshift(util.getFormatElement(commonCon, null));
-      }
-      if (startCon === endCon || lineNodes.length === 1) {
-        return lineNodes;
-      }
+      if (startCon === endCon || lineNodes.length === 1) return lineNodes;
 
-      const startLine = util.getFormatElement(startCon, null);
-      const endLine = util.getFormatElement(endCon, null);
+      let startLine = util.getFormatElement(startCon, null);
+      let endLine = util.getFormatElement(endCon, null);
       let startIdx = null;
       let endIdx = null;
 
@@ -1341,12 +1289,10 @@ export default function (
       if (
         util.isTable(startRangeEl) &&
         util.isListCell(startRangeEl.parentNode)
-      ) {
+      )
         startRangeEl = startRangeEl.parentNode;
-      }
-      if (util.isTable(endRangeEl) && util.isListCell(endRangeEl.parentNode)) {
+      if (util.isTable(endRangeEl) && util.isListCell(endRangeEl.parentNode))
         endRangeEl = endRangeEl.parentNode;
-      }
 
       const sameRange = startRangeEl === endRangeEl;
       for (let i = 0, len = lineNodes.length, line; i < len; i++) {
@@ -1363,12 +1309,8 @@ export default function (
         }
       }
 
-      if (startIdx === null) {
-        startIdx = 0;
-      }
-      if (endIdx === null) {
-        endIdx = lineNodes.length - 1;
-      }
+      if (startIdx === null) startIdx = 0;
+      if (endIdx === null) endIdx = lineNodes.length - 1;
 
       return lineNodes.slice(startIdx, endIdx + 1);
     },
@@ -1473,11 +1415,9 @@ export default function (
         util.copyTagAttributes(oFormat, formatNode || currentFormatEl);
       }
 
-      if (util.isCell(element)) {
+      if (util.isCell(element))
         element.insertBefore(oFormat, element.nextElementSibling);
-      } else {
-        element.parentNode.insertBefore(oFormat, element.nextElementSibling);
-      }
+      else element.parentNode.insertBefore(oFormat, element.nextElementSibling);
 
       return oFormat;
     },
@@ -1504,7 +1444,7 @@ export default function (
       const r = this.removeNode();
       this.getRange_addLine(this.getRange());
       let oNode = null;
-      const selectionNode = this.getSelectionNode();
+      let selectionNode = this.getSelectionNode();
       let formatEl = util.getFormatElement(selectionNode, null);
 
       if (util.isListCell(formatEl)) {
@@ -1513,9 +1453,8 @@ export default function (
           selectionNode === formatEl ? null : r.container.nextSibling,
           false
         );
-        if (!element.nextSibling) {
+        if (!element.nextSibling)
           element.parentNode.appendChild(util.createElement("BR"));
-        }
       } else {
         if (
           this.getRange().collapsed &&
@@ -1532,14 +1471,11 @@ export default function (
             r.offset,
             !depthFormat ? 0 : util.getElementDepth(depthFormat) + 1
           );
-          if (oNode) {
-            formatEl = oNode.previousSibling;
-          }
+          if (oNode) formatEl = oNode.previousSibling;
         }
         this.insertNode(element, formatEl, false);
-        if (formatEl && util.onlyZeroWidthSpace(formatEl)) {
+        if (formatEl && util.onlyZeroWidthSpace(formatEl))
           util.removeItem(formatEl);
-        }
       }
 
       if (!notSelect) {
@@ -1556,9 +1492,7 @@ export default function (
       }
 
       // history stack
-      if (!notHistoryPush) {
-        this.history.push(1);
-      }
+      if (!notHistoryPush) this.history.push(1);
 
       return oNode || element;
     },
@@ -1570,9 +1504,7 @@ export default function (
      * @returns {Object|null}
      */
     getFileComponent: function (element) {
-      if (!this._fileManager.queryString || !element) {
-        return null;
-      }
+      if (!this._fileManager.queryString || !element) return null;
 
       let target, pluginName;
       if (
@@ -1609,22 +1541,17 @@ export default function (
      * @param {String} pluginName Plugin name (image, video)
      */
     selectComponent: function (element, pluginName) {
-      if (!this.hasFocus) {
-        this.focus();
-      }
+      if (!this.hasFocus) this.focus();
       const plugin = this.plugins[pluginName];
-      if (!plugin) {
-        return;
-      }
+      if (!plugin) return;
       _w.setTimeout(
         function () {
-          if (typeof plugin.select === "function") {
+          if (typeof plugin.select === "function")
             this.callPlugin(
               pluginName,
               plugin.select.bind(this, element),
               null
             );
-          }
           this._setComponentLineBreaker(element);
         }.bind(this)
       );
@@ -1728,9 +1655,7 @@ export default function (
             r.offset,
             !depthFormat ? 0 : util.getElementDepth(depthFormat) + 1
           );
-          if (afterNode) {
-            afterNode = afterNode.previousSibling;
-          }
+          if (afterNode) afterNode = afterNode.previousSibling;
         }
       }
 
@@ -1749,8 +1674,8 @@ export default function (
       const endCon = formatRange
         ? commonCon.childNodes[endOff]
         : range.endContainer;
-      let parentNode;
-      let originAfter = null;
+      let parentNode,
+        originAfter = null;
 
       if (!afterNode) {
         parentNode = startCon;
@@ -1761,14 +1686,12 @@ export default function (
         /** No Select range node */
         if (range.collapsed) {
           if (commonCon.nodeType === 3) {
-            if (commonCon.textContent.length > endOff) {
+            if (commonCon.textContent.length > endOff)
               afterNode = commonCon.splitText(endOff);
-            } else {
-              afterNode = commonCon.nextSibling;
-            }
+            else afterNode = commonCon.nextSibling;
           } else {
             if (!util.isBreak(parentNode)) {
-              const c = parentNode.childNodes[startOff];
+              let c = parentNode.childNodes[startOff];
               const focusNode =
                 c &&
                 c.nodeType === 3 &&
@@ -1799,16 +1722,13 @@ export default function (
           const isSameContainer = startCon === endCon;
 
           if (isSameContainer) {
-            if (this.isEdgePoint(endCon, endOff)) {
+            if (this.isEdgePoint(endCon, endOff))
               afterNode = endCon.nextSibling;
-            } else {
-              afterNode = endCon.splitText(endOff);
-            }
+            else afterNode = endCon.splitText(endOff);
 
             let removeNode = startCon;
-            if (!this.isEdgePoint(startCon, startOff)) {
+            if (!this.isEdgePoint(startCon, startOff))
               removeNode = startCon.splitText(startOff);
-            }
 
             parentNode.removeChild(removeNode);
             if (parentNode.childNodes.length === 0 && isFormats) {
@@ -1853,8 +1773,9 @@ export default function (
             }
           }
         }
-      } else {
-        // has afterNode
+      }
+      // has afterNode
+      else {
         parentNode = afterNode.parentNode;
         afterNode = afterNode.nextSibling;
         originAfter = true;
@@ -1889,9 +1810,8 @@ export default function (
             afterNode = rangeCon ? null : container.nextSibling;
           }
 
-          if (oldParent.childNodes.length === 0 && parentNode !== oldParent) {
+          if (oldParent.childNodes.length === 0 && parentNode !== oldParent)
             util.removeItem(oldParent);
-          }
         }
 
         if (
@@ -2001,9 +1921,7 @@ export default function (
             util.isRangeFormatElement(lastONode)
           ) {
             this._setIntoFreeFormat(lastONode);
-            if (!oNode.parentNode) {
-              break;
-            }
+            if (!oNode.parentNode) break;
             oNodeChildren = oNode.childNodes;
             continue;
           }
@@ -2011,9 +1929,7 @@ export default function (
           parentNode.insertBefore(lastONode, oNode);
         }
 
-        if (oNode.childNodes.length === 0) {
-          util.removeItem(oNode);
-        }
+        if (oNode.childNodes.length === 0) util.removeItem(oNode);
         oNode = util.createElement("BR");
         parentNode.insertBefore(oNode, lastONode.nextSibling);
       }
@@ -2027,15 +1943,14 @@ export default function (
      * @returns {Object}
      */
     removeNode: function () {
-      if (!this._resetRangeToTextNode()) {
+      if (!this._resetRangeToTextNode())
         console.warn(
           '[KothingEditor.core.removeNode.exception] An exception occurred while resetting the "Range" object.'
         );
-      }
 
       const range = this.getRange();
-      let container;
-      let offset = 0;
+      let container,
+        offset = 0;
       let startCon = range.startContainer;
       let endCon = range.endContainer;
       const startOff = range.startOffset;
@@ -2086,9 +2001,11 @@ export default function (
             };
           }
           childNodes.push(commonCon);
-          startCon = endCon = commonCon;
+          startCon = commonCon;
+          endCon = commonCon;
         } else {
-          startCon = endCon = childNodes[0];
+          startCon = childNodes[0];
+          endCon = childNodes[0];
           if (util.isBreak(startCon) || util.onlyZeroWidthSpace(startCon)) {
             return {
               container: startCon,
@@ -2097,7 +2014,8 @@ export default function (
           }
         }
 
-        startIndex = endIndex = 0;
+        startIndex = 0;
+        endIndex = 0;
       }
 
       function remove(item) {
@@ -2151,9 +2069,7 @@ export default function (
             remove(startCon);
           }
 
-          if (item === endCon) {
-            break;
-          }
+          if (item === endCon) break;
           continue;
         }
 
@@ -2189,18 +2105,14 @@ export default function (
         const rc = util.removeItemAllParents(
           container,
           function (current) {
-            if (this.isComponent(current)) {
-              return false;
-            }
+            if (this.isComponent(current)) return false;
             const text = current.textContent;
             return text.length === 0 || /^(\n|\u200B)+$/.test(text);
           }.bind(util),
           null
         );
 
-        if (rc) {
-          container = rc.sc || rc.ec || context.element.wysiwyg;
-        }
+        if (rc) container = rc.sc || rc.ec || context.element.wysiwyg;
       }
 
       // set range
@@ -2222,9 +2134,7 @@ export default function (
     applyRangeFormatElement: function (rangeElement) {
       this.getRange_addLine(this.getRange());
       const rangeLines = this.getSelectedElementsAndComponents(false);
-      if (!rangeLines || rangeLines.length === 0) {
-        return;
-      }
+      if (!rangeLines || rangeLines.length === 0) return;
 
       linesLoop: for (
         let i = 0, len = rangeLines.length, line, nested, fEl, lEl, f, l;
@@ -2232,9 +2142,7 @@ export default function (
         i++
       ) {
         line = rangeLines[i];
-        if (!util.isListCell(line)) {
-          continue;
-        }
+        if (!util.isListCell(line)) continue;
 
         nested = line.lastElementChild;
         if (
@@ -2265,7 +2173,7 @@ export default function (
         }
       }
 
-      const last = rangeLines[rangeLines.length - 1];
+      let last = rangeLines[rangeLines.length - 1];
       let standTag, beforeTag, pElement;
 
       if (util.isRangeFormatElement(last) || util.isFormatElement(last)) {
@@ -2293,9 +2201,8 @@ export default function (
           if (
             origin &&
             util.getElementDepth(parent) === util.getElementDepth(origin)
-          ) {
+          )
             return before;
-          }
           cc = util.removeItemAllParents(origin, null, parent);
         }
 
@@ -2317,9 +2224,7 @@ export default function (
       ) {
         line = rangeLines[i];
         originParent = line.parentNode;
-        if (!originParent || rangeElement.contains(originParent)) {
-          continue;
-        }
+        if (!originParent || rangeElement.contains(originParent)) continue;
 
         depth = util.getElementDepth(line);
 
@@ -2346,8 +2251,8 @@ export default function (
               nextList = nextLine.parentNode.cloneNode(false);
             }
 
-            let list = originParent.parentNode;
-            let p;
+            let list = originParent.parentNode,
+              p;
             while (util.isList(list)) {
               p = util.createElement(list.nodeName);
               p.appendChild(listParent);
@@ -2367,34 +2272,26 @@ export default function (
               parentDepth = depth;
               pElement = edge.cc;
               beforeTag = removeItems(pElement, originParent, edge.ec);
-              if (beforeTag) {
-                pElement = beforeTag.parentNode;
-              }
+              if (beforeTag) pElement = beforeTag.parentNode;
             } else if (pElement === edge.cc) {
               beforeTag = edge.ec;
             }
 
             if (pElement !== edge.cc) {
               before = removeItems(pElement, edge.cc, before);
-              if (before !== undefined) {
-                beforeTag = before;
-              } else {
-                beforeTag = edge.cc;
-              }
+              if (before !== undefined) beforeTag = before;
+              else beforeTag = edge.cc;
             }
 
             for (let c = 0, cLen = edge.removeArray.length; c < cLen; c++) {
               listParent.appendChild(edge.removeArray[c]);
             }
 
-            if (!nested) {
-              rangeElement.appendChild(listParent);
-            }
-            if (nextList) {
+            if (!nested) rangeElement.appendChild(listParent);
+            if (nextList)
               edge.removeArray[edge.removeArray.length - 1].appendChild(
                 nextList
               );
-            }
             listParent = null;
             nested = false;
           }
@@ -2409,9 +2306,7 @@ export default function (
 
           if (pElement !== originParent) {
             before = removeItems(pElement, originParent);
-            if (before !== undefined) {
-              beforeTag = before;
-            }
+            if (before !== undefined) beforeTag = before;
           }
         }
       }
@@ -2506,9 +2401,8 @@ export default function (
       let moveComplete = false;
 
       function appendNode(parent, insNode, sibling, originNode) {
-        if (util.onlyZeroWidthSpace(insNode)) {
+        if (util.onlyZeroWidthSpace(insNode))
           insNode.innerHTML = util.zeroWidthSpace;
-        }
 
         if (insNode.nodeType === 3) {
           parent.insertBefore(insNode, sibling);
@@ -2528,16 +2422,12 @@ export default function (
             !util.isListCell(format)
           ) {
             if (format.childNodes.length > 0) {
-              if (!first) {
-                first = format;
-              }
+              if (!first) first = format;
               parent.insertBefore(format, sibling);
               format = insNode.cloneNode(false);
             }
             parent.insertBefore(c, sibling);
-            if (!first) {
-              first = c;
-            }
+            if (!first) first = c;
           } else {
             format.appendChild(c);
           }
@@ -2576,9 +2466,7 @@ export default function (
             parent.insertBefore(format, sibling);
           }
 
-          if (!first) {
-            first = format;
-          }
+          if (!first) first = format;
         }
 
         return first;
@@ -2591,9 +2479,7 @@ export default function (
         i++
       ) {
         insNode = children[i];
-        if (insNode.nodeType === 3 && util.isList(rangeEl)) {
-          continue;
-        }
+        if (insNode.nodeType === 3 && util.isList(rangeEl)) continue;
 
         moveComplete = false;
         if (remove && i === 0) {
@@ -2608,18 +2494,12 @@ export default function (
           }
         }
 
-        if (selectedFormats) {
-          lineIndex = selectedFormats.indexOf(insNode);
-        }
+        if (selectedFormats) lineIndex = selectedFormats.indexOf(insNode);
         if (selectedFormats && lineIndex === -1) {
-          if (!rangeEl) {
-            rangeEl = rangeElement.cloneNode(false);
-          }
+          if (!rangeEl) rangeEl = rangeElement.cloneNode(false);
           rangeEl.appendChild(insNode);
         } else {
-          if (selectedFormats) {
-            next = selectedFormats[lineIndex + 1];
-          }
+          if (selectedFormats) next = selectedFormats[lineIndex + 1];
           if (rangeEl && rangeEl.children.length > 0) {
             parent.insertBefore(rangeEl, rangeElement);
             rangeEl = null;
@@ -2656,9 +2536,7 @@ export default function (
               const isCell = util.isListCell(insNode);
               const innerChildren = inner.childNodes;
               while (innerChildren[0]) {
-                if (util.isList(innerChildren[0]) && !isCell) {
-                  break;
-                }
+                if (util.isList(innerChildren[0]) && !isCell) break;
                 insNode.appendChild(innerChildren[0]);
               }
               util.copyFormatAttributes(insNode, inner);
@@ -2697,7 +2575,8 @@ export default function (
                     firstNode = insNode;
                   }
                 } else if (!firstNode) {
-                  firstNode = lastNode = insNode;
+                  firstNode = insNode;
+                  lastNode = insNode;
                 }
               }
             } else {
@@ -2706,7 +2585,8 @@ export default function (
             }
 
             if (reset) {
-              reset = moveComplete = false;
+              reset = false;
+              moveComplete = false;
               children = util.getListChildNodes(rangeElement, function (
                 current
               ) {
@@ -2728,11 +2608,8 @@ export default function (
         rangeParent.insertBefore(rangeEl, rangeRight);
       }
 
-      if (newRangeElement) {
-        firstNode = newRangeElement.previousSibling;
-      } else if (!firstNode) {
-        firstNode = rangeElement.previousSibling;
-      }
+      if (newRangeElement) firstNode = newRangeElement.previousSibling;
+      else if (!firstNode) firstNode = rangeElement.previousSibling;
       rangeRight = rangeElement.nextSibling;
 
       if (
@@ -2753,12 +2630,8 @@ export default function (
           removeArray: removeArray,
         };
       } else {
-        if (!firstNode) {
-          firstNode = lastNode;
-        }
-        if (!lastNode) {
-          lastNode = firstNode;
-        }
+        if (!firstNode) firstNode = lastNode;
+        if (!lastNode) lastNode = firstNode;
         const childEdge = util.getEdgeChildNodes(
           firstNode,
           lastNode.parentNode ? firstNode : lastNode
@@ -2771,9 +2644,7 @@ export default function (
       }
 
       this.effectNode = null;
-      if (notHistoryPush) {
-        return edge;
-      }
+      if (notHistoryPush) return edge;
 
       if (!remove && edge) {
         if (!selectedFormats) {
@@ -2818,9 +2689,7 @@ export default function (
             r: r,
             f: [util.getParentElement(selectedFormats[i], "LI")],
           };
-          if (i === 0) {
-            listFirst = true;
-          }
+          if (i === 0) listFirst = true;
         } else if (r && isList) {
           if (r !== o) {
             const edge = this.detachRangeFormatElement(
@@ -2835,9 +2704,7 @@ export default function (
               first = edge.sc;
               listFirst = false;
             }
-            if (lastIndex) {
-              last = edge.ec;
-            }
+            if (lastIndex) last = edge.ec;
 
             if (isList) {
               r = o;
@@ -2845,17 +2712,13 @@ export default function (
                 r: r,
                 f: [util.getParentElement(selectedFormats[i], "LI")],
               };
-              if (lastIndex) {
-                listLast = true;
-              }
+              if (lastIndex) listLast = true;
             } else {
               r = null;
             }
           } else {
             rangeArr.f.push(util.getParentElement(selectedFormats[i], "LI"));
-            if (lastIndex) {
-              listLast = true;
-            }
+            if (lastIndex) listLast = true;
           }
         }
 
@@ -2867,12 +2730,8 @@ export default function (
             remove,
             true
           );
-          if (listLast || len === 1) {
-            last = edge.ec;
-          }
-          if (listFirst) {
-            first = edge.sc || last;
-          }
+          if (listLast || len === 1) last = edge.ec;
+          if (listFirst) first = edge.sc || last;
         }
       }
 
@@ -2977,7 +2836,7 @@ export default function (
         appendNode = util.createElement("DIV");
       }
 
-      const RegExp = _w.RegExp;
+      const wRegExp = _w.RegExp;
       const newNodeName = appendNode.nodeName;
 
       /* checked same style property */
@@ -3007,7 +2866,10 @@ export default function (
               if (sNode.nodeType === 1) {
                 const s = checkAttrs[i];
                 const classReg = /^\./.test(s)
-                  ? new RegExp("\\s*" + s.replace(/^\./, "") + "(\\s+|$)", "ig")
+                  ? new wRegExp(
+                      "\\s*" + s.replace(/^\./, "") + "(\\s+|$)",
+                      "ig"
+                    )
                   : false;
 
                 const styleCheck = isRemoveNode
@@ -3030,9 +2892,7 @@ export default function (
             sNode = sNode.parentNode;
           }
 
-          if (checkCnt >= checkAttrs.length) {
-            return;
-          }
+          if (checkCnt >= checkAttrs.length) return;
         }
       }
 
@@ -3056,12 +2916,12 @@ export default function (
 
         if (styleRegExp) {
           styleRegExp += ")\\s*:[^;]*\\s*(?:;|$)";
-          styleRegExp = new RegExp(styleRegExp, "ig");
+          styleRegExp = new wRegExp(styleRegExp, "ig");
         }
 
         if (classRegExp) {
           classRegExp += ")(?=\\s+|$)";
-          classRegExp = new RegExp(classRegExp, "ig");
+          classRegExp = new wRegExp(classRegExp, "ig");
         }
       }
 
@@ -3071,23 +2931,19 @@ export default function (
           removeNodeRegExp += "|" + removeNodeArray[i];
         }
         removeNodeRegExp += ")$";
-        removeNodeRegExp = new RegExp(removeNodeRegExp, "i");
+        removeNodeRegExp = new wRegExp(removeNodeRegExp, "i");
       }
 
-      /** validation check function */
+      /** validation check function*/
       const wBoolean = _w.Boolean;
       const _removeCheck = { v: false };
       const validation = function (checkNode) {
         const vNode = checkNode.cloneNode(false);
 
         // all path
-        if (vNode.nodeType === 3 || util.isBreak(vNode)) {
-          return vNode;
-        }
+        if (vNode.nodeType === 3 || util.isBreak(vNode)) return vNode;
         // all remove
-        if (isRemoveFormat) {
-          return null;
-        }
+        if (isRemoveFormat) return null;
 
         // remove node check
         const tagRemove =
@@ -3105,9 +2961,7 @@ export default function (
         let style = "";
         if (styleRegExp && originStyle.length > 0) {
           style = originStyle.replace(styleRegExp, "").trim();
-          if (style !== originStyle) {
-            _removeCheck.v = true;
-          }
+          if (style !== originStyle) _removeCheck.v = true;
         }
 
         // class check
@@ -3115,9 +2969,7 @@ export default function (
         let classes = "";
         if (classRegExp && originClasses.length > 0) {
           classes = originClasses.replace(classRegExp, "").trim();
-          if (classes !== originClasses) {
-            _removeCheck.v = true;
-          }
+          if (classes !== originClasses) _removeCheck.v = true;
         }
 
         // remove only
@@ -3142,16 +2994,14 @@ export default function (
           wBoolean(styleRegExp) !== wBoolean(originStyle) ||
           wBoolean(classRegExp) !== wBoolean(originClasses)
         ) {
-          if (styleRegExp && originStyle.length > 0) {
+          if (styleRegExp && originStyle.length > 0)
             vNode.style.cssText = style;
-          }
           if (!vNode.style.cssText) {
             vNode.removeAttribute("style");
           }
 
-          if (classRegExp && originClasses.length > 0) {
+          if (classRegExp && originClasses.length > 0)
             vNode.className = classes.trim();
-          }
           if (!vNode.className.trim()) {
             vNode.removeAttribute("class");
           }
@@ -3215,9 +3065,8 @@ export default function (
         (isRemoveNode &&
           (function (arr) {
             for (let n = 0, len = arr.length; n < len; n++) {
-              if (util._isMaintainedNode(arr[n]) || util._isSizeNode(arr[n])) {
+              if (util._isMaintainedNode(arr[n]) || util._isSizeNode(arr[n]))
                 return true;
-              }
             }
             return false;
           })(removeNodeArray));
@@ -3259,7 +3108,8 @@ export default function (
           start.container === end.container &&
           util.onlyZeroWidthSpace(start.container)
         ) {
-          start.offset = end.offset = 1;
+          start.offset = 1;
+          end.offset = 1;
         }
         this._setCommonListStyle(newRange.ancestor, null);
       } else {
@@ -3351,12 +3201,8 @@ export default function (
      * @private
      */
     _setCommonListStyle: function (el, child) {
-      if (!util.isListCell(el)) {
-        return;
-      }
-      if (!child) {
-        el.removeAttribute("style");
-      }
+      if (!util.isListCell(el)) return;
+      if (!child) el.removeAttribute("style");
 
       const children = util.getArrayItem(
         (child || el).childNodes,
@@ -3370,27 +3216,20 @@ export default function (
       );
       if (children[0] && children.length === 1) {
         child = children[0];
-        if (!child || child.nodeType !== 1) {
-          return;
-        }
+        if (!child || child.nodeType !== 1) return;
 
         const childStyle = child.style;
         const elStyle = el.style;
 
         // bold
-        if (/STRONG/i.test(child.nodeName)) {
-          elStyle.fontWeight = "bold";
-        } else if (childStyle.fontWeight) {
+        if (/STRONG/i.test(child.nodeName)) elStyle.fontWeight = "bold";
+        // bold
+        else if (childStyle.fontWeight)
           elStyle.fontWeight = childStyle.fontWeight;
-        }
 
         // styles
-        if (childStyle.color) {
-          elStyle.color = childStyle.color;
-        } // color
-        if (childStyle.fontSize) {
-          elStyle.fontSize = childStyle.fontSize;
-        } // size
+        if (childStyle.color) elStyle.color = childStyle.color; // color
+        if (childStyle.fontSize) elStyle.fontSize = childStyle.fontSize; // size
 
         this._setCommonListStyle(el, child);
       }
@@ -3403,9 +3242,7 @@ export default function (
      */
     _stripRemoveNode: function (removeNode) {
       const element = removeNode.parentNode;
-      if (!removeNode || removeNode.nodeType === 3 || !element) {
-        return;
-      }
+      if (!removeNode || removeNode.nodeType === 3 || !element) return;
 
       const children = removeNode.childNodes;
       while (children[0]) {
@@ -3422,9 +3259,7 @@ export default function (
      * @private
      */
     _util_getMaintainedNode: function (_isRemove, _isSizeNode, element) {
-      if (!element || _isRemove) {
-        return null;
-      }
+      if (!element || _isRemove) return null;
       return (
         this.getParentElement(element, this._isMaintainedNode.bind(this)) ||
         (!_isSizeNode
@@ -3440,9 +3275,7 @@ export default function (
      * @private
      */
     _util_isMaintainedNode: function (_isRemove, _isSizeNode, element) {
-      if (!element || _isRemove || element.nodeType !== 1) {
-        return false;
-      }
+      if (!element || _isRemove || element.nodeType !== 1) return false;
       const anchor = this._isMaintainedNode(element);
       return this.getParentElement(element, this._isMaintainedNode.bind(this))
         ? anchor
@@ -3487,9 +3320,7 @@ export default function (
         !util.isFormatElement(parentCon.parentNode) &&
         !util.isWysiwygDiv(parentCon.parentNode)
       ) {
-        if (parentCon.nodeName === newInnerNode.nodeName) {
-          break;
-        }
+        if (parentCon.nodeName === newInnerNode.nodeName) break;
         parentCon = parentCon.parentNode;
       }
 
@@ -3549,9 +3380,9 @@ export default function (
       let endPass = false;
       let pCurrent, newNode, appendNode, cssText, anchorNode;
 
-      const RegExp = _w.RegExp;
+      const wRegExp = _w.RegExp;
       function checkCss(vNode) {
-        const regExp = new RegExp(
+        const regExp = new wRegExp(
           "(?:;|^|\\s)(?:" + cssText + "null)\\s*:[^;]*\\s*(?:;|$)",
           "ig"
         );
@@ -3568,10 +3399,8 @@ export default function (
         const childNodes = current.childNodes;
 
         for (let i = 0, len = childNodes.length, vNode; i < len; i++) {
-          const child = childNodes[i];
-          if (!child) {
-            continue;
-          }
+          let child = childNodes[i];
+          if (!child) continue;
           let coverNode = ancestor;
           let cloneNode;
 
@@ -3603,7 +3432,8 @@ export default function (
                 let m = a;
                 let p = null;
                 while (m.parentNode !== line) {
-                  ancestor = p = m.parentNode.cloneNode(false);
+                  ancestor = m.parentNode.cloneNode(false);
+                  p = m.parentNode.cloneNode(false);
                   while (m.childNodes[0]) {
                     p.appendChild(m.childNodes[0]);
                   }
@@ -3620,12 +3450,8 @@ export default function (
             }
 
             const prevAnchorNode = _getMaintainedNode(ancestor);
-            if (prevAnchorNode) {
-              anchorNode = prevAnchorNode;
-            }
-            if (anchorNode) {
-              line = anchorNode;
-            }
+            if (!!prevAnchorNode) anchorNode = prevAnchorNode;
+            if (anchorNode) line = anchorNode;
 
             newNode = child;
             pCurrent = [];
@@ -3644,7 +3470,8 @@ export default function (
             }
 
             const childNode = pCurrent.pop() || textNode;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -3664,12 +3491,8 @@ export default function (
             startOffset = 0;
             startPass = true;
 
-            if (newNode !== textNode) {
-              newNode.appendChild(startContainer);
-            }
-            if (!isSameNode) {
-              continue;
-            }
+            if (newNode !== textNode) newNode.appendChild(startContainer);
+            if (!isSameNode) continue;
           }
 
           // endContainer
@@ -3707,11 +3530,9 @@ export default function (
               const anchors = [];
               while (newNode !== pNode && newNode !== el && newNode !== null) {
                 if (newNode.nodeType === 1 && checkCss(newNode)) {
-                  if (_isMaintainedNode(newNode)) {
+                  if (_isMaintainedNode(newNode))
                     anchors.push(newNode.cloneNode(false));
-                  } else {
-                    pCurrent.push(newNode.cloneNode(false));
-                  }
+                  else pCurrent.push(newNode.cloneNode(false));
                   cssText +=
                     newNode.style.cssText.substr(
                       0,
@@ -3722,7 +3543,9 @@ export default function (
               }
               pCurrent = pCurrent.concat(anchors);
 
-              cloneNode = appendNode = newNode = pCurrent.pop() || afterNode;
+              cloneNode = pCurrent.pop() || afterNode;
+              appendNode = pCurrent.pop() || afterNode;
+              newNode = pCurrent.pop() || afterNode;
               while (pCurrent.length > 0) {
                 newNode = pCurrent.pop();
                 appendNode.appendChild(newNode);
@@ -3757,7 +3580,8 @@ export default function (
             }
 
             const childNode = pCurrent.pop() || textNode;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -3784,9 +3608,7 @@ export default function (
               textNode.textContent = util.zeroWidthSpace;
             }
 
-            if (newNode !== textNode) {
-              newNode.appendChild(endContainer);
-            }
+            if (newNode !== textNode) newNode.appendChild(endContainer);
             continue;
           }
 
@@ -3823,9 +3645,7 @@ export default function (
                 checkCss(newNode)
               ) {
                 if (_isMaintainedNode(newNode)) {
-                  if (!anchorNode) {
-                    anchors.push(vNode);
-                  }
+                  if (!anchorNode) anchors.push(vNode);
                 } else {
                   pCurrent.push(vNode);
                 }
@@ -3840,7 +3660,8 @@ export default function (
             pCurrent = pCurrent.concat(anchors);
 
             const childNode = pCurrent.pop() || child;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -3865,17 +3686,11 @@ export default function (
               childNode.appendChild(newInnerNode);
               pNode.appendChild(childNode);
               nNodeArray.push(newInnerNode);
-              if (newInnerNode.children.length > 0) {
-                ancestor = newNode;
-              } else {
-                ancestor = newInnerNode;
-              }
+              if (newInnerNode.children.length > 0) ancestor = newNode;
+              else ancestor = newInnerNode;
             } else if (childNode === child) {
-              if (!endPass) {
-                ancestor = newInnerNode;
-              } else {
-                ancestor = pNode;
-              }
+              if (!endPass) ancestor = newInnerNode;
+              else ancestor = pNode;
             } else if (endPass) {
               pNode.appendChild(childNode);
               ancestor = newNode;
@@ -3907,9 +3722,8 @@ export default function (
 
           cloneNode = child.cloneNode(false);
           ancestor.appendChild(cloneNode);
-          if (child.nodeType === 1 && !util.isBreak(child)) {
+          if (child.nodeType === 1 && !util.isBreak(child))
             coverNode = cloneNode;
-          }
 
           recursionFunc(child, coverNode);
         }
@@ -3930,7 +3744,7 @@ export default function (
 
       if (isRemoveFormat) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          const removeNode = nNodeArray[i];
+          let removeNode = nNodeArray[i];
           let textNode, textNode_s, textNode_e;
 
           if (collapsed) {
@@ -3948,7 +3762,8 @@ export default function (
 
           if (i === 0) {
             if (collapsed) {
-              startContainer = endContainer = textNode;
+              startContainer = textNode;
+              endContainer = textNode;
             } else {
               startContainer = textNode_s;
               endContainer = textNode_e;
@@ -3963,7 +3778,8 @@ export default function (
         }
 
         if (collapsed) {
-          startContainer = endContainer = newInnerNode;
+          startContainer = newInnerNode;
+          endContainer = newInnerNode;
         }
       }
 
@@ -3992,9 +3808,7 @@ export default function (
       const startPath = util.getNodePath(startContainer, pNode, newStartOffset);
 
       const mergeEndCon = !endContainer.parentNode;
-      if (mergeEndCon) {
-        endContainer = startContainer;
-      }
+      if (mergeEndCon) endContainer = startContainer;
       const newEndOffset = { s: 0, e: 0 };
       const endPath = util.getNodePath(
         endContainer,
@@ -4062,9 +3876,7 @@ export default function (
         !util.isFormatElement(parentCon.parentNode) &&
         !util.isWysiwygDiv(parentCon.parentNode)
       ) {
-        if (parentCon.nodeName === newInnerNode.nodeName) {
-          break;
-        }
+        if (parentCon.nodeName === newInnerNode.nodeName) break;
         parentCon = parentCon.parentNode;
       }
 
@@ -4106,6 +3918,7 @@ export default function (
       let offset = startOff;
       let passNode = false;
       let pCurrent, newNode, appendNode, anchorNode;
+
       (function recursionFunc(current, ancestor) {
         const childNodes = current.childNodes;
 
@@ -4115,9 +3928,7 @@ export default function (
           i++
         ) {
           const child = childNodes[i];
-          if (!child) {
-            continue;
-          }
+          if (!child) continue;
           let coverNode = ancestor;
 
           if (passNode && !util.isBreak(child)) {
@@ -4151,9 +3962,7 @@ export default function (
               vNode = validation(newNode);
               if (newNode.nodeType === 1 && vNode) {
                 if (_isMaintainedNode(newNode)) {
-                  if (!anchorNode) {
-                    anchors.push(vNode);
-                  }
+                  if (!anchorNode) anchors.push(vNode);
                 } else {
                   pCurrent.push(vNode);
                 }
@@ -4164,7 +3973,8 @@ export default function (
 
             const isTopNode = pCurrent.length > 0;
             const childNode = pCurrent.pop() || child;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -4237,7 +4047,8 @@ export default function (
                 let m = a;
                 let p = null;
                 while (m.parentNode !== line) {
-                  ancestor = p = m.parentNode.cloneNode(false);
+                  ancestor = m.parentNode.cloneNode(false);
+                  p = m.parentNode.cloneNode(false);
                   while (m.childNodes[0]) {
                     p.appendChild(m.childNodes[0]);
                   }
@@ -4254,12 +4065,8 @@ export default function (
             }
 
             const prevAnchorNode = _getMaintainedNode(ancestor);
-            if (prevAnchorNode) {
-              anchorNode = prevAnchorNode;
-            }
-            if (anchorNode) {
-              line = anchorNode;
-            }
+            if (!!prevAnchorNode) anchorNode = prevAnchorNode;
+            if (anchorNode) line = anchorNode;
 
             newNode = ancestor;
             pCurrent = [];
@@ -4272,7 +4079,8 @@ export default function (
             }
 
             const childNode = pCurrent.pop() || ancestor;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -4286,9 +4094,8 @@ export default function (
               ancestor = newInnerNode;
             }
 
-            if (util.isBreak(child)) {
+            if (util.isBreak(child))
               newInnerNode.appendChild(child.cloneNode(false));
-            }
             line.appendChild(newInnerNode);
 
             container = textNode;
@@ -4302,9 +4109,7 @@ export default function (
           vNode = !passNode ? child.cloneNode(false) : validation(child);
           if (vNode) {
             ancestor.appendChild(vNode);
-            if (child.nodeType === 1 && !util.isBreak(child)) {
-              coverNode = vNode;
-            }
+            if (child.nodeType === 1 && !util.isBreak(child)) coverNode = vNode;
           }
 
           recursionFunc(child, coverNode);
@@ -4325,7 +4130,7 @@ export default function (
 
       if (isRemoveFormat) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          const removeNode = nNodeArray[i];
+          let removeNode = nNodeArray[i];
 
           const rChildren = removeNode.childNodes;
           const textNode = rChildren[0];
@@ -4334,9 +4139,7 @@ export default function (
           }
           util.removeItem(removeNode);
 
-          if (i === 0) {
-            container = textNode;
-          }
+          if (i === 0) container = textNode;
         }
       } else if (isRemoveNode) {
         for (let i = 0; i < nNodeArray.length; i++) {
@@ -4405,9 +4208,8 @@ export default function (
       if (!isRemoveNode) {
         // end container path
         let endPath = null;
-        if (_endContainer && element.contains(_endContainer)) {
+        if (_endContainer && element.contains(_endContainer))
           endPath = util.getNodePath(_endContainer, element);
-        }
 
         const tempNode = element.cloneNode(true);
         const newNodeName = newInnerNode.nodeName;
@@ -4419,9 +4221,7 @@ export default function (
         let len = children.length;
         for (let child; i < len; i++) {
           child = children[i];
-          if (child.nodeType === 3) {
-            break;
-          }
+          if (child.nodeType === 3) break;
           if (child.nodeName === newNodeName) {
             child.style.cssText += newCssText;
             util.addClass(child, newClass);
@@ -4462,10 +4262,8 @@ export default function (
           i < len;
           i++
         ) {
-          const child = childNodes[i];
-          if (!child) {
-            continue;
-          }
+          let child = childNodes[i];
+          if (!child) continue;
           let coverNode = ancestor;
 
           if (!util.isBreak(child) && util._isIgnoreNodeChange(child)) {
@@ -4492,28 +4290,23 @@ export default function (
             if (vNode) {
               noneChange = false;
               ancestor.appendChild(vNode);
-              if (child.nodeType === 1) {
-                coverNode = vNode;
-              }
+              if (child.nodeType === 1) coverNode = vNode;
             }
           }
 
-          if (!util.isBreak(child)) {
-            recursionFunc(child, coverNode);
-          }
+          if (!util.isBreak(child)) recursionFunc(child, coverNode);
         }
       })(element, newInnerNode);
 
       // not remove tag
-      if (noneChange || (isRemoveNode && !isRemoveFormat && !_removeCheck.v)) {
+      if (noneChange || (isRemoveNode && !isRemoveFormat && !_removeCheck.v))
         return { ancestor: element, endContainer: _endContainer };
-      }
 
       pNode.appendChild(newInnerNode);
 
       if (isRemoveFormat && isRemoveNode) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          const removeNode = nNodeArray[i];
+          let removeNode = nNodeArray[i];
 
           const rChildren = removeNode.childNodes;
           while (rChildren[0]) {
@@ -4567,9 +4360,7 @@ export default function (
         !util.isFormatElement(parentCon.parentNode) &&
         !util.isWysiwygDiv(parentCon.parentNode)
       ) {
-        if (parentCon.nodeName === newInnerNode.nodeName) {
-          break;
-        }
+        if (parentCon.nodeName === newInnerNode.nodeName) break;
         parentCon = parentCon.parentNode;
       }
 
@@ -4611,14 +4402,13 @@ export default function (
       let offset = endOff;
       let passNode = false;
       let pCurrent, newNode, appendNode, anchorNode;
+
       (function recursionFunc(current, ancestor) {
         const childNodes = current.childNodes;
 
-        for (let i = childNodes.length - 1, vNode; i >= 0; i--) {
+        for (let i = childNodes.length - 1, vNode; 0 <= i; i--) {
           const child = childNodes[i];
-          if (!child) {
-            continue;
-          }
+          if (!child) continue;
           let coverNode = ancestor;
 
           if (passNode && !util.isBreak(child)) {
@@ -4646,9 +4436,7 @@ export default function (
               vNode = validation(newNode);
               if (vNode && newNode.nodeType === 1) {
                 if (_isMaintainedNode(newNode)) {
-                  if (!anchorNode) {
-                    anchors.push(vNode);
-                  }
+                  if (!anchorNode) anchors.push(vNode);
                 } else {
                   pCurrent.push(vNode);
                 }
@@ -4659,7 +4447,8 @@ export default function (
 
             const isTopNode = pCurrent.length > 0;
             const childNode = pCurrent.pop() || child;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -4684,11 +4473,8 @@ export default function (
               childNode.appendChild(newInnerNode);
               pNode.insertBefore(childNode, pNode.firstChild);
               nNodeArray.push(newInnerNode);
-              if (newInnerNode.children.length > 0) {
-                ancestor = newNode;
-              } else {
-                ancestor = newInnerNode;
-              }
+              if (newInnerNode.children.length > 0) ancestor = newNode;
+              else ancestor = newInnerNode;
             } else if (isTopNode) {
               newInnerNode.insertBefore(childNode, newInnerNode.firstChild);
               ancestor = newNode;
@@ -4736,7 +4522,8 @@ export default function (
                 let m = a;
                 let p = null;
                 while (m.parentNode !== pNode) {
-                  ancestor = p = m.parentNode.cloneNode(false);
+                  ancestor = m.parentNode.cloneNode(false);
+                  p = m.parentNode.cloneNode(false);
                   while (m.childNodes[0]) {
                     p.appendChild(m.childNodes[0]);
                   }
@@ -4770,7 +4557,8 @@ export default function (
             }
 
             const childNode = pCurrent.pop() || ancestor;
-            appendNode = newNode = childNode;
+            appendNode = childNode;
+            newNode = childNode;
             while (pCurrent.length > 0) {
               newNode = pCurrent.pop();
               appendNode.appendChild(newNode);
@@ -4784,9 +4572,8 @@ export default function (
               ancestor = newInnerNode;
             }
 
-            if (util.isBreak(child)) {
+            if (util.isBreak(child))
               newInnerNode.appendChild(child.cloneNode(false));
-            }
 
             if (anchorNode) {
               anchorNode.insertBefore(newInnerNode, anchorNode.firstChild);
@@ -4807,9 +4594,7 @@ export default function (
           vNode = !passNode ? child.cloneNode(false) : validation(child);
           if (vNode) {
             ancestor.insertBefore(vNode, ancestor.firstChild);
-            if (child.nodeType === 1 && !util.isBreak(child)) {
-              coverNode = vNode;
-            }
+            if (child.nodeType === 1 && !util.isBreak(child)) coverNode = vNode;
           }
 
           recursionFunc(child, coverNode);
@@ -4829,7 +4614,7 @@ export default function (
 
       if (isRemoveFormat) {
         for (let i = 0; i < nNodeArray.length; i++) {
-          const removeNode = nNodeArray[i];
+          let removeNode = nNodeArray[i];
 
           const rChildren = removeNode.childNodes;
           let textNode = null;
@@ -4958,8 +4743,8 @@ export default function (
             target
           );
         }
-      } else if (command) {
-        // default command
+      } // default command
+      else if (command) {
         this.commandHandler(target, command);
       }
 
@@ -4990,32 +4775,30 @@ export default function (
      * @param {String} command Property of command button (data-value)
      */
     commandHandler: function (target, command) {
-      const wysiwyg = context.element.wysiwyg;
-      const first =
-        util.getChildElement(
-          wysiwyg.firstChild,
-          function (current) {
-            return current.childNodes.length === 0 || current.nodeType === 3;
-          },
-          false
-        ) || wysiwyg.firstChild;
-      const last =
-        util.getChildElement(
-          wysiwyg.lastChild,
-          function (current) {
-            return current.childNodes.length === 0 || current.nodeType === 3;
-          },
-          true
-        ) || wysiwyg.lastChild;
-      const nodesMap = this._variable.currentNodesMap;
-      const cmd =
-        nodesMap.indexOf(command) > -1 ? null : util.createElement(command);
-      let removeNode = command;
       switch (command) {
         case "selectAll":
-          if (!first || !last) {
-            return;
-          }
+          const wysiwyg = context.element.wysiwyg;
+          const first =
+            util.getChildElement(
+              wysiwyg.firstChild,
+              function (current) {
+                return (
+                  current.childNodes.length === 0 || current.nodeType === 3
+                );
+              },
+              false
+            ) || wysiwyg.firstChild;
+          const last =
+            util.getChildElement(
+              wysiwyg.lastChild,
+              function (current) {
+                return (
+                  current.childNodes.length === 0 || current.nodeType === 3
+                );
+              },
+              true
+            ) || wysiwyg.lastChild;
+          if (!first || !last) return;
           this.setRange(first, 0, last, last.textContent.length);
           break;
         case "codeView":
@@ -5058,16 +4841,19 @@ export default function (
             );
           }
 
-          if (context.tool.save) {
+          if (context.tool.save)
             context.tool.save.setAttribute("disabled", true);
-          }
           break;
         default:
           // 'STRONG', 'U', 'EM', 'DEL', 'SUB', 'SUP'..
           command = this._defaultCommand[command.toLowerCase()] || command;
-          if (!this.commandMap[command]) {
-            this.commandMap[command] = target;
-          }
+          if (!this.commandMap[command]) this.commandMap[command] = target;
+
+          const nodesMap = this._variable.currentNodesMap;
+          const cmd =
+            nodesMap.indexOf(command) > -1 ? null : util.createElement(command);
+          let removeNode = command;
+
           if (/^SUB$/i.test(command) && nodesMap.indexOf("SUP") > -1) {
             removeNode = "SUP";
           } else if (/^SUP$/i.test(command) && nodesMap.indexOf("SUB") > -1) {
@@ -5095,11 +4881,11 @@ export default function (
       const range = this.getRange();
       const rangeLines = this.getSelectedElements(null);
       const cells = [];
-      const shift = command !== "indent";
-      const sc = range.startContainer;
-      const ec = range.endContainer;
-      const so = range.startOffset;
-      const eo = range.endOffset;
+      const shift = "indent" !== command;
+      let sc = range.startContainer;
+      let ec = range.endContainer;
+      let so = range.startOffset;
+      let eo = range.endOffset;
 
       for (let i = 0, len = rangeLines.length, f, margin; i < len; i++) {
         f = rangeLines[i];
@@ -5170,9 +4956,8 @@ export default function (
           "display: block"
         );
 
-        if (options.height === "auto" && !options.codeMirrorEditor) {
+        if (options.height === "auto" && !options.codeMirrorEditor)
           context.element.code.style.height = "0px";
-        }
 
         this._variable.isCodeView = false;
 
@@ -5202,15 +4987,12 @@ export default function (
           "display: none"
         );
 
-        if (options.height === "auto" && !options.codeMirrorEditor) {
+        if (options.height === "auto" && !options.codeMirrorEditor)
           context.element.code.style.height =
             context.element.code.scrollHeight > 0
               ? context.element.code.scrollHeight + "px"
               : "auto";
-        }
-        if (options.codeMirrorEditor) {
-          options.codeMirrorEditor.refresh();
-        }
+        if (options.codeMirrorEditor) options.codeMirrorEditor.refresh();
 
         this._variable.isCodeView = true;
 
@@ -5232,9 +5014,8 @@ export default function (
 
       this._checkPlaceholder();
 
-      if (typeof functions.toggleCodeView === "function") {
+      if (typeof functions.toggleCodeView === "function")
         functions.toggleCodeView(this._variable.isCodeView, this);
-      }
     },
 
     /**
@@ -5254,8 +5035,7 @@ export default function (
         for (let i = 0, len = headChildren.length; i < len; i++) {
           if (/script/i.test(headChildren[i].tagName)) {
             parseDocument.head.removeChild(headChildren[i]);
-            i--;
-            len--;
+            i--, len--;
           }
         }
 
@@ -5266,14 +5046,11 @@ export default function (
 
         const attrs = parseDocument.body.attributes;
         for (let i = 0, len = attrs.length; i < len; i++) {
-          if (attrs[i].name === "contenteditable") {
-            continue;
-          }
+          if (attrs[i].name === "contenteditable") continue;
           this._wd.body.setAttribute(attrs[i].name, attrs[i].value);
         }
-        if (!util.hasClass(this._wd.body, "kothing-editor-editable")) {
+        if (!util.hasClass(this._wd.body, "kothing-editor-editable"))
           util.addClass(this._wd.body, "kothing-editor-editable");
-        }
       } else {
         context.element.wysiwyg.innerHTML =
           code_html.length > 0
@@ -5334,9 +5111,8 @@ export default function (
           this._isBalloon = false;
         }
 
-        if (options.toolbarContainer) {
+        if (!!options.toolbarContainer)
           context.element.relative.insertBefore(toolbar, editorArea);
-        }
 
         topArea.style.position = "fixed";
         topArea.style.top = "0";
@@ -5359,15 +5135,17 @@ export default function (
         _var._wysiwygOriginCssText = wysiwygFrame.style.cssText;
         _var._codeOriginCssText = code.style.cssText;
 
-        editorArea.style.cssText = toolbar.style.cssText = "";
+        editorArea.style.cssText = "";
+        toolbar.style.cssText = "";
         wysiwygFrame.style.cssText = (wysiwygFrame.style.cssText.match(
           /\s?display(\s+)?:(\s+)?[a-zA-Z]+;/
         ) || [""])[0];
         code.style.cssText = (code.style.cssText.match(
           /\s?display(\s+)?:(\s+)?[a-zA-Z]+;/
         ) || [""])[0];
-        toolbar.style.width = wysiwygFrame.style.height = code.style.height =
-          "100%";
+        toolbar.style.width = "100%";
+        wysiwygFrame.style.height = "100%";
+        code.style.height = "100%";
         toolbar.style.position = "relative";
         toolbar.style.display = "block";
 
@@ -5392,9 +5170,8 @@ export default function (
         topArea.style.cssText = _var._originCssText;
         _d.body.style.overflow = _var._bodyOverflow;
 
-        if (options.toolbarContainer) {
+        if (!!options.toolbarContainer)
           options.toolbarContainer.appendChild(toolbar);
-        }
 
         if (options.stickyToolbar > -1) {
           util.removeClass(toolbar, "ke-toolbar-sticky");
@@ -5408,12 +5185,9 @@ export default function (
 
         this._isInline = _var._fullScreenAttrs.inline;
         this._isBalloon = _var._fullScreenAttrs.balloon;
-        if (this._isInline) {
-          event._showToolbarInline();
-        }
-        if (options.toolbarContainer) {
+        if (this._isInline) event._showToolbarInline();
+        if (!!options.toolbarContainer)
           util.removeClass(toolbar, "ke-toolbar-balloon");
-        }
 
         event.onScroll_window();
         util.changeElement(element.firstElementChild, icons.expansion);
@@ -5421,9 +5195,8 @@ export default function (
         util.removeClass(this._styleCommandMap.fullScreen, "active");
       }
 
-      if (typeof functions.toggleFullScreen === "function") {
+      if (typeof functions.toggleFullScreen === "function")
         functions.toggleFullScreen(this._variable.isFullScreen, this);
-      }
     },
 
     /**
@@ -5635,9 +5408,7 @@ export default function (
     _makeLine: function (node, requireFormat) {
       // element
       if (node.nodeType === 1) {
-        if (util._disallowedTags(node)) {
-          return "";
-        }
+        if (util._disallowedTags(node)) return "";
         if (
           !requireFormat ||
           util.isFormatElement(node) ||
@@ -5653,16 +5424,12 @@ export default function (
       }
       // text
       if (node.nodeType === 3) {
-        if (!requireFormat) {
-          return node.textContent;
-        }
+        if (!requireFormat) return node.textContent;
         const textArray = node.textContent.split(/\n/g);
         let html = "";
         for (let i = 0, tLen = textArray.length, text; i < tLen; i++) {
           text = textArray[i].trim();
-          if (text.length > 0) {
-            html += "<p>" + text + "</p>";
-          }
+          if (text.length > 0) html += "<p>" + text + "</p>";
         }
         return html;
       }
@@ -5681,9 +5448,7 @@ export default function (
      * @private
      */
     _tagConvertor: function (text) {
-      if (!this._disallowedTextTagsRegExp) {
-        return text;
-      }
+      if (!this._disallowedTextTagsRegExp) return text;
 
       const ec = { b: "strong", i: "em", ins: "u", strike: "del", s: "del" };
       return text.replace(this._disallowedTextTagsRegExp, function (m, t, n) {
@@ -5719,35 +5484,26 @@ export default function (
       html = this._deleteDisallowedTags(html).replace(
         /(<[a-zA-Z0-9]+)[^>]*(?=>)/g,
         function (m, t) {
-          if (/^<[a-z0-9]+\:[a-z0-9]+/i.test(m)) {
-            return m;
-          }
+          if (/^<[a-z0-9]+\:[a-z0-9]+/i.test(m)) return m;
 
           let v = null;
           const tAttr = this._attributesTagsWhitelist[
             t.match(/(?!<)[a-zA-Z0-9]+/)[0].toLowerCase()
           ];
-          if (tAttr) {
-            v = m.match(tAttr);
-          } else {
-            v = m.match(this._attributesWhitelistRegExp);
-          }
+          if (tAttr) v = m.match(tAttr);
+          else v = m.match(this._attributesWhitelistRegExp);
 
           if (/<span/i.test(t) && (!v || !/style=/i.test(v.toString()))) {
             const sv = m.match(/style\s*=\s*"[^"]*"/);
             if (sv) {
-              if (!v) {
-                v = [];
-              }
+              if (!v) v = [];
               v.push(sv[0]);
             }
           }
 
           if (v) {
             for (let i = 0, len = v.length; i < len; i++) {
-              if (/^class="(?!(__ke__|ke-|katex))/.test(v[i])) {
-                continue;
-              }
+              if (/^class="(?!(__ke__|ke-|katex))/.test(v[i])) continue;
               t += " " + v[i];
             }
           }
@@ -5844,9 +5600,7 @@ export default function (
         cleanHTML += this._makeLine(domTree[i], true);
       }
 
-      if (cleanHTML.length === 0) {
-        return "<p><br></p>";
-      }
+      if (cleanHTML.length === 0) return "<p><br></p>";
 
       cleanHTML = util.htmlRemoveWhiteSpace(cleanHTML);
       return this._tagConvertor(cleanHTML);
@@ -5859,8 +5613,8 @@ export default function (
      */
     convertHTMLForCodeView: function (html) {
       let returnHTML = "";
-      const RegExp = _w.RegExp;
-      const brReg = new RegExp(
+      const wRegExp = _w.RegExp;
+      const brReg = new wRegExp(
         "^(BLOCKQUOTE|PRE|TABLE|THEAD|TBODY|TR|TH|TD|OL|UL|IMG|IFRAME|VIDEO|AUDIO|FIGURE|FIGCAPTION|HR|BR|CANVAS|SELECT)$",
         "i"
       );
@@ -5872,6 +5626,7 @@ export default function (
 
       let indentSize = this._variable.codeIndent * 1;
       indentSize = indentSize > 0 ? new _w.Array(indentSize + 1).join(" ") : "";
+
       (function recursionFunc(element, indent, lineBR) {
         const children = element.childNodes;
         const elementRegTest = brReg.test(element.nodeName);
@@ -5910,11 +5665,13 @@ export default function (
               br;
             continue;
           }
+
+          node.innerHTML = node.innerHTML;
           const tag = node.nodeName.toLowerCase();
           returnHTML +=
             (lineBR || (elementRegTest ? "" : br)) +
             (elementIndent || nodeRegTest ? indent : "") +
-            node.outerHTML.match(RegExp("<" + tag + "[^>]*>", "i"))[0] +
+            node.outerHTML.match(wRegExp("<" + tag + "[^>]*>", "i"))[0] +
             br;
           recursionFunc(node, indent + indentSize, "");
           returnHTML +=
@@ -5970,9 +5727,7 @@ export default function (
       const maxCharCount = options.maxCharCount;
       const countType = options.charCounterType;
       let nextCharCount = 0;
-      if (inputText) {
-        nextCharCount = this.getCharLength(inputText, countType);
-      }
+      if (!!inputText) nextCharCount = this.getCharLength(inputText, countType);
 
       this._setCharCount();
 
@@ -6005,9 +5760,7 @@ export default function (
 
         if (over) {
           this._callCounterBlink();
-          if (nextCharCount > 0) {
-            return false;
-          }
+          if (nextCharCount > 0) return false;
         }
       }
 
@@ -6133,7 +5886,7 @@ export default function (
      * @private
      */
     _init: function (reload, _initHTML) {
-      const RegExp = _w.RegExp;
+      const wRegExp = _w.RegExp;
       this._ww = options.iframe
         ? context.element.wysiwygFrame.contentWindow
         : _w;
@@ -6170,7 +5923,7 @@ export default function (
       this._disallowedTextTagsRegExp =
         disallowTextTags.length === 0
           ? null
-          : new RegExp(
+          : new wRegExp(
               "(<\\/?)(" +
                 disallowTextTags.join("|") +
                 ")\\b\\s*(?:[^>^<]+)?\\s*(?=>)",
@@ -6181,7 +5934,7 @@ export default function (
       const defaultAttr =
         "contenteditable|colspan|rowspan|target|href|src|class|type|controls|data-format|data-size|data-file-size|data-file-name|data-origin|data-align|data-image-link|data-rotate|data-proportion|data-percentage|origin-size|data-exp|data-font-size";
       this._allowHTMLComments = options._editorTagsWhitelist.indexOf("//") > -1;
-      this._htmlCheckWhitelistRegExp = new RegExp(
+      this._htmlCheckWhitelistRegExp = new wRegExp(
         "^(" + options._editorTagsWhitelist.replace("|//", "") + ")$",
         "i"
       );
@@ -6195,15 +5948,13 @@ export default function (
       const _attr = options.attributesWhitelist;
       const tagsAttr = {};
       let allAttr = "";
-      if (_attr) {
-        for (const k in _attr) {
-          if (!util.hasOwn(_attr, k)) {
-            continue;
-          }
+      if (!!_attr) {
+        for (let k in _attr) {
+          if (!util.hasOwn(_attr, k)) continue;
           if (k === "all") {
             allAttr = _attr[k] + "|";
           } else {
-            tagsAttr[k] = new RegExp(
+            tagsAttr[k] = new wRegExp(
               "((?:" + _attr[k] + "|" + defaultAttr + ')s*=s*"[^"]*")',
               "ig"
             );
@@ -6211,7 +5962,7 @@ export default function (
         }
       }
 
-      this._attributesWhitelistRegExp = new RegExp(
+      this._attributesWhitelistRegExp = new wRegExp(
         "((?:" + allAttr + defaultAttr + ')s*=s*"[^"]*")',
         "ig"
       );
@@ -6238,12 +5989,10 @@ export default function (
       this._fileManager.tags = [];
       this._fileManager.pluginMap = {};
 
-      const filePluginRegExp = [];
+      let filePluginRegExp = [];
       let plugin, button;
-      for (const key in plugins) {
-        if (!util.hasOwn(plugins, key)) {
-          continue;
-        }
+      for (let key in plugins) {
+        if (!util.hasOwn(plugins, key)) continue;
         plugin = plugins[key];
         button = pluginCallButtons[key];
         if (plugin.active && button) {
@@ -6275,11 +6024,11 @@ export default function (
 
       this.managedTagsInfo.query = managedClass.toString();
       this._fileManager.queryString = this._fileManager.tags.join(",");
-      this._fileManager.regExp = new RegExp(
+      this._fileManager.regExp = new wRegExp(
         "^(" + this._fileManager.tags.join("|") + ")$",
         "i"
       );
-      this._fileManager.pluginRegExp = new RegExp(
+      this._fileManager.pluginRegExp = new wRegExp(
         "^(" +
           (filePluginRegExp.length === 0
             ? "undefined"
@@ -6375,12 +6124,8 @@ export default function (
      */
     _onChange_historyStack: function () {
       event._applyTagEffects();
-      if (context.tool.save) {
-        context.tool.save.removeAttribute("disabled");
-      }
-      if (functions.onChange) {
-        functions.onChange(this.getContents(true), this);
-      }
+      if (context.tool.save) context.tool.save.removeAttribute("disabled");
+      if (functions.onChange) functions.onChange(this.getContents(true), this);
     },
 
     /**
@@ -6428,9 +6173,8 @@ export default function (
      * @private
      */
     _setDefaultFormat: function (formatName) {
-      if (this._fileManager.pluginRegExp.test(this.currentControllerName)) {
+      if (this._fileManager.pluginRegExp.test(this.currentControllerName))
         return;
-      }
 
       const range = this.getRange();
       const commonCon = range.commonAncestorContainer;
@@ -6439,22 +6183,18 @@ export default function (
       let focusNode, offset, format;
 
       const fileComponent = util.getParentElement(commonCon, util.isComponent);
-      if (fileComponent && !util.isTable(fileComponent)) {
-        return;
-      }
+      if (fileComponent && !util.isTable(fileComponent)) return;
       if (
         (util.isRangeFormatElement(startCon) || util.isWysiwygDiv(startCon)) &&
         util.isComponent(startCon.childNodes[range.startOffset])
-      ) {
+      )
         return;
-      }
 
       if (rangeEl) {
         format = util.createElement(formatName || "P");
         format.innerHTML = rangeEl.innerHTML;
-        if (format.childNodes.length === 0) {
+        if (format.childNodes.length === 0)
           format.innerHTML = util.zeroWidthSpace;
-        }
 
         rangeEl.innerHTML = format.outerHTML;
         format = rangeEl.firstChild;
@@ -6500,12 +6240,9 @@ export default function (
         return;
       }
 
-      if (util.isBreak(format.nextSibling)) {
-        util.removeItem(format.nextSibling);
-      }
-      if (util.isBreak(format.previousSibling)) {
+      if (util.isBreak(format.nextSibling)) util.removeItem(format.nextSibling);
+      if (util.isBreak(format.previousSibling))
         util.removeItem(format.previousSibling);
-      }
       if (util.isBreak(focusNode)) {
         const zeroWidth = util.createTextNode(util.zeroWidthSpace);
         focusNode.parentNode.insertBefore(zeroWidth, focusNode);
@@ -6523,11 +6260,12 @@ export default function (
      * @private
      */
     _setOptionsInit: function (el, _initHTML) {
-      this.context = context = _Context(
+      this.context = _Context(
         el.originElement,
         this._getConstructed(el),
         options
       );
+      context = _Context(el.originElement, this._getConstructed(el), options);
       this._componentsInfoReset = true;
       this._editorInit(true, _initHTML);
     },
@@ -6560,6 +6298,11 @@ export default function (
         if (typeof functions.onload === "function") {
           functions.onload(core, reload);
         }
+        // toolbar button tooltip
+        _util._tooltip(".ke-tooltip", {
+          transition: true,
+          time: 200,
+        });
       });
     },
 
@@ -6676,12 +6419,9 @@ export default function (
             command = "indent";
           }
           break;
-        default:
       }
 
-      if (!command) {
-        return false;
-      }
+      if (!command) return false;
 
       core.commandHandler(core.commandMap[command], command);
       return true;
@@ -6689,9 +6429,7 @@ export default function (
 
     _applyTagEffects: function () {
       let selectionNode = core.getSelectionNode();
-      if (selectionNode === core.effectNode) {
-        return;
-      }
+      if (selectionNode === core.effectNode) return;
       core.effectNode = selectionNode;
 
       const commandMap = core.commandMap;
@@ -6712,12 +6450,8 @@ export default function (
         !util.isWysiwygDiv(element);
         element = element.parentNode
       ) {
-        if (!element) {
-          break;
-        }
-        if (element.nodeType !== 1 || util.isBreak(element)) {
-          continue;
-        }
+        if (!element) break;
+        if (element.nodeType !== 1 || util.isBreak(element)) continue;
         nodeName = element.nodeName.toUpperCase();
         currentNodes.push(nodeName);
 
@@ -6767,13 +6501,9 @@ export default function (
       }
 
       /** remove class, display text */
-      for (const key in commandMap) {
-        if (
-          commandMapNodes.indexOf(key) > -1 ||
-          !util.hasOwn(commandMap, key)
-        ) {
+      for (let key in commandMap) {
+        if (commandMapNodes.indexOf(key) > -1 || !util.hasOwn(commandMap, key))
           continue;
-        }
         if (activePlugins.indexOf(key) > -1) {
           plugins[key].active.call(core, null);
         } else if (commandMap.OUTDENT && /^OUTDENT$/i.test(key)) {
@@ -6790,11 +6520,10 @@ export default function (
       core._variable.currentNodesMap = commandMapNodes;
 
       /**  Displays the current node structure to resizingBar */
-      if (options.showPathLabel) {
-        context.element.navigation.textContent = core._variable.currentNodes.map(item => item.toLowerCase()).join(
+      if (options.showPathLabel)
+        context.element.navigation.textContent = core._variable.currentNodes.join(
           " > "
         );
-      }
     },
 
     _cancelCaptionEdit: function () {
@@ -6804,9 +6533,7 @@ export default function (
 
     _buttonsEventHandler: function (e) {
       let target = e.target;
-      if (core._bindControllersOff) {
-        e.stopPropagation();
-      }
+      if (core._bindControllersOff) e.stopPropagation();
 
       if (/^(input|textarea|select|option)$/i.test(target.nodeName)) {
         core._antiBlur = false;
@@ -6855,26 +6582,16 @@ export default function (
         className = target.className;
       }
 
-      if (!command && !display) {
-        return;
-      }
-      if (target.disabled) {
-        return;
-      }
-      if (!core.hasFocus) {
-        core.nativeFocus();
-      }
-      if (!core._variable.isCodeView) {
-        core._editorRange();
-      }
+      if (!command && !display) return;
+      if (target.disabled) return;
+      if (!core.hasFocus) core.nativeFocus();
+      if (!core._variable.isCodeView) core._editorRange();
 
       core.actionCall(command, display, target);
     },
 
     onMouseDown_wysiwyg: function (e) {
-      if (util.isNonEditable(context.element.wysiwyg)) {
-        return;
-      }
+      if (util.isNonEditable(context.element.wysiwyg)) return;
 
       const tableCell = util.getParentElement(e.target, util.isCell);
       if (tableCell) {
@@ -6898,19 +6615,14 @@ export default function (
         event._hideToolbar();
       }
 
-      if (/FIGURE/i.test(e.target.nodeName)) {
-        e.preventDefault();
-      }
-      if (typeof functions.onMouseDown === "function") {
+      if (/FIGURE/i.test(e.target.nodeName)) e.preventDefault();
+      if (typeof functions.onMouseDown === "function")
         functions.onMouseDown(e, core);
-      }
     },
 
     onClick_wysiwyg: function (e) {
       const targetElement = e.target;
-      if (util.isNonEditable(context.element.wysiwyg)) {
-        return;
-      }
+      if (util.isNonEditable(context.element.wysiwyg)) return;
 
       const fileComponentInfo = core.getFileComponent(targetElement);
       if (fileComponentInfo) {
@@ -6978,12 +6690,8 @@ export default function (
         event._applyTagEffects();
       }
 
-      if (core._isBalloon) {
-        _w.setTimeout(event._toggleToolbarBalloon);
-      }
-      if (typeof functions.onClick === "function") {
-        functions.onClick(e, core);
-      }
+      if (core._isBalloon) _w.setTimeout(event._toggleToolbarBalloon);
+      if (typeof functions.onClick === "function") functions.onClick(e, core);
     },
 
     _balloonDelay: null,
@@ -7008,17 +6716,13 @@ export default function (
       if (
         core._bindControllersOff ||
         (!core._isBalloonAlways && range.collapsed)
-      ) {
+      )
         event._hideToolbar();
-      } else {
-        event._showToolbarBalloon(range);
-      }
+      else event._showToolbarBalloon(range);
     },
 
     _showToolbarBalloon: function (rangeObj) {
-      if (!core._isBalloon) {
-        return;
-      }
+      if (!core._isBalloon) return;
 
       const range = rangeObj || core.getRange();
       const toolbar = context.element.toolbar;
@@ -7045,7 +6749,7 @@ export default function (
       let scrollLeft = 0;
       let scrollTop = 0;
       let el = context.element.topArea;
-      while (el) {
+      while (!!el) {
         scrollLeft += el.scrollLeft;
         scrollTop += el.scrollTop;
         el = el.parentElement;
@@ -7162,7 +6866,7 @@ export default function (
           : rects.bottom + arrowMargin) -
         (rects.noText ? 0 : stickyTop) +
         scrollTop;
-      const l =
+      let l =
         absoluteLeft < 0
           ? padding
           : overRight < 0
@@ -7183,14 +6887,13 @@ export default function (
         resetTop = true;
       }
 
-      if (resetTop) {
+      if (resetTop)
         t =
           (isDirTop
             ? rects.top - toolbarHeight - arrowMargin
             : rects.bottom + arrowMargin) -
           (rects.noText ? 0 : stickyTop) +
           scrollTop;
-      }
 
       toolbar.style.left = _w.Math.floor(l) + "px";
       toolbar.style.top = _w.Math.floor(t) + "px";
@@ -7215,27 +6918,23 @@ export default function (
     },
 
     _showToolbarInline: function () {
-      if (!core._isInline) {
-        return;
-      }
+      if (!core._isInline) return;
 
       const toolbar = context.element.toolbar;
-      if (options.toolbarContainer) {
-        toolbar.style.position = "relative";
-      } else {
-        toolbar.style.position = "absolute";
-      }
+      if (options.toolbarContainer) toolbar.style.position = "relative";
+      else toolbar.style.position = "absolute";
 
       toolbar.style.visibility = "hidden";
       toolbar.style.display = "block";
-      core._inlineToolbarAttr.width = toolbar.style.width =
-        options.toolbarWidth;
-      core._inlineToolbarAttr.top = toolbar.style.top =
+      core._inlineToolbarAttr.width = options.toolbarWidth;
+      toolbar.style.width = options.toolbarWidth;
+      core._inlineToolbarAttr.top =
+        (options.toolbarContainer ? 0 : -1 - toolbar.offsetHeight) + "px";
+      toolbar.style.top =
         (options.toolbarContainer ? 0 : -1 - toolbar.offsetHeight) + "px";
 
-      if (typeof functions.showInline === "function") {
+      if (typeof functions.showInline === "function")
         functions.showInline(toolbar, context, core);
-      }
 
       event.onScroll_window();
       core._inlineToolbarAttr.isShow = true;
@@ -7262,9 +6961,7 @@ export default function (
       // history stack
       core.history.push(true);
 
-      if (typeof functions.onInput === "function") {
-        functions.onInput(e, core);
-      }
+      if (typeof functions.onInput === "function") functions.onInput(e, core);
     },
 
     _onShortcutKey: false,
@@ -7309,8 +7006,7 @@ export default function (
       let formatEl =
         util.getFormatElement(selectionNode, null) || selectionNode;
       let rangeEl = util.getRangeFormatElement(formatEl, null);
-      // nested list
-      const commonCon = range.commonAncestorContainer;
+
       switch (keyCode) {
         case 8 /** backspace key */:
           if (!selectRange) {
@@ -7417,6 +7113,8 @@ export default function (
             }
           }
 
+          // nested list
+          const commonCon = range.commonAncestorContainer;
           formatEl = util.getFormatElement(range.startContainer, null);
           rangeEl = util.getRangeFormatElement(formatEl, null);
           if (
@@ -7499,9 +7197,7 @@ export default function (
                   }
 
                   util.removeItem(formatEl);
-                  if (rangeEl.children.length === 0) {
-                    util.removeItem(rangeEl);
-                  }
+                  if (rangeEl.children.length === 0) util.removeItem(rangeEl);
 
                   core.setRange(con, offset, con, offset);
                   // history stack
@@ -7575,9 +7271,8 @@ export default function (
               if (fileComponentInfo) {
                 e.preventDefault();
                 e.stopPropagation();
-                if (formatEl.textContent.length === 0) {
+                if (formatEl.textContent.length === 0)
                   util.removeItem(formatEl);
-                }
                 core.selectComponent(
                   fileComponentInfo.target,
                   fileComponentInfo.pluginName
@@ -7617,7 +7312,7 @@ export default function (
                 selectionNode.nextSibling.nextSibling === null)) &&
             range.startOffset === selectionNode.textContent.length
           ) {
-            const nextEl = formatEl.nextElementSibling;
+            let nextEl = formatEl.nextElementSibling;
             if (!nextEl) {
               e.preventDefault();
               break;
@@ -7687,9 +7382,7 @@ export default function (
                   : range.endOffset === selectionNode.textContent.length &&
                     range.collapsed)))
           ) {
-            if (range.startContainer !== range.endContainer) {
-              core.removeNode();
-            }
+            if (range.startContainer !== range.endContainer) core.removeNode();
 
             let next = util.getArrayItem(formatEl.children, util.isList, false);
             next =
@@ -7729,20 +7422,15 @@ export default function (
 
           break;
         case 9 /** tab key */:
-          if (fileComponentName || options.tabDisable) {
-            break;
-          }
+          if (fileComponentName || options.tabDisable) break;
           e.preventDefault();
-          if (ctrl || alt || util.isWysiwygDiv(selectionNode)) {
-            break;
-          }
-
-          selectionNode = core.getSelectionNode();
+          if (ctrl || alt || util.isWysiwygDiv(selectionNode)) break;
 
           const isEdge =
             !range.collapsed ||
             core.isEdgePoint(range.startContainer, range.startOffset);
           const selectedFormats = core.getSelectedElements(null);
+          selectionNode = core.getSelectionNode();
           const cells = [];
           let lines = [];
           let fc = util.isListCell(selectedFormats[0]);
@@ -7779,24 +7467,19 @@ export default function (
                 ? util.prevIdx(cells, tableCell)
                 : util.nextIdx(cells, tableCell);
 
-              if (idx === cells.length && !shift) {
-                idx = 0;
-              }
-              if (idx === -1 && shift) {
-                idx = cells.length - 1;
-              }
+              if (idx === cells.length && !shift) idx = 0;
+              if (idx === -1 && shift) idx = cells.length - 1;
 
               let moveCell = cells[idx];
-              if (!moveCell) {
-                break;
-              }
+              if (!moveCell) break;
               moveCell = moveCell.firstElementChild || moveCell;
               core.setRange(moveCell, 0, moveCell, 0);
               break;
             }
 
             lines = lines.concat(cells);
-            fc = lc = null;
+            fc = null;
+            lc = null;
           }
 
           // Lines tab(4)
@@ -7807,9 +7490,7 @@ export default function (
               );
               if (lines.length === 1) {
                 const textRange = core.insertNode(tabText, null, true);
-                if (!textRange) {
-                  return false;
-                }
+                if (!textRange) return false;
                 if (!fc) {
                   r.sc = tabText;
                   r.so = textRange.endOffset;
@@ -7822,9 +7503,7 @@ export default function (
                 const len = lines.length - 1;
                 for (let i = 0, child; i <= len; i++) {
                   child = lines[i].firstChild;
-                  if (!child) {
-                    continue;
-                  }
+                  if (!child) continue;
 
                   if (util.isBreak(child)) {
                     lines[i].insertBefore(tabText.cloneNode(false), child);
@@ -7854,12 +7533,8 @@ export default function (
                 line = lines[i].childNodes;
                 for (let c = 0, cLen = line.length, child; c < cLen; c++) {
                   child = line[c];
-                  if (!child) {
-                    break;
-                  }
-                  if (util.onlyZeroWidthSpace(child)) {
-                    continue;
-                  }
+                  if (!child) break;
+                  if (util.onlyZeroWidthSpace(child)) continue;
 
                   if (/^\s{1,4}$/.test(child.textContent)) {
                     util.removeItem(child);
@@ -7948,11 +7623,8 @@ export default function (
                     (!util.isBreak(next) &&
                       util.onlyZeroWidthSpace(next.textContent)))))
             ) {
-              if (selectionFormat) {
-                util.removeItem(children[offset - 1]);
-              } else {
-                util.removeItem(selectionNode);
-              }
+              if (selectionFormat) util.removeItem(children[offset - 1]);
+              else util.removeItem(selectionNode);
               const newEl = core.appendFormatTag(
                 freeFormatEl,
                 util.isFormatElement(freeFormatEl.nextElementSibling)
@@ -8009,9 +7681,7 @@ export default function (
             break;
           }
 
-          if (selectRange) {
-            break;
-          }
+          if (selectRange) break;
 
           if (
             rangeEl &&
@@ -8138,7 +7808,6 @@ export default function (
             return false;
           }
           break;
-        default:
       }
 
       if (shift && /16/.test(keyCode)) {
@@ -8167,15 +7836,12 @@ export default function (
         core.setRange(zeroWidth, 1, zeroWidth, 1);
       }
 
-      if (typeof functions.onKeyDown === "function") {
+      if (typeof functions.onKeyDown === "function")
         functions.onKeyDown(e, core);
-      }
     },
 
     onKeyUp_wysiwyg: function (e) {
-      if (event._onShortcutKey) {
-        return;
-      }
+      if (event._onShortcutKey) return;
       core._editorRange();
 
       const range = core.getRange();
@@ -8194,9 +7860,7 @@ export default function (
         ((core._isBalloonAlways && keyCode !== 27) || !range.collapsed)
       ) {
         if (core._isBalloonAlways) {
-          if (keyCode !== 27) {
-            event._showToolbarBalloonDelay();
-          }
+          if (keyCode !== 27) event._showToolbarBalloonDelay();
         } else {
           event._showToolbarBalloon();
           return;
@@ -8280,55 +7944,35 @@ export default function (
       // history stack
       core.history.push(true);
 
-      if (typeof functions.onKeyUp === "function") {
-        functions.onKeyUp(e, core);
-      }
+      if (typeof functions.onKeyUp === "function") functions.onKeyUp(e, core);
     },
 
     onScroll_wysiwyg: function (e) {
       core.controllersOff();
       core._lineBreaker.style.display = "none";
-      if (core._isBalloon) {
-        event._hideToolbar();
-      }
-      if (typeof functions.onScroll === "function") {
-        functions.onScroll(e, core);
-      }
+      if (core._isBalloon) event._hideToolbar();
+      if (typeof functions.onScroll === "function") functions.onScroll(e, core);
     },
 
     onFocus_wysiwyg: function (e) {
-      if (core._antiBlur) {
-        return;
-      }
+      if (core._antiBlur) return;
       core.hasFocus = true;
-      if (core._isInline) {
-        event._showToolbarInline();
-      }
-      if (typeof functions.onFocus === "function") {
-        functions.onFocus(e, core);
-      }
+      if (core._isInline) event._showToolbarInline();
+      if (typeof functions.onFocus === "function") functions.onFocus(e, core);
     },
 
     onBlur_wysiwyg: function (e) {
-      if (core._antiBlur) {
-        return;
-      }
+      if (core._antiBlur) return;
       core.hasFocus = false;
       core.controllersOff();
-      if (core._isInline || core._isBalloon) {
-        event._hideToolbar();
-      }
-      if (typeof functions.onBlur === "function") {
-        functions.onBlur(e, core);
-      }
+      if (core._isInline || core._isBalloon) event._hideToolbar();
+      if (typeof functions.onBlur === "function") functions.onBlur(e, core);
 
       // active class reset of buttons
       const commandMap = core.commandMap;
       const activePlugins = core.activePlugins;
-      for (const key in commandMap) {
-        if (!util.hasOwn(commandMap, key)) {
-          continue;
-        }
+      for (let key in commandMap) {
+        if (!util.hasOwn(commandMap, key)) continue;
         if (activePlugins.indexOf(key) > -1) {
           plugins[key].active.call(core, null);
         } else if (commandMap.OUTDENT && /^OUTDENT$/i.test(key)) {
@@ -8342,9 +7986,7 @@ export default function (
 
       core._variable.currentNodes = [];
       core._variable.currentNodesMap = [];
-      if (options.showPathLabel) {
-        context.element.navigation.textContent = "";
-      }
+      if (options.showPathLabel) context.element.navigation.textContent = "";
     },
 
     onMouseDown_resizingBar: function (e) {
@@ -8367,7 +8009,11 @@ export default function (
       const resizeInterval =
         context.element.editorArea.offsetHeight +
         (e.clientY - core._variable.resizeClientY);
-      context.element.wysiwygFrame.style.height = context.element.code.style.height =
+      context.element.wysiwygFrame.style.height =
+        (resizeInterval < core._variable.minResizingSize
+          ? core._variable.minResizingSize
+          : resizeInterval) + "px";
+      context.element.code.style.height =
         (resizeInterval < core._variable.minResizingSize
           ? core._variable.minResizingSize
           : resizeInterval) + "px";
@@ -8395,9 +8041,7 @@ export default function (
         }
       }
 
-      if (context.element.toolbar.offsetWidth === 0) {
-        return;
-      }
+      if (context.element.toolbar.offsetWidth === 0) return;
 
       if (
         context.fileBrowser &&
@@ -8440,9 +8084,8 @@ export default function (
         core._variable.isFullScreen ||
         context.element.toolbar.offsetWidth === 0 ||
         options.stickyToolbar < 0
-      ) {
+      )
         return;
-      }
 
       const element = context.element;
       const editorHeight = element.editorArea.offsetHeight;
@@ -8458,9 +8101,7 @@ export default function (
         y + core._variable.minResizingSize >=
         editorHeight + editorTop
       ) {
-        if (!core._sticky) {
-          event._onStickyToolbar();
-        }
+        if (!core._sticky) event._onStickyToolbar();
         element.toolbar.style.top =
           editorHeight +
           editorTop +
@@ -8574,21 +8215,15 @@ export default function (
         sc.nodeType === 1 ? util.getParentElement(sc, ".ke-component") : null;
       const eComp =
         ec.nodeType === 1 ? util.getParentElement(ec, ".ke-component") : null;
-      if (sComp) {
-        util.removeItem(sComp);
-      }
-      if (eComp) {
-        util.removeItem(eComp);
-      }
+      if (sComp) util.removeItem(sComp);
+      if (eComp) util.removeItem(eComp);
 
       return false;
     },
 
     onPaste_wysiwyg: function (e) {
       const clipboardData = util.isIE ? _w.clipboardData : e.clipboardData;
-      if (!clipboardData) {
-        return true;
-      }
+      if (!clipboardData) return true;
       return event._dataTransferAction("paste", e, clipboardData);
     },
 
@@ -8646,9 +8281,7 @@ export default function (
 
     onDrop_wysiwyg: function (e) {
       const dataTransfer = e.dataTransfer;
-      if (!dataTransfer) {
-        return true;
-      }
+      if (!dataTransfer) return true;
       if (util.isIE) {
         e.preventDefault();
         e.stopPropagation();
@@ -8784,9 +8417,7 @@ export default function (
     },
 
     onMouseMove_wysiwyg: function (e) {
-      if (core.isDisabled) {
-        return;
-      }
+      if (core.isDisabled) return;
       const component = util.getParentElement(e.target, util.isComponent);
       const lineBreakerStyle = core._lineBreaker.style;
 
@@ -8843,8 +8474,8 @@ export default function (
           15 +
           "px";
         lineBreakerStyle.display = "block";
-      } else if (lineBreakerStyle.display !== "none") {
-        // off line breaker
+      } // off line breaker
+      else if (lineBreakerStyle.display !== "none") {
         lineBreakerStyle.display = "none";
       }
     },
@@ -8863,16 +8494,13 @@ export default function (
       const format = util.createElement(
         isList ? "BR" : util.isCell(component.parentNode) ? "DIV" : "P"
       );
-      if (!isList) {
-        format.innerHTML = "<br>";
-      }
+      if (!isList) format.innerHTML = "<br>";
 
       if (
         core._charTypeHTML &&
         !core.checkCharCount(format.outerHTML, "byte-html")
-      ) {
+      )
         return;
-      }
 
       component.parentNode.insertBefore(
         format,
@@ -9063,10 +8691,7 @@ export default function (
       eventWysiwyg.removeEventListener(
         "touchstart",
         event.onMouseDown_wysiwyg,
-        {
-          passive: true,
-          useCapture: false,
-        }
+        { passive: true, useCapture: false }
       );
 
       eventWysiwyg.removeEventListener("focus", event.onFocus_wysiwyg);
@@ -9102,10 +8727,10 @@ export default function (
         return;
       }
 
-      const sizeArray = (event._responsiveButtonSize = ["default"]);
-      const buttonsObj = (event._responsiveButtons = {
-        default: _responsiveButtons[0],
-      });
+      const sizeArray = ["default"];
+      event._responsiveButtonSize = ["default"];
+      const buttonsObj = { default: _responsiveButtons[0] };
+      event._responsiveButtons = { default: _responsiveButtons[0] };
       for (
         let i = 1, len = _responsiveButtons.length, size, buttonGroup;
         i < len;
@@ -9344,15 +8969,15 @@ export default function (
     /**
      * @description Reset the buttons on the toolbar. (Editor is not reloaded)
      * You cannot set a new plugin for the button.
-     * @param {Array} buttonList Button list
+     * @param {Array} toolbarItem Button list
      */
-    setToolbarButtons: function (buttonList) {
+    setToolbarButtons: function (toolbarItem) {
       core.submenuOff();
       core.containerOff();
 
       const newToolbar = _Constructor._createToolBar(
         _d,
-        buttonList,
+        toolbarItem,
         core.plugins,
         options
       );
@@ -9372,9 +8997,7 @@ export default function (
 
       context.element = newContext.element;
       context.tool = newContext.tool;
-      if (options.iframe) {
-        context.element.wysiwyg = core._wd.body;
-      }
+      if (options.iframe) context.element.wysiwyg = core._wd.body;
       core._cachingButtons();
       core.history._resetCachingButton();
 
@@ -9382,10 +9005,8 @@ export default function (
       const oldCallButtons = pluginCallButtons;
       pluginCallButtons = newToolbar.pluginCallButtons;
       let plugin, button, oldButton;
-      for (const key in pluginCallButtons) {
-        if (!util.hasOwn(pluginCallButtons, key)) {
-          continue;
-        }
+      for (let key in pluginCallButtons) {
+        if (!util.hasOwn(pluginCallButtons, key)) continue;
         plugin = plugins[key];
         button = pluginCallButtons[key];
         if (plugin.active && button) {
@@ -9398,19 +9019,14 @@ export default function (
         }
       }
 
-      if (core.hasFocus) {
-        event._applyTagEffects();
-      }
+      if (core.hasFocus) event._applyTagEffects();
 
-      if (core._variable.isCodeView) {
+      if (core._variable.isCodeView)
         util.addClass(core._styleCommandMap.codeView, "active");
-      }
-      if (core._variable.isFullScreen) {
+      if (core._variable.isFullScreen)
         util.addClass(core._styleCommandMap.fullScreen, "active");
-      }
-      if (util.hasClass(context.element.wysiwyg, "ke-show-block")) {
+      if (util.hasClass(context.element.wysiwyg, "ke-show-block"))
         util.addClass(core._styleCommandMap.showBlocks, "active");
-      }
     },
 
     /**
@@ -9428,10 +9044,8 @@ export default function (
 
       core.plugins = _options.plugins || core.plugins;
       const mergeOptions = [options, _options].reduce(function (init, option) {
-        for (const key in option) {
-          if (!util.hasOwn(option, key)) {
-            continue;
-          }
+        for (let key in option) {
+          if (!util.hasOwn(option, key)) continue;
           if (key === "plugins" && option[key] && init[key]) {
             let i = init[key];
             let o = option[key];
@@ -9474,16 +9088,14 @@ export default function (
       }
 
       if (cons.plugins) {
-        core.plugins = plugins = cons.plugins;
+        core.plugins = cons.plugins;
       }
 
       // reset context
-      if (el._menuTray.children.length === 0) {
-        this._menuTray = {};
-      }
+      if (el._menuTray.children.length === 0) this._menuTray = {};
       _responsiveButtons = cons.toolbar.responsiveButtons;
       options = mergeOptions;
-      core.lang = lang = options.lang;
+      core.lang = options.lang;
 
       if (options.iframe) {
         el.wysiwygFrame.addEventListener("load", function () {
@@ -9506,10 +9118,8 @@ export default function (
      * @param {String} style Style string
      */
     setDefaultStyle: function (style) {
-      const newStyles = (options._editorStyles = util._setDefaultOptionStyle(
-        options,
-        style
-      ));
+      const newStyles = util._setDefaultOptionStyle(options, style);
+      options._editorStyles = util._setDefaultOptionStyle(options, style);
       const el = context.element;
 
       // top area
@@ -9554,7 +9164,7 @@ export default function (
     },
 
     /**
-     * @description Gets the kothingEditor's context object. Contains settings, plugins, and cached element objects
+     * @description Gets the KothingEditor's context object. Contains settings, plugins, and cached element objects
      * @returns {Object}
      */
     getContext: function () {
@@ -9562,7 +9172,7 @@ export default function (
     },
 
     /**
-     * @description Gets the contents of the kothingEditor
+     * @description Gets the contents of the KothingEditor
      * @param {Boolean} onlyContents - Return only the contents of the body without headers when the "fullPage" option is true
      * @returns {String}
      */
@@ -9571,7 +9181,7 @@ export default function (
     },
 
     /**
-     * @description Gets only the text of the kothingEditor contents
+     * @description Gets only the text of the KothingEditor contents
      * @returns {String}
      */
     getText: function () {
@@ -9636,19 +9246,15 @@ export default function (
      * @param {FileList} files FileList
      */
     insertImage: function (files) {
-      if (!core.plugins.image || !files) {
-        return;
-      }
+      if (!core.plugins.image || !files) return;
 
-      if (!core.initPlugins.image) {
+      if (!core.initPlugins.image)
         core.callPlugin(
           "image",
           core.plugins.image.submitAction.bind(core, files),
           null
         );
-      } else {
-        core.plugins.image.submitAction.call(core, files);
-      }
+      else core.plugins.image.submitAction.call(core, files);
       core.focus();
     },
 
@@ -9666,9 +9272,7 @@ export default function (
       rangeSelection
     ) {
       if (typeof html === "string") {
-        if (!notCleaningData) {
-          html = core.cleanHTML(html, null);
-        }
+        if (!notCleaningData) html = core.cleanHTML(html, null);
         try {
           const dom = _d.createRange().createContextualFragment(html);
           const domTree = dom.childNodes;
@@ -9679,34 +9283,28 @@ export default function (
             for (let i = 0, len = domTree.length; i < len; i++) {
               checkHTML += domTree[i][type];
             }
-            if (!core.checkCharCount(checkHTML, null)) {
-              return;
-            }
+            if (!core.checkCharCount(checkHTML, null)) return;
           }
 
           let c, a, t, firstCon;
           while ((c = domTree[0])) {
             t = core.insertNode(c, a, false);
             a = t.container || t;
-            if (!firstCon) {
-              firstCon = t;
-            }
+            if (!firstCon) firstCon = t;
           }
 
           const offset =
             a.nodeType === 3
               ? t.endOffset || a.textContent.length
               : a.childNodes.length;
-          if (rangeSelection) {
+          if (rangeSelection)
             core.setRange(
               firstCon.container || firstCon,
               firstCon.startOffset || 0,
               a,
               offset
             );
-          } else {
-            core.setRange(a, offset, a, offset);
-          }
+          else core.setRange(a, offset, a, offset);
         } catch (error) {
           core.execCommand("insertHTML", false, html);
         }
@@ -9730,7 +9328,7 @@ export default function (
     },
 
     /**
-     * @description Change the contents of the kothingEditor
+     * @description Change the contents of the KothingEditor
      * @param {String} contents Contents to Input
      */
     setContents: function (contents) {
@@ -9738,7 +9336,7 @@ export default function (
     },
 
     /**
-     * @description Add contents to the kothingEditor
+     * @description Add contents to the KothingEditor
      * @param {String} contents Contents to Input
      */
     appendContents: function (contents) {
@@ -9764,7 +9362,7 @@ export default function (
     },
 
     /**
-     * @description Disable the kothingEditor
+     * @description Disable the KothingEditor
      */
     disabled: function () {
       context.tool.cover.style.display = "block";
@@ -9779,7 +9377,7 @@ export default function (
     },
 
     /**
-     * @description Enable the kothingEditor
+     * @description Enable the KothingEditor
      */
     enabled: function () {
       context.tool.cover.style.display = "none";
@@ -9794,36 +9392,31 @@ export default function (
     },
 
     /**
-     * @description Show the kothingEditor
+     * @description Show the KothingEditor
      */
     show: function () {
       const topAreaStyle = context.element.topArea.style;
-      if (topAreaStyle.display === "none") {
+      if (topAreaStyle.display === "none")
         topAreaStyle.display = options.display;
-      }
     },
 
     /**
-     * @description Hide the kothingEditor
+     * @description Hide the KothingEditor
      */
     hide: function () {
       context.element.topArea.style.display = "none";
     },
 
     /**
-     * @description Destroy the kothingEditor
+     * @description Destroy the KothingEditor
      */
     destroy: function () {
       /** off menus */
       core.submenuOff();
       core.containerOff();
       core.controllersOff();
-      if (core.notice) {
-        core.notice.close.call(core);
-      }
-      if (core.modalForm) {
-        core.plugins.dialog.close.call(core);
-      }
+      if (core.notice) core.notice.close.call(core);
+      if (core.modalForm) core.plugins.dialog.close.call(core);
 
       /** remove history */
       core.history._destroy();
@@ -9836,32 +9429,22 @@ export default function (
       util.removeItem(context.element.topArea);
 
       /** remove object reference */
-      for (const k in core) {
-        if (util.hasOwn(core, k)) {
-          delete core[k];
-        }
+      for (let k in core) {
+        if (util.hasOwn(core, k)) delete core[k];
       }
-      for (const k in event) {
-        if (util.hasOwn(event, k)) {
-          delete event[k];
-        }
+      for (let k in event) {
+        if (util.hasOwn(event, k)) delete event[k];
       }
-      for (const k in context) {
-        if (util.hasOwn(context, k)) {
-          delete context[k];
-        }
+      for (let k in context) {
+        if (util.hasOwn(context, k)) delete context[k];
       }
-      for (const k in pluginCallButtons) {
-        if (util.hasOwn(pluginCallButtons, k)) {
-          delete pluginCallButtons[k];
-        }
+      for (let k in pluginCallButtons) {
+        if (util.hasOwn(pluginCallButtons, k)) delete pluginCallButtons[k];
       }
 
       /** remove user object */
-      for (const k in this) {
-        if (util.hasOwn(this, k)) {
-          delete this[k];
-        }
+      for (let k in this) {
+        if (util.hasOwn(this, k)) delete this[k];
       }
     },
 
@@ -9909,7 +9492,7 @@ export default function (
     },
   };
 
-  /** ********** Core init ************/
+  /************ Core init ************/
   // functions
   core.functions = functions;
 
@@ -9937,7 +9520,9 @@ export default function (
   }
 
   contextEl.editorArea.appendChild(contextEl.wysiwygFrame);
-  contextEl = originEl = topEl = null;
+  contextEl = null;
+  originEl = null;
+  topEl = null;
 
   // init
   if (!options.iframe) {

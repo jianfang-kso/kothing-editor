@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-call */
 /*
  * Rich Text Editor
  *
@@ -19,10 +18,10 @@ export default {
     core.addModule([dialog, component, resizing, fileManager]);
 
     const context = core.context;
-    const contextImage = (context.image = {
-      _infoList: [], // @Override fileManager
-      _infoIndex: 0, // @Override fileManager
-      _uploadFileLength: 0, // @Override fileManager
+    const defaultImage = {
+      _infoList: [],
+      _infoIndex: 0,
+      _uploadFileLength: 0,
       sizeUnit: context.option._imageSizeUnit,
       _altText: "",
       _linkElement: null,
@@ -31,11 +30,9 @@ export default {
       _v_link: { _linkValue: "" },
       _v_src: { _linkValue: "" },
       svgDefaultSize: "30%",
-      // @require @Override component
       _element: null,
       _cover: null,
       _container: null,
-      // @Override resizing properties
       inputX: null,
       inputY: null,
       _element_w: 1,
@@ -60,7 +57,9 @@ export default {
       _captionChecked: false,
       _caption: null,
       captionCheckEl: null,
-    });
+    };
+    const contextImage = defaultImage;
+    context.image = defaultImage;
 
     /** image dialog */
     let image_dialog = this.setDialog.call(core);
@@ -186,79 +185,60 @@ export default {
     dialog.className = "ke-dialog-content";
     dialog.style.display = "none";
 
-    let html =
-      "" +
-      '<div class="ke-dialog-header">' +
-      '<button type="button" data-command="close" class="ke-btn ke-dialog-close" class="close" aria-label="Close" title="' +
-      lang.dialogBox.close +
-      '">' +
-      this.icons.cancel +
-      "</button>" +
-      '<span class="ke-modal-title">' +
-      lang.dialogBox.imageBox.title +
-      "</span>" +
-      "</div>" +
-      '<div class="ke-dialog-tabs">' +
-      '<button type="button" class="_ke_tab_link active" data-tab-link="image">' +
-      lang.toolbar.image +
-      "</button>" +
-      '<button type="button" class="_ke_tab_link" data-tab-link="url">' +
-      lang.toolbar.link +
-      "</button>" +
-      "</div>" +
-      '<form method="post" enctype="multipart/form-data">' +
-      '<div class="_ke_tab_content _ke_tab_content_image">' +
-      '<div class="ke-dialog-body"><div style="border-bottom: 1px dashed #ccc;">';
+    let html = `
+      <div class="ke-dialog-header">
+        <button type="button" data-command="close" class="ke-btn ke-dialog-close" class="close" aria-label="Close" title="${lang.dialogBox.close}">${this.icons.cancel}</button>
+        <span class="ke-modal-title">
+          ${lang.dialogBox.imageBox.title}
+        </span>
+      </div>
+      <div class="ke-dialog-tabs">
+        <button type="button" class="_ke_tab_link active" data-tab-link="image">${lang.toolbar.image}</button><button type="button" class="_ke_tab_link" data-tab-link="url">${lang.toolbar.link}</button>
+      </div>
+      <form method="post" enctype="multipart/form-data">
+        <div class="_ke_tab_content _ke_tab_content_image">
+        <div class="ke-dialog-body">
+        <div style="border-bottom: 1px dashed #ccc;">`;
 
     if (option.imageFileInput) {
-      html +=
-        "" +
-        '<div class="ke-dialog-form">' +
-        "<label>" +
-        lang.dialogBox.imageBox.file +
-        "</label>" +
-        '<div class="ke-dialog-form-files">' +
-        '<input class="ke-input-form _ke_image_file" type="file" accept="image/"' +
-        option.imageAccept +
-        (option.imageMultipleFile ? ' multiple="multiple"' : "") +
-        "/>" +
-        '<button type="button" class="ke-btn ke-dialog-files-edge-button ke-file-remove" title="' +
-        lang.controller.remove +
-        '">' +
-        this.icons.cancel +
-        "</button>" +
-        "</div>" +
-        "</div>";
+      html += `
+        <div class="ke-dialog-form">
+        <label>${lang.dialogBox.imageBox.file}</label>
+        <div class="ke-dialog-form-files">
+        <input class="ke-input-form _ke_image_file" type="file" accept="${
+          option.imageAccept
+        }" ${option.imageMultipleFile ? `multiple="multiple"` : ""}/>
+        <button type="button" class="ke-btn ke-dialog-files-edge-button ke-file-remove" title="${
+          lang.controller.remove
+        }">
+          ${this.icons.cancel}
+        </button>
+        </div>
+        </div>`;
     }
 
     if (option.imageUrlInput) {
-      html +=
-        "" +
-        '<div class="ke-dialog-form">' +
-        "<label>" +
-        lang.dialogBox.imageBox.url +
-        "</label>" +
-        '<div class="ke-dialog-form-files">' +
-        '<input class="ke-input-form ke-input-url" type="text" />' +
-        (option.imageGalleryUrl && this.plugins.imageGallery
-          ? '<button type="button" class="ke-btn ke-dialog-files-edge-button __ke__gallery" title="' +
-            lang.toolbar.imageGallery +
-            '">' +
-            this.icons.image_gallery +
-            "</button>"
-          : "") +
-        "</div>" +
-        '<pre class="ke-link-preview"></pre>' +
-        "</div>";
+      html += `
+        <div class="ke-dialog-form">
+          <label>${lang.dialogBox.imageBox.url}</label>
+          <div class="ke-dialog-form-files">
+            <input class="ke-input-form ke-input-url" type="text" />
+            ${
+              option.imageGalleryUrl && this.plugins.imageGallery
+                ? `<button type="button" class="ke-btn ke-dialog-files-edge-button __ke__gallery" title="${lang.toolbar.imageGallery}">${this.icons.image_gallery}</button>`
+                : ""
+            }
+          </div>
+          <pre class="ke-link-preview"></pre>
+        </div>`;
     }
 
-    html +=
-      "</div>" +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.imageBox.altText +
-      '</label><input class="ke-input-form _ke_image_alt" type="text" />' +
-      "</div>";
+    html += `
+      </div>
+      <div class="ke-dialog-form">
+        <label>${lang.dialogBox.imageBox.altText}</label>
+        <input class="ke-input-form _ke_image_alt" type="text" />
+      </div>`;
 
     if (option.imageResizing) {
       const onlyPercentage = option.imageSizeOnlyPercentage;
@@ -270,100 +250,78 @@ export default {
         : "";
       html += '<div class="ke-dialog-form">';
       if (onlyPercentage || !option.imageHeightShow) {
-        html +=
-          "" +
-          '<div class="ke-dialog-size-text">' +
-          '<label class="size-w">' +
-          lang.dialogBox.size +
-          "</label>" +
-          "</div>";
+        html += `
+          <div class="ke-dialog-size-text">
+            <label class="size-w">${lang.dialogBox.size}</label>
+          </div>`;
       } else {
-        html +=
-          "" +
-          '<div class="ke-dialog-size-text">' +
-          '<label class="size-w">' +
-          lang.dialogBox.width +
-          "</label>" +
-          '<label class="ke-dialog-size-x">&nbsp;</label>' +
-          '<label class="size-h">' +
-          lang.dialogBox.height +
-          "</label>" +
-          "</div>";
+        html += `
+          <div class="ke-dialog-size-text">
+            <label class="size-w">${lang.dialogBox.width}</label>
+            <label class="ke-dialog-size-x">&nbsp;</label>
+            <label class="size-h">${lang.dialogBox.height}</label>
+          </div>`;
       }
-      html +=
-        "" +
-        '<input class="ke-input-control _ke_image_size_x" placeholder="auto"' +
-        (onlyPercentage ? ' type="number" min="1"' : 'type="text"') +
-        (onlyPercentage ? ' max="100"' : "") +
-        " />" +
-        '<label class="ke-dialog-size-x"' +
-        heightDisplay +
-        ">" +
-        (onlyPercentage ? "%" : "x") +
-        "</label>" +
-        '<input type="text" class="ke-input-control _ke_image_size_y" placeholder="auto"' +
-        onlyPercentDisplay +
-        (onlyPercentage ? ' max="100"' : "") +
-        heightDisplay +
-        "/>" +
-        "<label" +
-        onlyPercentDisplay +
-        heightDisplay +
-        '><input type="checkbox" class="ke-dialog-btn-check _ke_image_check_proportion" checked/>&nbsp;' +
-        lang.dialogBox.proportion +
-        "</label>" +
-        '<button type="button" title="' +
-        lang.dialogBox.revertButton +
-        '" class="ke-btn ke-dialog-btn-revert" style="float: right;">' +
-        this.icons.revert +
-        "</button>" +
-        "</div>";
+      html += `
+          <input class="ke-input-control _ke_image_size_x" placeholder="auto" ${
+            onlyPercentage ? ' type="number" min="1"' : 'type="text"'
+          } ${onlyPercentage ? ' max="100"' : ""}/>
+          <label class="ke-dialog-size-x" ${heightDisplay}>${
+        onlyPercentage ? "%" : "x"
+      }</label>
+          <input type="text" class="ke-input-control _ke_image_size_y" placeholder="auto" ${onlyPercentDisplay} ${
+        onlyPercentage ? ' max="100"' : ""
+      } ${heightDisplay}/>
+          <label ${onlyPercentDisplay} ${heightDisplay}>
+          <input type="checkbox" class="ke-dialog-btn-check _ke_image_check_proportion" checked />&nbsp;${
+            lang.dialogBox.proportion
+          }</label>
+          <button type="button" title="${
+            lang.dialogBox.revertButton
+          }" class="ke-btn ke-dialog-btn-revert" style="float: right;">
+            ${this.icons.revert}
+          </button>
+        </div>`;
     }
 
-    html +=
-      "" +
-      '<div class="ke-dialog-form ke-dialog-form">' +
-      '<label><input type="checkbox" class="ke-dialog-btn-check _ke_image_check_caption" />&nbsp;' +
-      lang.dialogBox.caption +
-      "</label>" +
-      "</div>" +
-      "</div>" +
-      "</div>" +
-      '<div class="_ke_tab_content _ke_tab_content_url" style="display: none">' +
-      '<div class="ke-dialog-body">' +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.linkBox.url +
-      '</label><input class="ke-input-form _ke_image_link" type="text" />' +
-      '<pre class="ke-link-preview"></pre>' +
-      "</div>" +
-      '<label><input type="checkbox" class="_ke_image_link_check"/>&nbsp;' +
-      lang.dialogBox.linkBox.newWindowCheck +
-      "</label>" +
-      "</div>" +
-      "</div>" +
-      '<div class="ke-dialog-footer">' +
-      "<div>" +
-      '<label><input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="none" checked>' +
-      lang.dialogBox.basic +
-      "</label>" +
-      '<label><input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="left">' +
-      lang.dialogBox.left +
-      "</label>" +
-      '<label><input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="center">' +
-      lang.dialogBox.center +
-      "</label>" +
-      '<label><input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="right">' +
-      lang.dialogBox.right +
-      "</label>" +
-      "</div>" +
-      '<button type="submit" class="ke-btn-primary" title="' +
-      lang.dialogBox.submitButton +
-      '"><span>' +
-      lang.dialogBox.submitButton +
-      "</span></button>" +
-      "</div>" +
-      "</form>";
+    html += `
+          <div class="ke-dialog-form ke-dialog-form-footer">
+            <label>
+              <input type="checkbox" class="ke-dialog-btn-check _ke_image_check_caption" />&nbsp;${lang.dialogBox.caption}
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="_ke_tab_content _ke_tab_content_url" style="display: none">
+        <div class="ke-dialog-body">
+          <div class="ke-dialog-form">
+            <label>${lang.dialogBox.linkBox.url}</label>
+            <input class="ke-input-form _ke_image_link" type="text" />
+            <pre class="ke-link-preview"></pre>
+          </div>
+          <label>
+            <input type="checkbox" class="_ke_image_link_check"/>&nbsp;${lang.dialogBox.linkBox.newWindowCheck}
+          </label>
+        </div>
+      </div>
+      <div class="ke-dialog-footer">
+        <div>
+          <label>
+            <input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="none" checked>${lang.dialogBox.basic}
+          </label>
+          <label>
+            <input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="left">${lang.dialogBox.left}
+          </label>
+          <label>
+            <input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="center">${lang.dialogBox.center}
+          </label>
+          <label>
+            <input type="radio" name="kothing-editor_image_radio" class="ke-dialog-btn-radio" value="right">${lang.dialogBox.right}
+          </label>
+        </div>
+        <button type="submit" class="ke-btn-primary" title="${lang.dialogBox.submitButton}">${lang.dialogBox.submitButton}</button>
+      </div>
+      </form>`;
 
     dialog.innerHTML = html;
 
@@ -404,12 +362,20 @@ export default {
     this._v_src._linkValue = target.src;
     this.previewSrc.textContent = target.src;
     this.imgUrlFile.value = target.src;
+
     this.imgUrlFile.focus();
   },
 
   _onLinkPreview: function (context, protocol, e) {
     const value = e.target.value.trim();
-    context._linkValue = this.textContent = !value
+    context._linkValue = !value
+      ? ""
+      : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
+      ? protocol + value
+      : value.indexOf("://") === -1
+      ? "/" + value
+      : value;
+    this.textContent = !value
       ? ""
       : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
       ? protocol + value
@@ -445,7 +411,7 @@ export default {
       this.util.getParentElement(imageEl, this.util.isMediaComponent) ||
       imageEl;
     const dataIndex = imageEl.getAttribute("data-index") * 1;
-    const focusEl =
+    let focusEl =
       imageContainer.previousElementSibling ||
       imageContainer.nextElementSibling;
 
@@ -527,16 +493,16 @@ export default {
     // Declare all variables
     const tabName = targetElement.getAttribute("data-tab-link");
     const contentClassName = "_ke_tab_content";
-    let i;
+    let i, tabContent, tabLinks;
 
     // Get all elements with class="tabcontent" and hide them
-    const tabContent = modal.getElementsByClassName(contentClassName);
+    tabContent = modal.getElementsByClassName(contentClassName);
     for (i = 0; i < tabContent.length; i++) {
       tabContent[i].style.display = "none";
     }
 
     // Get all elements with class="tablinks" and remove the class "active"
-    const tabLinks = modal.getElementsByClassName("_ke_tab_link");
+    tabLinks = modal.getElementsByClassName("_ke_tab_link");
     for (i = 0; i < tabLinks.length; i++) {
       this.util.removeClass(tabLinks[i], "active");
     }
@@ -596,7 +562,7 @@ export default {
     } catch (error) {
       this.closeLoading();
       throw Error(
-        '[KothingEditor.image.submit.fail] cause : "' + error.message + '"'
+        `[KothingEditor.image.submit.fail] cause : "${error.message}"`
       );
     } finally {
       this.plugins.dialog.close.call(this);
@@ -801,10 +767,10 @@ export default {
     isUpdate
   ) {
     try {
-      const FileReader = this._w.FileReader;
+      const wFileReader = this._w.FileReader;
 
       for (let i = 0, reader, file; i <= filesLen; i++) {
-        reader = new FileReader();
+        reader = new wFileReader();
         file = files[i];
 
         if (isUpdate) {
@@ -1122,7 +1088,7 @@ export default {
           : "";
         imageEl.setAttribute("data-image-link", linkValue);
       } else {
-        const newEl = this.plugins.image.onRender_link.call(
+        let newEl = this.plugins.image.onRender_link.call(
           this,
           imageEl,
           linkValue,
@@ -1134,7 +1100,7 @@ export default {
       const imageElement = imageEl;
 
       imageElement.setAttribute("data-image-link", "");
-      const newEl = imageElement.cloneNode(true);
+      let newEl = imageElement.cloneNode(true);
       cover.removeChild(contextImage._linkElement);
       cover.insertBefore(newEl, contextImage._caption);
       imageEl = newEl;
@@ -1183,7 +1149,7 @@ export default {
     }
 
     // size
-    const isPercent = false;
+    let isPercent = false;
     if (contextImage._resizing) {
       imageEl.setAttribute("data-proportion", contextImage._proportionChecked);
       if (changeSize) {
@@ -1289,12 +1255,14 @@ export default {
     }
     contextImage._altText = contextImage._element.alt;
     contextImage.altText.value = contextImage._element.alt;
+
     contextImage._v_link._linkValue =
       contextImage._linkElement === null ? "" : contextImage._linkElement.href;
     contextImage.previewLink.textContent =
       contextImage._linkElement === null ? "" : contextImage._linkElement.href;
     contextImage.imgLink.value =
       contextImage._linkElement === null ? "" : contextImage._linkElement.href;
+
     contextImage.imgLinkNewWindowCheck.checked =
       contextImage._linkElement &&
       contextImage._linkElement.target === "_blank";

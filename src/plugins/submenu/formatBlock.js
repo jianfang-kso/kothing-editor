@@ -10,12 +10,14 @@ export default {
   name: "formatBlock",
   display: "submenu",
   add: function (core, targetElement) {
+    const icons = core.icons;
     const context = core.context;
     context.formatBlock = {
       targetText: targetElement.querySelector(".txt"),
       targetTooltip: targetElement.parentNode.querySelector(".ke-tooltip-text"),
       _formatList: null,
       currentFormat: "",
+      icon: icons.format_block,
     };
 
     /** set submenu */
@@ -126,12 +128,10 @@ export default {
    */
   active: function (element) {
     let formatTitle = this.lang.toolbar.formats;
-    const target = this.context.formatBlock.targetText;
-    const tooltip = this.context.formatBlock.targetTooltip;
-
+    const target = this.context.formatBlock.targetText.firstElementChild;
+    const icon = this.context.formatBlock.icon;
     if (!element) {
-      this.util.changeTxt(target, formatTitle);
-      this.util.changeTxt(tooltip, formatTitle);
+      this.util.changeElement(target, icon);
     } else if (this.util.isFormatElement(element)) {
       const formatContext = this.context.formatBlock;
       const formatList = formatContext._formatList;
@@ -151,8 +151,7 @@ export default {
         }
       }
 
-      this.util.changeTxt(target, formatTitle);
-      this.util.changeTxt(tooltip, formatTitle);
+      this.util.changeElement(target, `<span>${formatTitle}</span>`);
       target.setAttribute("data-value", nodeName);
       target.setAttribute("data-class", className);
 
@@ -195,10 +194,10 @@ export default {
     e.stopPropagation();
 
     let target = e.target;
-    let command = null;
-    let value = null;
-    let tag = null;
-    let className = "";
+    let command = null,
+      value = null,
+      tag = null,
+      className = "";
 
     while (!command && !/UL/i.test(target.tagName)) {
       command = target.getAttribute("data-command");
@@ -220,7 +219,6 @@ export default {
       const rangeElement = tag.cloneNode(false);
       this.applyRangeFormatElement(rangeElement);
     } else {
-      // free, replace
       let range = this.getRange();
       let selectedFormsts = this.getSelectedElementsAndComponents(false);
 
@@ -358,7 +356,6 @@ export default {
 
         this.setRange(focusElement, 0, focusElement, 0);
       } else {
-        // replace format
         for (
           let i = 0, len = modifiedFormsts.length, node, newFormat;
           i < len;

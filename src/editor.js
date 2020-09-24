@@ -27,7 +27,7 @@ export default {
   },
 
   /**
-   * @description Create the kothingEditor
+   * @description Create the KothingEditor
    * @param {String|Element} idOrElement textarea Id or textarea element
    * @param {JSON|Object} options user options
    * @returns {Object}
@@ -40,13 +40,13 @@ export default {
     }
     if (_init_options) {
       options = [_init_options, options].reduce(function (init, option) {
-        for (const key in option) {
+        for (let key in option) {
           if (!util.hasOwn(option, key)) {
             continue;
           }
           if (key === "plugins" && option[key] && init[key]) {
-            let i = init[key];
-            let o = option[key];
+            let i = init[key],
+              o = option[key];
             i = i.length
               ? i
               : Object.keys(i).map(function (name) {
@@ -85,7 +85,7 @@ export default {
       }
 
       throw Error(
-        "[KothingEditor.create.fail] kothingEditor requires textarea's element or id value"
+        "[KothingEditor.create.fail] KothingEditor requires textarea's element or id value"
       );
     }
 
@@ -96,7 +96,7 @@ export default {
       document.getElementById(cons.constructed._top.id)
     ) {
       throw Error(
-        '[KothingEditor.create.fail] The ID of the kothingEditor you are trying to create already exists (ID:"' +
+        '[KothingEditor.create.fail] The ID of the KothingEditor you are trying to create already exists (ID:"' +
           cons.constructed._top.id +
           '")'
       );

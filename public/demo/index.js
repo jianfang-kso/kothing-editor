@@ -50,7 +50,7 @@ kothintEditor.create('scrolleditor', {
   katex: Katex,
   // attributesWhitelist: 'style',
   width: '100%',
-  toolBarItem: [
+  toolbarItem: [
     ['font', 'fontSize', 'formatBlock'],
   ],
 });
@@ -64,7 +64,7 @@ let s1 = kothintEditor.create('editor', {
   display: "inline",
   tabDisable: false,
   placeholder: "Enter the question image here",
-  toolBarItem: [["table", "removeFormat"]],
+  toolbarItem: [["table", "removeFormat"]],
 });
 
 // s1.core._charCount = function (nextCharCount, blink) {
@@ -121,7 +121,7 @@ window.cm = CodeMirror;
 
 // let s1 = window.s1 = kothintEditor.create(document.getElementById('editor'), {
 //     plugins: [lineHeight],
-//     toolBarItem: [
+//     toolbarItem: [
 //         [
 //             'lineHeight'
 //         ]
@@ -137,7 +137,7 @@ window.cm = CodeMirror;
 
 // });
 
-window.sun_destroy1 = function () {
+window.kothing_destroy1 = function () {
   s1.destroy();
 
   // s1.setDefaultStyle('height: auto; font-family: cursive; font-size: 10px; width:300px;');
@@ -160,11 +160,11 @@ window.sun_destroy1 = function () {
   // '</html>')
 };
 
-window.sun_create1 = function () {
+window.kothing_create1 = function () {
   // s1.destroy();
   s1 = kothintEditor.create('editor', {
     plugins: [align, plugins.link],
-    toolBarItem: [['align', 'link', 'bold', 'underline', 'italic', 'strike', 'removeFormat', 'codeView']],
+    toolbarItem: [['align', 'link', 'bold', 'underline', 'italic', 'strike', 'removeFormat', 'codeView']],
     width: '100%',
     height: 'auto',
   });
@@ -234,7 +234,7 @@ let ss = window.ss = kothintEditor.create(document.getElementById('editor1'), {
   ],
   // maxCharCount: 670,
   imageGalleryUrl: '',
-  toolBarItem: [
+  toolbarItem: [
     // default
     ['undo', 'redo'],
     ['font', 'fontSize', 'formatBlock'],
@@ -417,45 +417,45 @@ ss.showInline = function () {
 
 },
 
-// ss.showController = function (name, controllers, core) {
-//     let c = null;
-//     console.log('target', core.currentControllerTarget);
-//     for (let i in controllers) {
-//         c = controllers[i];
-//         if (core.util.hasClass(c, 'ke-controller-resizing')) {
-//             const updateButton = c.querySelector('[data-command="update"]');
-//             if (name === 'image') updateButton.setAttribute('disabled', true);
-//             else updateButton.removeAttribute('disabled');
-//         }
-//     }
-// }
+  // ss.showController = function (name, controllers, core) {
+  //     let c = null;
+  //     console.log('target', core.currentControllerTarget);
+  //     for (let i in controllers) {
+  //         c = controllers[i];
+  //         if (core.util.hasClass(c, 'ke-controller-resizing')) {
+  //             const updateButton = c.querySelector('[data-command="update"]');
+  //             if (name === 'image') updateButton.setAttribute('disabled', true);
+  //             else updateButton.removeAttribute('disabled');
+  //         }
+  //     }
+  // }
 
-window.sun_noticeOpen = function () {
-  ss.noticeOpen('test notice');
-};
+  window.kothing_noticeOpen = function () {
+    ss.noticeOpen('test notice');
+  };
 
-window.sun_noticeClose = function () {
+window.kothing_noticeClose = function () {
   ss.noticeClose();
 };
 
-window.sun_save = function () {
+window.kothing_save = function () {
   ss.save();
 };
 
-window.sun_getContext = function () {
+window.kothing_getContext = function () {
   console.log(ss.getContext());
 };
 
-window.sun_getImagesInfo = function () {
+window.kothing_getImagesInfo = function () {
   console.log(ss.getImagesInfo());
   ss.getImagesInfo().list[0].select();
 };
 
-window.sun_insertHTML = function () {
+window.kothing_insertHTML = function () {
   ss.insertHTML('<img style="height:100px; width:100px;" src="http://kothing.github.io/editor/img/beauty.jpg" /><p>fdafds</p>', true, true, true);
 };
 
-window.sun_getContents = function () {
+window.kothing_getContents = function () {
   // alert(ss.getContents());
 
   console.log(ss.getText());
@@ -471,34 +471,34 @@ window.sun_getContents = function () {
   // console.log(ss.core.context.element.wysiwyg.textContent)
 };
 
-window.sun_setContents = function () {
+window.kothing_setContents = function () {
   ss.setContents('<style>div{color: red;}</style><p><br></p><img src="https://picsum.photos/200/300"><img src="https://picsum.photos/200/300"><p><br></p>');
   ss.core.history.reset(true);
   ss.core.focusEdge(null);
   // ss.core.context.tool.save.disabled = true;
 };
 
-window.sun_appendContents = function (content) {
+window.kothing_appendContents = function (content) {
   ss.appendContents(content);
 };
 
-window.sun_disabled = function () {
+window.kothing_disabled = function () {
   ss.disabled();
 };
 
-window.sun_enabled = function () {
+window.kothing_enabled = function () {
   ss.enabled();
 };
 
-window.sun_show = function () {
+window.kothing_show = function () {
   ss.show();
 };
 
-window.sun_hide = function () {
+window.kothing_hide = function () {
   ss.hide();
 };
 
-window.sun_destroy = function () {
+window.kothing_destroy = function () {
   // ss.destroy();
   ss.setToolbarButtons([
     [':command2-title2-text.Insert', 'codeView', 'preview'],
@@ -506,7 +506,7 @@ window.sun_destroy = function () {
   ]);
 };
 
-window.sun_create = function () {
+window.kothing_create = function () {
   // ss = kothintEditor.create('editor1', {
   //     plugins: plugins,
   //     height: 148
@@ -545,7 +545,7 @@ let s2 = window.s2 = editor.create(document.getElementById('editor2'), {
   fontSizeUnit: 'pt',
   imageResizing: true,
   // imageWidth: '400',
-  toolBarItem: [
+  toolbarItem: [
     // ['undo', 'redo'],
     // ['font', 'fontSize', 'formatBlock'],
     // ['paragraphStyle'],
@@ -608,7 +608,7 @@ const newOption = {
   // defaultStyle: 'height: 200px;',
   height: 150,
   textSizeUnit: 'pt',
-  toolBarItem: [
+  toolbarItem: [
     ['undo', 'redo'],
     ['font', 'fontSize', 'formatBlock'],
     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -645,7 +645,7 @@ const newOption3 = {
   colorList: [
     ['#ccc', '#dedede', 'OrangeRed', 'Orange', 'RoyalBlue', 'SaddleBrown'],
   ],
-  toolBarItem: [
+  toolbarItem: [
     ['fontColor', 'hiliteColor'],
   ],
 };
@@ -680,9 +680,9 @@ window.setVideoList = function () {
     video = videoList[i];
 
     list += '<li>' +
-            '<button title="delete" onclick="selectVideo(\'delete\',' + video.index + ')">X</button>' +
-            '<a href="javascript:void(0)" onclick="selectVideo(\'select\',' + video.index + ')">' + video.src + '</a>' +
-            '</li>';
+      '<button title="delete" onclick="selectVideo(\'delete\',' + video.index + ')">X</button>' +
+      '<a href="javascript:void(0)" onclick="selectVideo(\'select\',' + video.index + ')">' + video.src + '</a>' +
+      '</li>';
   }
 
   videoTable.innerHTML = list;
@@ -739,12 +739,12 @@ window.setImageList = function () {
     fixSize = (image.size / 1000).toFixed(1) * 1;
 
     list += '<li id="img_' + image.index + '">' +
-            '<div onclick="checkImage(' + image.index + ')">' +
-            '<div><img src="' + image.src + '"></div>' +
-            '</div>' +
-            '<a href="javascript:void(0)" onclick="setImage(\'select\',' + image.index + ')" class="image-size">' + fixSize + 'KB</a>' +
-            '<div class="image-check"><svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg></div>' +
-            '</li>';
+      '<div onclick="checkImage(' + image.index + ')">' +
+      '<div><img src="' + image.src + '"></div>' +
+      '</div>' +
+      '<a href="javascript:void(0)" onclick="setImage(\'select\',' + image.index + ')" class="image-size">' + fixSize + 'KB</a>' +
+      '<div class="image-check"><svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg></div>' +
+      '</li>';
 
     size += fixSize;
   }
@@ -796,33 +796,33 @@ s2.onVideoUpload = function (targetElement, index, state, videoInfo, remainingFi
   }
 };
 
-window.sun_setOptions2 = function () {
+window.kothing_setOptions2 = function () {
   s2.setOptions(newOption);
 };
 
-window.sun_setOptions3 = function () {
+window.kothing_setOptions3 = function () {
   s2.setOptions(newOption2);
 };
-window.sun_setOptions4 = function () {
+window.kothing_setOptions4 = function () {
   s2.setOptions(newOption3);
 };
 
-window.sun_insertImage2 = function () {
-  s2.insertImage(document.getElementById('sun_files').files);
+window.kothing_insertImage2 = function () {
+  s2.insertImage(document.getElementById('kothing_files').files);
 };
 
 
-window.sun_destroy2 = function () {
+window.kothing_destroy2 = function () {
   s2.destroy();
 };
 
-window.sun_create2 = function () {
+window.kothing_create2 = function () {
   s2 = kothintEditor.create('editor2', {
   });
 };
 
 let s3 = editor.create(document.getElementsByName('editor3')[0], {
-  toolBarItem: [
+  toolbarItem: [
     [plugins.formatBlock, 'align', 'horizontalRule', 'list', 'table', 'codeView', plugins.image, plugins.video, plugins.link, plugins.link, plugins.fontColor, plugins.hiliteColor, plugins.fontSize],
   ],
   mode: 'balloon-always',
@@ -846,17 +846,17 @@ let s3 = editor.create(document.getElementsByName('editor3')[0], {
   placeholder: 'Start typing something.4..',
   // maxCharCount: 280,
 });
-window.sun_destroy3 = function () {
+window.kothing_destroy3 = function () {
   s3.destroy();
 };
 
-window.sun_create3 = function () {
+window.kothing_create3 = function () {
   s3 = kothintEditor.create(document.getElementsByName('editor3')[0], {
   });
 };
 
 
-window.sun_create4 = function () {
+window.kothing_create4 = function () {
   const win = window.open();
   document.querySelectorAll('link').forEach(function (linkNode) {
     win.document.write(linkNode.outerHTML);

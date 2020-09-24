@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 /*
  * Rich Text Editor
@@ -44,22 +43,21 @@ export default {
     const listDiv = this.util.createElement("DIV");
 
     listDiv.className = "ke-submenu ke-list-layer";
-    listDiv.innerHTML =
-      "" +
-      '<div class="ke-list-inner">' +
-      '<ul class="ke-list-basic">' +
-      '<li><button type="button" class="ke-btn-list ke-tooltip" data-command="OL" title="' +
-      lang.toolbar.orderList +
-      '">' +
-      this.icons.list_number +
-      "</button></li>" +
-      '<li><button type="button" class="ke-btn-list ke-tooltip" data-command="UL" title="' +
-      lang.toolbar.unorderList +
-      '">' +
-      this.icons.list_bullets +
-      "</button></li>" +
-      "</ul>" +
-      "</div>";
+    listDiv.innerHTML = `
+      <div class="ke-list-inner">
+        <ul class="ke-list-basic">
+          <li>
+            <button type="button" class="ke-btn-list" data-command="OL" title="${lang.toolbar.orderList}">
+              ${this.icons.list_number}
+            </button>
+          </li>
+          <li>
+            <button type="button" class="ke-btn-list" data-command="UL" title="${lang.toolbar.unorderList}">
+              ${this.icons.list_bullets}
+            </button>
+          </li>
+        </ul>
+      </div>`;
 
     return listDiv;
   },
@@ -135,8 +133,8 @@ export default {
     util.sortByDepth(selectedFormats, true);
 
     // merge
-    const firstSel = selectedFormats[0];
-    const lastSel = selectedFormats[selectedFormats.length - 1];
+    let firstSel = selectedFormats[0];
+    let lastSel = selectedFormats[selectedFormats.length - 1];
     let topEl =
       (util.isListCell(firstSel) || util.isComponent(firstSel)) &&
       !firstSel.previousElementSibling

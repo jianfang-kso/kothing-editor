@@ -10,11 +10,13 @@ export default {
   name: "fontSize",
   display: "submenu",
   add: function (core, targetElement) {
+    const icons = core.icons;
     const context = core.context;
     context.fontSize = {
       targetText: targetElement.querySelector(".txt"),
       _sizeList: null,
       currentSize: "",
+      icon: icons.font_size,
     };
 
     /** set submenu */
@@ -44,33 +46,22 @@ export default {
       ? [8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72]
       : option.fontSize;
 
-    let list =
-      '<div class="ke-list-inner">' +
-      '<ul class="ke-list-basic">' +
-      '<li><button type="button" class="default_value ke-btn-list" title="' +
-      lang.toolbar.default +
-      '">(' +
-      lang.toolbar.default +
-      ")</button></li>";
+    let list = `<div class="ke-list-inner">
+      <ul class="ke-list-basic">
+      <li>
+        <button type="button" class="default_value ke-btn-list" title="${lang.toolbar.default}">
+        (${lang.toolbar.default})
+        </button>
+      </li>`;
     for (
       let i = 0, unit = option.fontSizeUnit, len = sizeList.length, size;
       i < len;
       i++
     ) {
       size = sizeList[i];
-      list +=
-        '<li><button type="button" class="ke-btn-list" data-value="' +
-        size +
-        unit +
-        '" title="' +
-        size +
-        unit +
-        '" style="font-size:' +
-        size +
-        unit +
-        ';">' +
-        size +
-        "</button></li>";
+      list += `<li>
+        <button type="button" class="ke-btn-list" data-value="${size}${unit}" title="${size}${unit}" style="font-size:${size}${unit};">${size}</button>
+      </li>`;
     }
     list += "</ul></div>";
 
@@ -83,16 +74,12 @@ export default {
    * @Override core
    */
   active: function (element) {
+    const target = this.context.fontSize.targetText.firstElementChild;
+    const icon = this.context.fontSize.icon;
     if (!element) {
-      this.util.changeTxt(
-        this.context.fontSize.targetText,
-        this.lang.toolbar.fontSize
-      );
+      this.util.changeElement(target, icon);
     } else if (element.style && element.style.fontSize.length > 0) {
-      this.util.changeTxt(
-        this.context.fontSize.targetText,
-        element.style.fontSize
-      );
+      this.util.changeElement(target, `<span>${element.style.fontSize}</span>`);
       return true;
     }
 

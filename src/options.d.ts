@@ -1,6 +1,82 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { Lang } from "./lang/Lang";
 import { Plugin } from "./plugins/Plugin";
+
+export type FormatTagName =
+  | "p"
+  | "div"
+  | "blockquote"
+  | "pre"
+  | "h1"
+  | "h2"
+  | "h3"
+  | "h4"
+  | "h5"
+  | "h6"
+  | {
+      tag: string;
+      name?: string;
+      command: "replace" | "range" | "free";
+      class: string;
+    };
+export type TemplatesItem = { name: string; html: string };
+export type LineHeightsItem = { text: string; value: number };
+export type ParagraphStyles = (
+  | string
+  | { name: string; class: string; _class?: string }
+)[];
+export type TextStyles = (
+  | string
+  | { name: string; style: string; tag: string; _class?: string }
+)[];
+export type ToolbarItemDefaults =
+  | "/" // Line Break
+  | "bold"
+  | "underline"
+  | "italic"
+  | "strike"
+  | "subscript"
+  | "superscript"
+  | "removeFormat"
+  | "indent"
+  | "outdent"
+  | "fullScreen"
+  | "showBlocks"
+  | "codeView"
+  | "undo"
+  | "redo"
+  | "preview"
+  | "print"
+  | "save"
+  | "font"
+  | "formatBlock"
+  | "fontSize"
+  | "fontColor"
+  | "hiliteColor"
+  | "align"
+  | "list"
+  | "horizontalRule"
+  | "table"
+  | "lineHeight"
+  | "template"
+  | "paragraphStyle"
+  | "textStyle"
+  | "link"
+  | "image"
+  | "video"
+  | "math"
+  | "imageGallery";
+export type ToolbarItem =
+  | ToolbarItemDefaults
+  | ToolbarItemDefaults[]
+  | string[];
+
+interface CodeMirrorOptions {
+  [key: string | number]: any;
+}
+
+interface KatexOptions {
+  [key: string | number]: any;
+}
 
 export interface KothingEditorOptions {
   plugins: Plugin[] | Record<string, Plugin>;
@@ -42,9 +118,9 @@ export interface KothingEditorOptions {
    */
   mode?: "classic" | "inline" | "balloon" | "balloon-always";
   /**
-   * TooleBar Item
+   * Button List
    */
-  toolBarItem?: ToolBarItem[];
+  toolbarItem?: ToolbarItem[];
   /**
      * The width of the toolbar.
       Applies only when the editor mode is 'inline' or 'balloon' mode.
@@ -75,11 +151,11 @@ export interface KothingEditorOptions {
   /**
    * CodeMirror core object
    */
-  codeMirror?: any | { src: any; options: object };
+  codeMirror?: any | { src: any; options: CodeMirrorOptions };
   /**
    * Use "math" plugin
    */
-  katex?: any | { src: any; options: object };
+  katex?: any | { src: any; options: KatexOptions };
   /**
    * Display
    * =======
@@ -339,7 +415,7 @@ export interface KothingEditorOptions {
   videoMultipleFile?: boolean;
   /**
    * Define "Attributes" of the video tag.
-   * @example { poster: "http://videourl.com/videoPic.png", autoplay: true }
+   * @example { poster: "http://kothing.com/img/poster.gif", autoplay: true }
    */
   videoTagAttrs?: Record<string, string | boolean>;
   /**
@@ -449,71 +525,3 @@ export interface KothingEditorOptions {
    */
   icons?: Record<string, string>;
 }
-export type FormatTagName =
-  | "p"
-  | "div"
-  | "blockquote"
-  | "pre"
-  | "h1"
-  | "h2"
-  | "h3"
-  | "h4"
-  | "h5"
-  | "h6"
-  | {
-      tag: string;
-      name?: string;
-      command: "replace" | "range" | "free";
-      class: string;
-    };
-export type TemplatesItem = { name: string; html: string };
-export type LineHeightsItem = { text: string; value: number };
-export type ParagraphStyles = (
-  | string
-  | { name: string; class: string; _class?: string }
-)[];
-export type TextStyles = (
-  | string
-  | { name: string; style: string; tag: string; _class?: string }
-)[];
-export type ToolBarItemDefaults =
-  | "/" // Line Break
-  | "bold"
-  | "underline"
-  | "italic"
-  | "strike"
-  | "subscript"
-  | "superscript"
-  | "removeFormat"
-  | "indent"
-  | "outdent"
-  | "fullScreen"
-  | "showBlocks"
-  | "codeView"
-  | "undo"
-  | "redo"
-  | "preview"
-  | "print"
-  | "save"
-  | "font"
-  | "formatBlock"
-  | "fontSize"
-  | "fontColor"
-  | "hiliteColor"
-  | "align"
-  | "list"
-  | "horizontalRule"
-  | "table"
-  | "lineHeight"
-  | "template"
-  | "paragraphStyle"
-  | "textStyle"
-  | "link"
-  | "image"
-  | "video"
-  | "math"
-  | "imageGallery";
-export type ToolBarItem =
-  | ToolBarItemDefaults
-  | ToolBarItemDefaults[]
-  | string[];

@@ -61,7 +61,8 @@ export default {
     context.element.relative.appendChild(link_controller);
 
     /** empty memory */
-    link_dialog = null, link_controller = null;
+    link_dialog = null;
+    link_controller = null;
   },
 
   /** dialog */
@@ -79,35 +80,35 @@ export default {
     dialog.className = 'ke-dialog-content';
     dialog.style.display = 'none';
     let html = '' +
-            '<form class="editor_link">' +
-            '<div class="ke-dialog-header">' +
-            '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' + lang.dialogBox.close + '">' +
-            this.icons.cancel +
-            '</button>' +
-            '<span class="ke-modal-title">' + lang.dialogBox.linkBox.title + '</span>' +
-            '</div>' +
-            '<div class="ke-dialog-body">' +
-            '<div class="ke-dialog-form">' +
-            '<label>' + lang.dialogBox.linkBox.url + '</label>' +
-            '<input class="ke-input-form _ke_link_url" type="text" />' +
-            '</div>' +
-            '<div class="ke-dialog-form">' +
-            '<label>' + lang.dialogBox.linkBox.text + '</label><input class="ke-input-form _ke_link_text" type="text" />' +
-            '</div>' +
-            '<div class="ke-dialog-form ke-dialog-form">' +
-            '<select class="ke-input-select" title="links">';
+      '<form class="editor_link">' +
+      '<div class="ke-dialog-header">' +
+      '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' + lang.dialogBox.close + '">' +
+      this.icons.cancel +
+      '</button>' +
+      '<span class="ke-modal-title">' + lang.dialogBox.linkBox.title + '</span>' +
+      '</div>' +
+      '<div class="ke-dialog-body">' +
+      '<div class="ke-dialog-form">' +
+      '<label>' + lang.dialogBox.linkBox.url + '</label>' +
+      '<input class="ke-input-form _ke_link_url" type="text" />' +
+      '</div>' +
+      '<div class="ke-dialog-form">' +
+      '<label>' + lang.dialogBox.linkBox.text + '</label><input class="ke-input-form _ke_link_text" type="text" />' +
+      '</div>' +
+      '<div class="ke-dialog-form ke-dialog-form">' +
+      '<select class="ke-input-select" title="links">';
     for (let i = 0, len = targetList.length, t, selected; i < len; i++) {
       t = targetList[i];
       selected = t.selected ? ' selected' : '';
       html += '<option value="' + t.target + '"' + selected + '>' + t.name + '</option>';
     }
     html += '</select>' +
-            '</div>' +
-            '</div>' +
-            '<div class="ke-dialog-footer">' +
-            '<button type="submit" class="ke-btn-primary" title="' + lang.dialogBox.submitButton + '"><span>' + lang.dialogBox.submitButton + '</span></button>' +
-            '</div>' +
-            '</form>';
+      '</div>' +
+      '</div>' +
+      '<div class="ke-dialog-footer">' +
+      '<button type="submit" class="ke-btn-primary" title="' + lang.dialogBox.submitButton + '"><span>' + lang.dialogBox.submitButton + '</span></button>' +
+      '</div>' +
+      '</form>';
 
 
     dialog.innerHTML = html;
@@ -123,23 +124,23 @@ export default {
 
     link_btn.className = 'ke-controller ke-controller-link';
     link_btn.innerHTML = '' +
-            '<div class="ke-arrow ke-arrow-up"></div>' +
-            '<div class="link-content"><span><a target="_blank" href=""></a>&nbsp;</span>' +
-            '<div class="ke-btn-group">' +
-            '<button type="button" data-command="update" tabindex="-1" class="ke-tooltip">' +
-            icons.edit +
-            '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.edit + '</span></span>' +
-            '</button>' +
-            '<button type="button" data-command="unlink" tabindex="-1" class="ke-tooltip">' +
-            icons.unlink +
-            '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.unlink + '</span></span>' +
-            '</button>' +
-            '<button type="button" data-command="delete" tabindex="-1" class="ke-tooltip">' +
-            icons.delete +
-            '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.remove + '</span></span>' +
-            '</button>' +
-            '</div>' +
-            '</div>';
+      '<div class="ke-arrow ke-arrow-up"></div>' +
+      '<div class="link-content"><span><a target="_blank" href=""></a>&nbsp;</span>' +
+      '<div class="ke-btn-group">' +
+      '<button type="button" data-command="update" tabindex="-1" class="ke-tooltip">' +
+      icons.edit +
+      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.edit + '</span></span>' +
+      '</button>' +
+      '<button type="button" data-command="unlink" tabindex="-1" class="ke-tooltip">' +
+      icons.unlink +
+      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.unlink + '</span></span>' +
+      '</button>' +
+      '<button type="button" data-command="delete" tabindex="-1" class="ke-tooltip">' +
+      icons.delete +
+      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.remove + '</span></span>' +
+      '</button>' +
+      '</div>' +
+      '</div>';
 
     return link_btn;
   },
@@ -243,7 +244,8 @@ export default {
   },
 
   call_controller: function (selectionATag) {
-    this.editLink = this.context.customLink._linkAnchor = selectionATag;
+    this.editLink = selectionATag;
+    this.context.customLink._linkAnchor = selectionATag;
     const linkBtn = this.context.customLink.linkController;
     const link = linkBtn.querySelector('a');
 

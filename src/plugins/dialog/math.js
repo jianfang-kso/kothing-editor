@@ -1,3 +1,5 @@
+"use strict";
+
 import dialog from "../modules/dialog";
 
 export default {
@@ -69,52 +71,35 @@ export default {
 
     dialog.className = "ke-dialog-content";
     dialog.style.display = "none";
-    dialog.innerHTML =
-      "" +
-      "<form>" +
-      '<div class="ke-dialog-header">' +
-      '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' +
-      lang.dialogBox.close +
-      '">' +
-      this.icons.cancel +
-      "</button>" +
-      '<span class="ke-modal-title">' +
-      lang.dialogBox.mathBox.title +
-      "</span>" +
-      "</div>" +
-      '<div class="ke-dialog-body">' +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.mathBox.inputLabel +
-      ' (<a href="https://katex.org/docs/supported.html" target="_blank">KaTeX</a>)</label>' +
-      '<textarea class="ke-input-form ke-math-exp" type="text"></textarea>' +
-      "</div>" +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.mathBox.fontSizeLabel +
-      "</label>" +
-      '<select class="ke-input-select ke-math-size">' +
-      '<option value="1em">1</option>' +
-      '<option value="1.5em">1.5</option>' +
-      '<option value="2em">2</option>' +
-      '<option value="2.5em">2.5</option>' +
-      "</select>" +
-      "</div>" +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.mathBox.previewLabel +
-      "</label>" +
-      '<p class="ke-math-preview"></p>' +
-      "</div>" +
-      "</div>" +
-      '<div class="ke-dialog-footer">' +
-      '<button type="submit" class="ke-btn-primary" title="' +
-      lang.dialogBox.submitButton +
-      '"><span>' +
-      lang.dialogBox.submitButton +
-      "</span></button>" +
-      "</div>" +
-      "</form>";
+    dialog.innerHTML = `
+      <form>
+        <div class="ke-dialog-header">
+          <button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="${lang.dialogBox.close}">${this.icons.cancel}</button>
+          <span class="ke-modal-title">${lang.dialogBox.mathBox.title}</span>
+        </div>
+        <div class="ke-dialog-body">
+          <div class="ke-dialog-form">
+            <label>${lang.dialogBox.mathBox.inputLabel}(<a href="https://katex.org/docs/supported.html" target="_blank">KaTeX</a>)</label>
+            <textarea class="ke-input-form ke-math-exp" type="text"></textarea>
+          </div>
+          <div class="ke-dialog-form">
+            <label>${lang.dialogBox.mathBox.fontSizeLabel}</label>
+            <select class="ke-input-select ke-math-size">
+              <option value="1em">1</option>
+              <option value="1.5em">1.5</option>
+              <option value="2em">2</option>
+              <option value="2.5em">2.5</option>
+            </select>
+          </div>
+          <div class="ke-dialog-form">
+            <label>${lang.dialogBox.mathBox.previewLabel}</label>
+            <p class="ke-math-preview"></p>
+          </div>
+        </div>
+        <div class="ke-dialog-footer">
+          <button type="submit" class="ke-btn-primary" title="${lang.dialogBox.submitButton}">${lang.dialogBox.submitButton}</button>
+        </div>
+      </form>`;
 
     return dialog;
   },
@@ -125,26 +110,18 @@ export default {
     const math_btn = this.util.createElement("DIV");
 
     math_btn.className = "ke-controller ke-controller-link";
-    math_btn.innerHTML =
-      "" +
-      '<div class="ke-arrow ke-arrow-up"></div>' +
-      '<div class="link-content">' +
-      '<div class="ke-btn-group">' +
-      '<button type="button" data-command="update" tabindex="-1" class="ke-btn ke-tooltip">' +
-      this.icons.edit +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.edit +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="delete" tabindex="-1" class="ke-btn ke-tooltip">' +
-      this.icons.delete +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.remove +
-      "</span></span>" +
-      "</button>" +
-      "</div>" +
-      "</div>" +
-      "";
+    math_btn.innerHTML = `
+      <div class="ke-arrow ke-arrow-up"></div>
+      <div class="link-content">
+        <div class="ke-btn-group">
+          <button type="button" data-command="update" data-tip="${lang.controller.edit}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+            ${this.icons.edit}
+          </button>
+          <button type="button" data-command="delete" data-tip="${lang.controller.remove}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+            ${this.icons.delete}
+          </button>
+        </div>
+      </div>`;
 
     return math_btn;
   },

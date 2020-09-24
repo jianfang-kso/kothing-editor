@@ -1,4 +1,3 @@
-/* eslint-disable no-useless-escape */
 /*
  * Rich Text Editor
  *
@@ -10,19 +9,22 @@
 /**
  * @description utility function
  */
-const util = {
+export default {
   _d: null,
   _w: null,
   isIE: null,
   isIE_Edge: null,
   isOSX_IOS: null,
-  _propertiesInit: function() {
-    if (this._d) { return; }
+  _propertiesInit: function () {
+    if (this._d) {
+      return;
+    }
     this._d = document;
     this._w = window;
-    this.isIE = navigator.userAgent.indexOf('Trident') > -1;
+    this.isIE = navigator.userAgent.indexOf("Trident") > -1;
     this.isIE_Edge =
-      navigator.userAgent.indexOf('Trident') > -1 || navigator.appVersion.indexOf('Edge') > -1;
+      navigator.userAgent.indexOf("Trident") > -1 ||
+      navigator.appVersion.indexOf("Edge") > -1;
     this.isOSX_IOS = /(Mac|iPhone|iPod|iPad)/.test(navigator.platform);
   },
 
@@ -32,17 +34,17 @@ const util = {
    * @returns {String} HTML string
    * @private
    */
-  _HTMLConvertor: function(contents) {
+  _HTMLConvertor: function (contents) {
     const ec = {
-      '&': '&amp;',
-      '\u00A0': '&nbsp;',
-      "'": '&apos;',
-      '"': '&quot;',
-      '<': '&lt;',
-      '>': '&gt;',
+      "&": "&amp;",
+      "\u00A0": "&nbsp;",
+      "'": "&apos;",
+      '"': "&quot;",
+      "<": "&lt;",
+      ">": "&gt;",
     };
-    return contents.replace(/&|\u00A0|'|"|<|>/g, function(m) {
-      return typeof ec[m] === 'string' ? ec[m] : m;
+    return contents.replace(/&|\u00A0|'|"|<|>/g, function (m) {
+      return typeof ec[m] === "string" ? ec[m] : m;
     });
   },
 
@@ -54,35 +56,35 @@ const util = {
   /**
    * @description Regular expression to find 'zero width space' (/\u200B/g)
    */
-  zeroWidthRegExp: new RegExp(String.fromCharCode(8203), 'g'),
+  zeroWidthRegExp: new RegExp(String.fromCharCode(8203), "g"),
 
   /**
    * @description Regular expression to find only 'zero width space' (/^\u200B+$/)
    */
-  onlyZeroWidthRegExp: new RegExp('^' + String.fromCharCode(8203) + '+$'),
+  onlyZeroWidthRegExp: new RegExp("^" + String.fromCharCode(8203) + "+$"),
 
   /**
    * @description A method that checks If the text is blank or to see if it contains 'ZERO WIDTH SPACE' or empty (util.zeroWidthSpace)
    * @param {String|Node} text String value or Node
    * @returns {Boolean}
    */
-  onlyZeroWidthSpace: function(text) {
-    if (typeof text !== 'string') { text = text.textContent; }
-    return text === '' || this.onlyZeroWidthRegExp.test(text);
+  onlyZeroWidthSpace: function (text) {
+    if (typeof text !== "string") text = text.textContent;
+    return text === "" || this.onlyZeroWidthRegExp.test(text);
   },
 
   /**
    * @description Gets XMLHttpRequest object
    * @returns {XMLHttpRequest|ActiveXObject}
    */
-  getXMLHttpRequest: function() {
+  getXMLHttpRequest: function () {
     /** IE */
     if (this._w.ActiveXObject) {
       try {
-        return new Window.ActiveXObject('Msxml2.XMLHTTP');
+        return new ActiveXObject("Msxml2.XMLHTTP");
       } catch (e) {
         try {
-          return new Window.ActiveXObject('Microsoft.XMLHTTP');
+          return new ActiveXObject("Microsoft.XMLHTTP");
         } catch (e1) {
           return null;
         }
@@ -101,7 +103,7 @@ const util = {
    * @param {String} elementName Element name
    * @returns {Element}
    */
-  createElement: function(elementName) {
+  createElement: function (elementName) {
     return this._d.createElement(elementName);
   },
 
@@ -110,8 +112,8 @@ const util = {
    * @param {String} text text contents
    * @returns {Node}
    */
-  createTextNode: function(text) {
-    return this._d.createTextNode(text || '');
+  createTextNode: function (text) {
+    return this._d.createTextNode(text || "");
   },
 
   /**
@@ -121,10 +123,10 @@ const util = {
    * @param {String} contents HTML or Text string
    * @returns {String}
    */
-  HTMLEncoder: function(contents) {
-    const ec = { '<': '$lt;', '>': '$gt;' };
-    return contents.replace(/<|>/g, function(m) {
-      return typeof ec[m] === 'string' ? ec[m] : m;
+  HTMLEncoder: function (contents) {
+    const ec = { "<": "$lt;", ">": "$gt;" };
+    return contents.replace(/<|>/g, function (m) {
+      return typeof ec[m] === "string" ? ec[m] : m;
     });
   },
 
@@ -135,10 +137,10 @@ const util = {
    * @param {String} contents HTML or Text string
    * @returns {String}
    */
-  HTMLDecoder: function(contents) {
-    const ec = { '$lt;': '<', '$gt;': '>' };
-    return contents.replace(/\$lt;|\$gt;/g, function(m) {
-      return typeof ec[m] === 'string' ? ec[m] : m;
+  HTMLDecoder: function (contents) {
+    const ec = { "$lt;": "<", "$gt;": ">" };
+    return contents.replace(/\$lt;|\$gt;/g, function (m) {
+      return typeof ec[m] === "string" ? ec[m] : m;
     });
   },
 
@@ -148,7 +150,7 @@ const util = {
    * @param {String} key obj.key
    * @returns {Boolean}
    */
-  hasOwn: function(obj, key) {
+  hasOwn: function (obj, key) {
     return this._hasOwn.call(obj, key);
   },
   _hasOwn: Object.prototype.hasOwnProperty,
@@ -161,55 +163,65 @@ const util = {
    * @param {String} extension js, css
    * @returns {String}
    */
-  getIncludePath: function(nameArray, extension) {
-    let path = '';
+  getIncludePath: function (nameArray, extension) {
+    let path = "";
     const pathList = [];
-    const tagName = extension === 'js' ? 'script' : 'link';
-    const src = extension === 'js' ? 'src' : 'href';
+    const tagName = extension === "js" ? "script" : "link";
+    const src = extension === "js" ? "src" : "href";
 
-    let fileName = '(?:';
+    let fileName = "(?:";
     for (let i = 0, len = nameArray.length; i < len; i++) {
-      fileName += nameArray[i] + (i < len - 1 ? '|' : ')');
+      fileName += nameArray[i] + (i < len - 1 ? "|" : ")");
     }
 
     const regExp = new this._w.RegExp(
-      '(^|.*[\\/])' + fileName + '(\\.[^\\/]+)?.' + extension + '(?:\\?.*|;.*)?$',
-      'i'
+      "(^|.*[\\/])" +
+        fileName +
+        "(\\.[^\\/]+)?." +
+        extension +
+        "(?:\\?.*|;.*)?$",
+      "i"
     );
-    const extRegExp = new this._w.RegExp('.+\\.' + extension + '(?:\\?.*|;.*)?$', 'i');
+    const extRegExp = new this._w.RegExp(
+      ".+\\." + extension + "(?:\\?.*|;.*)?$",
+      "i"
+    );
 
-    for (let c = this._d.getElementsByTagName(tagName), i = 0; i < c.length; i++) {
+    for (
+      let c = this._d.getElementsByTagName(tagName), i = 0;
+      i < c.length;
+      i++
+    ) {
       if (extRegExp.test(c[i][src])) {
         pathList.push(c[i]);
       }
     }
 
     for (let i = 0; i < pathList.length; i++) {
-      const editorTag = pathList[i][src].match(regExp);
+      let editorTag = pathList[i][src].match(regExp);
       if (editorTag) {
         path = editorTag[0];
         break;
       }
     }
 
-    if (path === '') { path = pathList.length > 0 ? pathList[0][src] : ''; }
+    if (path === "") path = pathList.length > 0 ? pathList[0][src] : "";
 
-    path.indexOf(':/') === -1 &&
-      path.slice(0, 2) !== '//' &&
+    path.indexOf(":/") === -1 &&
+      path.slice(0, 2) !== "//" &&
       (path =
-        path.indexOf('/') === 0
-          ? window.location.href.match(/^.*?:\/\/[^\/]*/)[0] + path
-          : window.location.href.match(/^[^\?]*\/(?:)/)[0] + path);
+        0 === path.indexOf("/")
+          ? location.href.match(/^.*?:\/\/[^\/]*/)[0] + path
+          : location.href.match(/^[^\?]*\/(?:)/)[0] + path);
 
-    if (!path) {
-      throw Error(
-        '[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +' +
-          path +
-          ', extension: ' +
-          extension +
-          ')'
-      ); 
-    }
+    if (!path)
+      throw (
+        "[KothingEditor.util.getIncludePath.fail] The KothingEditor installation path could not be automatically detected. (name: +" +
+        name +
+        ", extension: " +
+        extension +
+        ")"
+      );
 
     return path;
   },
@@ -220,8 +232,8 @@ const util = {
    * @param {Document|null} doc To get the CSS text of an document(core._wd). If null get the current document.
    * @returns {String} Styles string
    */
-  getPageStyle: function(doc) {
-    let cssText = '';
+  getPageStyle: function (doc) {
+    let cssText = "";
     const sheets = (doc || this._d).styleSheets;
 
     for (let i = 0, len = sheets.length, rules; i < len; i++) {
@@ -244,9 +256,9 @@ const util = {
    * @param {Element} iframe Iframe element (context.element.wysiwygFrame)
    * @returns {Document}
    */
-  getIframeDocument: function(iframe) {
+  getIframeDocument: function (iframe) {
     let wDocument = iframe.contentWindow || iframe.contentDocument;
-    if (wDocument.document) { wDocument = wDocument.document; }
+    if (wDocument.document) wDocument = wDocument.document;
     return wDocument;
   },
 
@@ -256,14 +268,14 @@ const util = {
    * @param {Array|null} exceptAttrs Array of attribute names to exclude from the result
    * @returns {String}
    */
-  getAttributesToString: function(element, exceptAttrs) {
-    if (!element.attributes) { return ''; }
+  getAttributesToString: function (element, exceptAttrs) {
+    if (!element.attributes) return "";
 
     const attrs = element.attributes;
-    let attrString = '';
+    let attrString = "";
 
     for (let i = 0, len = attrs.length; i < len; i++) {
-      if (exceptAttrs && exceptAttrs.indexOf(attrs[i].name) > -1) { continue; }
+      if (exceptAttrs && exceptAttrs.indexOf(attrs[i].name) > -1) continue;
       attrString += attrs[i].name + '="' + attrs[i].value + '" ';
     }
 
@@ -276,7 +288,7 @@ const util = {
    * @param {String} text String text
    * @returns {Number}
    */
-  getByteLength: function(text) {
+  getByteLength: function (text) {
     const encoder = this._w.encodeURIComponent;
     let cr, cl;
     if (this.isIE_Edge) {
@@ -289,7 +301,7 @@ const util = {
 
       return cl + cr;
     } else {
-      cl = new this._w.TextEncoder('utf-8').encode(text.toString()).length;
+      cl = new this._w.TextEncoder("utf-8").encode(text.toString()).length;
       cr = 0;
 
       if (encoder(text.toString()).match(/(%0A|%0D)/gi) !== null) {
@@ -305,11 +317,12 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isWysiwygDiv: function(element) {
+  isWysiwygDiv: function (element) {
     return (
       element &&
       element.nodeType === 1 &&
-      (this.hasClass(element, 'ke-wrapper-wysiwyg') || /^BODY$/i.test(element.nodeName))
+      (this.hasClass(element, "ke-wrapper-wysiwyg") ||
+        /^BODY$/i.test(element.nodeName))
     );
   },
 
@@ -318,8 +331,12 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isNonEditable: function(element) {
-    return element && element.nodeType === 1 && element.getAttribute('contenteditable') === 'false';
+  isNonEditable: function (element) {
+    return (
+      element &&
+      element.nodeType === 1 &&
+      element.getAttribute("contenteditable") === "false"
+    );
   },
 
   /**
@@ -328,10 +345,10 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isTextStyleElement: function(element) {
+  isTextStyleElement: function (element) {
     return (
       element &&
-      element.nodeType === 1 &&
+      element.nodeType !== 3 &&
       /^(strong|span|font|b|var|i|em|u|ins|s|strike|del|sub|sup|mark|a|label|code)$/i.test(
         element.nodeName
       )
@@ -344,14 +361,14 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isFormatElement: function(element) {
+  isFormatElement: function (element) {
     return (
       element &&
       element.nodeType === 1 &&
       (/^(P|DIV|H[1-6]|PRE|LI|TH|TD)$/i.test(element.nodeName) ||
         this.hasClass(
           element,
-          '(\\s|^)__ke__format__replace_.+(\\s|$)|(\\s|^)__ke__format__free_.+(\\s|$)'
+          "(\\s|^)__ke__format__replace_.+(\\s|$)|(\\s|^)__ke__format__free_.+(\\s|$)"
         )) &&
       !this.isComponent(element) &&
       !this.isWysiwygDiv(element)
@@ -364,12 +381,14 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isRangeFormatElement: function(element) {
+  isRangeFormatElement: function (element) {
     return (
       element &&
       element.nodeType === 1 &&
-      (/^(BLOCKQUOTE|OL|UL|FIGCAPTION|TABLE|THEAD|TBODY|TR|TH|TD)$/i.test(element.nodeName) ||
-        this.hasClass(element, '(\\s|^)__ke__format__range_.+(\\s|$)'))
+      (/^(BLOCKQUOTE|OL|UL|FIGCAPTION|TABLE|THEAD|TBODY|TR|TH|TD)$/i.test(
+        element.nodeName
+      ) ||
+        this.hasClass(element, "(\\s|^)__ke__format__range_.+(\\s|$)"))
     );
   },
 
@@ -382,12 +401,12 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isClosureRangeFormatElement: function(element) {
+  isClosureRangeFormatElement: function (element) {
     return (
       element &&
       element.nodeType === 1 &&
       (/^(TH|TD)$/i.test(element.nodeName) ||
-        this.hasClass(element, '(\\s|^)__ke__format__range__closure_.+(\\s|$)'))
+        this.hasClass(element, "(\\s|^)__ke__format__range__closure_.+(\\s|$)"))
     );
   },
 
@@ -399,12 +418,12 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isFreeFormatElement: function(element) {
+  isFreeFormatElement: function (element) {
     return (
       element &&
       element.nodeType === 1 &&
       (/^PRE$/i.test(element.nodeName) ||
-        this.hasClass(element, '(\\s|^)__ke__format__free_.+(\\s|$)')) &&
+        this.hasClass(element, "(\\s|^)__ke__format__free_.+(\\s|$)")) &&
       !this.isComponent(element) &&
       !this.isWysiwygDiv(element)
     );
@@ -419,11 +438,11 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isClosureFreeFormatElement: function(element) {
+  isClosureFreeFormatElement: function (element) {
     return (
       element &&
       element.nodeType === 1 &&
-      this.hasClass(element, '(\\s|^)__ke__format__free__closure_.+(\\s|$)')
+      this.hasClass(element, "(\\s|^)__ke__format__free__closure_.+(\\s|$)")
     );
   },
 
@@ -432,9 +451,11 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isComponent: function(element) {
+  isComponent: function (element) {
     return (
-      element && (/ke-component/.test(element.className) || /^(TABLE|HR)$/.test(element.nodeName))
+      element &&
+      (/ke-component/.test(element.className) ||
+        /^(TABLE|HR)$/.test(element.nodeName))
     );
   },
 
@@ -443,7 +464,7 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isMediaComponent: function(element) {
+  isMediaComponent: function (element) {
     return element && /ke-component/.test(element.className);
   },
 
@@ -452,7 +473,7 @@ const util = {
    * @param {Node} element The node to check
    * @returns {Boolean}
    */
-  isNotCheckingNode: function(element) {
+  isNotCheckingNode: function (element) {
     return element && /katex|__ke__tag/.test(element.className);
   },
 
@@ -462,18 +483,18 @@ const util = {
    * @param {Function|null} validation Additional validation function.
    * @returns {Element|null}
    */
-  getFormatElement: function(element, validation) {
-    if (!element) { return null; }
+  getFormatElement: function (element, validation) {
+    if (!element) return null;
     if (!validation) {
-      validation = function() {
+      validation = function () {
         return true;
       };
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) { return null; }
-      if (this.isRangeFormatElement(element)) { return element.firstElementChild; }
-      if (this.isFormatElement(element) && validation(element)) { return element; }
+      if (this.isWysiwygDiv(element)) return null;
+      if (this.isRangeFormatElement(element)) element.firstElementChild;
+      if (this.isFormatElement(element) && validation(element)) return element;
 
       element = element.parentNode;
     }
@@ -487,21 +508,22 @@ const util = {
    * @param {Function|null} validation Additional validation function.
    * @returns {Element|null}
    */
-  getRangeFormatElement: function(element, validation) {
-    if (!element) { return null; }
+  getRangeFormatElement: function (element, validation) {
+    if (!element) return null;
     if (!validation) {
-      validation = function() {
+      validation = function () {
         return true;
       };
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) { return null; }
+      if (this.isWysiwygDiv(element)) return null;
       if (
         this.isRangeFormatElement(element) &&
         !/^(THEAD|TBODY|TR)$/i.test(element.nodeName) &&
         validation(element)
-      ) { return element; }
+      )
+        return element;
       element = element.parentNode;
     }
 
@@ -514,17 +536,18 @@ const util = {
    * @param {Function|null} validation Additional validation function.
    * @returns {Element|null}
    */
-  getFreeFormatElement: function(element, validation) {
-    if (!element) { return null; }
+  getFreeFormatElement: function (element, validation) {
+    if (!element) return null;
     if (!validation) {
-      validation = function() {
+      validation = function () {
         return true;
       };
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) { return null; }
-      if (this.isFreeFormatElement(element) && validation(element)) { return element; }
+      if (this.isWysiwygDiv(element)) return null;
+      if (this.isFreeFormatElement(element) && validation(element))
+        return element;
 
       element = element.parentNode;
     }
@@ -538,17 +561,18 @@ const util = {
    * @param {Function|null} validation Additional validation function.
    * @returns {Element|null}
    */
-  getClosureFreeFormatElement: function(element, validation) {
-    if (!element) { return null; }
+  getClosureFreeFormatElement: function (element, validation) {
+    if (!element) return null;
     if (!validation) {
-      validation = function() {
+      validation = function () {
         return true;
       };
     }
 
     while (element) {
-      if (this.isWysiwygDiv(element)) { return null; }
-      if (this.isClosureFreeFormatElement(element) && validation(element)) { return element; }
+      if (this.isWysiwygDiv(element)) return null;
+      if (this.isClosureFreeFormatElement(element) && validation(element))
+        return element;
 
       element = element.parentNode;
     }
@@ -561,7 +585,7 @@ const util = {
    * @param {Element} originEl Origin element
    * @param {Element} copyEl Element to copy
    */
-  copyTagAttributes: function(originEl, copyEl) {
+  copyTagAttributes: function (originEl, copyEl) {
     if (copyEl.style.cssText) {
       originEl.style.cssText += copyEl.style.cssText;
     }
@@ -571,8 +595,8 @@ const util = {
       this.addClass(originEl, classes[i]);
     }
 
-    if (!originEl.style.cssText) { originEl.removeAttribute('style'); }
-    if (!originEl.className.trim()) { originEl.removeAttribute('class'); }
+    if (!originEl.style.cssText) originEl.removeAttribute("style");
+    if (!originEl.className.trim()) originEl.removeAttribute("class");
   },
 
   /**
@@ -580,9 +604,12 @@ const util = {
    * @param {Element} originEl Origin element
    * @param {Element} copyEl Element to copy
    */
-  copyFormatAttributes: function(originEl, copyEl) {
+  copyFormatAttributes: function (originEl, copyEl) {
     copyEl = copyEl.cloneNode(false);
-    copyEl.className = copyEl.className.replace(/(\s|^)__ke__format__[^\s]+/g, '');
+    copyEl.className = copyEl.className.replace(
+      /(\s|^)__ke__format__[^\s]+/g,
+      ""
+    );
     this.copyTagAttributes(originEl, copyEl);
   },
 
@@ -594,12 +621,12 @@ const util = {
    * If false, returns only one item that meet the criteria otherwise return null.
    * @returns {Array|Node|null}
    */
-  getArrayItem: function(array, validation, multi) {
-    if (!array || array.length === 0) { return null; }
+  getArrayItem: function (array, validation, multi) {
+    if (!array || array.length === 0) return null;
 
     validation =
       validation ||
-      function() {
+      function () {
         return true;
       };
     const arr = [];
@@ -607,7 +634,8 @@ const util = {
     for (let i = 0, len = array.length, a; i < len; i++) {
       a = array[i];
       if (validation(a)) {
-        if (!multi) { return a; } else { arr.push(a); }
+        if (!multi) return a;
+        else arr.push(a);
       }
     }
 
@@ -620,7 +648,7 @@ const util = {
    * @param {Node} element The element to find index
    * @returns {Number}
    */
-  getArrayIndex: function(array, element) {
+  getArrayIndex: function (array, element) {
     let idx = -1;
     for (let i = 0, len = array.length; i < len; i++) {
       if (array[i] === element) {
@@ -638,9 +666,9 @@ const util = {
    * @param {Node} item The element to find index
    * @returns {Number}
    */
-  nextIdx: function(array, item) {
-    const idx = this.getArrayIndex(array, item);
-    if (idx === -1) { return -1; }
+  nextIdx: function (array, item) {
+    let idx = this.getArrayIndex(array, item);
+    if (idx === -1) return -1;
     return idx + 1;
   },
 
@@ -650,9 +678,9 @@ const util = {
    * @param {Node} item The element to find index
    * @returns {Number}
    */
-  prevIdx: function(array, item) {
-    const idx = this.getArrayIndex(array, item);
-    if (idx === -1) { return -1; }
+  prevIdx: function (array, item) {
+    let idx = this.getArrayIndex(array, item);
+    if (idx === -1) return -1;
     return idx - 1;
   },
 
@@ -661,7 +689,7 @@ const util = {
    * @param {Node} node The Node to find index
    * @returns {Number}
    */
-  getPositionIndex: function(node) {
+  getPositionIndex: function (node) {
     let idx = 0;
     while ((node = node.previousSibling)) {
       idx += 1;
@@ -679,24 +707,25 @@ const util = {
    * Do not use unless absolutely necessary.
    * @returns {Array}
    */
-  getNodePath: function(node, parentNode, _newOffsets) {
+  getNodePath: function (node, parentNode, _newOffsets) {
     const path = [];
     let finds = true;
 
     this.getParentElement(
       node,
-      function(el) {
-        if (el === parentNode) { finds = false; }
+      function (el) {
+        if (el === parentNode) finds = false;
         if (finds && !this.isWysiwygDiv(el)) {
           // merge text nodes
           if (_newOffsets && el.nodeType === 3) {
             let temp = null;
             let tempText = null;
-            _newOffsets.s = _newOffsets.e = 0;
+            _newOffsets.s = 0;
+            _newOffsets.e = 0;
 
             let previous = el.previousSibling;
             while (previous && previous.nodeType === 3) {
-              tempText = previous.textContent.replace(this.zeroWidthRegExp, '');
+              tempText = previous.textContent.replace(this.zeroWidthRegExp, "");
               _newOffsets.s += tempText.length;
               el.textContent = tempText + el.textContent;
               temp = previous;
@@ -706,7 +735,7 @@ const util = {
 
             let next = el.nextSibling;
             while (next && next.nodeType === 3) {
-              tempText = next.textContent.replace(this.zeroWidthRegExp, '');
+              tempText = next.textContent.replace(this.zeroWidthRegExp, "");
               _newOffsets.e += tempText.length;
               el.textContent += tempText;
               temp = next;
@@ -731,13 +760,13 @@ const util = {
    * @param {Node} parentNode Base parent element
    * @returns {Node}
    */
-  getNodeFromPath: function(offsets, parentNode) {
+  getNodeFromPath: function (offsets, parentNode) {
     let current = parentNode;
     let nodes;
 
     for (let i = 0, len = offsets.length; i < len; i++) {
       nodes = current.childNodes;
-      if (nodes.length === 0) { break; }
+      if (nodes.length === 0) break;
       if (nodes.length <= offsets[i]) {
         current = nodes[nodes.length - 1];
       } else {
@@ -755,16 +784,16 @@ const util = {
    * @param {Node} b Node to compare
    * @returns {Boolean}
    */
-  isSameAttributes: function(a, b) {
-    if (a.nodeType === 3 && b.nodeType === 3) { return true; }
-    if (a.nodeType === 3 || b.nodeType === 3) { return false; }
+  isSameAttributes: function (a, b) {
+    if (a.nodeType === 3 && b.nodeType === 3) return true;
+    if (a.nodeType === 3 || b.nodeType === 3) return false;
 
     const style_a = a.style;
     const style_b = b.style;
     let compStyle = 0;
 
     for (let i = 0, len = style_a.length; i < len; i++) {
-      if (style_a[style_a[i]] === style_b[style_a[i]]) { compStyle++; }
+      if (style_a[style_a[i]] === style_b[style_a[i]]) compStyle++;
     }
 
     const class_a = a.classList;
@@ -773,13 +802,14 @@ const util = {
     let compClass = 0;
 
     for (let i = 0, len = class_a.length; i < len; i++) {
-      if (reg('(s|^)' + class_a[i] + '(s|$)').test(class_b.value)) { compClass++; }
+      if (reg("(s|^)" + class_a[i] + "(s|$)").test(class_b.value)) compClass++;
     }
 
     return (
       compStyle === style_b.length &&
       compStyle === style_a.length &&
-      (compClass === class_b.length && compClass === class_a.length)
+      compClass === class_b.length &&
+      compClass === class_a.length
     );
   },
 
@@ -788,8 +818,10 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isList: function(node) {
-    return node && /^(OL|UL)$/i.test(typeof node === 'string' ? node : node.nodeName);
+  isList: function (node) {
+    return (
+      node && /^(OL|UL)$/i.test(typeof node === "string" ? node : node.nodeName)
+    );
   },
 
   /**
@@ -797,8 +829,10 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isListCell: function(node) {
-    return node && /^LI$/i.test(typeof node === 'string' ? node : node.nodeName);
+  isListCell: function (node) {
+    return (
+      node && /^LI$/i.test(typeof node === "string" ? node : node.nodeName)
+    );
   },
 
   /**
@@ -806,10 +840,12 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isTable: function(node) {
+  isTable: function (node) {
     return (
       node &&
-      /^(TABLE|THEAD|TBODY|TR|TH|TD)$/i.test(typeof node === 'string' ? node : node.nodeName)
+      /^(TABLE|THEAD|TBODY|TR|TH|TD)$/i.test(
+        typeof node === "string" ? node : node.nodeName
+      )
     );
   },
 
@@ -818,8 +854,10 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isCell: function(node) {
-    return node && /^(TD|TH)$/i.test(typeof node === 'string' ? node : node.nodeName);
+  isCell: function (node) {
+    return (
+      node && /^(TD|TH)$/i.test(typeof node === "string" ? node : node.nodeName)
+    );
   },
 
   /**
@@ -827,8 +865,10 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isBreak: function(node) {
-    return node && /^BR$/i.test(typeof node === 'string' ? node : node.nodeName);
+  isBreak: function (node) {
+    return (
+      node && /^BR$/i.test(typeof node === "string" ? node : node.nodeName)
+    );
   },
 
   /**
@@ -836,8 +876,8 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isAnchor: function(node) {
-    return node && /^A$/i.test(typeof node === 'string' ? node : node.nodeName);
+  isAnchor: function (node) {
+    return node && /^A$/i.test(typeof node === "string" ? node : node.nodeName);
   },
 
   /**
@@ -845,10 +885,12 @@ const util = {
    * @param {Node|String} node The element or element name to check
    * @returns {Boolean}
    */
-  isMedia: function(node) {
+  isMedia: function (node) {
     return (
       node &&
-      /^(IMG|IFRAME|AUDIO|VIDEO|CANVAS)$/i.test(typeof node === 'string' ? node : node.nodeName)
+      /^(IMG|IFRAME|AUDIO|VIDEO|CANVAS)$/i.test(
+        typeof node === "string" ? node : node.nodeName
+      )
     );
   },
 
@@ -857,8 +899,8 @@ const util = {
    * @param {String|Number} text Text string or number
    * @returns {Boolean}
    */
-  isNumber: function(text) {
-    return !!text && /^-?\d+(\.\d+)?$/.test(text + '');
+  isNumber: function (text) {
+    return !!text && /^-?\d+(\.\d+)?$/.test(text + "");
   },
 
   /**
@@ -867,18 +909,18 @@ const util = {
    * @param {Number} maxDec Maximum number of decimal places (-1 : Infinity)
    * @returns {Number}
    */
-  getNumber: function(text, maxDec) {
-    if (!text) { return 0; }
+  getNumber: function (text, maxDec) {
+    if (!text) return 0;
 
-    let number = (text + '').match(/-?\d+(\.\d+)?/);
-    if (!number || !number[0]) { return 0; }
+    let number = (text + "").match(/-?\d+(\.\d+)?/);
+    if (!number || !number[0]) return 0;
 
     number = number[0];
     return maxDec < 0
       ? number * 1
       : maxDec === 0
-        ? this._w.Math.round(number * 1)
-        : (number * 1).toFixed(maxDec) * 1;
+      ? this._w.Math.round(number * 1)
+      : (number * 1).toFixed(maxDec) * 1;
   },
 
   /**
@@ -887,13 +929,14 @@ const util = {
    * @param {Function|null} validation Conditional function
    * @returns {Array}
    */
-  getListChildren: function(element, validation) {
+  getListChildren: function (element, validation) {
     const children = [];
-    if (!element || !element.children || element.children.length === 0) { return children; }
+    if (!element || !element.children || element.children.length === 0)
+      return children;
 
     validation =
       validation ||
-      function() {
+      function () {
         return true;
       };
 
@@ -916,13 +959,13 @@ const util = {
    * @param {Function|null} validation Conditional function
    * @returns {Array}
    */
-  getListChildNodes: function(element, validation) {
+  getListChildNodes: function (element, validation) {
     const children = [];
-    if (!element || element.childNodes.length === 0) { return children; }
+    if (!element || element.childNodes.length === 0) return children;
 
     validation =
       validation ||
-      function() {
+      function () {
         return true;
       };
 
@@ -946,8 +989,8 @@ const util = {
    * @param {Node} element The element to check
    * @returns {Number}
    */
-  getElementDepth: function(element) {
-    if (!element || this.isWysiwygDiv(element)) { return -1; }
+  getElementDepth: function (element) {
+    if (!element || this.isWysiwygDiv(element)) return -1;
 
     let depth = 0;
     element = element.parentNode;
@@ -966,7 +1009,7 @@ const util = {
    * @param {Node} b Node to compare.
    * @returns {Object} { ancesstor, a, b, result: (a > b ? 1 : a < b ? -1 : 0) };
    */
-  compareElements: function(a, b) {
+  compareElements: function (a, b) {
     let aNode = a;
     let bNode = b;
     while (aNode && bNode && aNode.parentNode !== bNode.parentNode) {
@@ -974,7 +1017,7 @@ const util = {
       bNode = bNode.parentNode;
     }
 
-    if (!aNode || !bNode) { return { ancestor: null, a: a, b: b, result: 0 }; }
+    if (!aNode || !bNode) return { ancestor: null, a: a, b: b, result: 0 };
 
     const children = aNode.parentNode.childNodes;
     const aIndex = this.getArrayIndex(children, aNode);
@@ -998,29 +1041,29 @@ const util = {
    * Only one condition can be entered at a time.
    * @returns {Element|null}
    */
-  getParentElement: function(element, query) {
+  getParentElement: function (element, query) {
     let check;
 
-    if (typeof query === 'function') {
+    if (typeof query === "function") {
       check = query;
     } else {
       let attr;
       if (/^\./.test(query)) {
-        attr = 'className';
-        query = query.split('.')[1];
+        attr = "className";
+        query = query.split(".")[1];
       } else if (/^#/.test(query)) {
-        attr = 'id';
-        query = '^' + query.split('#')[1] + '$';
+        attr = "id";
+        query = "^" + query.split("#")[1] + "$";
       } else if (/^:/.test(query)) {
-        attr = 'name';
-        query = '^' + query.split(':')[1] + '$';
+        attr = "name";
+        query = "^" + query.split(":")[1] + "$";
       } else {
-        attr = 'nodeName';
-        query = '^' + query + '$';
+        attr = "nodeName";
+        query = "^" + query + "$";
       }
 
-      const regExp = new this._w.RegExp(query, 'i');
-      check = function(el) {
+      const regExp = new this._w.RegExp(query, "i");
+      check = function (el) {
         return regExp.test(el[attr]);
       };
     }
@@ -1046,34 +1089,34 @@ const util = {
    * Only one condition can be entered at a time.
    * @returns {Element|null}
    */
-  getChildElement: function(element, query, last) {
+  getChildElement: function (element, query, last) {
     let check;
 
-    if (typeof query === 'function') {
+    if (typeof query === "function") {
       check = query;
     } else {
       let attr;
       if (/^\./.test(query)) {
-        attr = 'className';
-        query = query.split('.')[1];
+        attr = "className";
+        query = query.split(".")[1];
       } else if (/^#/.test(query)) {
-        attr = 'id';
-        query = '^' + query.split('#')[1] + '$';
+        attr = "id";
+        query = "^" + query.split("#")[1] + "$";
       } else if (/^:/.test(query)) {
-        attr = 'name';
-        query = '^' + query.split(':')[1] + '$';
+        attr = "name";
+        query = "^" + query.split(":")[1] + "$";
       } else {
-        attr = 'nodeName';
-        query = '^' + (query === 'text' ? '#' + query : query) + '$';
+        attr = "nodeName";
+        query = "^" + (query === "text" ? "#" + query : query) + "$";
       }
 
-      const regExp = new this._w.RegExp(query, 'i');
-      check = function(el) {
+      const regExp = new this._w.RegExp(query, "i");
+      check = function (el) {
         return regExp.test(el[attr]);
       };
     }
 
-    const childList = this.getListChildNodes(element, function(current) {
+    const childList = this.getListChildNodes(element, function (current) {
       return check(current);
     });
 
@@ -1089,12 +1132,24 @@ const util = {
    * @param {Node|null} last Last element
    * @returns {Object}
    */
-  getEdgeChildNodes: function(first, last) {
-    if (!first) { return; }
-    if (!last) { last = first; }
+  getEdgeChildNodes: function (first, last) {
+    if (!first) return;
+    if (!last) last = first;
 
-    while (first && first.nodeType === 1 && first.childNodes.length > 0 && !this.isBreak(first)) { first = first.firstChild; }
-    while (last && last.nodeType === 1 && last.childNodes.length > 0 && !this.isBreak(last)) { last = last.lastChild; }
+    while (
+      first &&
+      first.nodeType === 1 &&
+      first.childNodes.length > 0 &&
+      !this.isBreak(first)
+    )
+      first = first.firstChild;
+    while (
+      last &&
+      last.nodeType === 1 &&
+      last.childNodes.length > 0 &&
+      !this.isBreak(last)
+    )
+      last = last.lastChild;
 
     return {
       sc: first,
@@ -1108,15 +1163,19 @@ const util = {
    * @param {Element|null} wysiwygFrame When use iframe option, iframe object should be sent (context.element.wysiwygFrame)
    * @returns {Object}
    */
-  getOffset: function(element, wysiwygFrame) {
+  getOffset: function (element, wysiwygFrame) {
     let offsetLeft = 0;
     let offsetTop = 0;
-    let offsetElement = element.nodeType === 3 ? element.parentElement : element;
-    const wysiwyg = this.getParentElement(element, this.isWysiwygDiv.bind(this));
+    let offsetElement =
+      element.nodeType === 3 ? element.parentElement : element;
+    const wysiwyg = this.getParentElement(
+      element,
+      this.isWysiwygDiv.bind(this)
+    );
 
     while (
       offsetElement &&
-      !this.hasClass(offsetElement, 'ke-container') &&
+      !this.hasClass(offsetElement, "ke-container") &&
       offsetElement !== wysiwyg
     ) {
       offsetLeft += offsetElement.offsetLeft;
@@ -1128,7 +1187,10 @@ const util = {
 
     return {
       left: offsetLeft + (iframe ? wysiwygFrame.parentElement.offsetLeft : 0),
-      top: offsetTop - wysiwyg.scrollTop + (iframe ? wysiwygFrame.parentElement.offsetTop : 0),
+      top:
+        offsetTop -
+        wysiwyg.scrollTop +
+        (iframe ? wysiwygFrame.parentElement.offsetTop : 0),
     };
   },
 
@@ -1141,10 +1203,11 @@ const util = {
    * @param {Number} bEnd Start index of "b"
    * @returns {Number}
    */
-  getOverlapRangeAtIndex: function(aStart, aEnd, bStart, bEnd) {
-    if (aStart <= bEnd ? aEnd < bStart : aEnd > bStart) { return 0; }
+  getOverlapRangeAtIndex: function (aStart, aEnd, bStart, bEnd) {
+    if (aStart <= bEnd ? aEnd < bStart : aEnd > bStart) return 0;
 
-    const overlap = (aStart > bStart ? aStart : bStart) - (aEnd < bEnd ? aEnd : bEnd);
+    const overlap =
+      (aStart > bStart ? aStart : bStart) - (aEnd < bEnd ? aEnd : bEnd);
     return (overlap < 0 ? overlap * -1 : overlap) + 1;
   },
 
@@ -1153,8 +1216,8 @@ const util = {
    * @param {Node} element Element to replace text content
    * @param {String} txt Text to be applied
    */
-  changeTxt: function(element, txt) {
-    if (!element || !txt) { return; }
+  changeTxt: function (element, txt) {
+    if (!element || !txt) return;
     element.textContent = txt;
   },
 
@@ -1163,12 +1226,12 @@ const util = {
    * @param {Element} element Target element
    * @param {String|Element} newElement String or element of the new element to apply
    */
-  changeElement: function(element, newElement) {
-    if (typeof newElement === 'string') {
+  changeElement: function (element, newElement) {
+    if (typeof newElement === "string") {
       if (element.outerHTML) {
         element.outerHTML = newElement;
       } else {
-        const doc = this.createElement('DIV');
+        const doc = this.createElement("DIV");
         doc.innerHTML = newElement;
         newElement = doc.firstChild;
         element.parentNode.replaceChild(newElement, element);
@@ -1184,11 +1247,11 @@ const util = {
    * @param {String} styleName Style attribute name (marginLeft, textAlign...)
    * @param {String|Number} value Style value
    */
-  setStyle: function(element, styleName, value) {
+  setStyle: function (element, styleName, value) {
     element.style[styleName] = value;
 
     if (!value && !element.style.cssText) {
-      element.removeAttribute('style');
+      element.removeAttribute("style");
     }
   },
 
@@ -1198,8 +1261,8 @@ const util = {
    * @param {String} className Class name to search for
    * @returns {Boolean}
    */
-  hasClass: function(element, className) {
-    if (!element) { return; }
+  hasClass: function (element, className) {
+    if (!element) return;
 
     return new this._w.RegExp(className).test(element.className);
   },
@@ -1209,13 +1272,15 @@ const util = {
    * @param {Element} element Elements to add class name
    * @param {String} className Class name to be add
    */
-  addClass: function(element, className) {
-    if (!element) { return; }
-
-    const check = new this._w.RegExp('(\\s|^)' + className + '(\\s|$)');
-    if (check.test(element.className)) { return; }
-
-    element.className += (element.className.length > 0 ? ' ' : '') + className;
+  addClass: function (element, className) {
+    if (!element) {
+      return;
+    }
+    const check = new this._w.RegExp("(\\s|^)" + className + "(\\s|$)");
+    if (check.test(element.className)) {
+      return;
+    }
+    element.className += (element.className.length > 0 ? " " : "") + className;
   },
 
   /**
@@ -1223,13 +1288,13 @@ const util = {
    * @param {Element} element Elements to remove class name
    * @param {String} className Class name to be remove
    */
-  removeClass: function(element, className) {
-    if (!element) { return; }
+  removeClass: function (element, className) {
+    if (!element) return;
 
-    const check = new this._w.RegExp('(\\s|^)' + className + '(\\s|$)');
-    element.className = element.className.replace(check, ' ').trim();
+    const check = new this._w.RegExp("(\\s|^)" + className + "(\\s|$)");
+    element.className = element.className.replace(check, " ").trim();
 
-    if (!element.className.trim()) { element.removeAttribute('class'); }
+    if (!element.className.trim()) element.removeAttribute("class");
   },
 
   /**
@@ -1237,17 +1302,17 @@ const util = {
    * @param {Element} element Elements to replace class name
    * @param {String} className Class name to be change
    */
-  toggleClass: function(element, className) {
-    if (!element) { return; }
+  toggleClass: function (element, className) {
+    if (!element) return;
 
-    const check = new this._w.RegExp('(\\s|^)' + className + '(\\s|$)');
+    const check = new this._w.RegExp("(\\s|^)" + className + "(\\s|$)");
     if (check.test(element.className)) {
-      element.className = element.className.replace(check, ' ').trim();
+      element.className = element.className.replace(check, " ").trim();
     } else {
-      element.className += ' ' + className;
+      element.className += " " + className;
     }
 
-    if (!element.className.trim()) { element.removeAttribute('class'); }
+    if (!element.className.trim()) element.removeAttribute("class");
   },
 
   /**
@@ -1255,11 +1320,11 @@ const util = {
    * core.codeViewDisabledButtons (An array of buttons whose class name is not "ke-code-view-enabled")
    * core.resizingDisabledButtons (An array of buttons whose class name is not "ke-resizing-enabled")
    * @param {Boolean} disabled Disabled value
-   * @param {Array|HTMLCollection|NodeList} toolBarItem Button array
+   * @param {Array|HTMLCollection|NodeList} toolbarItem Button array
    */
-  setDisabledButtons: function(disabled, toolBarItem) {
-    for (let i = 0, len = toolBarItem.length; i < len; i++) {
-      toolBarItem[i].disabled = disabled;
+  setDisabledButtons: function (disabled, toolbarItem) {
+    for (let i = 0, len = toolbarItem.length; i < len; i++) {
+      toolbarItem[i].disabled = disabled;
     }
   },
 
@@ -1267,12 +1332,12 @@ const util = {
    * @description Delete argumenu value element
    * @param {Node} item Node to be remove
    */
-  removeItem: function(item) {
-    if (!item) { return; }
+  removeItem: function (item) {
+    if (!item) return;
     try {
       item.remove();
     } catch (e) {
-      if (item.parentNode) { item.parentNode.removeChild(item); }
+      if (item.parentNode) item.parentNode.removeChild(item);
     }
   },
 
@@ -1284,26 +1349,29 @@ const util = {
    * @param {Element|null} stopParent Stop when the parent node reaches stopParent
    * @returns {Object|null} {sc: previousSibling, ec: nextSibling}
    */
-  removeItemAllParents: function(item, validation, stopParent) {
-    if (!item) { return null; }
+  removeItemAllParents: function (item, validation, stopParent) {
+    const _this = this;
+    if (!item) {
+      return null;
+    }
     let cc = null;
     if (!validation) {
-      validation = function(current) {
-        if (current === stopParent || this.isComponent(current)) { return false; }
+      validation = function (current) {
+        if (current === stopParent || this.isComponent(current)) return false;
         const text = current.textContent.trim();
         return text.length === 0 || /^(\n|\u200B)+$/.test(text);
       }.bind(this);
     }
 
     (function recursionFunc(element) {
-      if (!util.isWysiwygDiv(element)) {
+      if (!_this.isWysiwygDiv(element)) {
         const parent = element.parentNode;
         if (parent && validation(element)) {
           cc = {
             sc: element.previousElementSibling,
             ec: element.nextElementSibling,
           };
-          util.removeItem(element);
+          _this.removeItem(element);
           recursionFunc(parent);
         }
       }
@@ -1319,7 +1387,7 @@ const util = {
    * @param {Boolean} all If true, it also detach all nested lists of a returned list.
    * @returns {Element}
    */
-  detachNestedList: function(baseNode, all) {
+  detachNestedList: function (baseNode, all) {
     const rNode = this._deleteNestedList(baseNode);
     let rangeElement, cNodes;
 
@@ -1339,7 +1407,7 @@ const util = {
       const depth = this.getElementDepth(baseNode) + 2;
       rChildren = this.getListChildren(
         baseNode,
-        function(current) {
+        function (current) {
           return (
             this.isListCell(current) &&
             !current.previousElementSibling &&
@@ -1350,7 +1418,7 @@ const util = {
     } else {
       rChildren = this.getListChildren(
         rangeElement,
-        function(current) {
+        function (current) {
           return this.isListCell(current) && !current.previousElementSibling;
         }.bind(this)
       );
@@ -1362,7 +1430,7 @@ const util = {
 
     if (rNode) {
       rNode.parentNode.insertBefore(rangeElement, rNode.nextSibling);
-      if (cNodes && cNodes.length === 0) { this.removeItem(rNode); }
+      if (cNodes && cNodes.length === 0) this.removeItem(rNode);
     }
 
     return rangeElement === baseNode ? rangeElement.parentNode : rangeElement;
@@ -1372,7 +1440,7 @@ const util = {
    * @description Sub function of util.detachNestedList method.
    * @private
    */
-  _deleteNestedList: function(baseNode) {
+  _deleteNestedList: function (baseNode) {
     const baseParent = baseNode.parentNode;
     let sibling = baseParent;
     let parent = sibling.parentNode;
@@ -1390,7 +1458,7 @@ const util = {
           while (c[index]) {
             liParent.insertBefore(c[index], liSibling);
           }
-          if (c.length === 0) { this.removeItem(child); }
+          if (c.length === 0) this.removeItem(child);
         } else {
           liParent.appendChild(child);
         }
@@ -1400,7 +1468,7 @@ const util = {
       parent = liParent.parentNode;
     }
 
-    if (baseParent.children.length === 0) { this.removeItem(baseParent); }
+    if (baseParent.children.length === 0) this.removeItem(baseParent);
 
     return liParent;
   },
@@ -1413,25 +1481,26 @@ const util = {
    * @param {Number} depth The nesting depth of the element being split. (default: 0)
    * @returns {Element}
    */
-  splitElement: function(baseNode, offset, depth) {
+  splitElement: function (baseNode, offset, depth) {
+    const _this = this;
     const bp = baseNode.parentNode;
-    let index = 0;
-    let newEl;
-    let children;
-    let temp;
+    let index = 0,
+      newEl,
+      children,
+      temp;
     let next = true;
-    if (!depth || depth < 0) { depth = 0; }
+    if (!depth || depth < 0) depth = 0;
 
     if (baseNode.nodeType === 3) {
       index = this.getPositionIndex(baseNode);
       if (offset >= 0) {
         baseNode.splitText(offset);
         const after = this.getNodeFromPath([index + 1], bp);
-        if (this.onlyZeroWidthSpace(after)) { after.data = this.zeroWidthSpace; }
+        if (this.onlyZeroWidthSpace(after)) after.data = this.zeroWidthSpace;
       }
     } else if (baseNode.nodeType === 1) {
       if (!baseNode.previousSibling) {
-        if (this.getElementDepth(baseNode) === depth) { next = false; }
+        if (this.getElementDepth(baseNode) === depth) next = false;
       } else {
         baseNode = baseNode.previousSibling;
       }
@@ -1447,10 +1516,14 @@ const util = {
       children = depthEl.childNodes;
 
       if (temp) {
-        if (this.isListCell(newEl) && this.isList(temp) && temp.firstElementChild) {
+        if (
+          this.isListCell(newEl) &&
+          this.isList(temp) &&
+          temp.firstElementChild
+        ) {
           newEl.innerHTML = temp.firstElementChild.innerHTML;
-          util.removeItem(temp.firstElementChild);
-          if (temp.children.length > 0) { newEl.appendChild(temp); }
+          _this.removeItem(temp.firstElementChild);
+          if (temp.children.length > 0) newEl.appendChild(temp);
         } else {
           newEl.appendChild(temp);
         }
@@ -1464,23 +1537,25 @@ const util = {
     if (
       depthEl.childNodes.length <= 1 &&
       (!depthEl.firstChild || depthEl.firstChild.textContent.length === 0)
-    ) { depthEl.innerHTML = '<br>'; }
+    )
+      depthEl.innerHTML = "<br>";
 
     const pElement = depthEl.parentNode;
-    if (next) { depthEl = depthEl.nextSibling; }
-    if (!newEl) { return depthEl; }
+    if (next) depthEl = depthEl.nextSibling;
+    if (!newEl) return depthEl;
 
     this.mergeSameTags(newEl, null, false);
     this.mergeNestedTags(
       newEl,
-      function(current) {
+      function (current) {
         return this.isList(current);
       }.bind(this)
     );
 
-    if (newEl.childNodes.length > 0) { pElement.insertBefore(newEl, depthEl); } else { newEl = depthEl; }
+    if (newEl.childNodes.length > 0) pElement.insertBefore(newEl, depthEl);
+    else newEl = depthEl;
 
-    if (bp.childNodes.length === 0) { this.removeItem(bp); }
+    if (bp.childNodes.length === 0) this.removeItem(bp);
 
     return newEl;
   },
@@ -1494,7 +1569,7 @@ const util = {
    * @param {Boolean} onlyText If true, non-text nodes(!util._isIgnoreNodeChange) like 'span', 'strong'.. are ignored.
    * @returns {Array} [offset, ..]
    */
-  mergeSameTags: function(element, nodePathArray, onlyText) {
+  mergeSameTags: function (element, nodePathArray, onlyText) {
     const inst = this;
     const nodePathLen = nodePathArray ? nodePathArray.length : 0;
     let offsets = null;
@@ -1512,20 +1587,25 @@ const util = {
       for (let i = 0, len = children.length, child, next; i < len; i++) {
         child = children[i];
         next = children[i + 1];
-        if (!child) { break; }
+        if (!child) break;
         if (
           (onlyText && inst._isIgnoreNodeChange(child)) ||
           (!onlyText &&
             (inst.isTable(child) ||
               inst.isListCell(child) ||
-              (inst.isFormatElement(child) && !inst.isFreeFormatElement(child))))
+              (inst.isFormatElement(child) &&
+                !inst.isFreeFormatElement(child))))
         ) {
           if (inst.isTable(child) || inst.isListCell(child)) {
             recursionFunc(child, depth + 1, i);
           }
           continue;
         }
-        if (len === 1 && current.nodeName === child.nodeName && current.parentNode) {
+        if (
+          len === 1 &&
+          current.nodeName === child.nodeName &&
+          current.parentNode
+        ) {
           // update nodePath
           if (nodePathLen) {
             let path, c, p, cDepth, spliceDepth;
@@ -1559,7 +1639,9 @@ const util = {
           inst.removeItem(current);
         }
         if (!next) {
-          if (child.nodeType === 1) { recursionFunc(child, depth + 1, i); }
+          if (child.nodeType === 1) {
+            recursionFunc(child, depth + 1, i);
+          }
           break;
         }
 
@@ -1571,7 +1653,7 @@ const util = {
           const childs = child.childNodes;
           let childLength = 0;
           for (let n = 0, nLen = childs.length; n < nLen; n++) {
-            if (childs[n].textContent.length > 0) { childLength++; }
+            if (childs[n].textContent.length > 0) childLength++;
           }
 
           const l = child.lastChild;
@@ -1591,14 +1673,15 @@ const util = {
               l.nodeType === 3 &&
               r.nodeType === 3 &&
               (l.textContent.length > 0 || r.textContent.length > 0)
-            ) { childLength--; }
+            )
+              childLength--;
 
             if (nodePathLen) {
               let path = null;
               for (let n = 0; n < nodePathLen; n++) {
                 path = nodePathArray[n];
                 if (path && path[depth] > i) {
-                  if (depth > 0 && path[depth - 1] !== depthIndex) { continue; }
+                  if (depth > 0 && path[depth - 1] !== depthIndex) continue;
 
                   path[depth] -= 1;
                   if (path[depth + 1] >= 0 && path[depth] === i) {
@@ -1622,7 +1705,7 @@ const util = {
               for (let n = 0; n < nodePathLen; n++) {
                 path = nodePathArray[n];
                 if (path && path[depth] > i) {
-                  if (depth > 0 && path[depth - 1] !== depthIndex) { continue; }
+                  if (depth > 0 && path[depth - 1] !== depthIndex) continue;
 
                   path[depth] -= 1;
                   if (path[depth + 1] >= 0 && path[depth] === i) {
@@ -1652,13 +1735,15 @@ const util = {
    * @param {Element} element Element object
    * @param {Function|String|null} validation Validation function / String("tag1|tag2..") / If null, all tags are applicable.
    */
-  mergeNestedTags: function(element, validation) {
-    if (typeof validation === 'string') {
-      validation = function(current) {
+  mergeNestedTags: function (element, validation) {
+    if (typeof validation === "string") {
+      validation = function (current) {
         return this.test(current.tagName);
-      }.bind(new this._w.RegExp('^(' + (validation || '.+') + ')$', 'i'));
-    } else if (typeof validation !== 'function') {
-      validation = function() {
+      }.bind(
+        new this._w.RegExp("^(" + (validation ? validation : ".+") + ")$", "i")
+      );
+    } else if (typeof validation !== "function") {
+      validation = function () {
         return true;
       };
     }
@@ -1689,17 +1774,22 @@ const util = {
    * @param {Element} element Element node
    * @param {Node|null} notRemoveNode Do not remove node
    */
-  removeEmptyNode: function(element, notRemoveNode) {
+  removeEmptyNode: function (element, notRemoveNode) {
     const inst = this;
 
     if (notRemoveNode) {
-      notRemoveNode = inst.getParentElement(notRemoveNode, function(current) {
+      notRemoveNode = inst.getParentElement(notRemoveNode, function (current) {
         return element === current.parentElement;
       });
     }
 
     (function recursionFunc(current) {
-      if (inst._notTextNode(current) || current === notRemoveNode || inst.isNonEditable(current)) { return 0; }
+      if (
+        inst._notTextNode(current) ||
+        current === notRemoveNode ||
+        inst.isNonEditable(current)
+      )
+        return 0;
       if (
         current !== element &&
         inst.onlyZeroWidthSpace(current.textContent) &&
@@ -1712,7 +1802,7 @@ const util = {
       } else {
         const children = current.children;
         for (let i = 0, len = children.length, r = 0; i < len; i++) {
-          if (!children[i + r] || inst.isComponent(children[i + r])) { continue; }
+          if (!children[i + r] || inst.isComponent(children[i + r])) continue;
           r += recursionFunc(children[i + r]);
         }
       }
@@ -1720,7 +1810,7 @@ const util = {
       return 0;
     })(element);
 
-    if (element.childNodes.length === 0) { element.innerHTML = '<br>'; }
+    if (element.childNodes.length === 0) element.innerHTML = "<br>";
   },
 
   /**
@@ -1728,13 +1818,13 @@ const util = {
    * @param {String} html HTML string
    * @returns {String}
    */
-  htmlRemoveWhiteSpace: function(html) {
-    if (!html) { return ''; }
+  htmlRemoveWhiteSpace: function (html) {
+    if (!html) return "";
     return html
       .trim()
       .replace(
         /<\/?(?!strong|span|font|b|var|i|em|u|ins|s|strike|del|sub|sup|mark|a|label|code)[^>^<]+>\s+(?=<)/gi,
-        function(m) {
+        function (m) {
           return m.trim();
         }
       );
@@ -1745,13 +1835,13 @@ const util = {
    * @param {Array} array Array object
    * @param {Boolean} des true: descending order / false: ascending order
    */
-  sortByDepth: function(array, des) {
+  sortByDepth: function (array, des) {
     const t = !des ? -1 : 1;
     const f = t * -1;
 
     array.sort(
-      function(a, b) {
-        if (!this.isListCell(a) || !this.isListCell(b)) { return 0; }
+      function (a, b) {
+        if (!this.isListCell(a) || !this.isListCell(b)) return 0;
         a = this.getElementDepth(a);
         b = this.getElementDepth(b);
         return a > b ? t : a < b ? f : 0;
@@ -1765,10 +1855,10 @@ const util = {
    * @returns {Boolean}
    * @private
    */
-  _isIgnoreNodeChange: function(element) {
+  _isIgnoreNodeChange: function (element) {
     return (
       element &&
-      element.nodeType === 1 &&
+      element.nodeType !== 3 &&
       (this.isNonEditable(element) || !this.isTextStyleElement(element))
     );
   },
@@ -1779,11 +1869,13 @@ const util = {
    * @returns {Boolean}
    * @private
    */
-  _isMaintainedNode: function(element) {
+  _isMaintainedNode: function (element) {
     return (
       element &&
-      element.nodeType === 1 &&
-      /^(a|label|code)$/i.test(typeof element === 'string' ? element : element.nodeName)
+      element.nodeType !== 3 &&
+      /^(a|label|code)$/i.test(
+        typeof element === "string" ? element : element.nodeName
+      )
     );
   },
 
@@ -1793,10 +1885,10 @@ const util = {
    * @returns {Boolean}
    * @private
    */
-  _isSizeNode: function(element) {
+  _isSizeNode: function (element) {
     return (
       element &&
-      element.nodeType === 1 &&
+      element.nodeType !== 3 &&
       this.isTextStyleElement(element) &&
       !!element.style.fontSize
     );
@@ -1808,12 +1900,13 @@ const util = {
    * @returns {Boolean}
    * @private
    */
-  _notTextNode: function(element) {
+  _notTextNode: function (element) {
     return (
-      element.nodeType === 1 &&
+      element &&
+      element.nodeType !== 3 &&
       (this.isComponent(element) ||
         /^(br|input|select|canvas|img|iframe|audio|video)$/i.test(
-          typeof element === 'string' ? element : element.nodeName
+          typeof element === "string" ? element : element.nodeName
         ))
     );
   },
@@ -1824,7 +1917,7 @@ const util = {
    * @returns {Boolean}
    * @private
    */
-  _disallowedTags: function(element) {
+  _disallowedTags: function (element) {
     return /^(meta|script|link|style|[a-z]+\:[a-z]+)$/i.test(element.nodeName);
   },
 
@@ -1834,17 +1927,17 @@ const util = {
    * @param {String} list Tags list ("br|p|div|pre...")
    * @returns {RegExp}
    */
-  createTagsWhitelist: function(list) {
-    const exclusionTags = list.split('|');
-    let regStr = '<\\/?(';
+  createTagsWhitelist: function (list) {
+    const exclusionTags = list.split("|");
+    let regStr = "<\\/?(";
 
     for (let i = 0, len = exclusionTags.length; i < len; i++) {
-      regStr += '(?!\\b' + exclusionTags[i] + '\\b)';
+      regStr += "(?!\\b" + exclusionTags[i] + "\\b)";
     }
 
-    regStr += ')[^>]>';
+    regStr += ")[^>]>";
 
-    return new RegExp(regStr, 'g');
+    return new RegExp(regStr, "g");
   },
 
   /**
@@ -1853,7 +1946,10 @@ const util = {
    * @param {RegExp} htmlCheckWhitelistRegExp Editor tags whitelist (core._htmlCheckWhitelistRegExp)
    * @private
    */
-  _consistencyCheckOfHTML: function(documentFragment, htmlCheckWhitelistRegExp) {
+  _consistencyCheckOfHTML: function (
+    documentFragment,
+    htmlCheckWhitelistRegExp
+  ) {
     /**
      * It is can use ".children(util.getListChildren)" to exclude text nodes, but "documentFragment.children" is not supported in IE.
      * So check the node type and exclude the text no (current.nodeType !== 1)
@@ -1866,8 +1962,8 @@ const util = {
     // wrong position
     const wrongTags = this.getListChildNodes(
       documentFragment,
-      function(current) {
-        if (current.nodeType !== 1) { return false; }
+      function (current) {
+        if (current.nodeType !== 1) return false;
 
         // white list
         if (
@@ -1895,7 +1991,11 @@ const util = {
         }
 
         // wrong list
-        if (this.isList(current.parentNode) && !this.isList(current) && !this.isListCell(current)) {
+        if (
+          this.isList(current.parentNode) &&
+          !this.isList(current) &&
+          !this.isListCell(current)
+        ) {
           wrongList.push(current);
           return false;
         }
@@ -1915,7 +2015,9 @@ const util = {
 
         return (
           current.parentNode !== documentFragment &&
-          (this.isFormatElement(current) || this.isComponent(current) || this.isList(current)) &&
+          (this.isFormatElement(current) ||
+            this.isComponent(current) ||
+            this.isList(current)) &&
           !this.isRangeFormatElement(current.parentNode) &&
           !this.isListCell(current.parentNode) &&
           !this.getParentElement(current, this.isComponent) &&
@@ -1932,7 +2034,7 @@ const util = {
     for (let i = 0, len = wrongTags.length, t, p; i < len; i++) {
       t = wrongTags[i];
       p = t.parentNode;
-      if (!p || !p.parentNode) { continue; }
+      if (!p || !p.parentNode) continue;
       p.parentNode.insertBefore(t, p);
       checkTags.push(p);
     }
@@ -1951,56 +2053,74 @@ const util = {
     for (let i = 0, len = wrongList.length, t, tp, children, p; i < len; i++) {
       t = wrongList[i];
 
-      tp = this.createElement('LI');
+      tp = this.createElement("LI");
       children = t.childNodes;
       while (children[0]) {
         tp.appendChild(children[0]);
       }
 
       p = t.parentNode;
-      if (!p) { continue; }
+      if (!p) continue;
       p.insertBefore(tp, t);
       this.removeItem(t);
     }
 
     for (let i = 0, len = withoutFormatCells.length, t, f; i < len; i++) {
       t = withoutFormatCells[i];
-      f = this.createElement('DIV');
-      f.innerHTML = t.textContent.trim().length === 0 ? '<br>' : t.innerHTML;
+      f = this.createElement("DIV");
+      f.innerHTML = t.textContent.trim().length === 0 ? "<br>" : t.innerHTML;
       t.innerHTML = f.outerHTML;
     }
   },
 
-  _setDefaultOptionStyle: function(options, defaultStyle) {
-    let optionStyle = '';
-    if (options.height) { optionStyle += 'height:' + options.height + ';'; }
-    if (options.minHeight) { optionStyle += 'min-height:' + options.minHeight + ';'; }
-    if (options.maxHeight) { optionStyle += 'max-height:' + options.maxHeight + ';'; }
-    if (options.position) { optionStyle += 'position:' + options.position + ';'; }
-    if (options.width) { optionStyle += 'width:' + options.width + ';'; }
-    if (options.minWidth) { optionStyle += 'min-width:' + options.minWidth + ';'; }
-    if (options.maxWidth) { optionStyle += 'max-width:' + options.maxWidth + ';'; }
+  _setDefaultOptionStyle: function (options, defaultStyle) {
+    let optionStyle = "";
+    if (options.height) {
+      if (options.minHeight) {
+        optionStyle += `height: auto;`;
+      } else {
+        optionStyle += `height: ${options.height};`;
+      }
+    }
+    if (options.minHeight) {
+      optionStyle += `min-height: ${options.minHeight};`;
+    }
+    if (options.maxHeight) {
+      optionStyle += `max-height: ${options.maxHeight};`;
+    }
+    if (options.position) {
+      optionStyle += `position: ${options.position};`;
+    }
+    if (options.width) {
+      optionStyle += `width: ${options.width};`;
+    }
+    if (options.minWidth) {
+      optionStyle += `min-width: ${options.minWidth};`;
+    }
+    if (options.maxWidth) {
+      optionStyle += `max-width: ${options.maxWidth};`;
+    }
 
-    let top = '';
-    let frame = '';
-    let editor = '';
+    let top = "";
+    let frame = "";
+    let editor = "";
     defaultStyle = optionStyle + defaultStyle;
-    const styleArr = defaultStyle.split(';');
+    const styleArr = defaultStyle.split(";");
     for (let i = 0, len = styleArr.length, s; i < len; i++) {
       s = styleArr[i].trim();
-      if (!s) { continue; }
+      if (!s) continue;
       if (/^(min-|max-)?width\s*:/.test(s)) {
-        top += s + ';';
+        top += s + ";";
         continue;
       }
       if (/^(min-|max-)?height\s*:/.test(s)) {
-        if (/^height/.test(s) && s.split(':')[1].trim() === 'auto') {
-          options.height = 'auto';
+        if (/^height/.test(s) && s.split(":")[1].trim() === "auto") {
+          options.height = "auto";
         }
-        frame += s + ';';
+        frame += s + ";";
         continue;
       }
-      editor += s + ';';
+      editor += s + ";";
     }
 
     return {
@@ -2010,22 +2130,22 @@ const util = {
     };
   },
 
-  _setIframeDocument: function(frame, options) {
-    frame.setAttribute('scrolling', 'auto');
+  _setIframeDocument: function (frame, options) {
+    frame.setAttribute("scrolling", "auto");
     frame.contentDocument.head.innerHTML =
-      '' +
+      "" +
       '<meta charset="utf-8" />' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
-      '<title></title>' +
+      "<title></title>" +
       this._setIframeCssTags(options);
-    frame.contentDocument.body.className = 'kothing-editor-editable';
-    frame.contentDocument.body.setAttribute('contenteditable', true);
+    frame.contentDocument.body.className = "kothing-editor-editable";
+    frame.contentDocument.body.setAttribute("contenteditable", true);
   },
 
-  _setIframeCssTags: function(options) {
+  _setIframeCssTags: function (options) {
     const linkNames = options.iframeCSSFileName;
-    const RegExp = this._w.RegExp;
-    let tagString = '';
+    const wRegExp = this._w.RegExp;
+    let tagString = "";
 
     for (let f = 0, len = linkNames.length, path; f < len; f++) {
       path = [];
@@ -2033,25 +2153,25 @@ const util = {
       if (/(^https?:\/\/)|(^data:text\/css,)/.test(linkNames[f])) {
         path.push(linkNames[f]);
       } else {
-        const CSSFileName = new RegExp(
-          '(^|.*[\\/])' + linkNames[f] + '(\\..+)?\\.css(?:\\?.*|;.*)?$',
-          'i'
+        const CSSFileName = new wRegExp(
+          "(^|.*[\\/])" + linkNames[f] + "(\\..+)?\\.css(?:\\?.*|;.*)?$",
+          "i"
         );
         for (
-          let c = document.getElementsByTagName('link'), i = 0, len = c.length, styleTag;
+          let c = document.getElementsByTagName("link"),
+            i = 0,
+            len = c.length,
+            styleTag;
           i < len;
           i++
         ) {
           styleTag = c[i].href.match(CSSFileName);
-          if (styleTag) { path.push(styleTag[0]); }
+          if (styleTag) path.push(styleTag[0]);
         }
       }
 
-      if (!path || path.length === 0) {
-        throw Error(
-          '[KothingEditor.constructor.iframe.fail] The kothingEditor CSS files installation path could not be automatically detected. Please set the option property "iframeCSSFileName" before creating editor instances.'
-        ); 
-      }
+      if (!path || path.length === 0)
+        throw '[KothingEditor.constructor.iframe.fail] The KothingEditor CSS files installation path could not be automatically detected. Please set the option property "iframeCSSFileName" before creating editor instances.';
 
       for (let i = 0, len = path.length; i < len; i++) {
         tagString += '<link href="' + path[i] + '" rel="stylesheet">';
@@ -2060,11 +2180,151 @@ const util = {
 
     return (
       tagString +
-      (options.height === 'auto'
-        ? '<style>\n/** Iframe height auto */\nbody{height: min-content; overflow: hidden;}\n</style>'
-        : '')
+      (options.height === "auto"
+        ? "<style>\n/** Iframe height auto */\nbody{height: min-content; overflow: hidden;}\n</style>"
+        : "")
     );
   },
-};
 
-export default util;
+  /**
+   * @description Tooltip
+   * @param {ele} element class, ex: ".ke-tooltip"
+   * @param {transitionOptions} { transition: boolean, time: number }, css3 transition options
+   * @param {enterCallback} mouseenter events callback
+   * @param {outCallback} mouseleave events callback
+   */
+  _tooltip: (ele, transitionOptions, enterCallback, outCallback) => {
+    if (!ele || typeof ele !== "string") {
+      console.error(
+        new Error(
+          'The "tooltip" method requires the "class" of at least one parameter'
+        )
+      );
+      return false;
+    }
+    if (transitionOptions && {}.constructor.name === "Object") {
+      const els = document.querySelectorAll(ele);
+      const tipContent = document.createElement("span");
+      const transition = transitionOptions.transition || false;
+      const time = transitionOptions.time || 200;
+      let timer = null;
+
+      const opacityTransition = (ele, state) => {
+        timer && clearTimeout(timer);
+        ele.style.setProperty("transition", "opacity " + time / 1000 + "s");
+        ele.style.setProperty(
+          "-webkit-transition",
+          "opacity " + time / 1000 + "s"
+        );
+        if (state === "enter") {
+          ele.style.opacity = 0;
+          timer = setTimeout(() => {
+            ele.style.opacity = 1;
+            if (typeof enterCallback === "function") {
+              enterCallback();
+            }
+          }, 0);
+        } else {
+          if (state === "leave") {
+            ele.style.opacity = 0;
+            if (typeof outCallback === "function") {
+              outCallback();
+            }
+            timer = setTimeout(() => {
+              try {
+                // document.body.removeChild(ele);
+                ele.parentElement.removeChild(ele);
+              } catch (e) {
+                console.error(e);
+              }
+            }, time);
+          }
+        }
+      };
+
+      const deleteTipContent = (el) => {
+        el.addEventListener(
+          "mouseleave",
+          () => {
+            const oldTipContent = document.querySelector(".tool_tip");
+            if (oldTipContent) {
+              if (transition === true) {
+                return opacityTransition(oldTipContent, "leave");
+              }
+              // document.body.removeChild(oldTipContent);
+              el.parentElement.removeChild(oldTipContent);
+              if (typeof outCallback === "function") {
+                outCallback();
+              }
+            }
+          },
+          false
+        );
+      };
+
+      const tipContentSetter = (
+        tipContent,
+        context,
+        direction,
+        parentElement
+      ) => {
+        tipContent.innerHTML = context;
+        tipContent.className = "tool_tip tool_tip_" + direction;
+        // document.body.appendChild(tipContent);
+        parentElement.appendChild(tipContent);
+        if (transition === true) {
+          opacityTransition(tipContent, "enter");
+          return false;
+        }
+        if (typeof enterCallback === "function") {
+          enterCallback();
+        }
+      };
+
+      Array.prototype.slice.call(els).forEach((el) => {
+        el.addEventListener(
+          "mouseenter",
+          () => {
+            const currenLeft = el.offsetLeft;
+            const currenTop = el.offsetTop;
+            const currenWidth = el.offsetWidth;
+            const currenHeight = el.offsetHeight;
+            const context = el.getAttribute("data-tip");
+            const direction = el.getAttribute("data-direction") || "top";
+
+            tipContentSetter(tipContent, context, direction, el.parentElement);
+
+            const tipContentWidth = tipContent.offsetWidth;
+            const tipContentHeight = tipContent.offsetHeight;
+
+            switch (direction) {
+              case "top":
+                tipContent.style.left =
+                  currenLeft + currenWidth / 2 - tipContentWidth / 2 + "px";
+                tipContent.style.top = currenTop - tipContentHeight - 7 + "px";
+                break;
+              case "left":
+                tipContent.style.left = currenLeft - tipContentWidth - 7 + "px";
+                tipContent.style.top =
+                  currenTop + currenHeight / 2 - tipContentHeight / 2 + "px";
+                break;
+              case "right":
+                tipContent.style.left = currenLeft + currenWidth + 7 + "px";
+                tipContent.style.top =
+                  currenTop + currenHeight / 2 - tipContentHeight / 2 + "px";
+                break;
+              case "bottom":
+                tipContent.style.left =
+                  currenLeft + currenWidth / 2 - tipContentWidth / 2 + "px";
+                tipContent.style.top = currenTop + currenHeight + 7 + "px";
+                break;
+              default:
+            }
+          },
+          false
+        );
+        deleteTipContent(el);
+      });
+    }
+  },
+};

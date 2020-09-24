@@ -1,6 +1,14 @@
+/*
+ * Rich Text Editor
+ *
+ * kothing-ditor.js
+ * Copyright Kothing.
+ * MIT license.
+ */
+
+import ckb from "./ckb";
 import da from "./da";
 import de from "./de";
-import ckb from "./ckb";
 import en from "./en";
 import es from "./es";
 import fr from "./fr";

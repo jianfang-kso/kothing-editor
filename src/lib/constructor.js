@@ -1,5 +1,3 @@
-/* eslint-disable no-useless-escape */
-/* eslint-disable no-labels */
 /*
  * Rich Text Editor
  *
@@ -10,7 +8,7 @@
 
 import _icons from "../assets/defaultIcons";
 import _defaultLang from "../lang/en";
-import util from "./util";
+import _util from "./util";
 
 export default {
   /**
@@ -20,21 +18,17 @@ export default {
    * @returns {Object}
    */
   init: function (element, options) {
-    if (typeof options !== "object") {
-      options = {};
-    }
+    if (typeof options !== "object") options = {};
 
     const doc = document;
 
     /** --- init options --- */
     this._initOptions(element, options);
 
-    // kothingEditor div
+    // KothingEditor div
     const top_div = doc.createElement("DIV");
     top_div.className = "kothing-editor";
-    if (element.id) {
-      top_div.id = "kothing-editor_" + element.id;
-    }
+    if (element.id) top_div.id = "kothing-editor_" + element.id;
 
     // relative div
     const relative = doc.createElement("DIV");
@@ -43,14 +37,12 @@ export default {
     // toolbar
     const tool_bar = this._createToolBar(
       doc,
-      options.toolBarItem,
+      options.toolbarItem,
       options.plugins,
       options
     );
     tool_bar.element.style.visibility = "hidden";
-    if (tool_bar.pluginCallButtons.math) {
-      this._checkKatexMath(options.katex);
-    }
+    if (tool_bar.pluginCallButtons.math) this._checkKatexMath(options.katex);
     const arrow = doc.createElement("DIV");
     arrow.className = "ke-arrow";
 
@@ -62,7 +54,7 @@ export default {
     const editor_div = doc.createElement("DIV");
     editor_div.className = "ke-wrapper";
 
-    /** --- init elements and create tollbar --- */
+    /** --- init elements and create bottom bar --- */
     const initElements = this._initElements(
       options,
       top_div,
@@ -94,8 +86,8 @@ export default {
     const line_breaker_t = doc.createElement("DIV");
     line_breaker_t.className += "ke-line-breaker-component";
     const line_breaker_b = line_breaker_t.cloneNode(true);
-    line_breaker_t.innerHTML = line_breaker_b.innerHTML =
-      options.icons.line_break;
+    line_breaker_t.innerHTML = options.icons.line_break;
+    line_breaker_b.innerHTML = options.icons.line_break;
 
     // resize operation background
     const resize_back = doc.createElement("DIV");
@@ -122,9 +114,7 @@ export default {
     relative.appendChild(line_breaker);
     relative.appendChild(line_breaker_t);
     relative.appendChild(line_breaker_b);
-    if (resizing_bar) {
-      relative.appendChild(resizing_bar);
-    }
+    if (resizing_bar) relative.appendChild(resizing_bar);
     top_div.appendChild(relative);
 
     textarea = this._checkCodeMirror(options, textarea);
@@ -175,10 +165,8 @@ export default {
         },
         options.codeMirror.options || {},
       ].reduce(function (init, option) {
-        for (const key in option) {
-          if (util.hasOwn(option, key)) {
-            init[key] = option[key];
-          }
+        for (let key in option) {
+          if (_util.hasOwn(option, key)) init[key] = option[key];
         }
         return init;
       }, {});
@@ -205,11 +193,10 @@ export default {
    * @private
    */
   _checkKatexMath: function (katex) {
-    if (!katex) {
+    if (!katex)
       throw Error(
         '[KothingEditor.create.fail] To use the math button you need to add a "katex" object to the options.'
       );
-    }
 
     const katexOptions = [
       {
@@ -217,10 +204,8 @@ export default {
       },
       katex.options || {},
     ].reduce(function (init, option) {
-      for (const key in option) {
-        if (util.hasOwn(option, key)) {
-          init[key] = option[key];
-        }
+      for (let key in option) {
+        if (_util.hasOwn(option, key)) init[key] = option[key];
       }
       return init;
     }, {});
@@ -247,20 +232,19 @@ export default {
       mergeOptions.toolbarContainer &&
       mergeOptions.toolbarContainer !== originOptions.toolbarContainer;
     const isNewToolbar =
-      !!mergeOptions.toolBarItem ||
+      !!mergeOptions.toolbarItem ||
       mergeOptions.mode !== originOptions.mode ||
       isNewToolbarContainer;
     const isNewPlugins = !!mergeOptions.plugins;
 
     const tool_bar = this._createToolBar(
       document,
-      isNewToolbar ? mergeOptions.toolBarItem : originOptions.toolBarItem,
+      isNewToolbar ? mergeOptions.toolbarItem : originOptions.toolbarItem,
       isNewPlugins ? mergeOptions.plugins : plugins,
       mergeOptions
     );
-    if (tool_bar.pluginCallButtons.math) {
+    if (tool_bar.pluginCallButtons.math)
       this._checkKatexMath(mergeOptions.katex);
-    }
     const arrow = document.createElement("DIV");
     arrow.className = "ke-arrow";
 
@@ -291,18 +275,12 @@ export default {
     const placeholder_span = initElements.placeholder;
     let code = initElements.codeView;
 
-    if (el.resizingBar) {
-      relative.removeChild(el.resizingBar);
-    }
-    if (bottomBar.resizingBar) {
-      relative.appendChild(bottomBar.resizingBar);
-    }
+    if (el.resizingBar) relative.removeChild(el.resizingBar);
+    if (bottomBar.resizingBar) relative.appendChild(bottomBar.resizingBar);
 
     editorArea.innerHTML = "";
     editorArea.appendChild(code);
-    if (placeholder_span) {
-      editorArea.appendChild(placeholder_span);
-    }
+    if (placeholder_span) editorArea.appendChild(placeholder_span);
 
     code = this._checkCodeMirror(mergeOptions, code);
 
@@ -322,7 +300,7 @@ export default {
   },
 
   /**
-   * @description Initialize property of kothingEditor elements
+   * @description Initialize property of KothingEditor elements
    * @param {Object} options Options
    * @param {Element} topDiv KothingEditor top div
    * @param {Element} toolBar Tool bar
@@ -483,7 +461,7 @@ export default {
     /** Layout */
     options.mode = options.mode || "classic"; // classic, inline, balloon, balloon-always
     options.toolbarWidth = options.toolbarWidth
-      ? util.isNumber(options.toolbarWidth)
+      ? _util.isNumber(options.toolbarWidth)
         ? options.toolbarWidth + "px"
         : options.toolbarWidth
       : "auto";
@@ -524,7 +502,9 @@ export default {
     /** Bottom resizing bar */
     options.resizingBar =
       options.resizingBar === undefined
-        ? !/inline|balloon/i.test(options.mode)
+        ? /inline|balloon/i.test(options.mode)
+          ? false
+          : true
         : options.resizingBar;
     options.showPathLabel = !options.resizingBar
       ? false
@@ -547,39 +527,39 @@ export default {
         ? options.charCounterLabel.trim()
         : null;
     options.maxCharCount =
-      util.isNumber(options.maxCharCount) && options.maxCharCount > -1
+      _util.isNumber(options.maxCharCount) && options.maxCharCount > -1
         ? options.maxCharCount * 1
         : null;
     /** Width size */
     options.width = options.width
-      ? util.isNumber(options.width)
+      ? _util.isNumber(options.width)
         ? options.width + "px"
         : options.width
-      : element.clientWidth
+      : element.clientWidth && element.clientWidth
       ? element.clientWidth + "px"
       : "100%";
     options.minWidth =
-      (util.isNumber(options.minWidth)
+      (_util.isNumber(options.minWidth)
         ? options.minWidth + "px"
         : options.minWidth) || "";
     options.maxWidth =
-      (util.isNumber(options.maxWidth)
+      (_util.isNumber(options.maxWidth)
         ? options.maxWidth + "px"
         : options.maxWidth) || "";
     /** Height size */
     options.height = options.height
-      ? util.isNumber(options.height)
+      ? _util.isNumber(options.height)
         ? options.height + "px"
         : options.height
-      : element.clientHeight
+      : element.clientHeight && element.clientHeight > 100
       ? element.clientHeight + "px"
-      : "auto";
+      : "100px";
     options.minHeight =
-      (util.isNumber(options.minHeight)
+      (_util.isNumber(options.minHeight)
         ? options.minHeight + "px"
         : options.minHeight) || "";
     options.maxHeight =
-      (util.isNumber(options.maxHeight)
+      (_util.isNumber(options.maxHeight)
         ? options.maxHeight + "px"
         : options.maxHeight) || "";
     /** Editing area default style */
@@ -606,12 +586,12 @@ export default {
       options.imageHeightShow === undefined ? true : !!options.imageHeightShow;
     options.imageWidth = !options.imageWidth
       ? "auto"
-      : util.isNumber(options.imageWidth)
+      : _util.isNumber(options.imageWidth)
       ? options.imageWidth + "px"
       : options.imageWidth;
     options.imageHeight = !options.imageHeight
       ? "auto"
-      : util.isNumber(options.imageHeight)
+      : _util.isNumber(options.imageHeight)
       ? options.imageHeight + "px"
       : options.imageHeight;
     options.imageSizeOnlyPercentage = !!options.imageSizeOnlyPercentage;
@@ -632,13 +612,14 @@ export default {
         ? options.imageUploadUrl
         : null;
     options.imageUploadSizeLimit = /\d+/.test(options.imageUploadSizeLimit)
-      ? util.getNumber(options.imageUploadSizeLimit, 0)
+      ? _util.getNumber(options.imageUploadSizeLimit, 0)
       : null;
     options.imageMultipleFile = !!options.imageMultipleFile;
     options.imageAccept =
-      typeof options.imageAccept === "string"
-        ? options.imageAccept.trim() || "*"
-        : "*";
+      typeof options.imageAccept !== "string" ||
+      options.imageAccept.trim() === "*"
+        ? "image/*"
+        : options.imageAccept.trim() || "image/*";
     /** Image - image gallery */
     options.imageGalleryUrl =
       typeof options.imageGalleryUrl === "string"
@@ -652,15 +633,15 @@ export default {
     options.videoRatioShow =
       options.videoRatioShow === undefined ? true : !!options.videoRatioShow;
     options.videoWidth =
-      !options.videoWidth || !util.getNumber(options.videoWidth, 0)
+      !options.videoWidth || !_util.getNumber(options.videoWidth, 0)
         ? ""
-        : util.isNumber(options.videoWidth)
+        : _util.isNumber(options.videoWidth)
         ? options.videoWidth + "px"
         : options.videoWidth;
     options.videoHeight =
-      !options.videoHeight || !util.getNumber(options.videoHeight, 0)
+      !options.videoHeight || !_util.getNumber(options.videoHeight, 0)
         ? ""
-        : util.isNumber(options.videoHeight)
+        : _util.isNumber(options.videoHeight)
         ? options.videoHeight + "px"
         : options.videoHeight;
     options.videoSizeOnlyPercentage = !!options.videoSizeOnlyPercentage;
@@ -669,7 +650,7 @@ export default {
       options.videoRotation !== undefined
         ? options.videoRotation
         : !(options.videoSizeOnlyPercentage || !options.videoHeightShow);
-    options.videoRatio = util.getNumber(options.videoRatio, 4) || 0.5625;
+    options.videoRatio = _util.getNumber(options.videoRatio, 4) || 0.5625;
     options.videoRatioList = !options.videoRatioList
       ? null
       : options.videoRatioList;
@@ -685,24 +666,25 @@ export default {
         ? options.videoUploadUrl
         : null;
     options.videoUploadSizeLimit = /\d+/.test(options.videoUploadSizeLimit)
-      ? util.getNumber(options.videoUploadSizeLimit, 0)
+      ? _util.getNumber(options.videoUploadSizeLimit, 0)
       : null;
     options.videoMultipleFile = !!options.videoMultipleFile;
     options.videoTagAttrs = options.videoTagAttrs || null;
     options.videoIframeAttrs = options.videoIframeAttrs || null;
     options.videoAccept =
-      typeof options.videoAccept === "string"
-        ? options.videoAccept.trim() || "*"
-        : "*";
+      typeof options.videoAccept !== "string" ||
+      options.videoAccept.trim() === "*"
+        ? "video/*"
+        : options.videoAccept.trim() || "video/*";
     /** Audio */
     options.audioWidth = !options.audioWidth
       ? ""
-      : util.isNumber(options.audioWidth)
+      : _util.isNumber(options.audioWidth)
       ? options.audioWidth + "px"
       : options.audioWidth;
     options.audioHeight = !options.audioHeight
       ? ""
-      : util.isNumber(options.audioHeight)
+      : _util.isNumber(options.audioHeight)
       ? options.audioHeight + "px"
       : options.audioHeight;
     options.audioFileInput = !!options.audioFileInput;
@@ -716,14 +698,15 @@ export default {
         ? options.audioUploadUrl
         : null;
     options.audioUploadSizeLimit = /\d+/.test(options.audioUploadSizeLimit)
-      ? util.getNumber(options.audioUploadSizeLimit, 0)
+      ? _util.getNumber(options.audioUploadSizeLimit, 0)
       : null;
     options.audioMultipleFile = !!options.audioMultipleFile;
     options.audioTagAttrs = options.audioTagAttrs || null;
     options.audioAccept =
-      typeof options.audioAccept === "string"
-        ? options.audioAccept.trim() || "*"
-        : "*";
+      typeof options.audioAccept !== "string" ||
+      options.audioAccept.trim() === "*"
+        ? "audio/*"
+        : options.audioAccept.trim() || "audio/*";
     /** Table */
     options.tableCellControllerPosition =
       typeof options.tableCellControllerPosition === "string"
@@ -756,7 +739,7 @@ export default {
         : { src: options.katex }
       : null;
     /** Buttons */
-    options.toolBarItem = options.toolBarItem || [
+    options.toolbarItem = options.toolbarItem || [
       ["undo", "redo"],
       ["bold", "underline", "italic", "strike", "subscript", "superscript"],
       ["removeFormat"],
@@ -770,30 +753,28 @@ export default {
       !options.icons || typeof options.icons !== "object"
         ? _icons
         : [_icons, options.icons].reduce(function (_default, _new) {
-            for (const key in _new) {
-              if (util.hasOwn(_new, key)) {
-                _default[key] = _new[key];
-              }
+            for (let key in _new) {
+              if (_util.hasOwn(_new, key)) _default[key] = _new[key];
             }
             return _default;
           }, {});
 
     /** _init options */
-    options._editorStyles = util._setDefaultOptionStyle(
+    options._editorStyles = _util._setDefaultOptionStyle(
       options,
       options.defaultStyle
     );
   },
 
   /**
-   * @description KothingEditor's Default toolbar item
+   * @description KothingEditor's Default button list
    * @param {Object} options options
    * @private
    */
   _defaultButtons: function (options) {
     const icons = options.icons;
     const lang = options.lang;
-    const cmd = util.isOSX_IOS ? "⌘" : "CTRL";
+    const cmd = _util.isOSX_IOS ? "⌘" : "CTRL";
     const shortcutsDisable = !options.shortcutsHint
       ? ["bold", "strike", "underline", "italic", "undo", "indent"]
       : options.shortcutsDisable;
@@ -947,27 +928,21 @@ export default {
         lang.toolbar.font,
         "font",
         "submenu",
-        '<span class="txt">' + lang.toolbar.font + "</span>" + icons.arrow_down,
+        `<span class="txt">${icons.font}</span> <span class="arrow-icon">${icons.arrow_down}</span>`,
       ],
       formatBlock: [
         "ke-btn-select ke-btn-tool-format",
         lang.toolbar.formats,
         "formatBlock",
         "submenu",
-        '<span class="txt">' +
-          lang.toolbar.formats +
-          "</span>" +
-          icons.arrow_down,
+        `<span class="txt">${icons.format_block}</span> <span class="arrow-icon">${icons.arrow_down}</span>`,
       ],
       fontSize: [
         "ke-btn-select ke-btn-tool-size",
         lang.toolbar.fontSize,
         "fontSize",
         "submenu",
-        '<span class="txt">' +
-          lang.toolbar.fontSize +
-          "</span>" +
-          icons.arrow_down,
+        `<span class="txt">${icons.font_size}</span> <span class="arrow-icon">${icons.arrow_down}</span>`,
       ],
       fontColor: [
         "",
@@ -1050,10 +1025,10 @@ export default {
    * @private
    */
   _createModuleGroup: function () {
-    const oDiv = util.createElement("DIV");
+    const oDiv = _util.createElement("DIV");
     oDiv.className = "ke-btn-module ke-btn-module-border";
 
-    const oUl = util.createElement("UL");
+    const oUl = _util.createElement("UL");
     oUl.className = "ke-menu-list";
     oDiv.appendChild(oUl);
 
@@ -1084,8 +1059,8 @@ export default {
     _disabled,
     _icons
   ) {
-    const oLi = util.createElement("LI");
-    const oButton = util.createElement("BUTTON");
+    const oLi = _util.createElement("LI");
+    const oButton = _util.createElement("BUTTON");
 
     oButton.setAttribute("type", "button");
     oButton.setAttribute(
@@ -1096,9 +1071,10 @@ export default {
     oButton.setAttribute("data-display", dataDisplay);
     oButton.setAttribute("tabindex", "-1");
 
-    if (!innerHTML) {
-      innerHTML = '<span class="ke-icon-text">!</span>';
-    }
+    oButton.setAttribute("data-tip", title || dataCommand);
+    oButton.setAttribute("data-direction", "bottom");
+
+    if (!innerHTML) innerHTML = '<span class="ke-icon-text">!</span>';
     if (/^default\./i.test(innerHTML)) {
       innerHTML = _icons[innerHTML.replace(/^default\./i, "")];
     }
@@ -1107,10 +1083,7 @@ export default {
       oButton.className += " ke-btn-more-text";
     }
 
-    innerHTML +=
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      (title || dataCommand) +
-      "</span></span>";
+    // innerHTML += '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + (title || dataCommand) + '</span></span>';
 
     if (_disabled) {
       oButton.setAttribute("disabled", true);
@@ -1128,13 +1101,13 @@ export default {
   /**
    * @description Create editor HTML
    * @param {Array} doc document object
-   * @param {Array} toolBarItem option.toolBarItem
+   * @param {Array} toolbarItem option.toolbarItem
    * @param {Array|Object|null} _plugins Plugins
    * @param {Array} options options
    * @returns {Object} { element: (Element) Toolbar element, plugins: (Array|null) Plugins Array, pluginCallButtons: (Object), responsiveButtons: (Array) }
    * @private
    */
-  _createToolBar: function (doc, toolBarItem, _plugins, options) {
+  _createToolBar: function (doc, toolbarItem, _plugins, options) {
     const separator_vertical = doc.createElement("DIV");
     separator_vertical.className = "ke-toolbar-separator-vertical";
 
@@ -1145,9 +1118,9 @@ export default {
     _buttonTray.className = "ke-btn-tray";
     tool_bar.appendChild(_buttonTray);
 
-    /** create toolbar item */
+    /** create button list */
     const icons = options.icons;
-    const defaultToolBarItem = this._defaultButtons(options);
+    const defaultToolbarItem = this._defaultButtons(options);
     const pluginCallButtons = {};
     const responsiveButtons = [];
     const plugins = {};
@@ -1169,17 +1142,17 @@ export default {
     let buttonElement = null;
     let pluginName = "";
     let vertical = false;
-    const moreLayer = util.createElement("DIV");
+    const moreLayer = _util.createElement("DIV");
     moreLayer.className = "ke-toolbar-more-layer";
 
     buttonGroupLoop: for (
       let i = 0, more, moreContainer, moreCommand, buttonGroup, align;
-      i < toolBarItem.length;
+      i < toolbarItem.length;
       i++
     ) {
       more = false;
       align = "";
-      buttonGroup = toolBarItem[i];
+      buttonGroup = toolbarItem[i];
       moduleElement = this._createModuleGroup();
 
       // button object
@@ -1192,14 +1165,14 @@ export default {
           if (/^\%\d+/.test(button) && j === 0) {
             buttonGroup[0] = button.replace(/[^\d]/g, "");
             responsiveButtons.push(buttonGroup);
-            toolBarItem.splice(i--, 1);
+            toolbarItem.splice(i--, 1);
             continue buttonGroupLoop;
           }
 
           if (typeof button === "object") {
             if (typeof button.add === "function") {
               pluginName = button.name;
-              module = defaultToolBarItem[pluginName];
+              module = defaultToolbarItem[pluginName];
               plugins[pluginName] = button;
             } else {
               pluginName = button.name;
@@ -1228,21 +1201,21 @@ export default {
               const title = matched[2].trim();
               const innerHTML = matched[3].trim();
               module = ["ke-btn-more", title, moreCommand, "MORE", innerHTML];
-            } else {
-              // buttons
-              module = defaultToolBarItem[button];
+            }
+            // buttons
+            else {
+              module = defaultToolbarItem[button];
             }
 
             pluginName = button;
             if (!module) {
               const custom = plugins[pluginName];
-              if (!custom) {
+              if (!custom)
                 throw Error(
                   "[KothingEditor.create.toolbar.fail] The button name of a plugin that does not exist. [" +
                     pluginName +
                     "]"
                 );
-              }
               module = [
                 custom.buttonClass,
                 custom.title,
@@ -1274,7 +1247,7 @@ export default {
           // more button
           if (moreButton) {
             more = true;
-            moreContainer = util.createElement("DIV");
+            moreContainer = _util.createElement("DIV");
             moreContainer.className = "ke-more-layer " + moreCommand;
             moreContainer.innerHTML =
               '<div class="ke-more-form"><ul class="ke-menu-list"' +
@@ -1287,16 +1260,14 @@ export default {
 
         if (vertical) {
           const sv = separator_vertical.cloneNode(false);
-          if (align) {
-            sv.style.float = align;
-          }
+          if (align) sv.style.float = align;
           _buttonTray.appendChild(sv);
         }
 
         _buttonTray.appendChild(moduleElement.div);
         vertical = true;
       } else if (/^\/$/.test(buttonGroup)) {
-        /** line break  */
+      /** line break  */
         const enterDiv = doc.createElement("DIV");
         enterDiv.className = "ke-btn-module-enter";
         _buttonTray.appendChild(enterDiv);
@@ -1305,10 +1276,10 @@ export default {
     }
 
     if (_buttonTray.children.length === 1) {
-      util.removeClass(_buttonTray.firstElementChild, "ke-btn-module-border");
+      _util.removeClass(_buttonTray.firstElementChild, "ke-btn-module-border");
     }
     if (responsiveButtons.length > 0) {
-      responsiveButtons.unshift(toolBarItem);
+      responsiveButtons.unshift(toolbarItem);
     }
     if (moreLayer.children.length > 0) {
       _buttonTray.appendChild(moreLayer);

@@ -1,6 +1,6 @@
 {
   "name": "kothing-editor",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A powerful WYSIWYG rich text web editor by pure javascript",
   "repository": {
     "type": "git",

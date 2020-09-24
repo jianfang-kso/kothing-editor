@@ -136,15 +136,15 @@ export default {
   on: function () {
     const util = this.util;
     const textStyleContext = this.context.textStyle;
-    const styleToolBarItem = textStyleContext._styleList;
+    const styleToolbarItem = textStyleContext._styleList;
     const selectionNode = this.getSelectionNode();
 
     for (
-      let i = 0, len = styleToolBarItem.length, btn, data, active;
+      let i = 0, len = styleToolbarItem.length, btn, data, active;
       i < len;
       i++
     ) {
-      btn = styleToolBarItem[i];
+      btn = styleToolbarItem[i];
       data = btn.getAttribute("data-value").split(",");
 
       for (let v = 0, node, value; v < data.length; v++) {
@@ -183,8 +183,8 @@ export default {
     e.stopPropagation();
 
     let target = e.target;
-    let command = null;
-    let tag = null;
+    let command = null,
+      tag = null;
 
     while (!command && !/UL/i.test(target.tagName)) {
       command = target.getAttribute("data-command");

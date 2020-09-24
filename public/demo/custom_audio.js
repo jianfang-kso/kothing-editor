@@ -31,9 +31,9 @@ function _setAudioList() {
     info = audioList[i];
 
     list += '<li>' +
-            '<button title="delete" onclick="_selectAudio(\'delete\',' + info.index + ')">X</button>' +
-            '<a href="javascript:void(0)" onclick="_selectAudio(\'select\',' + info.index + ')">' + info.src + '</a>' +
-            '</li>';
+      '<button title="delete" onclick="_selectAudio(\'delete\',' + info.index + ')">X</button>' +
+      '<a href="javascript:void(0)" onclick="_selectAudio(\'select\',' + info.index + ')">' + info.src + '</a>' +
+      '</li>';
   }
 
   audioTable.innerHTML = list;
@@ -145,7 +145,8 @@ export default {
     context.element.relative.appendChild(audio_controller);
 
     /** empty memory */
-    audio_dialog = null, audio_controller = null;
+    audio_dialog = null;
+    audio_controller = null;
   },
 
   /** HTML - dialog */
@@ -156,30 +157,30 @@ export default {
     dialog.className = 'ke-dialog-content';
     dialog.style.display = 'none';
     let html = '' +
-            '<form class="editor_link">' +
-            '<div class="ke-dialog-header">' +
-            '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' + lang.dialogBox.close + '">' +
-            this.icons.cancel +
-            '</button>' +
-            '<span class="ke-modal-title">' + lang.audio.title + '</span>' +
-            '</div>' +
-            '<div class="ke-dialog-body">' +
-            '<div class="ke-dialog-form">' +
-            '<label>' + lang.audio.file + '</label>' +
-            '<div class="ke-dialog-form-files">' +
-            '<input class="ke-input-form _ke_audio_files" type="file" accept="audio/*" multiple="multiple" />' +
-            '<button type="button" data-command="filesRemove" class="ke-btn ke-dialog-files-edge-button ke-file-remove" title="' + lang.controller.remove + '">' + this.icons.cancel + '</button>' +
-            '</div>' +
-            '</div>' +
-            '<div class="ke-dialog-form">' +
-            '<label>' + lang.audio.url + '</label>' +
-            '<input class="ke-input-form ke-input-url" type="text" />' +
-            '</div>' +
-            '</div>' +
-            '<div class="ke-dialog-footer">' +
-            '<button type="submit" class="ke-btn-primary" title="' + lang.dialogBox.submitButton + '"><span>' + lang.dialogBox.submitButton + '</span></button>' +
-            '</div>' +
-            '</form>';
+      '<form class="editor_link">' +
+      '<div class="ke-dialog-header">' +
+      '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' + lang.dialogBox.close + '">' +
+      this.icons.cancel +
+      '</button>' +
+      '<span class="ke-modal-title">' + lang.audio.title + '</span>' +
+      '</div>' +
+      '<div class="ke-dialog-body">' +
+      '<div class="ke-dialog-form">' +
+      '<label>' + lang.audio.file + '</label>' +
+      '<div class="ke-dialog-form-files">' +
+      '<input class="ke-input-form _ke_audio_files" type="file" accept="audio/*" multiple="multiple" />' +
+      '<button type="button" data-command="filesRemove" class="ke-btn ke-dialog-files-edge-button ke-file-remove" title="' + lang.controller.remove + '">' + this.icons.cancel + '</button>' +
+      '</div>' +
+      '</div>' +
+      '<div class="ke-dialog-form">' +
+      '<label>' + lang.audio.url + '</label>' +
+      '<input class="ke-input-form ke-input-url" type="text" />' +
+      '</div>' +
+      '</div>' +
+      '<div class="ke-dialog-footer">' +
+      '<button type="submit" class="ke-btn-primary" title="' + lang.dialogBox.submitButton + '"><span>' + lang.dialogBox.submitButton + '</span></button>' +
+      '</div>' +
+      '</form>';
 
     dialog.innerHTML = html;
 
@@ -194,19 +195,19 @@ export default {
 
     link_btn.className = 'ke-controller ke-controller-link';
     link_btn.innerHTML = '' +
-            '<div class="ke-arrow ke-arrow-up"></div>' +
-            '<div class="link-content">' +
-            '<div class="ke-btn-group">' +
-            '<button type="button" data-command="update" tabindex="-1" class="ke-tooltip">' +
-            icons.edit +
-            '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.edit + '</span></span>' +
-            '</button>' +
-            '<button type="button" data-command="delete" tabindex="-1" class="ke-tooltip">' +
-            icons.delete +
-            '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.remove + '</span></span>' +
-            '</button>' +
-            '</div>' +
-            '</div>';
+      '<div class="ke-arrow ke-arrow-up"></div>' +
+      '<div class="link-content">' +
+      '<div class="ke-btn-group">' +
+      '<button type="button" data-command="update" tabindex="-1" class="ke-tooltip">' +
+      icons.edit +
+      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.edit + '</span></span>' +
+      '</button>' +
+      '<button type="button" data-command="delete" tabindex="-1" class="ke-tooltip">' +
+      icons.delete +
+      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + lang.controller.remove + '</span></span>' +
+      '</button>' +
+      '</div>' +
+      '</div>';
 
     return link_btn;
   },
@@ -439,12 +440,12 @@ export default {
 
     // find component element
     const existElement = this.util.getParentElement(element, this.util.isMediaComponent) ||
-            this.util.getParentElement(element, function (current) {
-              return this.isWysiwygDiv(current.parentNode);
-            }.bind(this.util));
+      this.util.getParentElement(element, function (current) {
+        return this.isWysiwygDiv(current.parentNode);
+      }.bind(this.util));
 
     // clone element
-    context._element = element = element.cloneNode(false);
+    context._element = element.cloneNode(false);
     const cover = this.plugins.component.set_cover.call(this, element);
     const container = this.plugins.component.set_container.call(this, cover, 'ke-video-container');
 

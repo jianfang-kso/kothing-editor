@@ -18,7 +18,7 @@ export default {
     core.addModule([dialog, component, resizing, fileManager]);
 
     const context = core.context;
-    const contextVideo = (context.video = {
+    const defaultVideo = {
       _infoList: [], // @Override fileManager
       _infoIndex: 0, // @Override fileManager
       _uploadFileLength: 0, // @Override fileManager
@@ -57,7 +57,9 @@ export default {
       _ratioX: 1,
       _ratioY: 1,
       _captionShow: false,
-    });
+    };
+    const contextVideo = defaultVideo;
+    context.video = defaultVideo;
 
     /** video dialog */
     let video_dialog = this.setDialog.call(core);
@@ -180,8 +182,9 @@ export default {
         lang.dialogBox.videoBox.file +
         "</label>" +
         '<div class="ke-dialog-form-files">' +
-        '<input class="ke-input-form _ke_video_file" type="file" accept="video/"' +
+        '<input class="ke-input-form _ke_video_file" type="file" accept="' +
         option.videoAccept +
+        '"' +
         (option.videoMultipleFile ? ' multiple="multiple"' : "") +
         "/>" +
         '<button type="button" data-command="filesRemove" class="ke-btn ke-dialog-files-edge-button ke-file-remove" title="' +
@@ -289,7 +292,7 @@ export default {
         this.icons.revert +
         "</button>" +
         "</div>" +
-        '<div class="ke-dialog-form ke-dialog-form"' +
+        '<div class="ke-dialog-form ke-dialog-form-footer"' +
         onlyPercentDisplay +
         onlyWidthDisplay +
         ">" +
@@ -354,7 +357,14 @@ export default {
       context._linkValue = value;
       this.textContent = '<IFrame :src=".."></IFrame>';
     } else {
-      context._linkValue = this.textContent = !value
+      context._linkValue = !value
+        ? ""
+        : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
+        ? protocol + value
+        : value.indexOf("://") === -1
+        ? "/" + value
+        : value;
+      this.textContent = !value
         ? ""
         : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
         ? protocol + value
@@ -372,7 +382,7 @@ export default {
       return;
     }
 
-    for (const key in attrs) {
+    for (let key in attrs) {
       if (!this.util.hasOwn(attrs, key)) {
         continue;
       }
@@ -395,7 +405,7 @@ export default {
       return;
     }
 
-    for (const key in attrs) {
+    for (let key in attrs) {
       if (!this.util.hasOwn(attrs, key)) {
         continue;
       }
@@ -434,7 +444,7 @@ export default {
     const frame = element || this.context.video._element;
     const container = this.context.video._container;
     const dataIndex = frame.getAttribute("data-index") * 1;
-    const focusEl =
+    let focusEl =
       container.previousElementSibling || container.nextElementSibling;
 
     const emptyDiv = container.parentNode;
@@ -521,7 +531,10 @@ export default {
     const contextVideo = this.context.video;
     const value = e.target.options[e.target.selectedIndex].value;
 
-    contextVideo._defaultSizeY = contextVideo._videoRatio = !value
+    contextVideo._defaultSizeY = !value
+      ? contextVideo._defaultSizeY
+      : value * 100 + "%";
+    contextVideo._videoRatio = !value
       ? contextVideo._defaultSizeY
       : value * 100 + "%";
     contextVideo.inputY.placeholder = !value ? "" : value * 100 + "%";
@@ -854,7 +867,8 @@ export default {
           const newTag = this.plugins.video.createIframeTag.call(this);
           newTag.src = src;
           oFrame.parentNode.replaceChild(newTag, oFrame);
-          contextVideo._element = oFrame = newTag;
+          contextVideo._element = newTag;
+          oFrame = newTag;
         } else if (
           !isYoutube &&
           !isVimeo &&
@@ -863,7 +877,8 @@ export default {
           const newTag = this.plugins.video.createVideoTag.call(this);
           newTag.src = src;
           oFrame.parentNode.replaceChild(newTag, oFrame);
-          contextVideo._element = oFrame = newTag;
+          contextVideo._element = newTag;
+          oFrame = newTag;
         } else {
           oFrame.src = src;
         }
@@ -964,16 +979,20 @@ export default {
         }.bind(this.util)
       );
 
-    contextVideo._element = oFrame = oFrame.cloneNode(true);
-    const cover = (contextVideo._cover = this.plugins.component.set_cover.call(
-      this,
-      oFrame
-    ));
-    const container = (contextVideo._container = this.plugins.component.set_container.call(
+    contextVideo._element = oFrame.cloneNode(true);
+    oFrame = oFrame.cloneNode(true);
+    const cover = this.plugins.component.set_cover.call(this, oFrame);
+    contextVideo._cover = this.plugins.component.set_cover.call(this, oFrame);
+    const container = this.plugins.component.set_container.call(
       this,
       cover,
       "ke-video-container"
-    ));
+    );
+    contextVideo._container = this.plugins.component.set_container.call(
+      this,
+      cover,
+      "ke-video-container"
+    );
 
     const figcaption = existElement.querySelector("figcaption");
     let caption = null;
@@ -1073,10 +1092,11 @@ export default {
         this.plugins.video
       );
 
-      const y = (contextVideo._videoRatio = this.plugins.resizing._module_getSizeY.call(
+      const y = this.plugins.resizing._module_getSizeY.call(this, contextVideo);
+      contextVideo._videoRatio = this.plugins.resizing._module_getSizeY.call(
         this,
         contextVideo
-      ));
+      );
       const ratioSelected = this.plugins.video.setVideoRatioSelect.call(
         this,
         y
@@ -1107,7 +1127,8 @@ export default {
     contextVideo.inputY.placeholder = "";
     for (let i = 0, len = ratioOptions.length; i < len; i++) {
       if (ratioOptions[i].value === value) {
-        ratioSelected = ratioOptions[i].selected = true;
+        ratioSelected = true;
+        ratioOptions[i].selected = true;
         contextVideo.inputY.placeholder = !value ? "" : value * 100 + "%";
       } else {
         ratioOptions[i].selected = false;
@@ -1205,7 +1226,8 @@ export default {
       contextVideo._element.style.width = w ? w + contextVideo.sizeUnit : "";
     }
     if (!onlyW) {
-      contextVideo._cover.style.paddingBottom = contextVideo._cover.style.height = h;
+      contextVideo._cover.style.paddingBottom = h;
+      contextVideo._cover.style.height = h;
     }
 
     if (!onlyH && !/%$/.test(w)) {
@@ -1403,8 +1425,9 @@ export default {
       contextVideo.videoInputFile.value = "";
     }
     if (contextVideo.videoUrlFile) {
-      contextVideo._linkValue = contextVideo.preview.textContent = contextVideo.videoUrlFile.value =
-        "";
+      contextVideo._linkValue = "";
+      contextVideo.preview.textContent = "";
+      contextVideo.videoUrlFile.value = "";
     }
     if (contextVideo.videoInputFile && contextVideo.videoUrlFile) {
       contextVideo.videoUrlFile.removeAttribute("disabled");

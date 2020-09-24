@@ -10,12 +10,13 @@ export default {
   name: "font",
   display: "submenu",
   add: function (core, targetElement) {
+    const icons = core.icons;
     const context = core.context;
     context.font = {
       targetText: targetElement.querySelector(".txt"),
-      targetTooltip: targetElement.parentNode.querySelector(".ke-tooltip-text"),
       _fontList: null,
       currentFont: "",
+      icon: icons.font,
     };
 
     /** set submenu */
@@ -43,7 +44,7 @@ export default {
     listDiv.className = "ke-submenu ke-list-layer ke-list-font-family";
 
     let font, text, i, len;
-    const fontList = !option.font
+    let fontList = !option.font
       ? [
           "Arial",
           "Comic Sans MS",
@@ -90,17 +91,13 @@ export default {
    * @Override core
    */
   active: function (element) {
-    const target = this.context.font.targetText;
-    const tooltip = this.context.font.targetTooltip;
-
+    const target = this.context.font.targetText.firstElementChild;
+    const icon = this.context.font.icon;
     if (!element) {
-      const font = this.lang.toolbar.font;
-      this.util.changeTxt(target, font);
-      this.util.changeTxt(tooltip, font);
+      this.util.changeElement(target, icon);
     } else if (element.style && element.style.fontFamily.length > 0) {
       const selectFont = element.style.fontFamily.replace(/["']/g, "");
-      this.util.changeTxt(target, selectFont);
-      this.util.changeTxt(tooltip, selectFont);
+      this.util.changeElement(target, `<span>${selectFont}</span>`);
       return true;
     }
 

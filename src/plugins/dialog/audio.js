@@ -17,20 +17,21 @@ export default {
     core.addModule([dialog, component, fileManager]);
 
     const context = core.context;
-    const contextAudio = (context.audio = {
-      _infoList: [], // @Override fileManager
-      _infoIndex: 0, // @Override fileManager
-      _uploadFileLength: 0, // @Override fileManager
-      focusElement: null, // @Override // This element has focus when the dialog is opened.
+    const defaultAudio = {
+      _infoList: [],
+      _infoIndex: 0,
+      _uploadFileLength: 0,
+      focusElement: null,
       targetSelect: null,
       _origin_w: context.option.audioWidth,
       _origin_h: context.option.audioHeight,
       _linkValue: "",
-      // @require @Override component
       _element: null,
       _cover: null,
       _container: null,
-    });
+    };
+    const contextAudio = defaultAudio;
+    context.audio = defaultAudio;
 
     /** dialog */
     let audio_dialog = this.setDialog.call(core);
@@ -123,16 +124,17 @@ export default {
     if (option.audioFileInput) {
       html +=
         "" +
-        '<div class="ke-dialog-form">' +
+        '<div class="se-dialog-form">' +
         "<label>" +
         lang.dialogBox.audioBox.file +
         "</label>" +
-        '<div class="ke-dialog-form-files">' +
-        '<input class="ke-input-form _ke_audio_files" type="file" accept="audio/"' +
+        '<div class="se-dialog-form-files">' +
+        '<input class="se-input-form _se_audio_files" type="file" accept="' +
         option.audioAccept +
+        '"' +
         (option.audioMultipleFile ? ' multiple="multiple"' : "") +
         "/>" +
-        '<button type="button" data-command="filesRemove" class="ke-btn ke-dialog-files-edge-button ke-file-remove" title="' +
+        '<button type="button" data-command="filesRemove" class="se-btn se-dialog-files-edge-button se-file-remove" title="' +
         lang.controller.remove +
         '">' +
         this.icons.cancel +
@@ -177,25 +179,18 @@ export default {
     const link_btn = this.util.createElement("DIV");
 
     link_btn.className = "ke-controller ke-controller-link";
-    link_btn.innerHTML =
-      "" +
-      '<div class="ke-arrow ke-arrow-up"></div>' +
-      '<div class="link-content">' +
-      '<div class="ke-btn-group">' +
-      '<button type="button" data-command="update" tabindex="-1" class="ke-tooltip">' +
-      icons.edit +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.edit +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="delete" tabindex="-1" class="ke-tooltip">' +
-      icons.delete +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.remove +
-      "</span></span>" +
-      "</button>" +
-      "</div>" +
-      "</div>";
+    link_btn.innerHTML = `
+      <div class="ke-arrow ke-arrow-up"></div>
+      <div class="link-content">
+        <div class="ke-btn-group">
+          <button type="button" data-command="update" data-tip="${lang.controller.edit}" data-direction="bottom" tabindex="-1" class="ke-tooltip">
+          ${icons.edit}
+          </button>
+          <button type="button" data-command="delete" data-tip="${lang.controller.remove}" data-direction="bottom" tabindex="-1" class="ke-tooltip">
+            ${icons.delete}
+          </button>
+        </div>
+      </div>`;
 
     return link_btn;
   },
@@ -252,7 +247,14 @@ export default {
 
   _onLinkPreview: function (context, protocol, e) {
     const value = e.target.value.trim();
-    context._linkValue = this.textContent = !value
+    context._linkValue = !value
+      ? ""
+      : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
+      ? protocol + value
+      : value.indexOf("://") === -1
+      ? "/" + value
+      : value;
+    this.textContent = !value
       ? ""
       : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
       ? protocol + value
@@ -357,8 +359,9 @@ export default {
       }
     } else if (contextAudio._element) {
       this.context.dialog.updateModal = true;
-      contextAudio._linkValue = contextAudio.preview.textContent = contextAudio.audioUrlFile.value =
-        contextAudio._element.src;
+      contextAudio._linkValue = contextAudio._element.src;
+      contextAudio.preview.textContent = contextAudio._element.src;
+      contextAudio.audioUrlFile.value = contextAudio._element.src;
       if (
         contextAudio.audioInputFile &&
         this.context.options.audioMultipleFile
@@ -662,7 +665,8 @@ export default {
       );
 
     // clone element
-    contextAudio._element = element = element.cloneNode(false);
+    contextAudio._element = element.cloneNode(false);
+    element = element.cloneNode(false);
     const cover = this.plugins.component.set_cover.call(this, element);
     const container = this.plugins.component.set_container.call(
       this,
@@ -730,8 +734,9 @@ export default {
   openModify: function (notOpen) {
     if (this.context.audio.audioUrlFile) {
       const contextAudio = this.context.audio;
-      contextAudio._linkValue = contextAudio.preview.textContent = contextAudio.audioUrlFile.value =
-        contextAudio._element.src;
+      contextAudio._linkValue = contextAudio._element.src;
+      contextAudio.preview.textContent = contextAudio._element.src;
+      contextAudio.audioUrlFile.value = contextAudio._element.src;
     }
     if (!notOpen) {
       this.plugins.dialog.open.call(this, "audio", true);
@@ -776,8 +781,9 @@ export default {
       contextAudio.audioInputFile.value = "";
     }
     if (contextAudio.audioUrlFile) {
-      contextAudio._linkValue = contextAudio.preview.textContent = contextAudio.audioUrlFile.value =
-        "";
+      contextAudio._linkValue = "";
+      contextAudio.preview.textContent = "";
+      contextAudio.audioUrlFile.value = "";
     }
     if (contextAudio.audioInputFile && contextAudio.audioUrlFile) {
       contextAudio.audioUrlFile.removeAttribute("disabled");

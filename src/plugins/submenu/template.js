@@ -40,7 +40,7 @@ export default {
     listDiv.className = "ke-list-layer";
 
     let list =
-      '<div class="ke-submenu ke-list-inner"><ul class="ke-list-basic">';
+      '<div class="ke-submenu ke-list-inner">' + '<ul class="ke-list-basic">';
     for (let i = 0, len = templateList.length, t; i < len; i++) {
       t = templateList[i];
       list +=

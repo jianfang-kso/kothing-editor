@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { Module } from "../Module";
 
 /**
@@ -7,6 +6,9 @@ import { Module } from "../Module";
     _infoIndex: 0,
     _uploadFileLength: 0
 */
+
+type FunctionType = (params?: any, ...rest: any) => viod;
+
 declare interface fileManager extends Module {
   /**
    * @description Upload the file to the server.
@@ -21,8 +23,8 @@ declare interface fileManager extends Module {
     uploadUrl: string,
     uploadHeader: Record<string, string> | null,
     formData: FormData,
-    callBack: Function | null,
-    errorCallBack: Function | null
+    callBack: FunctionType | null,
+    errorCallBack: FunctionType | null
   ): void;
 
   /**
@@ -43,8 +45,8 @@ declare interface fileManager extends Module {
   checkInfo(
     pluginName: string,
     tagNames: string[],
-    uploadEventHandler: Function | null,
-    modifyHandler: Function | null,
+    uploadEventHandler: FunctionType | null,
+    modifyHandler: FunctionType | null,
     resizing: boolean
   ): void;
 
@@ -62,7 +64,7 @@ declare interface fileManager extends Module {
   setInfo(
     pluginName: string,
     element,
-    uploadEventHandler: Function | null,
+    uploadEventHandler: FunctionType | null,
     file: Record<string, string | number> | null,
     resizing: boolean
   ): void;
@@ -76,7 +78,7 @@ declare interface fileManager extends Module {
   deleteInfo(
     pluginName: string,
     index,
-    uploadEventHandler: Function | null
+    uploadEventHandler: FunctionType | null
   ): void;
 
   /**
@@ -84,7 +86,7 @@ declare interface fileManager extends Module {
    * @param  pluginName Plugin name
    * @param  uploadEventHandler Event handler to process updated file info (created in setInfo)
    */
-  resetInfo(pluginName: string, uploadEventHandler: Function | null): void;
+  resetInfo(pluginName: string, uploadEventHandler: FunctionType | null): void;
 }
 
 export default fileManager;

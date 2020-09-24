@@ -1,6 +1,7 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import KothingEditor from "../../lib/core";
 import { Module } from "../Module";
+
+type FunctionType = (params?: any, ...rest: any) => viod;
 
 declare interface _colorPicker extends Module {
   /**
@@ -9,7 +10,7 @@ declare interface _colorPicker extends Module {
    * @param makeColor this._makeColorList
    * @returns HTML string
    */
-  createColorList(core: KothingEditor, makeColor: Function): string;
+  createColorList(core: KothingEditor, makeColor: FunctionType): string;
 
   /**
    * @description Displays or resets the currently selected color at color list.

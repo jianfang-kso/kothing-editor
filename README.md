@@ -106,7 +106,7 @@ import lang from 'kothing-editor/lib/lang';
 
 KothingEditor.create('my-editor', {
   plugins: [font, fontSize, fontColor, horizontalRule, link, image],
-  toolBarItem: [['font', 'fontSize'], ['fontColor'], ['horizontalRule'], ['link', 'image']],
+  toolbarItem: [['font', 'fontSize'], ['fontColor'], ['horizontalRule'], ['link', 'image']],
   lang: lang.zh_cn,
 });
 ```
@@ -127,7 +127,7 @@ KothingEditor.create('document', {
     lang: lang.en,
     plugins: plugins,
     katex: katex,
-    toolBarItem: [
+    toolbarItem: [
       ['undo', 'redo'],
       ['font', 'fontSize', 'formatBlock'],
       ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'fontColor', 'hiliteColor'],
@@ -160,7 +160,7 @@ KothingEditor.create('my-editor', {
         plugins.font
         plugins.fontSize
     ],
-    toolBarItem: [
+    toolbarItem: [
         ['font', 'fontSize'],
         // Plugins can be used directly in the toolbar item
         [plugins.formatBlock]
@@ -190,7 +190,7 @@ import {
 } from 'kothing-editor/lib/plugins';
 
 KothingEditor.create('my-editor', {
-  toolBarItem: [
+  toolbarItem: [
     ['undo', 'redo'],
     [font, fontSize, formatBlock],
     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript'],
@@ -222,7 +222,7 @@ import plugins from 'kothing-editor/lib/plugins';
 const initEditor = KothingEditor.init({
   plugins: plugins,
   height: 200,
-  toolBarItem: [
+  toolbarItem: [
     [
       'undo',
       'redo',
@@ -265,7 +265,7 @@ initEditor.create('my-editor_1', {
 initEditor.create('my-editor_2', {
   // The value of the option argument put in the "create" function call takes precedence
   height: 'auto',
-  toolBarItem: [['bold', 'underline', 'italic'], ['removeFormat'], ['preview', 'print']],
+  toolbarItem: [['bold', 'underline', 'italic'], ['removeFormat'], ['preview', 'print']],
 });
 ```
 
@@ -299,7 +299,7 @@ KothingEditor.create('my-editor', {
   //     src: CodeMirror,
   //     options: {...}
   // }
-  toolBarItem: [['codeView']],
+  toolbarItem: [['codeView']],
   height: 400,
 });
 ```
@@ -490,7 +490,7 @@ templates       : If you use a template plugin, add it.
                   ]
 
 // Buttons--------------------------------------------------------------------------------------------------------
-toolBarItem      : Defines toolbar item to array {Array}
+toolbarItem      : Defines toolbar item to array {Array}
                   default: [
                     ['undo', 'redo'],
                     // ['font', 'fontSize', 'formatBlock'],
@@ -517,7 +517,7 @@ const editor = KothingEditor.create('example');
 // Add or reset option property
 editor.setOptions({
   minHeight: '300px',
-  toolBarItem: [['fontColor', 'hiliteColor']],
+  toolbarItem: [['fontColor', 'hiliteColor']],
   colorList: [['#ccc', '#dedede', 'OrangeRed', 'Orange', 'RoyalBlue', 'SaddleBrown']],
 });
 

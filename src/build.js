@@ -1,3 +1,11 @@
+/*
+ * Rich Text Editor
+ *
+ * kothing-ditor.js
+ * Copyright Kothing.
+ * MIT license.
+ */
+
 import "./assets/css/editor.css";
 import "./assets/css/editor-contents.css";
 
@@ -12,5 +20,3 @@ Object.defineProperty(window, "KothingEditor", {
     plugins: plugins,
   }),
 });
-
-export default KothingEditor;

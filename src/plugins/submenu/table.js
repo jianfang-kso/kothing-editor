@@ -116,23 +116,22 @@ export default {
     context.element.relative.appendChild(tableController);
 
     /** empty memory */
-    listDiv = null;
-    tablePicker = null;
-    resizeDiv = null;
-    tableController = null;
+    (listDiv = null),
+      (tablePicker = null),
+      (resizeDiv = null),
+      (tableController = null);
   },
 
   setSubmenu: function () {
     const listDiv = this.util.createElement("DIV");
     listDiv.className = "ke-submenu ke-selector-table";
-    listDiv.innerHTML =
-      "" +
-      '<div class="ke-table-size">' +
-      '<div class="ke-table-size-picker ke-controller-table-picker"></div>' +
-      '<div class="ke-table-size-highlighted"></div>' +
-      '<div class="ke-table-size-unhighlighted"></div>' +
-      "</div>" +
-      '<div class="ke-table-size-display">1 x 1</div>';
+    listDiv.innerHTML = `
+      <div class="ke-table-size">
+        <div class="ke-table-size-picker ke-controller-table-picker"></div>
+        <div class="ke-table-size-highlighted"></div>
+        <div class="ke-table-size-unhighlighted"></div>
+      </div>
+      <div class="ke-table-size-display">1 x 1</div>`;
 
     return listDiv;
   },
@@ -143,36 +142,43 @@ export default {
     const tableResize = this.util.createElement("DIV");
 
     tableResize.className = "ke-controller ke-controller-table";
-    tableResize.innerHTML =
-      "" +
-      "<div>" +
-      '<div class="ke-btn-group">' +
-      '<button type="button" data-command="resize" class="ke-btn ke-tooltip _ke_table_resize">' +
-      icons.expansion +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.maxSize +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="layout" class="ke-btn ke-tooltip _ke_table_fixed_column">' +
-      icons.fixed_column_width +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.fixedColumnWidth +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="header" class="ke-btn ke-tooltip _ke_table_header">' +
-      icons.table_header +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.tableHeader +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="remove" class="ke-btn ke-tooltip">' +
-      icons.delete +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.remove +
-      "</span></span>" +
-      "</button>" +
-      "</div>" +
-      "</div>";
+    tableResize.innerHTML = `
+      <div>
+        <div class="ke-btn-group">
+          <button type="button" data-command="resize" class="ke-btn ke-tooltip _ke_table_resize">
+            ${icons.expansion}
+            <span class="ke-tooltip-inner">
+              <span class="ke-tooltip-text">
+                ${lang.controller.maxSize}
+              </span>
+            </span>
+          </button>
+          <button type="button" data-command="layout" class="ke-btn ke-tooltip _ke_table_fixed_column">
+            ${icons.fixed_column_width}
+            <span class="ke-tooltip-inner">
+              <span class="ke-tooltip-text">
+                ${lang.controller.fixedColumnWidth}
+              </span>
+            </span>
+          </button>
+          <button type="button" data-command="header" class="ke-btn ke-tooltip _ke_table_header">
+            ${icons.table_header}
+            <span class="ke-tooltip-inner">
+              <span class="ke-tooltip-text">
+                ${lang.controller.tableHeader}
+              </span>
+            </span>
+          </button>
+          <button type="button" data-command="remove" class="ke-btn ke-tooltip">
+            ${icons.delete}
+            <span class="ke-tooltip-inner">
+              <span class="ke-tooltip-text">
+                ${lang.controller.remove}
+              </span>
+            </span>
+          </button>
+        </div>
+      </div>`;
 
     return tableResize;
   },
@@ -307,8 +313,8 @@ export default {
     this.context.table.tableHighlight.style.width = x + "em";
     this.context.table.tableHighlight.style.height = y + "em";
 
-    const x_u = 10; // x < 5 ? 5 : (x > 9 ? 10 : x + 1);
-    const y_u = 10; // y < 5 ? 5 : (y > 9 ? 10 : y + 1);
+    let x_u = 10; // x < 5 ? 5 : (x > 9 ? 10 : x + 1);
+    let y_u = 10; //y < 5 ? 5 : (y > 9 ? 10 : y + 1);
     this.context.table.tableUnHighlight.style.width = x_u + "em";
     this.context.table.tableUnHighlight.style.height = y_u + "em";
 
@@ -492,7 +498,8 @@ export default {
         contextTable._trElement = tdElement.parentNode;
       }
 
-      const rows = (contextTable._trElements = table.rows);
+      const rows = table.rows;
+      contextTable._trElements = table.rows;
       const cellIndex = tdElement.cellIndex;
 
       let cellCnt = 0;
@@ -516,8 +523,9 @@ export default {
 
       // span
       contextTable._current_colSpan = contextTable._tdElement.colSpan - 1;
-      contextTable._current_rowSpan =
-        contextTable._trElement.cells[cellIndex].rowSpan - 1;
+      contextTable._current_rowSpan -
+        contextTable._trElement.cells[cellIndex].rowSpan -
+        1;
 
       // find logcal cell index
       let rowSpanArr = [];
@@ -699,7 +707,6 @@ export default {
         tablePlugin.init.call(this);
       }
     } else {
-      // one
       tablePlugin[isRow ? "editRow" : "editCell"].call(this, option);
     }
 
@@ -787,8 +794,7 @@ export default {
             colSpan += cell.colSpan - 1;
 
             if (logcalIndex >= spanCell.index) {
-              i--;
-              colSpan--;
+              i--, colSpan--;
               colSpan += spanCell.cell.colSpan - 1;
               next.insertBefore(spanCell.cell, cell);
               spanCell = spanCells.shift();
@@ -1280,7 +1286,7 @@ export default {
 
     let emptyRowFirst = null;
     let emptyRowLast = null;
-    const cs = ref.ce - ref.cs + 1;
+    let cs = ref.ce - ref.cs + 1;
     let rs = ref.re - ref.rs + 1;
     let mergeHTML = "";
     let row = null;
@@ -1570,13 +1576,20 @@ export default {
     let findSelectedCell = true;
     let spanIndex = [];
     let rowSpanArr = [];
-    const ref = (tablePlugin._ref = {
+    const ref = {
       _i: 0,
       cs: null,
       ce: null,
       rs: null,
       re: null,
-    });
+    };
+    tablePlugin._ref = {
+      _i: 0,
+      cs: null,
+      ce: null,
+      rs: null,
+      re: null,
+    };
 
     for (let i = 0, len = rows.length, cells, colSpan; i < len; i++) {
       cells = rows[i].cells;
@@ -1793,7 +1806,7 @@ export default {
 
     e.preventDefault();
     const contextTable = this.context.table;
-    const emptyDiv = contextTable._element.parentNode;
+
     switch (command) {
       case "insert":
       case "delete":
@@ -1831,7 +1844,8 @@ export default {
           tablePlugin._shift
         );
         break;
-      case "remove":
+      case "remove": {
+        const emptyDiv = contextTable._element.parentNode;
         this.util.removeItem(contextTable._element);
         this.controllersOff();
 
@@ -1846,6 +1860,8 @@ export default {
         }
         this.focus();
         break;
+      }
+
       default:
     }
 

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { Module } from "../Module";
 
 /**
@@ -31,6 +30,10 @@ import { Module } from "../Module";
     _captionChecked: false,
     captionCheckEl: null
 */
+
+interface contextPluginProps {
+  [key: string | number]: any;
+}
 declare interface resizing extends Module {
   /**
    * @description Gets the width size
@@ -41,7 +44,7 @@ declare interface resizing extends Module {
    * @returns
    */
   _module_getSizeX(
-    contextPlugin: object,
+    contextPlugin: contextPluginProps,
     element: Element,
     cover: Element,
     container: Element
@@ -56,7 +59,7 @@ declare interface resizing extends Module {
    * @returns
    */
   _module_getSizeY(
-    contextPlugin: object,
+    contextPlugin: Record<string, unknown>,
     element: Element,
     cover: Element,
     container: Element
@@ -67,7 +70,10 @@ declare interface resizing extends Module {
    * @param contextPlugin context object of plugin (core.context[plugin])
    * @param pluginObj Plugin object
    */
-  _module_setModifyInputSize(contextPlugin: Object, pluginObj: Object): void;
+  _module_setModifyInputSize(
+    contextPlugin: Record<string, unknown>,
+    pluginObj: Record<string, unknown>
+  ): void;
 
   /**
    * @description It is called in "setInputSize" (input tag keyupEvent),
@@ -76,27 +82,30 @@ declare interface resizing extends Module {
    * @param contextPlugin context object of plugin (core.context[plugin])
    * @param xy 'x': width, 'y': height
    */
-  _module_setInputSize(contextPlugin: Object, xy: string): void;
+  _module_setInputSize(
+    contextPlugin: Record<string, unknown>,
+    xy: string
+  ): void;
 
   /**
    * @description It is called in "setRatio" (input and proportionCheck tags changeEvent),
    * checks the value of the input tag, calculates the ratio, and resets it in the input tag.
    * @param contextPlugin context object of plugin (core.context[plugin])
    */
-  _module_setRatio(contextPlugin: Object): void;
+  _module_setRatio(contextPlugin: Record<string, unknown>): void;
 
   /**
    * @description Revert size of element to origin size (plugin._origin_w, plugin._origin_h)
    * @param contextPlugin context object of plugin (core.context[plugin])
    */
-  _module_sizeRevert(contextPlugin: Object): void;
+  _module_sizeRevert(contextPlugin: Record<string, unknown>): void;
 
   /**
    * @description Save the size data (element.setAttribute("data-size"))
    * Used at the "setSize" method
    * @param contextPlugin context object of plugin (core.context[plugin])
    */
-  _module_saveCurrentSize(contextPlugin: Object): void;
+  _module_saveCurrentSize(contextPlugin: Record<string, unknown>): void;
 
   /**
    * @description Call the resizing module
@@ -156,9 +165,9 @@ declare interface resizing extends Module {
    * @param e Event object
    */
   resizing_element(
-    contextResizing: Object,
+    contextResizing: Record<string, unknown>,
     direction: string,
-    plugin: Object,
+    plugin: Record<string, unknown>,
     e: MouseEvent
   ): void;
 

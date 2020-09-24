@@ -1,5 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { Plugin } from "./Plugin";
+
+interface DrawItem {
+  [key: string | number]: any;
+}
 
 export interface FileBrowserPlugin extends Plugin {
   /**
@@ -14,7 +17,7 @@ export interface FileBrowserPlugin extends Plugin {
    * @description Define the HTML of the item to be put in "div.ke-file-item-column".
    * @param item Item of the response data's array
    */
-  drawItems: (item: object) => string;
+  drawItems: (item: DrawItem) => string;
 
   /**
    * @description Close a file browser window

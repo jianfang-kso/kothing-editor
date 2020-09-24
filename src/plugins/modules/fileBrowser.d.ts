@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-types */
 import { Module } from "../Module";
 
 /**
@@ -11,6 +10,11 @@ import { Module } from "../Module";
     selectorHandler(@Required): "Function that action when item click",
     columnSize(@Option): "Number of "div.ke-file-item-column" to be created (default: 4)"
 */
+
+interface DrawItem {
+  [key: string | number]: any;
+}
+
 declare interface fileBrowser extends Module {
   /**
    * @description Open a file browser window
@@ -24,7 +28,7 @@ declare interface fileBrowser extends Module {
    * @description Define the HTML of the item to be put in "div.ke-file-item-column".
    * @param item Item of the response data's array
    */
-  drawItems: (item: object) => string;
+  drawItems: (item: DrawItem) => string;
 
   /**
    * @description Close a file browser window

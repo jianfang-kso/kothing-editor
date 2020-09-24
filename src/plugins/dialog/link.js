@@ -74,46 +74,40 @@ export default {
 
     dialog.className = "ke-dialog-content";
     dialog.style.display = "none";
-    dialog.innerHTML =
-      "" +
-      '<form class="editor_link">' +
-      '<div class="ke-dialog-header">' +
-      '<button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="' +
-      lang.dialogBox.close +
-      '">' +
-      this.icons.cancel +
-      "</button>" +
-      '<span class="ke-modal-title">' +
-      lang.dialogBox.linkBox.title +
-      "</span>" +
-      "</div>" +
-      '<div class="ke-dialog-body">' +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.linkBox.url +
-      "</label>" +
-      '<input class="ke-input-form _ke_link_url" type="text" />' +
-      '<pre class="ke-link-preview"></pre>' +
-      "</div>" +
-      '<div class="ke-dialog-form">' +
-      "<label>" +
-      lang.dialogBox.linkBox.text +
-      '</label><input class="ke-input-form _ke_link_text" type="text" />' +
-      "</div>" +
-      '<div class="ke-dialog-form">' +
-      '<label><input type="checkbox" class="ke-dialog-btn-check _ke_link_check" />&nbsp;' +
-      lang.dialogBox.linkBox.newWindowCheck +
-      "</label>" +
-      "</div>" +
-      "</div>" +
-      '<div class="ke-dialog-footer">' +
-      '<button type="submit" class="ke-btn-primary" title="' +
-      lang.dialogBox.submitButton +
-      '"><span>' +
-      lang.dialogBox.submitButton +
-      "</span></button>" +
-      "</div>" +
-      "</form>";
+    dialog.innerHTML = `
+      <form class="editor_link">
+        <div class="ke-dialog-header">
+          <button type="button" data-command="close" class="ke-btn ke-dialog-close" aria-label="Close" title="${lang.dialogBox.close}">
+            ${this.icons.cancel}
+          </button>
+          <span class="ke-modal-title">
+            ${lang.dialogBox.linkBox.title}
+          </span>
+        </div>
+        <div class="ke-dialog-body">
+          <div class="ke-dialog-form">
+            <label>${lang.dialogBox.linkBox.url}</label>
+            <input class="ke-input-form _ke_link_url" type="text" />
+            <pre class="ke-link-preview"></pre>
+          </div>
+          <div class="ke-dialog-form">
+            <label>${lang.dialogBox.linkBox.text}</label>
+            <input class="ke-input-form _ke_link_text" type="text" />
+          </div>
+          <div class="ke-dialog-form">
+            <label>
+              <input type="checkbox" class="ke-dialog-btn-check _ke_link_check" /> ${lang.dialogBox.linkBox.newWindowCheck}
+            </label>
+          </div>
+        </div>
+        <div class="ke-dialog-footer">
+          <button type="submit" class="ke-btn-primary" title="${lang.dialogBox.submitButton}">
+            <span>
+              ${lang.dialogBox.submitButton}
+            </span>
+          </button>
+        </div>
+      </form>`;
 
     return dialog;
   },
@@ -125,31 +119,22 @@ export default {
     const link_btn = this.util.createElement("DIV");
 
     link_btn.className = "ke-controller ke-controller-link";
-    link_btn.innerHTML =
-      "" +
-      '<div class="ke-arrow ke-arrow-up"></div>' +
-      '<div class="link-content"><span><a target="_blank" href=""></a>&nbsp;</span>' +
-      '<div class="ke-btn-group">' +
-      '<button type="button" data-command="update" tabindex="-1" class="ke-btn ke-tooltip">' +
-      icons.edit +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.edit +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="unlink" tabindex="-1" class="ke-btn ke-tooltip">' +
-      icons.unlink +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.unlink +
-      "</span></span>" +
-      "</button>" +
-      '<button type="button" data-command="delete" tabindex="-1" class="ke-btn ke-tooltip">' +
-      icons.delete +
-      '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' +
-      lang.controller.remove +
-      "</span></span>" +
-      "</button>" +
-      "</div>" +
-      "</div>";
+    link_btn.innerHTML = `
+      <div class="ke-arrow ke-arrow-up"></div>
+      <div class="link-content">
+        <span><a target="_blank" href=""></a>&nbsp;</span>
+        <div class="ke-btn-group">
+          <button type="button" data-command="update" data-tip="${lang.controller.edit}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+            ${icons.edit}
+          </button>
+          <button type="button" data-command="unlink" data-tip="${lang.controller.unlink}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+            ${icons.unlink}
+          </button>
+          <button type="button" data-command="delete" data-tip="${lang.controller.remove}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+            ${icons.delete}
+          </button>
+        </div>
+      </div>`;
 
     return link_btn;
   },
@@ -167,7 +152,14 @@ export default {
 
   _onLinkPreview: function (context, protocol, e) {
     const value = e.target.value.trim();
-    context._linkValue = this.textContent = !value
+    context._linkValue = !value
+      ? ""
+      : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
+      ? protocol + value
+      : value.indexOf("://") === -1
+      ? "/" + value
+      : value;
+    this.textContent = !value
       ? ""
       : protocol && value.indexOf("://") === -1 && value.indexOf("#") !== 0
       ? protocol + value
@@ -282,9 +274,11 @@ export default {
       contextLink.preview.textContent = contextLink._linkAnchor.href;
       contextLink.focusElement.value = contextLink._linkAnchor.href;
       contextLink.linkAnchorText.value = contextLink._linkAnchor.textContent;
-      contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(
+      contextLink.linkNewWindowCheck.checked = /_blank/i.test(
         contextLink._linkAnchor.target
-      );
+      )
+        ? true
+        : false;
     }
   },
 
@@ -339,9 +333,11 @@ export default {
       contextLink.preview.textContent = contextLink._linkAnchor.href;
       contextLink.focusElement.value = contextLink._linkAnchor.href;
       contextLink.linkAnchorText.value = contextLink._linkAnchor.textContent;
-      contextLink.linkNewWindowCheck.checked = !!/_blank/i.test(
+      contextLink.linkNewWindowCheck.checked = /_blank/i.test(
         contextLink._linkAnchor.target
-      );
+      )
+        ? true
+        : false;
       this.plugins.dialog.open.call(this, "link", true);
     } else if (/unlink/.test(command)) {
       const sc = this.util.getChildElement(

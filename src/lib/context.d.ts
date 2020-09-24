@@ -1,5 +1,5 @@
-import { KothingEditorOptions } from './../options.d';
-import { Plugin } from '../plugins/Plugin';
+import { KothingEditorOptions } from "./../options.d";
+import { Plugin } from "../plugins/Plugin";
 
 declare interface EditorElement {
   originElement: Element;
