@@ -124,13 +124,13 @@ export default {
       <div class="link-content">
         <span><a target="_blank" href=""></a>&nbsp;</span>
         <div class="ke-btn-group">
-          <button type="button" data-command="update" data-tip="${lang.controller.edit}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+          <button type="button" data-command="update" data-tooltip="${lang.controller.edit}" tabindex="-1" class="ke-btn">
             ${icons.edit}
           </button>
-          <button type="button" data-command="unlink" data-tip="${lang.controller.unlink}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+          <button type="button" data-command="unlink" data-tooltip="${lang.controller.unlink}" tabindex="-1" class="ke-btn">
             ${icons.unlink}
           </button>
-          <button type="button" data-command="delete" data-tip="${lang.controller.remove}" data-direction="bottom" tabindex="-1" class="ke-btn ke-tooltip">
+          <button type="button" data-command="delete" data-tooltip="${lang.controller.remove}" tabindex="-1" class="ke-btn">
             ${icons.delete}
           </button>
         </div>

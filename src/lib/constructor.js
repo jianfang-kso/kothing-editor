@@ -10,6 +10,8 @@ import _icons from "../assets/defaultIcons";
 import _defaultLang from "../lang/en";
 import _util from "./util";
 
+import ToolTip from "../plugins/modules/toolTip";
+
 export default {
   /**
    * @description document create
@@ -362,9 +364,11 @@ export default {
       resizingBar.className = "ke-resizing-bar";
 
       /** resizinIcon */
-      resizinIcon = document.createElement("DIV");
-      resizinIcon.className = "ke-resizin-icon";
-      resizingBar.appendChild(resizinIcon);
+      if (/\d+/.test(options.height)) {
+        resizinIcon = document.createElement("DIV");
+        resizinIcon.className = "ke-resizing-icon";
+        resizingBar.appendChild(resizinIcon);
+      }
 
       /** navigation */
       navigation = document.createElement("DIV");
@@ -551,13 +555,11 @@ export default {
       ? _util.isNumber(options.height)
         ? options.height + "px"
         : options.height
-      : element.clientHeight && element.clientHeight > 100
-      ? element.clientHeight + "px"
-      : "100px";
+      : "auto";
     options.minHeight =
       (_util.isNumber(options.minHeight)
         ? options.minHeight + "px"
-        : options.minHeight) || "";
+        : options.minHeight) || (options.height === "auto" ? "100px" : "");
     options.maxHeight =
       (_util.isNumber(options.maxHeight)
         ? options.maxHeight + "px"
@@ -1065,13 +1067,13 @@ export default {
     oButton.setAttribute("type", "button");
     oButton.setAttribute(
       "class",
-      "ke-btn" + (buttonClass ? " " + buttonClass : "") + " ke-tooltip"
+      "ke-btn" + (buttonClass ? " " + buttonClass : "")
     );
     oButton.setAttribute("data-command", dataCommand);
     oButton.setAttribute("data-display", dataDisplay);
     oButton.setAttribute("tabindex", "-1");
 
-    oButton.setAttribute("data-tip", title || dataCommand);
+    oButton.setAttribute("data-tooltip", title || dataCommand); // toolTip
     oButton.setAttribute("data-direction", "bottom");
 
     if (!innerHTML) innerHTML = '<span class="ke-icon-text">!</span>';
@@ -1083,14 +1085,14 @@ export default {
       oButton.className += " ke-btn-more-text";
     }
 
-    // innerHTML += '<span class="ke-tooltip-inner"><span class="ke-tooltip-text">' + (title || dataCommand) + '</span></span>';
-
     if (_disabled) {
       oButton.setAttribute("disabled", true);
     }
 
     oButton.innerHTML = innerHTML;
     oLi.appendChild(oButton);
+
+    new ToolTip(oButton, "bottom", "toBottom"); // tooltip
 
     return {
       li: oLi,
@@ -1118,7 +1120,7 @@ export default {
     _buttonTray.className = "ke-btn-tray";
     tool_bar.appendChild(_buttonTray);
 
-    /** create button list */
+    /** create toolbar button list */
     const icons = options.icons;
     const defaultToolbarItem = this._defaultButtons(options);
     const pluginCallButtons = {};

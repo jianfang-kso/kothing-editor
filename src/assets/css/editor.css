@@ -108,135 +108,12 @@
   border-radius: 0;
 }
 
-/** --- Icons ---------------------------------------------------------- */
-/* button children are pointer event none */
-.kothing-editor button * {
-  pointer-events: none;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  -moz-backface-visibility: hidden;
-}
-/* default svg */
-.kothing-editor .ke-svg,
-.kothing-editor button > svg,
-.kothing-editor button.ke-btn-select .arrow-icon {
-  margin: auto;
-  fill: currentColor;
-  display: block;
-  text-align: center;
-  float: none;
-}
-
-/* ke-select-btn arrow-icon */
-.kothing-editor .ke-btn-select .arrow-icon > svg {
-  float: right;
-  width: 10px;
-  height: 10px;
-  -webkit-transition: 0.3s ease-out;
-  -moz-transition: 0.3s ease-out;
-  -ms-transition: 0.3s ease-out;
-  -o-transition: 0.3s ease-out;
-  transition: 0.3s ease-out;
-}
-.kothing-editor .ke-btn-select.on .arrow-icon > svg {
-  transform: rotate(180deg);
-}
-
-/* close class icon */
-.kothing-editor .close > svg,
-.kothing-editor .ke-dialog-close > svg {
-  width: 10px;
-  height: 10px;
-}
-
-/* ke-btn-list inner icon */
-.kothing-editor .ke-btn-list > .ke-list-icon {
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin: -1px 10px 0 0;
-  vertical-align: middle;
-}
-
-/* ke-line-breaker inner icon */
-.kothing-editor .ke-line-breaker > button > svg {
-  width: 24px;
-  height: 24px;
-}
-
-/* icon class */
-.kothing-editor button > i::before {
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  display: inline-block;
-  font-style: normal;
-  font-variant: normal;
-  text-rendering: auto;
-  font-size: 15px;
-  line-height: 2;
-}
-.kothing-editor button > [class="ke-icon-text"] {
-  font-size: 20px;
-  line-height: 1;
-}
-
-/** --- arrow icon ---------------------------------------------------------- */
-.kothing-editor .ke-arrow,
-.kothing-editor .ke-arrow::after {
-  position: absolute;
-  display: block;
-  width: 0;
-  height: 0;
-  border: 11px solid transparent;
-}
-/* arrow up */
-.kothing-editor .ke-arrow.ke-arrow-up {
-  top: -11px;
-  left: 20px;
-  margin-left: -11px;
-  border-top-width: 0;
-  border-bottom-color: rgba(0, 0, 0, 0.25);
-}
-
-.kothing-editor .ke-arrow.ke-arrow-up::after {
-  top: 1px;
-  margin-left: -11px;
-  content: " ";
-  border-top-width: 0;
-  border-bottom-color: #fff;
-}
-
-.kothing-editor .ke-toolbar .ke-arrow.ke-arrow-up::after {
-  border-bottom-color: #fafafa;
-}
-/* arrow down */
-.kothing-editor .ke-arrow.ke-arrow-down {
-  top: 0px;
-  left: 0px;
-  margin-left: -11px;
-  border-bottom-width: 0;
-  border-top-color: rgba(0, 0, 0, 0.25);
-}
-
-.kothing-editor .ke-arrow.ke-arrow-down::after {
-  top: -12px;
-  margin-left: -11px;
-  content: " ";
-  border-bottom-width: 0;
-  border-top-color: #fff;
-}
-
-.kothing-editor .ke-toolbar .ke-arrow.ke-arrow-down::after {
-  border-top-color: #fafafa;
-}
-
 /** --- ke-btn button */
 .kothing-editor .ke-btn {
   display: inline-block;
   min-width: 30px;
   height: 30px;
   line-height: 30px;
-  margin: 2px;
   border-radius: 3px;
 }
 
@@ -359,6 +236,128 @@
   cursor: not-allowed;
   background-color: inherit;
   color: #bdbdbd;
+}
+
+/** --- Icons ---------------------------------------------------------- */
+/* button children are pointer event none */
+.kothing-editor button * {
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+}
+/* default svg */
+.kothing-editor .ke-svg,
+.kothing-editor button > svg,
+.kothing-editor button.ke-btn-select .arrow-icon {
+  margin: auto;
+  fill: currentColor;
+  display: block;
+  text-align: center;
+  float: none;
+}
+
+/* ke-select-btn arrow-icon */
+.kothing-editor .ke-btn-select .arrow-icon > svg {
+  float: right;
+  width: 10px;
+  height: 10px;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -ms-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.kothing-editor .ke-btn-select.on .arrow-icon > svg {
+  transform: rotate(180deg);
+}
+
+/* close class icon */
+.kothing-editor .close > svg,
+.kothing-editor .ke-dialog-close > svg {
+  width: 10px;
+  height: 10px;
+}
+
+/* ke-btn-list inner icon */
+.kothing-editor .ke-btn-list > .ke-list-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: -1px 10px 0 0;
+  vertical-align: middle;
+}
+
+/* ke-line-breaker inner icon */
+.kothing-editor .ke-line-breaker > button > svg {
+  width: 24px;
+  height: 24px;
+}
+
+/* icon class */
+.kothing-editor button > i::before {
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  font-size: 15px;
+  line-height: 2;
+}
+.kothing-editor button > [class="ke-icon-text"] {
+  font-size: 20px;
+  line-height: 1;
+}
+
+/** --- arrow icon ---------------------------------------------------------- */
+.kothing-editor .ke-arrow,
+.kothing-editor .ke-arrow::after {
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border: 11px solid transparent;
+}
+/* arrow up */
+.kothing-editor .ke-arrow.ke-arrow-up {
+  top: -11px;
+  left: 20px;
+  margin-left: -11px;
+  border-top-width: 0;
+  border-bottom-color: rgba(0, 0, 0, 0.25);
+}
+
+.kothing-editor .ke-arrow.ke-arrow-up::after {
+  top: 1px;
+  margin-left: -11px;
+  content: " ";
+  border-top-width: 0;
+  border-bottom-color: #fff;
+}
+
+.kothing-editor .ke-toolbar .ke-arrow.ke-arrow-up::after {
+  border-bottom-color: #fafafa;
+}
+/* arrow down */
+.kothing-editor .ke-arrow.ke-arrow-down {
+  top: 0px;
+  left: 0px;
+  margin-left: -11px;
+  border-bottom-width: 0;
+  border-top-color: rgba(0, 0, 0, 0.25);
+}
+
+.kothing-editor .ke-arrow.ke-arrow-down::after {
+  top: -12px;
+  margin-left: -11px;
+  content: " ";
+  border-bottom-width: 0;
+  border-top-color: #fff;
+}
+
+.kothing-editor .ke-toolbar .ke-arrow.ke-arrow-down::after {
+  border-top-color: #fafafa;
 }
 
 /** --- loading box */
@@ -587,15 +586,24 @@
 
 /* innser ul */
 .kothing-editor .ke-menu-list {
-  float: left;
   padding: 0;
   margin: 0;
+  overflow:auto;
 }
 .kothing-editor .ke-menu-list li {
   position: relative;
   float: left;
   padding: 0;
   margin: 0;
+}
+
+.kothing-editor .ke-menu-list li .ke-btn,
+.kothing-editor .ke-menu-list li .ke-btn-select {
+  min-width: 30px;
+  height: 28px;
+  line-height: 28px;
+  margin: 2px;
+  font-size: 16px;
 }
 
 /* tool bar select button (font, fontSize, formatBlock) */
@@ -1104,7 +1112,7 @@
   background: transparent;
   /* cursor: row-resize; */
 }
-.kothing-editor .ke-resizing-bar .ke-resizin-icon {
+.kothing-editor .ke-resizing-bar .ke-resizing-icon {
   height: 4px;
   width: 20px;
   top: calc(50% - 2px);
@@ -2237,57 +2245,104 @@
   opacity: 1;
 }
 
-.tool_tip {
-  background-color: rgba(0, 0, 0, 0.9);
-  padding: 4px 8px;
-  border-radius: 4px;
+/* Tooltip */
+.tooltip {
+  background-color: #222;
+  padding: 4px 10px;
+  font-size: 0.815em;
   color: #fff;
-  font-size: 12px;
   position: absolute;
-  z-index: 99999;
-  max-width: 100px;
-  word-wrap: break-word;
-}
-.tool_tip:before {
-  position: absolute;
-  content: "";
-  background-color: rgba(0, 0, 0, 0);
-  width: 0;
-  height: 0;
-  border-width: 5px;
-  border-style: solid;
-}
-.tool_tip_top:before {
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, 0);
-  -ms-transform: translate(-50%, 0);
-  -webkit-transform: translate(-50%, 0);
-  border-color: rgba(0, 0, 0, 0.9) transparent transparent transparent;
-}
-.tool_tip_right:before {
-  top: 50%;
-  left: 0;
-  transform: translate(-100%, -50%);
-  -ms-transform: translate(-100%, -50%);
-  -webkit-transform: translate(-100%, -50%);
-  border-color: transparent rgba(0, 0, 0, 0.9) transparent transparent;
-}
-.tool_tip_bottom:before {
   top: 0;
-  left: 50%;
-  transform: translate(-50%, -100%);
-  -ms-transform: translate(-50%, -100%);
-  -webkit-transform: translate(-50%, -100%);
-  border-color: transparent transparent rgba(0, 0, 0, 0.9) transparent;
+  left: 0;
+  border-radius: 3px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+  -webkit-font-smoothing: antialiased;
+  transition-duration: 0.3s;
+  transition-property: opacity;
 }
-.tool_tip_left:before {
-  top: 50%;
-  left: 100%;
-  transform: translate(0, -50%);
-  -ms-transform: translate(0, -50%);
-  -webkit-transform: translate(0, -50%);
-  border-color: transparent transparent transparent rgba(0, 0, 0, 0.9);
+.tooltip.tooltip__visible {
+  opacity: 0.8;
+}
+.tooltip.trans__toTop {
+  transform: translateY(10px);
+  transition-property: opacity, transform;
+}
+.tooltip.trans__toTop.tooltip__visible {
+  transform: translateY(0px);
+}
+.tooltip.trans__toBottom {
+  transform: translateY(0);
+  transition-property: opacity, transform;
+}
+.tooltip.trans__toBottom.tooltip__visible {
+  transform: translateY(6px);
+}
+.tooltip.trans__rotate {
+  transform: rotateX(90deg);
+  border-radius: 100px 100px 3px 3px;
+  transition-property: opacity, transform, border-radius;
+}
+.tooltip.trans__rotate.tooltip__visible {
+  border-radius: 3px;
+  transform: rotateX(0deg);
+}
+.tooltip.trans__scale {
+  transform: skew(50deg) scale(0);
+  transition-property: opacity, transform;
+}
+.tooltip.trans__scale.tooltip__visible {
+  transform: skew(0deg) scale(1);
+}
+.tooltip.trans__skew {
+  transform: skewX(50deg);
+  transition-property: opacity, transform;
+}
+.tooltip.trans__skew.tooltip__visible {
+  transform: skewX(0deg);
+}
+.tooltip::after {
+  content: "";
+  position: absolute;
+}
+.tooltip.tooltip__bottom::after {
+  top: auto !important;
+  bottom: 100% !important;
+  border-top-color: transparent;
+  border-bottom-color: #222;
+}
+.tooltip.direction__top::after {
+  left: calc(50% - 6px);
+  top: 100%;
+  border-top: 6px solid #222;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
+.tooltip.direction__bottom::after {
+  left: calc(50% - 6px);
+  top: -12px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid #222;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+}
+.tooltip.direction__left::after {
+  top: calc(50% - 6px);
+  right: -12px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-left: 6px solid #222;
+}
+.tooltip.direction__right::after {
+  top: calc(50% - 6px);
+  left: -12px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  border-right: 6px solid #222;
+  border-left: 6px solid transparent;
 }
 
 /** animation */

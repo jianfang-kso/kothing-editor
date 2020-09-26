@@ -195,71 +195,71 @@ export default {
     resize_button.innerHTML = `
       <div class="ke-arrow ke-arrow-up"></div>
       <div class="ke-btn-group _ke_resizing_btn_group">
-        <button type="button" data-command="percent" data-value="1" data-tip="${lang.controller.resize100}" data-direction="bottom" class="ke-tooltip _ke_percentage">
+        <button type="button" data-command="percent" data-value="1" data-tooltip="${lang.controller.resize100}" class="_ke_percentage">
           <span>100%</span>
         </button>
-        <button type="button" data-command="percent" data-value="0.75" data-tip="${lang.controller.resize75}" data-direction="bottom" class="ke-tooltip _ke_percentage">
+        <button type="button" data-command="percent" data-value="0.75" data-tooltip="${lang.controller.resize75}" class="_ke_percentage">
           <span>75%</span>
         </button>
-        <button type="button" data-command="percent" data-value="0.5" data-tip="${lang.controller.resize50}" data-direction="bottom" class="ke-tooltip _ke_percentage">
+        <button type="button" data-command="percent" data-value="0.5" data-tooltip="${lang.controller.resize50}" class="_ke_percentage">
           <span>50%</span>
         </button>
-        <button type="button" data-command="auto" data-tip="${lang.controller.autoSize}" data-direction="bottom" class="ke-btn ke-tooltip _ke_auto_size">
+        <button type="button" data-command="auto" data-tooltip="${lang.controller.autoSize}" class="ke-btn _ke_auto_size">
           ${icons.auto_size}
         </button>
-        <button type="button" data-command="rotate" data-value="-90" data-tip="${lang.controller.rotateLeft}" data-direction="bottom" class="ke-btn ke-tooltip _ke_rotation">
+        <button type="button" data-command="rotate" data-value="-90" data-tooltip="${lang.controller.rotateLeft}" class="ke-btn _ke_rotation">
           ${icons.rotate_left}
         </button>
-        <button type="button" data-command="rotate" data-value="90" data-tip="${lang.controller.rotateRight}" data-direction="bottom" class="ke-btn ke-tooltip _ke_rotation">
+        <button type="button" data-command="rotate" data-value="90" data-tooltip="${lang.controller.rotateRight}" class="ke-btn _ke_rotation">
           ${icons.rotate_right}
         </button>
       </div>
       <div class="ke-btn-group" style="padding-top: 0;">
-        <button type="button" data-command="mirror" data-value="h" data-tip="${lang.controller.mirrorHorizontal}" data-direction="bottom" class="ke-btn ke-tooltip">
+        <button type="button" data-command="mirror" data-value="h" data-tooltip="${lang.controller.mirrorHorizontal}" class="ke-btn">
           ${icons.mirror_horizontal}
         </button>
-        <button type="button" data-command="mirror" data-value="v" data-tip="${lang.controller.mirrorVertical}" data-direction="bottom" class="ke-btn ke-tooltip">
+        <button type="button" data-command="mirror" data-value="v" data-tooltip="${lang.controller.mirrorVertical}" class="ke-btn">
           ${icons.mirror_vertical}
         </button>
-        <button type="button" data-command="onalign" data-tip="${lang.toolbar.align}" data-direction="bottom" class="ke-btn ke-tooltip _ke_resizing_align_button">
+        <button type="button" data-command="onalign" data-tooltip="${lang.toolbar.align}" class="ke-btn _ke_resizing_align_button">
           ${icons.align_justify}
         </button>
         <div class="ke-btn-group-sub kothing-editor-common ke-list-layer ke-resizing-align-list">
           <div class="ke-list-inner">
             <ul class="ke-list-basic">
               <li>
-                <button type="button" class="ke-btn-list ke-tooltip" data-command="align" data-value="basic" data-tip="${lang.dialogBox.basic}" data-direction="bottom">
+                <button type="button" class="ke-btn-list" data-command="align" data-value="basic" data-tooltip="${lang.dialogBox.basic}">
                   ${icons.align_justify}
                 </button>
               </li>
               <li>
-                <button type="button" class="ke-btn-list ke-tooltip" data-command="align" data-value="left" data-tip="${lang.dialogBox.left}" data-direction="bottom">
+                <button type="button" class="ke-btn-list" data-command="align" data-value="left" data-tooltip="${lang.dialogBox.left}">
                   ${icons.align_left}
                 </button>
               </li>
               <li>
-                <button type="button" class="ke-btn-list ke-tooltip" data-command="align" data-value="center" data-tip="${lang.dialogBox.center}" data-direction="bottom">
+                <button type="button" class="ke-btn-list" data-command="align" data-value="center" data-tooltip="${lang.dialogBox.center}">
                   ${icons.align_center}
                 </button>
               </li>
               <li>
-                <button type="button" class="ke-btn-list ke-tooltip" data-command="align" data-value="right" data-tip="${lang.dialogBox.right}" data-direction="bottom">
+                <button type="button" class="ke-btn-list" data-command="align" data-value="right" data-tooltip="${lang.dialogBox.right}">
                   ${icons.align_right}
                 </button>
               </li>
             </ul>
           </div>
         </div>
-        <button type="button" data-command="caption" data-tip="${lang.dialogBox.caption}" data-direction="bottom" class="ke-btn ke-tooltip _ke_resizing_caption_button">
+        <button type="button" data-command="caption" data-tooltip="${lang.dialogBox.caption}" class="ke-btn _ke_resizing_caption_button">
           ${icons.caption}
         </button>
-        <button type="button" data-command="revert" data-tip="${lang.dialogBox.revertButton}" data-direction="bottom" class="ke-btn ke-tooltip">
+        <button type="button" data-command="revert" data-tooltip="${lang.dialogBox.revertButton}" class="ke-btn">
           ${icons.revert}
         </button>
-        <button type="button" data-command="update" data-tip="${lang.controller.edit}" data-direction="bottom" class="ke-btn ke-tooltip">
+        <button type="button" data-command="update" data-tooltip="${lang.controller.edit}" class="ke-btn">
           ${icons.modify}
         </button>
-        <button type="button" data-command="delete" data-tip="${lang.controller.remove}" data-direction="bottom" class="ke-btn ke-tooltip">
+        <button type="button" data-command="delete" data-tooltip="${lang.controller.remove}" class="ke-btn">
           ${icons.delete}
         </button>
       </div>`;

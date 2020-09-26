@@ -90,10 +90,10 @@ export default {
         }
       }
     } else if (this._w.XMLHttpRequest) {
-    /** netscape */
+      /** netscape */
       return new XMLHttpRequest();
     } else {
-    /** fail */
+      /** fail */
       return null;
     }
   },
@@ -2184,147 +2184,5 @@ export default {
         ? "<style>\n/** Iframe height auto */\nbody{height: min-content; overflow: hidden;}\n</style>"
         : "")
     );
-  },
-
-  /**
-   * @description Tooltip
-   * @param {ele} element class, ex: ".ke-tooltip"
-   * @param {transitionOptions} { transition: boolean, time: number }, css3 transition options
-   * @param {enterCallback} mouseenter events callback
-   * @param {outCallback} mouseleave events callback
-   */
-  _tooltip: (ele, transitionOptions, enterCallback, outCallback) => {
-    if (!ele || typeof ele !== "string") {
-      console.error(
-        new Error(
-          'The "tooltip" method requires the "class" of at least one parameter'
-        )
-      );
-      return false;
-    }
-    if (transitionOptions && {}.constructor.name === "Object") {
-      const els = document.querySelectorAll(ele);
-      const tipContent = document.createElement("span");
-      const transition = transitionOptions.transition || false;
-      const time = transitionOptions.time || 200;
-      let timer = null;
-
-      const opacityTransition = (ele, state) => {
-        timer && clearTimeout(timer);
-        ele.style.setProperty("transition", "opacity " + time / 1000 + "s");
-        ele.style.setProperty(
-          "-webkit-transition",
-          "opacity " + time / 1000 + "s"
-        );
-        if (state === "enter") {
-          ele.style.opacity = 0;
-          timer = setTimeout(() => {
-            ele.style.opacity = 1;
-            if (typeof enterCallback === "function") {
-              enterCallback();
-            }
-          }, 0);
-        } else {
-          if (state === "leave") {
-            ele.style.opacity = 0;
-            if (typeof outCallback === "function") {
-              outCallback();
-            }
-            timer = setTimeout(() => {
-              try {
-                // document.body.removeChild(ele);
-                ele.parentElement.removeChild(ele);
-              } catch (e) {
-                console.error(e);
-              }
-            }, time);
-          }
-        }
-      };
-
-      const deleteTipContent = (el) => {
-        el.addEventListener(
-          "mouseleave",
-          () => {
-            const oldTipContent = document.querySelector(".tool_tip");
-            if (oldTipContent) {
-              if (transition === true) {
-                return opacityTransition(oldTipContent, "leave");
-              }
-              // document.body.removeChild(oldTipContent);
-              el.parentElement.removeChild(oldTipContent);
-              if (typeof outCallback === "function") {
-                outCallback();
-              }
-            }
-          },
-          false
-        );
-      };
-
-      const tipContentSetter = (
-        tipContent,
-        context,
-        direction,
-        parentElement
-      ) => {
-        tipContent.innerHTML = context;
-        tipContent.className = "tool_tip tool_tip_" + direction;
-        // document.body.appendChild(tipContent);
-        parentElement.appendChild(tipContent);
-        if (transition === true) {
-          opacityTransition(tipContent, "enter");
-          return false;
-        }
-        if (typeof enterCallback === "function") {
-          enterCallback();
-        }
-      };
-
-      Array.prototype.slice.call(els).forEach((el) => {
-        el.addEventListener(
-          "mouseenter",
-          () => {
-            const currenLeft = el.offsetLeft;
-            const currenTop = el.offsetTop;
-            const currenWidth = el.offsetWidth;
-            const currenHeight = el.offsetHeight;
-            const context = el.getAttribute("data-tip");
-            const direction = el.getAttribute("data-direction") || "top";
-
-            tipContentSetter(tipContent, context, direction, el.parentElement);
-
-            const tipContentWidth = tipContent.offsetWidth;
-            const tipContentHeight = tipContent.offsetHeight;
-
-            switch (direction) {
-              case "top":
-                tipContent.style.left =
-                  currenLeft + currenWidth / 2 - tipContentWidth / 2 + "px";
-                tipContent.style.top = currenTop - tipContentHeight - 7 + "px";
-                break;
-              case "left":
-                tipContent.style.left = currenLeft - tipContentWidth - 7 + "px";
-                tipContent.style.top =
-                  currenTop + currenHeight / 2 - tipContentHeight / 2 + "px";
-                break;
-              case "right":
-                tipContent.style.left = currenLeft + currenWidth + 7 + "px";
-                tipContent.style.top =
-                  currenTop + currenHeight / 2 - tipContentHeight / 2 + "px";
-                break;
-              case "bottom":
-                tipContent.style.left =
-                  currenLeft + currenWidth / 2 - tipContentWidth / 2 + "px";
-                tipContent.style.top = currenTop + currenHeight + 7 + "px";
-                break;
-              default:
-            }
-          },
-          false
-        );
-        deleteTipContent(el);
-      });
-    }
   },
 };

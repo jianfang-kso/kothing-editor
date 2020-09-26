@@ -6298,11 +6298,6 @@ export default function (
         if (typeof functions.onload === "function") {
           functions.onload(core, reload);
         }
-        // toolbar button tooltip
-        _util._tooltip(".ke-tooltip", {
-          transition: true,
-          time: 200,
-        });
       });
     },
 
