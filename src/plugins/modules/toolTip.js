@@ -221,7 +221,7 @@ export default class Tooltip {
     if (this.tooltip === null) {
       let tooltip = document.createElement("div");
       tooltip.innerHTML = this.tipTitle;
-      tooltip.classList.add("tooltip");
+      tooltip.classList.add("ke_tooltip");
       this.id = this.newId();
       tooltip.setAttribute("data-tooltip", this.newId());
       document.body.appendChild(tooltip);

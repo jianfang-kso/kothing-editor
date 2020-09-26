@@ -371,7 +371,7 @@
   background-color: #fff;
   opacity: 0.7;
   filter: alpha(opacity=70);
-  z-index: 2147483647;
+  z-index: 9990;
 }
 
 .kothing-editor .ke-loading-box .ke-loading-effect {
@@ -477,7 +477,7 @@
 .kothing-editor .ke-toolbar.ke-toolbar-inline {
   display: none;
   position: absolute;
-  z-index: 2147483647;
+  z-index: 9990;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
 }
@@ -485,7 +485,7 @@
 .kothing-editor .ke-toolbar.ke-toolbar-balloon {
   display: none;
   position: absolute;
-  z-index: 2147483647;
+  z-index: 9990;
   width: auto;
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
@@ -588,7 +588,7 @@
 .kothing-editor .ke-menu-list {
   padding: 0;
   margin: 0;
-  overflow:auto;
+  overflow: auto;
 }
 .kothing-editor .ke-menu-list li {
   position: relative;
@@ -1148,7 +1148,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2147483647;
+  z-index: 9990;
 }
 
 /** resizing bar - charCounter */
@@ -1182,7 +1182,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2147483647;
+  z-index: 9990;
 }
 
 .kothing-editor .ke-dialog label,
@@ -1893,7 +1893,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 2147483647;
+  z-index: 9990;
 }
 
 .kothing-editor .ke-file-browser label,
@@ -2246,7 +2246,7 @@
 }
 
 /* Tooltip */
-.tooltip {
+.ke_tooltip {
   background-color: #222;
   padding: 4px 10px;
   font-size: 0.815em;
@@ -2257,62 +2257,62 @@
   border-radius: 3px;
   opacity: 0;
   pointer-events: none;
-  z-index: 999;
+  z-index: 19999;
   -webkit-font-smoothing: antialiased;
   transition-duration: 0.3s;
   transition-property: opacity;
 }
-.tooltip.tooltip__visible {
+.ke_tooltip.tooltip__visible {
   opacity: 0.8;
 }
-.tooltip.trans__toTop {
+.ke_tooltip.trans__toTop {
   transform: translateY(10px);
   transition-property: opacity, transform;
 }
-.tooltip.trans__toTop.tooltip__visible {
+.ke_tooltip.trans__toTop.tooltip__visible {
   transform: translateY(0px);
 }
-.tooltip.trans__toBottom {
+.ke_tooltip.trans__toBottom {
   transform: translateY(0);
   transition-property: opacity, transform;
 }
-.tooltip.trans__toBottom.tooltip__visible {
+.ke_tooltip.trans__toBottom.tooltip__visible {
   transform: translateY(6px);
 }
-.tooltip.trans__rotate {
+.ke_tooltip.trans__rotate {
   transform: rotateX(90deg);
   border-radius: 100px 100px 3px 3px;
   transition-property: opacity, transform, border-radius;
 }
-.tooltip.trans__rotate.tooltip__visible {
+.ke_tooltip.trans__rotate.tooltip__visible {
   border-radius: 3px;
   transform: rotateX(0deg);
 }
-.tooltip.trans__scale {
+.ke_tooltip.trans__scale {
   transform: skew(50deg) scale(0);
   transition-property: opacity, transform;
 }
-.tooltip.trans__scale.tooltip__visible {
+.ke_tooltip.trans__scale.tooltip__visible {
   transform: skew(0deg) scale(1);
 }
-.tooltip.trans__skew {
+.ke_tooltip.trans__skew {
   transform: skewX(50deg);
   transition-property: opacity, transform;
 }
-.tooltip.trans__skew.tooltip__visible {
+.ke_tooltip.trans__skew.tooltip__visible {
   transform: skewX(0deg);
 }
-.tooltip::after {
+.ke_tooltip::after {
   content: "";
   position: absolute;
 }
-.tooltip.tooltip__bottom::after {
+.ke_tooltip.tooltip__bottom::after {
   top: auto !important;
   bottom: 100% !important;
   border-top-color: transparent;
   border-bottom-color: #222;
 }
-.tooltip.direction__top::after {
+.ke_tooltip.direction__top::after {
   left: calc(50% - 6px);
   top: 100%;
   border-top: 6px solid #222;
@@ -2320,7 +2320,7 @@
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
 }
-.tooltip.direction__bottom::after {
+.ke_tooltip.direction__bottom::after {
   left: calc(50% - 6px);
   top: -12px;
   border-top: 6px solid transparent;
@@ -2328,7 +2328,7 @@
   border-right: 6px solid transparent;
   border-left: 6px solid transparent;
 }
-.tooltip.direction__left::after {
+.ke_tooltip.direction__left::after {
   top: calc(50% - 6px);
   right: -12px;
   border-top: 6px solid transparent;
@@ -2336,7 +2336,7 @@
   border-right: 6px solid transparent;
   border-left: 6px solid #222;
 }
-.tooltip.direction__right::after {
+.ke_tooltip.direction__right::after {
   top: calc(50% - 6px);
   left: -12px;
   border-top: 6px solid transparent;
